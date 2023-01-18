@@ -1,8 +1,7 @@
-#include "../inc/header.h"
+#include "../../inc/header.h"
 
 void chat_between_server_and_client(int connection_fd, int socket_fd) {
     char buffer[BUFFER_SIZE];
-    int n;
 
     while (true) {
         if (connection_fd == -1 || socket_fd == -1) {
@@ -94,3 +93,4 @@ int main() {
 
     return 0;
 }
+

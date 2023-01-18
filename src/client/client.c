@@ -1,4 +1,4 @@
-#include "../inc/header.h"
+#include "../../inc/header.h"
 
 void send_string_to_server(int socket_fd) {
     char buffer[BUFFER_SIZE];
@@ -27,7 +27,7 @@ void send_string_to_server(int socket_fd) {
 int main() {
     int socket_fd;
     
-    struct sockaddr_in server_address, client_address;
+    struct sockaddr_in server_address;
 
     socket_fd = socket(AF_INET, SOCK_STREAM, 0);
 
@@ -56,3 +56,4 @@ int main() {
 
     return 0;
 }
+
