@@ -6,15 +6,19 @@ CFLAGS = -std=c11 -Wall -Wextra -Werror -Wpedantic -gdwarf-4
 OBJDIR = obj
 UTILS_OBJDIR = ../utils/obj
 SRCDIR = src
+SQLITE3_DIR = ../resources/libraries/sqlite3
+
+SQLITE3_NAME = sqlite3
 
 SOURCES = $(wildcard $(SRCDIR)/*.c)
 OBJECTS = $(addprefix $(OBJDIR)/,$(notdir $(SOURCES:.c=.o)))
 UTILS_OBJECTS = $(wildcard $(UTILS_OBJDIR)/*.o)
+SQLITE3_LIB = -L$(SQLITE3_DIR) -l$(SQLITE3_NAME)
 
 all: $(BINARYNAME)
 
 $(BINARYNAME): $(SOURCES) $(OBJDIR) $(OBJECTS)
-	$(CC) $(CFLAGS) $(OBJECTS) $(UTILS_OBJECTS) -o $@
+	$(CC) $(CFLAGS) $(OBJECTS) $(UTILS_OBJECTS) $(SQLITE3_LIB) -o $@
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
