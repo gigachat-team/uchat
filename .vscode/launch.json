@@ -5,11 +5,11 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "uchat",
+            "name": "uchat_server",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/endgame", //path to your programs exe and exe name
-            "args": [],
+            "program": "${workspaceFolder}/uchat_server", //path to your programs exe and exe name
+            "args": ["12346"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
