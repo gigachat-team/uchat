@@ -13,7 +13,7 @@ SQLITE3_NAME = sqlite3
 SOURCES = $(wildcard $(SRCDIR)/*.c)
 OBJECTS = $(addprefix $(OBJDIR)/,$(notdir $(SOURCES:.c=.o)))
 UTILS_OBJECTS = $(wildcard $(UTILS_OBJDIR)/*.o)
-SQLITE3_LIB = -L$(SQLITE3_DIR) -l$(SQLITE3_NAME)
+SQLITE3_LIB = -L$(SQLITE3_DIR) -l$(SQLITE3_NAME) -ldl -pthread
 
 all: $(BINARYNAME)
 
