@@ -5,11 +5,30 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "uchat_server",
+            "name": "Server",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/uchat_server", //path to your programs exe and exe name
-            "args": ["12346"],
+            "args": ["15719"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+        {
+            "name": "Client",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/uchat", //path to your programs exe and exe name
+            "args": ["127.0.0.1", "15719"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],

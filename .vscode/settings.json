@@ -1,6 +1,8 @@
 {
     "files.associations": {
         "stdio.h": "c",
-        "header.h": "c"
+        "header.h": "c",
+        "sqlite3.h": "c",
+        "main.h": "c"
     }
 }
