@@ -7,13 +7,13 @@ OBJDIR = obj
 UTILS_OBJDIR = ../utils/obj
 SRCDIR = src
 
-SOURCES = $(wildcard $(SRCDIR)/*.c)
+SOURCES = $(shell find . -name "*.c")
 OBJECTS = $(addprefix $(OBJDIR)/,$(notdir $(SOURCES:.c=.o)))
 UTILS_OBJECTS = $(wildcard $(UTILS_OBJDIR)/*.o)
 
 all: $(BINARYNAME)
 
-$(BINARYNAME): $(SOURCES) $(OBJDIR) $(OBJECTS)
+$(BINARYNAME): $(SOURCES) $(OBJDIR) $(OBJECTS) $(UTILS_OBJECTS)
 	$(CC) $(CFLAGS) $(OBJECTS) $(UTILS_OBJECTS) -o $@
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
