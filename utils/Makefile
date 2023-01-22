@@ -4,7 +4,7 @@ CFLAGS = -std=c11 -Wall -Wextra -Werror -Wpedantic -gdwarf-4
 OBJDIR = obj
 SRCDIR = src
 
-SOURCES = $(wildcard $(SRCDIR)/*.c)
+SOURCES = $(shell find . -name "*.c")
 OBJECTS = $(addprefix $(OBJDIR)/,$(notdir $(SOURCES:.c=.o)))
 
 all: $(OBJDIR) $(OBJECTS)
