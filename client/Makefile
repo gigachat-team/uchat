@@ -10,11 +10,12 @@ SRCDIR = src
 SOURCES = $(shell find . -name "*.c")
 OBJECTS = $(addprefix $(OBJDIR)/,$(notdir $(SOURCES:.c=.o)))
 UTILS_OBJECTS = $(wildcard $(UTILS_OBJDIR)/*.o)
+LIBMX_LIB = -L../resources/libraries/libmx -lmx
 
 all: $(BINARYNAME)
 
-$(BINARYNAME): $(SOURCES) $(OBJDIR) $(OBJECTS) $(UTILS_OBJECTS)
-	$(CC) $(CFLAGS) $(OBJECTS) $(UTILS_OBJECTS) -o $@
+$(BINARYNAME): $(SOURCES) $(OBJDIR) $(OBJECTS)
+	$(CC) $(CFLAGS) $(OBJECTS) $(UTILS_OBJECTS) $(LIBMX_LIB) -o $@
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
