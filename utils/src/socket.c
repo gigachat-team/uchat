@@ -44,17 +44,20 @@ int accept_socket(int this_socket) {
     return accepted_socket;
 }
 
-char *read_socket(int socket, unsigned int max_read_bytes, int *read_str_count) {
-    char *read_bytes = malloc(max_read_bytes);
-    *read_str_count = read(socket, read_bytes, max_read_bytes);
-    if (*read_str_count == -1) {
+void *read_socket(int socket, unsigned int max_read_bytes, int *read_bytes_count) {
+    void *read_bytes = malloc(max_read_bytes);
+    int read_bytes_length = read(socket, read_bytes, max_read_bytes);
+    if (read_bytes_length == -1) {
         perror("read failed");
         close(socket);
         // need to close listening socket
         free(read_bytes);
         exit(EXIT_FAILURE);
     }
-    read_bytes = realloc(read_bytes, *read_str_count);
+    read_bytes = realloc(read_bytes, read_bytes_length);
+
+    if (read_bytes_count != NULL)
+        *read_bytes_count = read_bytes_length;
 
     return read_bytes;
 }
