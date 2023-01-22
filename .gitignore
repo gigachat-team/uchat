@@ -2,3 +2,4 @@ obj
 uchat
 uchat_server
 *.a
+*.db
