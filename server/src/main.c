@@ -5,7 +5,26 @@ void handle_client_request(int client_socket, sqlite3 *database) {
     send_unsigned_char(client_socket, SUCCESSFULLY_READ);
 
     if (client_request == LOGIN) {
-        
+        char login[MAX_LOGIN_LENGTH];
+        read(client_socket, login, MAX_LOGIN_LENGTH);
+        send_unsigned_char(client_socket, SUCCESSFULLY_READ);
+
+        char password[MAX_PASSWORD_LENGTH];
+        read(client_socket, password, MAX_PASSWORD_LENGTH);
+
+        char *found_password = NULL;
+
+        if (get_password_by_login_in_users_table(database, login, &found_password) != SQLITE_OK) {
+            send_unsigned_char(client_socket, SUCH_LOGIN_DOES_NOT_EXIST);
+        } else {
+            if (strcmp(password, found_password) == 0) {
+                send_unsigned_char(client_socket, SUCCESSFUL_LOGIN);
+            } else {
+                send_unsigned_char(client_socket, WRONG_PASSWORD);
+            }
+        }
+
+        free(found_password);
     } else if (client_request == REGISTER) {
         char login[MAX_LOGIN_LENGTH];
         read(client_socket, login, MAX_LOGIN_LENGTH);
