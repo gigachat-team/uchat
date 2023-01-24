@@ -16,8 +16,6 @@ void *handle_request_thread(void *database_and_client_socket) {
     t_request client_request = recieve_unsigned_char(client_socket);
     send_unsigned_char(client_socket, SUCCESSFULLY_READ);
 
-    sleep(10);
-
     if (client_request == LOGIN) {
         char login[MAX_LOGIN_LENGTH];
         read(client_socket, login, MAX_LOGIN_LENGTH);
