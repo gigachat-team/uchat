@@ -11,6 +11,7 @@
 #define USER_PASSWORD_NAME "Password"
 
 sqlite3 *open_database();
+void close_database(sqlite3 *database);
 void create_users_table(sqlite3 *database);
 int insert_to_users_table(sqlite3 *database, char *login, char *password);
 int get_password_by_login_in_users_table(sqlite3 *database, const char *login, char **password);

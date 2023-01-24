@@ -1,17 +1,9 @@
 #include "../inc/requests.h"
 
-t_database_and_socket *create_database_and_socket(sqlite3 *database, int socket) {
-    t_database_and_socket *database_and_socket = malloc(sizeof(t_database_and_socket));
-    database_and_socket->database = database;
-    database_and_socket->socket = socket;
-    return database_and_socket;
-}
+void *handle_request_thread(void *client_socket_void) {
+    int client_socket = *(int *)client_socket_void;
 
-void *handle_request_thread(void *database_and_client_socket) {
-    t_database_and_socket *args = (t_database_and_socket *)database_and_client_socket;
-    int client_socket = args->socket;
-    sqlite3 *database = args->database;
-    free(args);
+    sqlite3 *database = open_database();
 
     t_request client_request = recieve_unsigned_char(client_socket);
     send_unsigned_char(client_socket, SUCCESSFULLY_READ);
@@ -52,29 +44,17 @@ void *handle_request_thread(void *database_and_client_socket) {
         }
     }
 
+    close_database(database);
     pthread_exit(NULL);
 }
 
-void *accept_requests_thread(void *database_and_listening_socket) {
-    t_database_and_socket *args = (t_database_and_socket *)database_and_listening_socket;
-    int listening_socket = args->socket;
-    sqlite3 *database = args->database;
-    free(args);
+void *accept_requests_thread(void *listening_socket_void) {
+    int listening_socket = *(int *)listening_socket_void;
 
     while (true)
     {
         int client_socket = accept_socket(listening_socket);
-        handle_request_in_new_thread(database, client_socket);
+        create_default_thread(handle_request_thread, &client_socket);
     }
-}
-
-pthread_t accept_requests_in_new_thread(sqlite3 *database, int listening_socket) {
-    t_database_and_socket *database_and_listening_socket = create_database_and_socket(database, listening_socket);
-    return create_default_thread(accept_requests_thread, database_and_listening_socket);
-}
-
-pthread_t handle_request_in_new_thread(sqlite3 *database, int client_socket) {
-    t_database_and_socket *database_and_client_socket = create_database_and_socket(database, client_socket);
-    return create_default_thread(handle_request_thread, database_and_client_socket);
 }
 

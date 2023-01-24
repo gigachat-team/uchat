@@ -8,12 +8,13 @@ int main(int argc, char **argv) {
 
     sqlite3 *database = open_database();
     create_users_table(database);
+    close_database(database);
 
     int listening_socket = create_socket();
     bind_socket(listening_socket, atoi(argv[1]));
     listen_socket(listening_socket, 5);
 
-    accept_requests_in_new_thread(database, listening_socket);
+    create_default_thread(accept_requests_thread, &listening_socket);
 
     printf("Server is listening for user requests.\n");
 
