@@ -14,7 +14,7 @@ int main(int argc, char **argv) {
     bind_socket(listening_socket, atoi(argv[1]));
     listen_socket(listening_socket, 5);
 
-    create_default_thread(accept_requests_thread, &listening_socket);
+    pthread_t listening_thread = create_default_thread(accept_requests_thread, &listening_socket);
 
     printf("Server is listening for user requests.\n");
 
@@ -25,8 +25,9 @@ int main(int argc, char **argv) {
         scanf("%s", user_command);
 
         if (strcmp(user_command, "exit") == 0) {
-            sqlite3_close(database);
             close(listening_socket);
+            cancel_thread(listening_thread);
+            join_thread(listening_thread, NULL);
             exit(EXIT_FAILURE);
         }
     }
