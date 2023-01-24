@@ -8,15 +8,16 @@ SOURCES = $(shell find . -name "*.c")
 OBJECTS = $(addprefix $(OBJDIR)/,$(notdir $(SOURCES:.c=.o)))
 
 all: $(OBJDIR) $(OBJECTS)
+	@:
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(OBJDIR):
 	@mkdir -p $@
 
 clean:
-	rm -rf $(OBJDIR)
+	@rm -rf $(OBJDIR)
 	
 uninstall: clean
 
