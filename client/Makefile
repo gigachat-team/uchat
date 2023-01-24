@@ -1,7 +1,7 @@
 BINARYNAME = ../uchat
 
 CC = clang
-CFLAGS = -std=c11 -Wall -Wextra -Werror -Wpedantic -gdwarf-4
+CFLAGS = -std=c11 -Wall -Wextra -Werror -Wpedantic -gdwarf-4 -pthread
 
 OBJDIR = obj
 UTILS_OBJDIR = ../utils/obj

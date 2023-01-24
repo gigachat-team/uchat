@@ -18,5 +18,3 @@ uint32_t recieve_unsigned_int(int socket) {
     return ntohl(recieved_number);
 }
 
-
-

@@ -1,5 +1,13 @@
 #pragma once
 
+#include <netdb.h>
+#include <fcntl.h>  
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <arpa/inet.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+
 #include "base_includes.h"
 
 int create_socket();

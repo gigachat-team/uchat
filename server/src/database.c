@@ -11,9 +11,20 @@ sqlite3 *open_database() {
     return database;
 }
 
-// void create_users_table(sqlite3 *database) {
-//     sqlite3_exec(database, USERS_TABLE_CREATION_SQL, NULL, )
-// }
+void create_users_table(sqlite3 *database) {
+    char sql_command[500];
+    sprintf(sql_command,    "CREATE TABLE IF NOT EXISTS %s ( \
+                                %s INTEGER PRIMARY KEY AUTOINCREMENT, \
+                                %s TEXT UNIQUE NOT NULL CHECK(%s != ''), \
+                                %s TEXT NOT NULL);",
+    USERS_TABLE_NAME, USER_ID_NAME, USER_LOGIN_NAME, USER_LOGIN_NAME, USER_PASSWORD_NAME);
+    
+    if (sqlite3_exec(database, sql_command, NULL, NULL, NULL) != SQLITE_OK) {
+        fprintf(stderr, "Failed to create users table.\n");
+        sqlite3_close(database);
+        exit(EXIT_FAILURE);
+    }
+}
 
 int insert_to_users_table(sqlite3 *database, char *login, char *password) {
     char sql_command[300];
