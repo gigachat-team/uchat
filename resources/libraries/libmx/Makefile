@@ -13,10 +13,11 @@ SOURCES = $(wildcard $(SRCDIR)/*.c)
 OBJECTS = $(addprefix $(OBJDIR)/,$(notdir $(SOURCES:.c=.o)))
 
 all: $(LIBNAME)
+	@:
 
 $(LIBNAME): $(SOURCES) $(OBJDIR) $(OBJECTS)
 	@$(LIBCREATOR) $(LIBCREATOR_FLAGS) $@ $(OBJECTS)
-	@printf "$(notdir $@) created\n"
+	@printf "$(notdir $@)\t\tcreated\n"
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@$(CC) $(CFLAGS) -c $< -o $@
@@ -24,12 +25,13 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c
 $(OBJDIR):
 	@mkdir -p $@
 
-uninstall: clean
-	rm -rf $(LIBNAME)
-
 clean:
-	rm -rf $(OBJDIR)
+	@rm -rf $(OBJDIR)
+	@printf "$(patsubst %.a,%,$(LIBNAME))\t\t$@ed\n"
+
+uninstall: clean
+	@rm -rf $(LIBNAME)
+	@printf "$(patsubst %.a,%,$(LIBNAME))\t\t$@ed\n"
 
 reinstall: uninstall all
-
 

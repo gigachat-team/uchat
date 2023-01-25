@@ -1,5 +1,26 @@
 #include "../inc/database.h"
 
+<<<<<<< HEAD:server/src/users_table.c
+=======
+sqlite3 *open_database() {
+    sqlite3 *database;
+    if (sqlite3_open(DATABASE_NAME, &database) != SQLITE_OK) {
+        fprintf(stderr, "Cannot open database: %s\n", sqlite3_errmsg(database));
+        close_database(database);
+        exit(EXIT_FAILURE);
+    }
+
+    return database;
+}
+
+void close_database(sqlite3 *database) {
+    if (sqlite3_close(database) != SQLITE_OK) {
+        fprintf(stderr, "Failed to close database: %s\n", sqlite3_errmsg(database));
+        exit(EXIT_FAILURE);
+    }
+}
+
+>>>>>>> 88c9c2417003f57344d47067a3fda8d501b63a77:server/src/database.c
 void create_users_table(sqlite3 *database) {
     char sql_command[SQLITE_COMMAND_SIZE];
     sprintf(sql_command,    "CREATE TABLE IF NOT EXISTS %s ( \

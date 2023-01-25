@@ -11,11 +11,5 @@
 
 #include "database.h"
 
-typedef struct s_database_and_socket {
-    sqlite3 *database;
-    int socket;
-} t_database_and_socket;
-
-pthread_t accept_requests_in_new_thread(sqlite3 *database, int listening_socket);
-pthread_t handle_request_in_new_thread(sqlite3 *database, int client_socket);
+void *accept_requests_thread(void *listening_socket_void);
 

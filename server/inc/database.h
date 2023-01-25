@@ -33,11 +33,15 @@
 #define MESSAGES_STATUSES_IS_READ_NAME "is_read"
 
 sqlite3 *open_database();
+<<<<<<< HEAD
 
 /*
     users table
 */
 
+=======
+void close_database(sqlite3 *database);
+>>>>>>> 88c9c2417003f57344d47067a3fda8d501b63a77
 void create_users_table(sqlite3 *database);
 int insert_to_users_table(sqlite3 *database, char *login, char *password);
 int get_password_by_login_in_users_table(sqlite3 *database, const char *login, char **password);
