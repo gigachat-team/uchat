@@ -7,7 +7,19 @@ int main(int argc, char **argv) {
     }
 
     sqlite3 *database = open_database();
+
     create_users_table(database);
+    create_chat_table(database);
+    create_messages_statuses_table(database);
+    create_messages_table(database);
+
+    // for (int i = 0; i < 10; i++) {
+    //     char mes[20];
+    //     sprintf(mes, "chat_%d", i);
+    //     insert_into_chat_table(database, mes, i);
+    // }
+    
+    printf("%s\n", get_current_date(database));
 
     int listening_socket = create_socket();
     bind_socket(listening_socket, atoi(argv[1]));
@@ -29,7 +41,8 @@ int main(int argc, char **argv) {
             exit(EXIT_FAILURE);
         }
     }
-    
+
+    sqlite3_close(database);
     return 0;
 }
 
