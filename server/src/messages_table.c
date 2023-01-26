@@ -1,19 +1,23 @@
 #include "../inc/database.h"
 
-char *get_current_date(sqlite3 *database) {
-    char *get_time_command = "SELECT date() AS date";
-    sqlite3_stmt *statement;
+// char *get_current_date(sqlite3 *database) {
+//     char *get_time_command = "SELECT date() AS date";
+//     sqlite3_stmt *statement;
 
-    if (sqlite3_prepare_v2(database, get_time_command, -1, &statement, 0) != SQLITE_OK) {
-        printf("sqlite3_prepare_v2 error: %s\n", sqlite3_errmsg(database));
-        sqlite3_close(database);
-        exit(EXIT_FAILURE);
-    }
+//     if (sqlite3_prepare_v2(database, get_time_command, -1, &statement, 0) != SQLITE_OK) {
+//         printf("sqlite3_prepare_v2 error: %s\n", sqlite3_errmsg(database));
+//         sqlite3_close(database);
+//         exit(EXIT_FAILURE);
+//     }
 
-    sqlite3_step(statement);
+//     sqlite3_step(statement);
 
-    return (char *)sqlite3_column_text(statement, 0);
-}
+//     char *date = mx_strdup((char *)sqlite3_column_text(statement, 0));
+
+//     sqlite3_finalize(statement);
+
+//     return date;
+// }
 
 void create_messages_table(sqlite3 *database) {
     char sql_command[SQLITE_COMMAND_SIZE];

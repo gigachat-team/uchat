@@ -17,7 +17,7 @@ void create_messages_statuses_table(sqlite3 *database) {
     
     if (sqlite3_exec(database, sql_command, NULL, NULL, NULL) != SQLITE_OK) {
         fprintf(stderr, "Failed to create/open messages_statuses table.\n");
-        sqlite3_close(database);
+        close_database(database);
         exit(EXIT_FAILURE);
     } 
 }
