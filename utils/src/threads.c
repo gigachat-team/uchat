@@ -12,6 +12,11 @@ pthread_t create_default_thread(void *(*func)(void *), void *arg) {
     return thread;
 }
 
+void create_detached_thread(void *(*func)(void *), void *arg) {
+    pthread_t thread = create_default_thread(func, arg);
+    pthread_detach(thread);
+}
+
 void join_thread(pthread_t thread, void **thread_return) {
     if (pthread_join(thread, thread_return) != 0) {
         fprintf(stderr, "Failed to join the thread.\n");

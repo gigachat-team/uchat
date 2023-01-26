@@ -54,7 +54,7 @@ void *accept_requests_thread(void *listening_socket_void) {
     while (true)
     {
         int client_socket = accept_socket(listening_socket);
-        create_default_thread(handle_request_thread, &client_socket);
+        create_detached_thread(handle_request_thread, &client_socket);
     }
 }
 
