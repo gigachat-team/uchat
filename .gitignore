@@ -3,3 +3,5 @@ uchat
 uchat_server
 *.a
 *.db
+*.o
+
