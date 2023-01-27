@@ -1,10 +1,6 @@
 #pragma once
 
-#include "../../utils/inc/requests.h"
-#include "../../utils/inc/state_codes.h"
-#include "../../utils/inc/base_includes.h"
-#include "../../utils/inc/senders.h"
-#include "../../utils/inc/recievers.h"
+#include "../utils/utils.h"
 
 typedef struct s_authentication_data {
     char *login;
@@ -18,4 +14,7 @@ typedef enum e_authentication_mode {
 
 void init_authentication(char *server_ip, int server_port);
 t_state_code authenticate_user(t_authentication_data authentication_data, t_authentication_mode authentication_mode);
+
+t_authentication_data get_authentication_data();
+void free_authentication_data(t_authentication_data authentication_data);
 

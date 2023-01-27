@@ -1,4 +1,4 @@
-#include "../inc/database.h"
+#include "../server.h"
 
 void close_database(sqlite3 *database) {
     if (sqlite3_close(database) != SQLITE_OK) {
