@@ -1,4 +1,4 @@
-#include "../inc/authentication.h"
+#include "../client.h"
 
 char *Server_ip = NULL;
 int Server_port = 0;
