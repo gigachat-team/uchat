@@ -17,16 +17,26 @@
 
 #define MAX_LOGIN_LENGTH 40
 #define MAX_PASSWORD_LENGTH 50
+#define MAX_CHAT_NAME_LENGTH 30
+
+typedef struct s_address {
+    char *ip;
+    int port;
+} t_address;
 
 typedef enum e_request {
     LOGIN,
-    REGISTER
+    REGISTER,
+    CREATE_CHAT
 } t_request;
 
 typedef enum e_state_code {
+    NONE,
+
     SUCCESSFULLY_READ,
     SUCCESSFUL_REGISTRATION,
     SUCCESSFUL_LOGIN,
+    CHAT_CREATED_SUCCESSFULLY,
     
     SUCH_LOGIN_ALREADY_EXISTS,
     SUCH_LOGIN_DOES_NOT_EXIST,
@@ -40,6 +50,7 @@ uint32_t recieve_unsigned_int(int socket);
 void send_unsigned_char(int socket, unsigned char character);
 void send_unsigned_short(int socket, uint16_t number);
 void send_unsigned_int(int socket, uint32_t number);
+void send_string(int socket, char *string);
 
 pthread_t create_default_thread(void *(*func)(void *), void *arg);
 void create_detached_thread(void *(*func)(void *), void *arg);
