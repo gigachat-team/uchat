@@ -1,7 +1,10 @@
 #pragma once
 
-#include "../../utils/inc/base_includes.h"
-#include "../../resources/libraries/sqlite3/sqlite3.h"
+#include "../utils/utils.h"
+#include "../resources/libraries/sqlite3/sqlite3.h"
+
+void *accept_requests_thread(void *listening_socket_void);
+
 
 #define DATABASE_NAME "uchat.db"
 #define SQLITE_COMMAND_SIZE 500
@@ -68,4 +71,3 @@ void create_messages_table(sqlite3 *database);
 
 void create_messages_statuses_table(sqlite3 *database);
 char *get_current_date(sqlite3 *database);
-

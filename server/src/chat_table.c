@@ -1,4 +1,5 @@
-#include "../inc/database.h"
+#include "../server.h"
+
 int insert_into_chat_table(sqlite3 *database, char *chat_name, int user_id) {
     char sql_command[SQLITE_COMMAND_SIZE];
 

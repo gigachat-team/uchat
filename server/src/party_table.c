@@ -1,4 +1,4 @@
-#include "../inc/database.h"
+#include "../server.h"
 
 void create_party_table(sqlite3 *database) {
     char sql_command[SQLITE_COMMAND_SIZE];
