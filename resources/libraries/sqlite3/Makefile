@@ -14,15 +14,12 @@ OBJECTS = $(addprefix $(OBJDIR)/,$(notdir $(SOURCES:.c=.o)))
 all: $(LIBNAME)
 	@:
 
-$(LIBNAME): $(SOURCES) $(OBJDIR) $(OBJECTS)
+$(LIBNAME): $(SOURCES) $(OBJECTS)
 	@$(LIBCREATOR) $(LIBCREATOR_FLAGS) $@ $(OBJECTS)
 	@printf "$(notdir $@)\tcreated\n"
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@$(CC) -c $< -o $@
-
-$(OBJDIR):
-	@mkdir -p $@
 
 clean:
 	@rm -rf $(OBJECTS)
