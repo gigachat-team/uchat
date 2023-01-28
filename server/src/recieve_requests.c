@@ -1,9 +1,8 @@
 #include "../server.h"
 
-
-
 void *handle_request_thread(void *client_socket_void) {
     int client_socket = *(int *)client_socket_void;
+    free(client_socket_void);
 
     sqlite3 *database = open_database();
 
@@ -55,8 +54,9 @@ void *accept_requests_thread(void *listening_socket_void) {
 
     while (true)
     {
-        int client_socket = accept_socket(listening_socket);
-        create_detached_thread(handle_request_thread, &client_socket);
+        int *client_socket = malloc(sizeof(int));
+        *client_socket = accept_socket(listening_socket);
+        create_detached_thread(handle_request_thread, client_socket);
     }
 }
 
