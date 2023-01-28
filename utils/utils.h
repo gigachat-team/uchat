@@ -24,6 +24,16 @@ typedef struct s_address {
     int port;
 } t_address;
 
+typedef struct s_authentication_data {
+    char *login;
+    char *password;
+} t_authentication_data;
+
+typedef struct s_chat_data {
+    char *name;
+    char **member_logins;
+} t_chat_data;
+
 typedef enum e_request {
     LOGIN,
     REGISTER,
@@ -63,4 +73,7 @@ void listen_socket(int socket, int queue_len);
 int accept_socket(int this_socket);
 void *read_socket(int socket, unsigned int max_read_bytes, int *read_bytes_count);
 void connect_socket(int socket, char *ip, unsigned int port);
+
+void free_authentication_data(t_authentication_data authentication_data);
+void free_chat_data(t_chat_data chat_data);
 

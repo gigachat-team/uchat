@@ -35,13 +35,3 @@ t_chat_data get_chat_data() {
     return chat_data;
 }
 
-void free_authentication_data(t_authentication_data authentication_data) {
-    free(authentication_data.login);
-    free(authentication_data.password);
-}
-
-void free_chat_data(t_chat_data chat_data) {
-    free(chat_data.name);
-    mx_free_str_arr(&chat_data.member_logins);
-}
-

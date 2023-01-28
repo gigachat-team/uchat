@@ -1,17 +1,22 @@
 #include "../client.h"
 
 void handle_user_commands(t_address server_address) {
-    printf("\nEnter a command (newchat): ");
-    char user_command[100];
-    scanf("%s", user_command);
+    while (true)
+    {
+        printf("\nEnter a command (newchat, exit): ");
+        char user_command[100];
+        scanf("%s", user_command);
 
-    if (strcmp(user_command, "newchat") == 0) {
-        t_chat_data chat_data = get_chat_data();
-        t_state_code creating_chat_result = create_chat(chat_data, server_address);
-        if (creating_chat_result == CHAT_CREATED_SUCCESSFULLY) {
-            printf("Chat \"%s\" created successfully.", chat_data.name);
+        if (strcmp(user_command, "newchat") == 0) {
+            t_chat_data chat_data = get_chat_data();
+            t_state_code creating_chat_result = create_chat(chat_data, server_address);
+            if (creating_chat_result == CHAT_CREATED_SUCCESSFULLY) {
+                printf("Chat \"%s\" created successfully.", chat_data.name);
+            }
+            free_chat_data(chat_data);
+        } else if (strcmp(user_command, "exit") == 0) {
+            return;
         }
-        free_chat_data(chat_data);
     }
 }
 
@@ -34,6 +39,7 @@ int main(int argc, char **argv) {
             t_state_code login_result = authenticate_user(authentication_data, LOGIN_MODE, server_address);
             if (login_result == SUCCESSFUL_LOGIN) {
                 printf("Successful login.\n");
+                handle_user_commands(server_address);
             } else if (login_result == SUCH_LOGIN_DOES_NOT_EXIST) {
                 printf("Such login does not exist.\n");
             } else if (login_result == WRONG_PASSWORD) {
@@ -45,6 +51,7 @@ int main(int argc, char **argv) {
             t_state_code registration_result = authenticate_user(authentication_data, REGISTER_MODE, server_address);
             if (registration_result == SUCCESSFUL_REGISTRATION) {
                 printf("Successful registration.\n");
+                handle_user_commands(server_address);
             } else if (registration_result == SUCH_LOGIN_ALREADY_EXISTS) {
                 printf("Such login already exists.\n");
             }

@@ -1,5 +1,21 @@
 #include "../server.h"
 
+t_authentication_data recieve_authentication_data(int socket) {
+    char login[MAX_LOGIN_LENGTH];
+    read(socket, login, MAX_LOGIN_LENGTH);
+    send_unsigned_char(socket, SUCCESSFULLY_READ);
+
+    char password[MAX_PASSWORD_LENGTH];
+    read(socket, password, MAX_PASSWORD_LENGTH);
+    send_unsigned_char(socket, SUCCESSFULLY_READ);
+
+    t_authentication_data authentication_data;
+    authentication_data.login = mx_strdup(login);
+    authentication_data.password = mx_strdup(password);
+
+    return authentication_data;
+}
+
 void *handle_request_thread(void *client_socket_void) {
     int client_socket = *(int *)client_socket_void;
     free(client_socket_void);
@@ -10,19 +26,12 @@ void *handle_request_thread(void *client_socket_void) {
     send_unsigned_char(client_socket, SUCCESSFULLY_READ);
 
     if (client_request == LOGIN) {
-        char login[MAX_LOGIN_LENGTH];
-        read(client_socket, login, MAX_LOGIN_LENGTH);
-        send_unsigned_char(client_socket, SUCCESSFULLY_READ);
-
-        char password[MAX_PASSWORD_LENGTH];
-        read(client_socket, password, MAX_PASSWORD_LENGTH);
-
+        t_authentication_data authentication_data = recieve_authentication_data(client_socket);
         char *found_password = NULL;
-
-        if (get_password_by_login_in_users_table(database, login, &found_password) != SQLITE_OK) {
+        if (get_password_by_login_in_users_table(database, authentication_data.login, &found_password) != SQLITE_OK) {
             send_unsigned_char(client_socket, SUCH_LOGIN_DOES_NOT_EXIST);
         } else {
-            if (strcmp(password, found_password) == 0) {
+            if (strcmp(authentication_data.password, found_password) == 0) {
                 send_unsigned_char(client_socket, SUCCESSFUL_LOGIN);
             } else {
                 send_unsigned_char(client_socket, WRONG_PASSWORD);
@@ -30,19 +39,16 @@ void *handle_request_thread(void *client_socket_void) {
         }
 
         free(found_password);
+        free_authentication_data(authentication_data);
     } else if (client_request == REGISTER) {
-        char login[MAX_LOGIN_LENGTH];
-        read(client_socket, login, MAX_LOGIN_LENGTH);
-        send_unsigned_char(client_socket, SUCCESSFULLY_READ);
-
-        char password[MAX_PASSWORD_LENGTH];
-        read(client_socket, password, MAX_PASSWORD_LENGTH);
-
-        if (insert_to_users_table(database, login, password) != SQLITE_OK) {
+        t_authentication_data authentication_data = recieve_authentication_data(client_socket);
+        if (insert_to_users_table(database, authentication_data.login, authentication_data.password) != SQLITE_OK) {
             send_unsigned_char(client_socket, SUCH_LOGIN_ALREADY_EXISTS);
         } else {
             send_unsigned_char(client_socket, SUCCESSFUL_REGISTRATION);
         }
+
+        free_authentication_data(authentication_data);
     }
 
     close_database(database);
