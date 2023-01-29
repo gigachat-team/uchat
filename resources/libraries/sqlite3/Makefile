@@ -23,11 +23,11 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c
 
 clean:
 	@rm -rf $(OBJECTS)
-	@printf "$(patsubst %.a,%,$(LIBNAME))\t$@ed\n"
+	@printf "$(patsubst lib%.a,%,$(LIBNAME))\t\t$@ed\n"
 
 uninstall: clean
 	@rm -rf $(LIBNAME)
-	@printf "$(patsubst %.a,%,$(LIBNAME))\t$@ed\n"
+	@printf "$(patsubst lib%.a,%,$(LIBNAME))\t\t$@ed\n"
 
 reinstall: uninstall all
 
