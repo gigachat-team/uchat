@@ -1,4 +1,4 @@
-#include "../server.h"
+#include "../../server.h"
 
 void create_party_table(sqlite3 *database) {
     char sql_command[SQLITE_COMMAND_SIZE];
@@ -13,10 +13,10 @@ void create_party_table(sqlite3 *database) {
         PARTY_CHAT_ID_NAME,
         PARTY_USER_ID_NAME,
         PARTY_CHAT_ID_NAME,
-        CHAT_TABLE_NAME,
+        CHATS_TABLE_NAME,
         CHAT_ID_NAME,
         PARTY_USER_ID_NAME,
-        CHAT_TABLE_NAME,
+        CHATS_TABLE_NAME,
         CHAT_USER_ID_NAME
     );
     

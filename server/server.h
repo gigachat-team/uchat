@@ -14,7 +14,7 @@ void *accept_requests_thread(void *listening_socket_void);
 #define USER_LOGIN_NAME "Login"
 #define USER_PASSWORD_NAME "Password"
 
-#define CHAT_TABLE_NAME "chat"
+#define CHATS_TABLE_NAME "chat"
 #define CHAT_ID_NAME "chat_id"
 #define CHAT_NAME_NAME "name"
 #define CHAT_USER_ID_NAME "user_id"
@@ -35,39 +35,59 @@ void *accept_requests_thread(void *listening_socket_void);
 #define MESSAGES_STATUSES_USER_ID_NAME "user_id"
 #define MESSAGES_STATUSES_IS_READ_NAME "is_read"
 
-sqlite3 *open_database();
-void close_database(sqlite3 *database);
+t_authentication_data recieve_authentication_data(int socket);
+t_chat_creation_data recieve_chat_creation_data(int socket);
 
-/*
-    users table
+void handle_registration(int client_socket);
+void handle_login(int client_socket);
+void handle_chat_creation(int client_socket);
+
+sqlite3 *db_open();
+sqlite3_stmt *db_open_statement(sqlite3 *database, char *sql_command);
+
+/**
+ * @brief Executes sql command. It opens and closes database inside.
 */
+void db_execute_sql(char *sql_command);
 
-void create_users_table(sqlite3 *database);
-int insert_to_users_table(sqlite3 *database, char *login, char *password);
-int get_password_by_login_in_users_table(sqlite3 *database, const char *login, char **password);
+void db_close(sqlite3 *database);
+void db_close_statement(sqlite3_stmt *sqlite3_statement, sqlite3 *database);
+void db_close_statement_and_database(sqlite3_stmt *statement, sqlite3 *database);
 
-/*
-    chat table
+/**
+ * @brief Creates users table if not exists.
 */
+void db_create_users_table();
 
-void create_chat_table(sqlite3 *database);
-int insert_into_chat_table(sqlite3 *database, char *chat_name, int user_id);
-
-/*
-    party table
+/**
+ * @return false if such login already exists or true if no errors occurred.
 */
+bool db_create_user(char *login, char *password);
+
+/**
+ * @param password Found password will be written here.
+ * @return false if such login does not exist or true if no errors occurred.
+*/
+bool db_get_password_by_login(const char *login, char **password);
+
+/**
+ * @param user_id Found user id will be written here.
+ * @return false if such login does not exist or true if no errors occurred.
+*/
+bool db_get_user_id_by_login(char *login, int *user_id);
+
+/**
+ * @return false if such login does not exist or true if exists
+*/
+bool db_users_table_has_login(char *login);
+
+void db_create_chats_table();
+
+void db_create_chat(char *chat_name, int owner_id);
 
 void create_party_table(sqlite3 *database);
 
-/*
-    messages table
-*/
-
 void create_messages_table(sqlite3 *database);
 
-/*
-    messages statuses table
-*/
-
-void create_messages_statuses_table(sqlite3 *database);
+void db_create_message_statuses_table();
 char *get_current_date(sqlite3 *database);

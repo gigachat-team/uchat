@@ -1,4 +1,4 @@
-#include "../server.h"
+#include "../../server.h"
 
 // char *get_current_date(sqlite3 *database) {
 //     char *get_time_command = "SELECT date() AS date";

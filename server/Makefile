@@ -7,21 +7,29 @@ OBJDIR = obj
 UTILS_OBJDIR = ../utils/obj
 SRCDIR = src
 
-SOURCES = $(shell find . -name "*.c")
-OBJECTS = $(addprefix $(OBJDIR)/,$(notdir $(SOURCES:.c=.o)))
+# VPATH = $(SRCDIR)/tables
+
+# SOURCES = $(shell find . -name "*.c")
+SOURCES = $(wildcard $(SRCDIR)/*.c) $(wildcard $(SRCDIR)/**/*.c)
+OBJECTS = $(subst $(SRCDIR)/,,$(addprefix $(OBJDIR)/, $(SOURCES:.c=.o)))
 UTILS_OBJECTS = $(wildcard $(UTILS_OBJDIR)/*.o)
 SQLITE3_LIB = -L../resources/libraries/sqlite3 -lsqlite3 -ldl
 LIBMX_LIB = -L../resources/libraries/libmx -lmx
+
+# all:
+# 	@echo $(SOURCES)
+# 	@echo $(OBJECTS)
 
 all: $(BINARYNAME)
 	@:
 
 $(BINARYNAME): $(SOURCES) $(OBJDIR) $(OBJECTS)
-	@$(CC) $(CFLAGS) $(OBJECTS) $(UTILS_OBJECTS) $(SQLITE3_LIB) $(LIBMX_LIB) -o $@
-	@printf "$(notdir $@)\tcreated\n"
+	$(CC) $(CFLAGS) $(OBJECTS) $(UTILS_OBJECTS) $(SQLITE3_LIB) $(LIBMX_LIB) -o $@
+	# @printf "$(notdir $@)\tcreated\n"
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
-	@$(CC) $(CFLAGS) -c $< -o $@
+	mkdir -p $(@D)
+	$(CC) $(CFLAGS) -c $< -o $@
 
 $(OBJDIR):
 	@mkdir -p $@

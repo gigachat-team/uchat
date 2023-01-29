@@ -18,3 +18,11 @@ uint32_t recieve_unsigned_int(int socket) {
     return ntohl(recieved_number);
 }
 
+char *recieve_string(int socket, int max_string_length) {
+    char *recieved_string = malloc(max_string_length);
+    read(socket, recieved_string, max_string_length);
+    char *returning_string = mx_strdup(recieved_string);
+    free(recieved_string);
+    return returning_string;
+}
+

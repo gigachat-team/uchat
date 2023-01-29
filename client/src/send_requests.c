@@ -25,21 +25,18 @@ t_state_code authenticate_user(t_authentication_data authentication_data, t_auth
     return authentication_result;
 }
 
-t_state_code create_chat(t_chat_data chat_data, t_address server_address) {
+t_state_code create_chat(t_chat_creation_data chat_data, t_address server_address) {
     int client_socket = create_socket();
     connect_socket(client_socket, server_address.ip, server_address.port);
 
     send_unsigned_char(client_socket, CREATE_CHAT);
     recieve_unsigned_char(client_socket);
 
-    send_string(client_socket, chat_data.name);
+    send_string(client_socket, chat_data.chat_name);
     recieve_unsigned_char(client_socket);
 
-    for (size_t i = 0; chat_data.member_logins[i] != NULL; i++)
-    {
-        send_string(client_socket, chat_data.member_logins[i]);
-        recieve_unsigned_char(client_socket);
-    }
+    send_string(client_socket, chat_data.owner_login);
+    recieve_unsigned_char(client_socket);
 
     t_state_code creating_chat_result = recieve_unsigned_char(client_socket);
 
