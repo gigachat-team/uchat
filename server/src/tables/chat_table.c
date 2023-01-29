@@ -22,5 +22,7 @@ void db_create_chats_table() {
         CHAT_USER_ID_NAME
     );
     db_execute_sql(sql_command);
+
+    free(sql_command);
 }
 
