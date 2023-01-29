@@ -7,9 +7,10 @@ OBJDIR = obj
 UTILS_OBJDIR = ../utils/obj
 SRCDIR = src
 
-SOURCES = $(shell find . -name "*.c")
-OBJECTS = $(addprefix $(OBJDIR)/,$(notdir $(SOURCES:.c=.o)))
-UTILS_OBJECTS = $(wildcard $(UTILS_OBJDIR)/*.o)
+SOURCES = $(subst ./,,$(shell find . -name "*.c"))
+OBJECTS = $(subst $(SRCDIR)/,,$(addprefix $(OBJDIR)/, $(SOURCES:.c=.o)))
+
+UTILS_LIB = -L../utils -lutils
 SQLITE3_LIB = -L../resources/libraries/sqlite3 -lsqlite3 -ldl
 LIBMX_LIB = -L../resources/libraries/libmx -lmx
 
@@ -17,10 +18,11 @@ all: $(BINARYNAME)
 	@:
 
 $(BINARYNAME): $(SOURCES) $(OBJDIR) $(OBJECTS)
-	@$(CC) $(CFLAGS) $(OBJECTS) $(UTILS_OBJECTS) $(SQLITE3_LIB) $(LIBMX_LIB) -o $@
+	@$(CC) $(CFLAGS) $(OBJECTS) $(UTILS_LIB) $(SQLITE3_LIB) $(LIBMX_LIB) -o $@
 	@printf "$(notdir $@)\tcreated\n"
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
+	@mkdir -p $(@D)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(OBJDIR):
