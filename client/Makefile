@@ -10,14 +10,17 @@ SRCDIR = src
 SOURCES = $(subst ./,,$(shell find . -name "*.c"))
 OBJECTS = $(subst $(SRCDIR)/,,$(addprefix $(OBJDIR)/, $(SOURCES:.c=.o)))
 
-UTILS_LIB = -L../utils -lutils
-LIBMX_LIB = -L../resources/libraries/libmx -lmx
+UTILS_LIB = ../utils/libutils.a
+LIBMX_LIB = ../resources/libraries/libmx/libmx.a
+
+INCLUDE_UTILS = -L$(dir $(UTILS_LIB)) -l$(patsubst lib%.a,%,$(notdir $(UTILS_LIB)))
+INCLUDE_LIBMX = -L$(dir $(LIBMX_LIB)) -l$(patsubst lib%.a,%,$(notdir $(LIBMX_LIB)))
 
 all: $(BINARYNAME)
 	@:
 
-$(BINARYNAME): $(SOURCES) $(OBJDIR) $(OBJECTS)
-	@$(CC) $(CFLAGS) $(OBJECTS) $(UTILS_LIB) $(LIBMX_LIB) -o $@
+$(BINARYNAME): $(SOURCES) $(OBJDIR) $(OBJECTS) $(UTILS_LIB)
+	@$(CC) $(CFLAGS) $(OBJECTS) $(INCLUDE_UTILS) $(INCLUDE_LIBMX) -o $@
 	@printf "$(notdir $@)\t\tcreated\n"
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
