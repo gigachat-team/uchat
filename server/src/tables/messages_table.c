@@ -19,48 +19,32 @@
 //     return date;
 // }
 
-void create_messages_table(sqlite3 *database) {
-    char sql_command[SQLITE_COMMAND_SIZE];
-
-    sprintf(sql_command, "CREATE TABLE IF NOT EXISTS %s ( \
-        %s INTEGER PRIMARY KEY AUTOINCREMENT, \
-        %s INTEGER, \
-        %s INTEGER, \
-        %s BLOB NOT NULL DEFAULT ' ', \
-        %s TEXT NOT NULL, \
-        FOREIGN KEY (%s) REFERENCES %s (%s), \
-        FOREIGN KEY (%s) REFERENCES %s (%s), \
-        FOREIGN KEY (%s) REFERENCES %s (%s), \
-        FOREIGN KEY (%s) REFERENCES %s (%s));",
+void db_create_messages_table() {
+    char *sql_command;
+    asprintf(&sql_command, "CREATE TABLE IF NOT EXISTS %s ( \
+                                %s INTEGER PRIMARY KEY AUTOINCREMENT, \
+                                %s INTEGER, \
+                                %s INTEGER, \
+                                %s BLOB NOT NULL DEFAULT ' ', \
+                                %s TEXT NOT NULL, \
+                                FOREIGN KEY (%s) REFERENCES %s (%s), \
+                                FOREIGN KEY (%s) REFERENCES %s (%s), \
+                                FOREIGN KEY (%s) REFERENCES %s (%s), \
+                                FOREIGN KEY (%s) REFERENCES %s (%s));",
         
         MESSAGES_TABLE_NAME,
-
         MESSAGES_ID_NAME,
         MESSAGES_CHAT_ID_NAME,
         MESSAGES_USER_ID_NAME,
         MESSAGES_CONTEXT_NAME,
         MESSAGES_DATE_NAME,
 
-        MESSAGES_CHAT_ID_NAME, 
-        PARTY_TABLE_NAME,
-        PARTY_CHAT_ID_NAME,
-
-        MESSAGES_USER_ID_NAME,
-        PARTY_TABLE_NAME,
-        PARTY_USER_ID_NAME,
-
-        MESSAGES_ID_NAME,
-        MESSAGES_STATUSES_TABLE_NAME,
-        MESSAGES_STATUSES_MESSAGES_ID_NAME,
-
-        MESSAGES_USER_ID_NAME,
-        MESSAGES_STATUSES_TABLE_NAME,
-        MESSAGES_STATUSES_USER_ID_NAME
+        MESSAGES_CHAT_ID_NAME,  PARTY_TABLE_NAME,               PARTY_CHAT_ID_NAME,
+        MESSAGES_USER_ID_NAME,  PARTY_TABLE_NAME,               PARTY_USER_ID_NAME,
+        MESSAGES_ID_NAME,       MESSAGES_STATUSES_TABLE_NAME,   MESSAGES_STATUSES_MESSAGES_ID_NAME,
+        MESSAGES_USER_ID_NAME,  MESSAGES_STATUSES_TABLE_NAME,   MESSAGES_STATUSES_USER_ID_NAME
     );
     
-    if (sqlite3_exec(database, sql_command, NULL, NULL, NULL) != SQLITE_OK) {
-        fprintf(stderr, "Failed to create/open messages table.\n");
-        sqlite3_close(database);
-        exit(EXIT_FAILURE);
-    } 
+    db_execute_sql(sql_command);
 }
+

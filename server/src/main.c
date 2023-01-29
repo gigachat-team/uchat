@@ -6,20 +6,10 @@ int main(int argc, char **argv) {
         return 0;
     }
 
-    sqlite3 *database = db_open();
-
-    db_create_users_table(database);
-    db_create_chats_table(database);
-    db_create_message_statuses_table(database);
-    create_messages_table(database);
-
-    // for (int i = 0; i < 10; i++) {
-    //     char mes[20];
-    //     sprintf(mes, "chat_%d", i);
-    //     insert_into_chat_table(database, mes, i);
-    // }
-    
-    db_close(database);
+    db_create_users_table();
+    db_create_chats_table();
+    db_create_message_statuses_table();
+    db_create_messages_table();
 
     int listening_socket = create_socket();
     bind_socket(listening_socket, atoi(argv[1]));
