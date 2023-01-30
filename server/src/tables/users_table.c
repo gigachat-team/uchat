@@ -1,8 +1,8 @@
 #include "../../server.h"
 
 void db_create_users_table() {
-    char sql_command[SQLITE_COMMAND_SIZE];
-    sprintf(sql_command,    "CREATE TABLE IF NOT EXISTS %s ( \
+    char *sql_command;
+    asprintf(sql_command,    "CREATE TABLE IF NOT EXISTS %s ( \
                                 %s INTEGER PRIMARY KEY AUTOINCREMENT, \
                                 %s TEXT UNIQUE NOT NULL CHECK(%s != ''), \
                                 %s TEXT NOT NULL);",
@@ -12,6 +12,8 @@ void db_create_users_table() {
     USER_PASSWORD_NAME);
 
     db_execute_sql(sql_command);
+
+    free(sql_command);
 }
 
 bool db_create_user(char *login, char *password) {
