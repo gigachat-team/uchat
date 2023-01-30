@@ -14,6 +14,8 @@ void handle_authenticated_user_commands(t_address server_address, char *user_log
                 printf("Chat \"%s\" created successfully.", chat_creation_data.chat_name);
             }
             free_chat_creation_data(chat_creation_data);
+        } else if (strcmp(user_command, "add_member") == 0) {
+            printf("Sorry, but this function is currently under developing.")
         } else if (strcmp(user_command, "exit") == 0) {
             return;
         }

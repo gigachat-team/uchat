@@ -35,6 +35,11 @@ typedef struct s_chat_creation_data {
     char *owner_login;
 } t_chat_creation_data;
 
+typedef struct s_new_chat_member_data {
+    int chat_id;
+    char *member_login;
+} t_new_chat_member_data;
+
 typedef enum e_request {
     LOGIN, // -> login -> password
     REGISTER, // -> login -> password

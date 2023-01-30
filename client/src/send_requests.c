@@ -45,3 +45,23 @@ t_state_code send_create_chat_requests(t_chat_creation_data chat_data, t_address
     return creating_chat_result;
 }
 
+t_state_code send_add_new_member_request(t_address server_address, t_new_chat_member_data new_chat_member_data) {
+    int client_socket = create_socket();
+    connect_socket(client_socket, server_address.ip, server_address.port);
+
+    send_unsigned_char(client_socket, ADD_MEMBER_TO_CHAT);
+    recieve_unsigned_char(client_socket);
+
+    send_unsigned_int(client_socket, new_chat_member_data.chat_id);
+    recieve_unsigned_char(client_socket);
+
+    send_string(client_socket, new_chat_member_data.member_login);
+    recieve_unsigned_char(client_socket);
+
+    t_state_code adding_new_member_to_chat_result = recieve_unsigned_char(client_socket);
+
+    close(client_socket);
+
+    return adding_new_member_to_chat_result;
+}
+
