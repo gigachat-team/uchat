@@ -1,6 +1,6 @@
 #include "../client.h"
 
-t_state_code authenticate_user(t_authentication_data authentication_data, t_authentication_mode authentication_mode, t_address server_address) {
+t_state_code send_authenticate_user_request(t_authentication_data authentication_data, t_authentication_mode authentication_mode, t_address server_address) {
     if (authentication_mode != REGISTER_MODE && authentication_mode != LOGIN_MODE) {
         printf("authenticate_user: There is only two authentication modes.");
         exit(EXIT_FAILURE);
@@ -25,7 +25,7 @@ t_state_code authenticate_user(t_authentication_data authentication_data, t_auth
     return authentication_result;
 }
 
-t_state_code create_chat(t_chat_creation_data chat_data, t_address server_address) {
+t_state_code send_create_chat_requests(t_chat_creation_data chat_data, t_address server_address) {
     int client_socket = create_socket();
     connect_socket(client_socket, server_address.ip, server_address.port);
 

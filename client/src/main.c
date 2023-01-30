@@ -9,7 +9,7 @@ void handle_authenticated_user_commands(t_address server_address, char *user_log
 
         if (strcmp(user_command, "newchat") == 0) {
             t_chat_creation_data chat_creation_data = get_chat_creation_data(user_login);
-            t_state_code creating_chat_result = create_chat(chat_creation_data, server_address);
+            t_state_code creating_chat_result = send_create_chat_requests(chat_creation_data, server_address);
             if (creating_chat_result == CHAT_CREATED_SUCCESSFULLY) {
                 printf("Chat \"%s\" created successfully.", chat_creation_data.chat_name);
             }
@@ -18,8 +18,6 @@ void handle_authenticated_user_commands(t_address server_address, char *user_log
             return;
         }
     }
-
-    (void)user_login;
 }
 
 int main(int argc, char **argv) {
@@ -38,7 +36,7 @@ int main(int argc, char **argv) {
 
         if (strcmp(user_command_str, "login") == 0) {
             t_authentication_data authentication_data = get_authentication_data();
-            t_state_code login_result = authenticate_user(authentication_data, LOGIN_MODE, server_address);
+            t_state_code login_result = send_authenticate_user_request(authentication_data, LOGIN_MODE, server_address);
             if (login_result == SUCCESSFUL_LOGIN) {
                 printf("Successful login.\n");
                 handle_authenticated_user_commands(server_address, authentication_data.login);
@@ -50,7 +48,7 @@ int main(int argc, char **argv) {
             free_authentication_data(authentication_data);
         } else if (strcmp(user_command_str, "register") == 0) {
             t_authentication_data authentication_data = get_authentication_data();
-            t_state_code registration_result = authenticate_user(authentication_data, REGISTER_MODE, server_address);
+            t_state_code registration_result = send_authenticate_user_request(authentication_data, REGISTER_MODE, server_address);
             if (registration_result == SUCCESSFUL_REGISTRATION) {
                 printf("Successful registration.\n");
                 handle_authenticated_user_commands(server_address, authentication_data.login);
