@@ -1,8 +1,8 @@
 #include "../../server.h"
 
 void db_create_users_table() {
-    char *sql_command;
-    asprintf(sql_command,    "CREATE TABLE IF NOT EXISTS %s ( \
+    char *sql_command = NULL;
+    asprintf(&sql_command,    "CREATE TABLE IF NOT EXISTS %s ( \
                                 %s INTEGER PRIMARY KEY AUTOINCREMENT, \
                                 %s TEXT UNIQUE NOT NULL CHECK(%s != ''), \
                                 %s TEXT NOT NULL);",
