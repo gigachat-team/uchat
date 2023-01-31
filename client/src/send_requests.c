@@ -1,13 +1,7 @@
 #include "../client.h"
 
 t_state_code send_authenticate_user_request(t_authentication_data authentication_data, t_authentication_mode authentication_mode, t_address server_address) {
-    if (authentication_mode != REGISTER_MODE && authentication_mode != LOGIN_MODE) {
-        printf("authenticate_user: There is only two authentication modes.");
-        exit(EXIT_FAILURE);
-    }
-
-    int client_socket = create_socket();
-    connect_socket(client_socket, server_address.ip, server_address.port);
+    int client_socket = create_and_connect_socket(server_address);
 
     send_unsigned_char(client_socket, authentication_mode);
     recieve_unsigned_char(client_socket);
@@ -26,8 +20,7 @@ t_state_code send_authenticate_user_request(t_authentication_data authentication
 }
 
 t_state_code send_create_chat_request(t_chat_creation_data chat_data, t_address server_address) {
-    int client_socket = create_socket();
-    connect_socket(client_socket, server_address.ip, server_address.port);
+    int client_socket = create_and_connect_socket(server_address);
 
     send_unsigned_char(client_socket, CREATE_CHAT);
     recieve_unsigned_char(client_socket);
@@ -46,8 +39,7 @@ t_state_code send_create_chat_request(t_chat_creation_data chat_data, t_address 
 }
 
 t_state_code get_chats_i_am_in(t_address server_address, char *user_login, t_chat **chats_i_am_in, size_t *chats_i_am_in_length) {
-    int client_socket = create_socket();
-    connect_socket(client_socket, server_address.ip, server_address.port);
+    int client_socket = create_and_connect_socket(server_address);
 
     send_unsigned_char(client_socket, GET_CHATS_I_AM_IN);
     recieve_unsigned_char(client_socket);
@@ -72,8 +64,7 @@ t_state_code get_chats_i_am_in(t_address server_address, char *user_login, t_cha
 }
 
 t_state_code send_add_new_member_request(t_address server_address, t_new_chat_member_data new_chat_member_data) {
-    int client_socket = create_socket();
-    connect_socket(client_socket, server_address.ip, server_address.port);
+    int client_socket = create_and_connect_socket(server_address);
 
     send_unsigned_char(client_socket, ADD_MEMBER_TO_CHAT);
     recieve_unsigned_char(client_socket);

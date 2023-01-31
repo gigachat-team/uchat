@@ -3,7 +3,7 @@
 int create_socket() {
     int created_socket = socket(AF_INET, SOCK_STREAM, 0);
     if (created_socket == -1) {
-        perror("socket creation failed");
+        perror("Failed to create a socket");
         exit(EXIT_FAILURE);
     }
 
@@ -16,7 +16,7 @@ void bind_socket(int socket, unsigned int port) {
     socket_address.sin_port = htons(port);
     
     if (bind(socket, (struct sockaddr *)&socket_address, sizeof(socket_address)) == -1) {
-        perror("bind failed");
+        perror("Failed to bind the socket");
         close(socket);
         exit(EXIT_FAILURE);
     }
@@ -24,7 +24,7 @@ void bind_socket(int socket, unsigned int port) {
 
 void listen_socket(int socket, int queue_len) {
     if (listen(socket, queue_len) == -1) {
-        perror("listen failed");
+        perror("Failed to listen the socket");
         close(socket);
         exit(EXIT_FAILURE);
     }
@@ -36,7 +36,7 @@ int accept_socket(int this_socket) {
 
     int accepted_socket = accept(this_socket, (struct sockaddr *)&accepting_socket_address, &accepting_socket_address_len);
     if (accepted_socket == -1) {
-        perror("client_socket");
+        perror("Failed to accept the socket");
         close(this_socket);
         exit(EXIT_FAILURE);
     }
@@ -44,34 +44,22 @@ int accept_socket(int this_socket) {
     return accepted_socket;
 }
 
-void *read_socket(int socket, unsigned int max_read_bytes, int *read_bytes_count) {
-    void *read_bytes = malloc(max_read_bytes);
-    int read_bytes_length = read(socket, read_bytes, max_read_bytes);
-    if (read_bytes_length == -1) {
-        perror("read failed");
-        close(socket);
-        // need to close listening socket
-        free(read_bytes);
-        exit(EXIT_FAILURE);
-    }
-    read_bytes = realloc(read_bytes, read_bytes_length);
-
-    if (read_bytes_count != NULL)
-        *read_bytes_count = read_bytes_length;
-
-    return read_bytes;
-}
-
-void connect_socket(int socket, char *ip, unsigned int port) {
+void connect_socket(int socket, t_address address) {
     struct sockaddr_in socket_address = {0};
     socket_address.sin_family = AF_INET;
-    socket_address.sin_addr.s_addr = inet_addr(ip);
-    socket_address.sin_port = htons(port);
+    socket_address.sin_addr.s_addr = inet_addr(address.ip);
+    socket_address.sin_port = htons(address.port);
 
     if (connect(socket, (struct sockaddr *)&socket_address, sizeof(socket_address)) != 0) {
-		perror("connect failed");
+		perror("Failed to connect the socket");
         close(socket);
 		exit(EXIT_FAILURE);
 	}
+}
+
+int create_and_connect_socket(t_address address) {
+    int socket = create_socket();
+    connect_socket(socket, address);
+    return socket;
 }
 

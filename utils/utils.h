@@ -22,7 +22,7 @@
 
 typedef struct s_address {
     char *ip;
-    int port;
+    in_port_t port;
 } t_address;
 
 typedef struct s_authentication_data {
@@ -92,8 +92,8 @@ int create_socket();
 void bind_socket(int socket, unsigned int port);
 void listen_socket(int socket, int queue_len);
 int accept_socket(int this_socket);
-void *read_socket(int socket, unsigned int max_read_bytes, int *read_bytes_count);
-void connect_socket(int socket, char *ip, unsigned int port);
+void connect_socket(int socket, t_address address);
+int create_and_connect_socket(t_address address);
 
 void free_authentication_data(t_authentication_data authentication_data);
 void free_chat_creation_data(t_chat_creation_data chat_creation_data);
