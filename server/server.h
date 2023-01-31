@@ -36,9 +36,12 @@ void *accept_requests_thread(void *listening_socket_void);
 t_authentication_data recieve_authentication_data(int socket);
 t_chat_creation_data recieve_chat_creation_data(int socket);
 
+void send_chat(int socket, t_chat chat);
+
 void handle_registration(int client_socket);
 void handle_login(int client_socket);
 void handle_chat_creation(int client_socket);
+void handle_getting_chats(int client_socket);
 
 sqlite3 *db_open();
 sqlite3_stmt *db_open_statement(sqlite3 *database, char *sql_command);
@@ -80,6 +83,12 @@ bool db_get_user_id_by_login(char *login, int *user_id);
 bool db_users_table_has_login(char *login);
 
 void db_create_chats_table();
+
+t_chat *db_get_chats_by_user_id(int user_id, size_t *number_of_chats);
+
+char *db_get_chat_name_by_id(int chat_id);
+
+int *db_get_IDs_of_chats_user_is_in(int user_id, size_t *IDs_of_chats_len);
 
 void db_create_chat(char *chat_name, int owner_id);
 

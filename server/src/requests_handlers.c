@@ -41,3 +41,28 @@ void handle_chat_creation(int client_socket) {
     free_chat_creation_data(chat_creation_data);
 }
 
+void handle_getting_chats(int client_socket) {
+    char *user_login = recieve_string(client_socket, MAX_LOGIN_LENGTH);
+    send_unsigned_char(client_socket, SUCCESSFULLY_READ);
+    int user_id;
+    db_get_user_id_by_login(user_login, &user_id);
+
+    size_t number_of_chats = 0;
+    t_chat *chats = db_get_chats_by_user_id(user_id, &number_of_chats);
+
+    send_unsigned_char(client_socket, START_OF_CHATS_ARRAY);
+    for (size_t i = 0; i < number_of_chats; i++) {
+        send_chat(client_socket, chats[i]);
+        if (i + 1 == number_of_chats) {
+            send_unsigned_char(client_socket, END_OF_CHATS_ARRAY);
+        } else {
+            send_unsigned_char(client_socket, CONTINUATION_OF_CHATS_ARRAY);
+        }
+    }
+
+    send_unsigned_char(client_socket, CHATS_ARRAY_TRENSFERRED_SUCCESSFULLY);
+
+    free(user_login);
+    free_chats(chats, number_of_chats);
+}
+

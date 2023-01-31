@@ -8,10 +8,13 @@ typedef enum e_authentication_mode {
 } t_authentication_mode;
 
 t_state_code send_authenticate_user_request(t_authentication_data authentication_data, t_authentication_mode authentication_mode, t_address server_address);
-t_state_code send_create_chat_requests(t_chat_creation_data chat_data, t_address server_address);
+t_state_code send_create_chat_request(t_chat_creation_data chat_data, t_address server_address);
+t_state_code get_chats_i_am_in(t_address server_address, char *user_login, t_chat **chats_i_am_in, size_t *chats_i_am_in_length);
 t_state_code send_add_new_member_request(t_address server_address, t_new_chat_member_data new_chat_member_data);
 
 t_authentication_data get_authentication_data();
 t_chat_creation_data get_chat_creation_data(char *owner_login);
 char *get_new_chat_member_login();
+
+t_chat recieve_chat(int socket);
 

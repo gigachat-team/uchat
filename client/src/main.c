@@ -3,19 +3,29 @@
 void handle_authenticated_user_commands(t_address server_address, char *user_login) {
     while (true)
     {
-        printf("\nEnter a command (newchat, exit): ");
+        printf("\nEnter a command (newchat, chats, exit): ");
         char user_command[100];
         scanf("%s", user_command);
 
         if (strcmp(user_command, "newchat") == 0) {
             t_chat_creation_data chat_creation_data = get_chat_creation_data(user_login);
-            t_state_code creating_chat_result = send_create_chat_requests(chat_creation_data, server_address);
+            t_state_code creating_chat_result = send_create_chat_request(chat_creation_data, server_address);
             if (creating_chat_result == CHAT_CREATED_SUCCESSFULLY) {
                 printf("Chat \"%s\" created successfully.", chat_creation_data.chat_name);
             }
             free_chat_creation_data(chat_creation_data);
         } else if (strcmp(user_command, "add_member") == 0) {
             printf("Sorry, but this function is currently under developing.");
+        } else if (strcmp(user_command, "chats") == 0) {
+            t_chat *chats_i_am_in = NULL;
+            size_t chats_i_am_in_length = 0;
+            if (get_chats_i_am_in(server_address, user_login, &chats_i_am_in, &chats_i_am_in_length) == CHATS_ARRAY_TRENSFERRED_SUCCESSFULLY) {
+                printf("Chats you're in:\n");
+                for (size_t i = 0; i < chats_i_am_in_length; i++) {
+                    printf("id: %i, name: %s\n", chats_i_am_in[i].id, chats_i_am_in[i].name);
+                }
+            }
+            free_chats(chats_i_am_in, chats_i_am_in_length);
         } else if (strcmp(user_command, "exit") == 0) {
             return;
         }
@@ -30,8 +40,7 @@ int main(int argc, char **argv) {
 
     t_address server_address = {argv[1], atoi(argv[2])};
 
-    while (true)
-    {
+    while (true) {
         printf("\nEnter a command (login, register, exit): ");
         char user_command_str[1024];
         scanf("%s", user_command_str);

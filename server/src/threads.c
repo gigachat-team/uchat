@@ -13,6 +13,8 @@ void *handle_request_thread(void *client_socket_void) {
         handle_registration(client_socket);
     } else if (client_request == CREATE_CHAT) {
         handle_chat_creation(client_socket);
+    } else if (client_request == GET_CHATS_I_AM_IN) {
+        handle_getting_chats(client_socket);
     }
 
     pthread_exit(NULL);

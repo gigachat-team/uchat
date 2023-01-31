@@ -25,7 +25,7 @@ t_state_code send_authenticate_user_request(t_authentication_data authentication
     return authentication_result;
 }
 
-t_state_code send_create_chat_requests(t_chat_creation_data chat_data, t_address server_address) {
+t_state_code send_create_chat_request(t_chat_creation_data chat_data, t_address server_address) {
     int client_socket = create_socket();
     connect_socket(client_socket, server_address.ip, server_address.port);
 
@@ -43,6 +43,32 @@ t_state_code send_create_chat_requests(t_chat_creation_data chat_data, t_address
     close(client_socket);
 
     return creating_chat_result;
+}
+
+t_state_code get_chats_i_am_in(t_address server_address, char *user_login, t_chat **chats_i_am_in, size_t *chats_i_am_in_length) {
+    int client_socket = create_socket();
+    connect_socket(client_socket, server_address.ip, server_address.port);
+
+    send_unsigned_char(client_socket, GET_CHATS_I_AM_IN);
+    recieve_unsigned_char(client_socket);
+
+    send_string(client_socket, user_login);
+    recieve_unsigned_char(client_socket);
+
+    *chats_i_am_in_length = 0;
+    t_state_code recieving_chat_datas_state_code = recieve_unsigned_char(client_socket);
+    while (recieving_chat_datas_state_code != END_OF_CHATS_ARRAY) {
+        t_chat chat_data = recieve_chat(client_socket);
+        *chats_i_am_in = realloc(*chats_i_am_in, sizeof(t_chat) * ++(*chats_i_am_in_length));
+        (*chats_i_am_in)[*chats_i_am_in_length - 1] = chat_data;
+        recieving_chat_datas_state_code = recieve_unsigned_char(client_socket);
+    }
+
+    t_state_code resulting_state_code = recieve_unsigned_char(client_socket);
+
+    close(client_socket);
+
+    return resulting_state_code;
 }
 
 t_state_code send_add_new_member_request(t_address server_address, t_new_chat_member_data new_chat_member_data) {
