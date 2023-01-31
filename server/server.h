@@ -5,31 +5,31 @@
 
 #define DATABASE_NAME "uchat.db"
 
-#define USERS_TABLE_NAME "Users"
-#define USER_ID_NAME "Id"
-#define USER_LOGIN_NAME "Login"
-#define USER_PASSWORD_NAME "Password"
+#define USERS_TABLE "Users"
+#define USERS_ID "Id"
+#define USERS_LOGIN "Login"
+#define USERS_PASSWORD "Password"
 
-#define CHATS_TABLE_NAME "chat"
-#define CHAT_ID_NAME "chat_id"
-#define CHAT_NAME_NAME "name"
-#define CHAT_USER_ID_NAME "user_id"
+#define CHATS_TABLE "Chats"
+#define CHATS_ID "Id"
+#define CHATS_NAME "Name"
+#define CHATS_USER_ID "UserId"
 
-#define PARTY_TABLE_NAME "party"
-#define PARTY_CHAT_ID_NAME "chat_id"
-#define PARTY_USER_ID_NAME "user_id"
+#define MEMBERS_TABLE "Members"
+#define MEMBERS_CHAT_ID "ChatId"
+#define MEMBERS_USER_ID "UserId"
 
-#define MESSAGES_TABLE_NAME "messages"
-#define MESSAGES_ID_NAME "message_id"
-#define MESSAGES_CHAT_ID_NAME "chat_id"
-#define MESSAGES_USER_ID_NAME "user_id"
-#define MESSAGES_CONTEXT_NAME "context"
-#define MESSAGES_DATE_NAME "message_date"
+#define MESSAGES_TABLE "Messages"
+#define MESSAGES_ID "MessageId"
+#define MESSAGES_CHAT_ID "ChatId"
+#define MESSAGES_USER_ID "User_Id"
+#define MESSAGES_CONTEXT "Context"
+#define MESSAGES_CREATION_DATE "CreationDate"
 
-#define MESSAGES_STATUSES_TABLE_NAME "messages_statuses"
-#define MESSAGES_STATUSES_MESSAGES_ID_NAME "messages_id"
-#define MESSAGES_STATUSES_USER_ID_NAME "user_id"
-#define MESSAGES_STATUSES_IS_READ_NAME "is_read"
+#define MESSAGE_STATUSES_TABLE "MessageStatuses"
+#define MESSAGE_STATUSES_MESSAGE_ID "MessageId"
+#define MESSAGE_STATUSES_USER_ID "UserId"
+#define MESSAGE_STATUSES_IS_READ "IsRead"
 
 void *accept_requests_thread(void *listening_socket_void);
 

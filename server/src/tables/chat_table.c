@@ -1,26 +1,19 @@
 #include "../../server.h"
 
 void db_create_chats_table() {
-    char *sql_command;
-    asprintf(&sql_command, "CREATE TABLE IF NOT EXISTS %s ( \
-                                %s INTEGER PRIMARY KEY AUTOINCREMENT, \
-                                %s TEXT, \
-                                %s INTEGER);",
-        CHATS_TABLE_NAME,
-        CHAT_ID_NAME,
-        CHAT_NAME_NAME,
-        CHAT_USER_ID_NAME
-    );
+    char *sql_command = "CREATE TABLE IF NOT EXISTS "CHATS_TABLE" ( \
+                                "CHATS_ID"      INTEGER PRIMARY KEY AUTOINCREMENT, \
+                                "CHATS_NAME"    TEXT, \
+                                "CHATS_USER_ID" INTEGER);"
+    ;
 
     db_open_and_execute_sql(sql_command);
-
-    free(sql_command);
 }
 
  int db_create_chat(char *chat_name, int owner_id) {
     char *sql_command = NULL;
-    asprintf(&sql_command, "INSERT INTO %s (%s, %s) VALUES ('%s', '%d');",
-        CHATS_TABLE_NAME, CHAT_NAME_NAME, CHAT_USER_ID_NAME, chat_name, owner_id
+    asprintf(&sql_command, "INSERT INTO "CHATS_TABLE" ("CHATS_NAME", "CHATS_USER_ID") \
+                            VALUES ('%s', '%d');", chat_name, owner_id
     );
 
     sqlite3 *database = db_open();
@@ -30,7 +23,7 @@ void db_create_chats_table() {
 
     sqlite3_int64 last_insert_rowid = sqlite3_last_insert_rowid(database);
     asprintf(&sql_command, "SELECT %s FROM %s WHERE rowid = %llu;",
-        CHAT_ID_NAME, CHATS_TABLE_NAME, last_insert_rowid
+        CHATS_ID, CHATS_TABLE, last_insert_rowid
     );
     sqlite3_stmt *statement = db_open_statement(database, sql_command);
     sqlite3_step(statement);
@@ -46,8 +39,8 @@ void db_create_chats_table() {
 
 char *db_get_chat_name_by_id(int chat_id) {
     char *sql_command = NULL;
-    asprintf(&sql_command, "SELECT %s FROM %s WHERE %s = %d",
-        CHAT_NAME_NAME, CHATS_TABLE_NAME, CHAT_ID_NAME, chat_id
+    asprintf(&sql_command, "SELECT "CHATS_NAME" FROM "CHATS_TABLE" \
+                            WHERE "CHATS_ID" = %d", chat_id
     );
 
     sqlite3 *database = db_open();

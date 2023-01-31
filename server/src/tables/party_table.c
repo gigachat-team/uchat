@@ -1,30 +1,21 @@
 #include "../../server.h"
 
 void db_create_party_table() {
-    char *sql_command;
-    asprintf(&sql_command, "CREATE TABLE IF NOT EXISTS %s ( \
-                                %s INTEGER, \
-                                %s INTEGER, \
-                                PRIMARY KEY (%s, %s), \
-                                FOREIGN KEY (%s) REFERENCES %s (%s), \
-                                FOREIGN KEY (%s) REFERENCES %s (%s));",
-        PARTY_TABLE_NAME,
-        PARTY_CHAT_ID_NAME,
-        PARTY_USER_ID_NAME,
-        PARTY_CHAT_ID_NAME, PARTY_USER_ID_NAME,
-        PARTY_CHAT_ID_NAME, CHATS_TABLE_NAME, CHAT_ID_NAME,
-        PARTY_USER_ID_NAME, CHATS_TABLE_NAME, CHAT_USER_ID_NAME
-    );
+    char *sql_command = "CREATE TABLE IF NOT EXISTS "MEMBERS_TABLE" ( \
+        "MEMBERS_CHAT_ID" INTEGER, \
+        "MEMBERS_USER_ID" INTEGER, \
+        PRIMARY KEY ("MEMBERS_CHAT_ID", "MEMBERS_USER_ID"), \
+        FOREIGN KEY ("MEMBERS_CHAT_ID") REFERENCES "CHATS_TABLE" ("CHATS_ID"), \
+        FOREIGN KEY ("MEMBERS_USER_ID") REFERENCES "CHATS_TABLE" ("CHATS_USER_ID"));"
+    ;
 
     db_open_and_execute_sql(sql_command);
-
-    free(sql_command);
 }
 
 int *db_get_IDs_of_chats_user_is_in(int user_id, size_t *IDs_of_chats_len) {
     char *sql_command = NULL;
-    asprintf(&sql_command, "SELECT %s FROM %s WHERE %s = %d",
-        PARTY_CHAT_ID_NAME, PARTY_TABLE_NAME, PARTY_USER_ID_NAME, user_id
+    asprintf(&sql_command, "SELECT "MEMBERS_CHAT_ID" FROM "MEMBERS_TABLE" \
+                            WHERE "MEMBERS_USER_ID" = %d", user_id
     );
 
     sqlite3 *database = db_open();
@@ -49,8 +40,8 @@ bool db_add_new_member_to_chat(int user_id, int chat_id) {
     }
 
     char *sql_command = NULL;
-    asprintf(&sql_command, "INSERT INTO %s (%s, %s) VALUES (%d, %d)",
-        PARTY_TABLE_NAME, PARTY_CHAT_ID_NAME, PARTY_USER_ID_NAME, chat_id, user_id
+    asprintf(&sql_command, "INSERT INTO "MEMBERS_TABLE" ("MEMBERS_CHAT_ID", "MEMBERS_USER_ID") \
+                            VALUES (%d, %d)", chat_id, user_id
     );
 
     db_open_and_execute_sql(sql_command);
@@ -62,8 +53,8 @@ bool db_add_new_member_to_chat(int user_id, int chat_id) {
 
 bool db_user_is_in_chat(int user_id, int chat_id) {
     char *sql_command = NULL;
-    asprintf(&sql_command, "SELECT * FROM %s WHERE %s = %d AND %s = %d",
-        PARTY_TABLE_NAME, PARTY_USER_ID_NAME, user_id, PARTY_CHAT_ID_NAME, chat_id
+    asprintf(&sql_command, "SELECT * FROM "MEMBERS_TABLE" \
+        WHERE "MEMBERS_USER_ID" = %d AND "MEMBERS_CHAT_ID" = %d", user_id, chat_id
     );
 
     sqlite3 *database = db_open();
