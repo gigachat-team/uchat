@@ -11,7 +11,7 @@ void db_create_message_statuses_table() {
         MESSAGES_STATUSES_USER_ID_NAME,
         MESSAGES_STATUSES_IS_READ_NAME
     );
-    db_execute_sql(sql_command);
+    db_open_and_execute_sql(sql_command);
 
     free(sql_command);
 }

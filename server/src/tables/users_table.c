@@ -11,7 +11,7 @@ void db_create_users_table() {
     USER_LOGIN_NAME, USER_LOGIN_NAME,
     USER_PASSWORD_NAME);
 
-    db_execute_sql(sql_command);
+    db_open_and_execute_sql(sql_command);
 
     free(sql_command);
 }
@@ -25,7 +25,7 @@ bool db_create_user(char *login, char *password) {
     asprintf(&sql_command, "INSERT INTO %s (%s, %s) VALUES ('%s', '%s');",
         USERS_TABLE_NAME, USER_LOGIN_NAME, USER_PASSWORD_NAME, login, password);
 
-    db_execute_sql(sql_command);
+    db_open_and_execute_sql(sql_command);
 
     free(sql_command);
 

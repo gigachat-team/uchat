@@ -45,7 +45,7 @@ void db_create_messages_table() {
         MESSAGES_USER_ID_NAME,  MESSAGES_STATUSES_TABLE_NAME,   MESSAGES_STATUSES_USER_ID_NAME
     );
     
-    db_execute_sql(sql_command);
+    db_open_and_execute_sql(sql_command);
 
     free(sql_command);
 }

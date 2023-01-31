@@ -41,7 +41,16 @@ void db_close_statement_and_database(sqlite3_stmt *statement, sqlite3 *database)
     db_close(database);
 }
 
-void db_execute_sql(char *sql_command) {
+void db_execute_sql(sqlite3 *database, char* sql_command) {
+    char *error_message;
+    if (sqlite3_exec(database, sql_command, NULL, NULL, &error_message) != SQLITE_OK) {
+        fprintf(stderr, "Failed to execute sql: %s", error_message);
+        db_close(database);
+        exit(EXIT_FAILURE);
+    }
+}
+
+void db_open_and_execute_sql(char *sql_command) {
     char *error_message;
     sqlite3 *database = db_open();
     if (sqlite3_exec(database, sql_command, NULL, NULL, &error_message) != SQLITE_OK) {
