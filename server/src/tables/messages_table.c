@@ -46,5 +46,7 @@ void db_create_messages_table() {
     );
     
     db_execute_sql(sql_command);
+
+    free(sql_command);
 }
 

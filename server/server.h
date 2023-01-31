@@ -33,8 +33,8 @@
 
 void *accept_requests_thread(void *listening_socket_void);
 
-t_authentication_data recieve_authentication_data(int socket);
-t_chat_creation_data recieve_chat_creation_data(int socket);
+t_authentication_data recieve_authentication_data(int client_socket);
+t_chat_creation_data recieve_chat_creation_data(int client_socket);
 
 void send_chat(int socket, t_chat chat);
 
@@ -72,10 +72,9 @@ bool db_create_user(char *login, char *password);
 bool db_get_password_by_login(const char *login, char **password);
 
 /**
- * @param user_id Found user id will be written here.
- * @return false if such login does not exist or true if no errors occurred.
+ * @return -1 if user id didn't find by the login. Positive number if a user id found
 */
-bool db_get_user_id_by_login(char *login, int *user_id);
+int db_get_user_id_by_login(char *login);
 
 /**
  * @return false if such login does not exist or true if exists
@@ -84,7 +83,7 @@ bool db_users_table_has_login(char *login);
 
 void db_create_chats_table();
 
-t_chat *db_get_chats_by_user_id(int user_id, size_t *number_of_chats);
+t_chat *db_get_chats_user_is_in(int user_id, size_t *number_of_chats);
 
 char *db_get_chat_name_by_id(int chat_id);
 

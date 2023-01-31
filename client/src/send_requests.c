@@ -12,10 +12,10 @@ t_state_code send_authenticate_user_request(t_authentication_data authentication
     send_unsigned_char(client_socket, authentication_mode);
     recieve_unsigned_char(client_socket);
 
-    send(client_socket, authentication_data.login, strlen(authentication_data.login) + 1, 0);
+    send_string(client_socket, authentication_data.login);
     recieve_unsigned_char(client_socket);
 
-    send(client_socket, authentication_data.password, strlen(authentication_data.password) + 1, 0);
+    send_string(client_socket, authentication_data.password);
     recieve_unsigned_char(client_socket);
 
     t_state_code authentication_result = recieve_unsigned_char(client_socket);

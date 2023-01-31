@@ -3,8 +3,8 @@
 sqlite3 *db_open() {
     sqlite3 *database;
     if (sqlite3_open(DATABASE_NAME, &database) != SQLITE_OK) {
-        fprintf(stderr, "Cannot open database: %s\n", sqlite3_errmsg(database));
-        sqlite3_close(database);
+        fprintf(stderr, "Failed o open database: %s\n", sqlite3_errmsg(database));
+        db_close(database);
         exit(EXIT_FAILURE);
     }
 

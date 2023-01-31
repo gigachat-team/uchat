@@ -54,7 +54,7 @@ bool db_get_password_by_login(const char *login, char **password) {
     return true;
 }
 
-bool db_get_user_id_by_login(char *login, int *user_id) {
+int db_get_user_id_by_login(char *login) {
     char *sql_command = NULL;
     asprintf(&sql_command, "SELECT %s FROM %s WHERE %s = '%s'",
         USER_ID_NAME, USERS_TABLE_NAME, USER_LOGIN_NAME, login);
@@ -62,18 +62,18 @@ bool db_get_user_id_by_login(char *login, int *user_id) {
     sqlite3 *database = db_open();
     sqlite3_stmt *statement = db_open_statement(database, sql_command);
 
-    if (sqlite3_step(statement) != SQLITE_ROW) {
-        db_close_statement_and_database(statement, database);
-        free(sql_command);
-        return false;
-    }
-
-    *user_id = sqlite3_column_int(statement, 0);
-
-    db_close_statement_and_database(statement, database);
     free(sql_command);
 
-    return true;
+    if (sqlite3_step(statement) != SQLITE_ROW) {
+        db_close_statement_and_database(statement, database);
+        return -1;
+    }
+
+    int user_id = sqlite3_column_int(statement, 0);
+
+    db_close_statement_and_database(statement, database);
+
+    return user_id;
 }
 
 bool db_users_table_has_login(char *login) {
@@ -84,7 +84,7 @@ bool db_users_table_has_login(char *login) {
     sqlite3 *database = db_open();
     sqlite3_stmt *statement = db_open_statement(database, sql_command);
 
-    bool has_login = sqlite3_step(statement);
+    bool has_login = sqlite3_step(statement) == SQLITE_ROW;
 
     free(sql_command);
     db_close_statement_and_database(statement, database);
