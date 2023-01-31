@@ -1,6 +1,6 @@
 #include "../../server.h"
 
-void db_create_party_table() {
+void db_create_members_table() {
     char *sql_command = "CREATE TABLE IF NOT EXISTS "MEMBERS_TABLE" ( \
         "MEMBERS_CHAT_ID" INTEGER, \
         "MEMBERS_USER_ID" INTEGER, \

@@ -22,7 +22,7 @@
 #define MESSAGES_TABLE "Messages"
 #define MESSAGES_ID "MessageId"
 #define MESSAGES_CHAT_ID "ChatId"
-#define MESSAGES_USER_ID "User_Id"
+#define MESSAGES_USER_ID "UserId"
 #define MESSAGES_CONTEXT "Context"
 #define MESSAGES_CREATION_DATE "CreationDate"
 
@@ -46,23 +46,18 @@ void handle_getting_chats(int client_socket);
 void handle_adding_new_member_to_chat(int client_socket);
 
 sqlite3 *db_open();
-sqlite3_stmt *db_open_statement(sqlite3 *database, char *sql_command);
-
-
-
 void db_close(sqlite3 *database);
+sqlite3_stmt *db_open_statement(sqlite3 *database, char *sql_command);
 void db_close_statement(sqlite3_stmt *sqlite3_statement, sqlite3 *database);
 void db_close_statement_and_database(sqlite3_stmt *statement, sqlite3 *database);
 void db_execute_sql(sqlite3 *database, char* sql_command);
-/**
- * @brief Executes sql command. It opens and closes database inside.
-*/
 void db_open_and_execute_sql(char *sql_command);
 
-/**
- * @brief Creates users table if not exists.
-*/
 void db_create_users_table();
+void db_create_chats_table();
+void db_create_members_table();
+void db_create_messages_table();
+void db_create_message_statuses_table();
 
 /**
  * @return false if such login already exists or true if no errors occurred.
@@ -85,20 +80,15 @@ int db_get_user_id_by_login(char *login);
 */
 bool db_users_table_has_login(char *login);
 
-void db_create_chats_table();
-
 t_chat *db_get_chats_user_is_in(int user_id, size_t *number_of_chats);
 
 char *db_get_chat_name_by_id(int chat_id);
 
 int db_create_chat(char *chat_name, int owner_id);
 
-void db_create_party_table();
 int *db_get_IDs_of_chats_user_is_in(int user_id, size_t *IDs_of_chats_len);
+
 bool db_add_new_member_to_chat(int user_id, int chat_id);
+
 bool db_user_is_in_chat(int user_id, int chat_id);
 
-void db_create_messages_table();
-
-void db_create_message_statuses_table();
-char *get_current_date(sqlite3 *database);

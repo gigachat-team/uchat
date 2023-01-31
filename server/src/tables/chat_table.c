@@ -8,6 +8,7 @@ void db_create_chats_table() {
     ;
 
     db_open_and_execute_sql(sql_command);
+
 }
 
  int db_create_chat(char *chat_name, int owner_id) {
@@ -22,8 +23,8 @@ void db_create_chats_table() {
     free(sql_command);
 
     sqlite3_int64 last_insert_rowid = sqlite3_last_insert_rowid(database);
-    asprintf(&sql_command, "SELECT %s FROM %s WHERE rowid = %llu;",
-        CHATS_ID, CHATS_TABLE, last_insert_rowid
+    asprintf(&sql_command, "SELECT "CHATS_ID" FROM "CHATS_TABLE" \
+                            WHERE rowid = %llu;", last_insert_rowid
     );
     sqlite3_stmt *statement = db_open_statement(database, sql_command);
     sqlite3_step(statement);

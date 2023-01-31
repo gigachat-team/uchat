@@ -10,7 +10,7 @@ int main(int argc, char **argv) {
     db_create_chats_table();
     db_create_message_statuses_table();
     db_create_messages_table();
-    db_create_party_table();
+    db_create_members_table();
 
     int listening_socket = create_socket();
     bind_socket(listening_socket, atoi(argv[1]));
