@@ -22,7 +22,7 @@
 
 typedef struct s_address {
     char *ip;
-    int port;
+    in_port_t port;
 } t_address;
 
 typedef struct s_authentication_data {
@@ -35,11 +35,22 @@ typedef struct s_chat_creation_data {
     char *owner_login;
 } t_chat_creation_data;
 
+typedef struct s_new_chat_member_data {
+    int chat_id;
+    char *member_login;
+} t_new_chat_member_data;
+
+typedef struct s_chat_description {
+    int id;
+    char *name;
+} t_chat;
+
 typedef enum e_request {
     LOGIN, // -> login -> password
     REGISTER, // -> login -> password
     CREATE_CHAT, // -> chat_name -> owner_login
-    ADD_MEMBER_TO_CHAT // -> chat_id -> member_login
+    ADD_MEMBER_TO_CHAT, // -> chat_id -> member_login
+    GET_CHATS_I_AM_IN // -> user_id
 } t_request;
 
 typedef enum e_state_code {
@@ -49,10 +60,17 @@ typedef enum e_state_code {
     SUCCESSFUL_REGISTRATION,
     SUCCESSFUL_LOGIN,
     CHAT_CREATED_SUCCESSFULLY,
+    CHATS_ARRAY_TRENSFERRED_SUCCESSFULLY,
+    USER_SUCCESSFULLY_ADDED_TO_CHAT,
     
     SUCH_LOGIN_ALREADY_EXISTS,
     SUCH_LOGIN_DOES_NOT_EXIST,
-    WRONG_PASSWORD
+    WRONG_PASSWORD,
+    SUCH_USER_IS_ALREADY_IN_CHAT,
+
+    START_OF_CHATS_ARRAY,
+    CONTINUATION_OF_CHATS_ARRAY,
+    END_OF_CHATS_ARRAY
 } t_state_code;
 
 unsigned char recieve_unsigned_char(int socket);
@@ -74,9 +92,12 @@ int create_socket();
 void bind_socket(int socket, unsigned int port);
 void listen_socket(int socket, int queue_len);
 int accept_socket(int this_socket);
-void *read_socket(int socket, unsigned int max_read_bytes, int *read_bytes_count);
-void connect_socket(int socket, char *ip, unsigned int port);
+void connect_socket(int socket, t_address address);
+int create_and_connect_socket(t_address address);
 
 void free_authentication_data(t_authentication_data authentication_data);
-void free_chat_creation_data(t_chat_creation_data chat_data);
+void free_chat_creation_data(t_chat_creation_data chat_creation_data);
+void free_chat(t_chat chat);
+void free_chats(t_chat *chats, size_t length);
+void free_new_chat_member_data(t_new_chat_member_data new_chat_member_data);
 

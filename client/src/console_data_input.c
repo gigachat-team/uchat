@@ -26,3 +26,16 @@ t_chat_creation_data get_chat_creation_data(char *owner_login) {
     return chat_creation_data;
 }
 
+t_new_chat_member_data get_new_chat_member_data() {
+    printf("Enter chat id: ");
+    int chat_id;
+    scanf("%d", &chat_id);
+
+    printf("Enter new member login: ");
+    char member_login[MAX_LOGIN_LENGTH];
+    scanf("%s", member_login);
+
+    t_new_chat_member_data new_chat_member_data = {chat_id, strdup(member_login)};
+    return new_chat_member_data;
+}
+

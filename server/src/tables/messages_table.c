@@ -1,66 +1,18 @@
 #include "../../server.h"
 
-// char *get_current_date(sqlite3 *database) {
-//     char *get_time_command = "SELECT date() AS date";
-//     sqlite3_stmt *statement;
-
-//     if (sqlite3_prepare_v2(database, get_time_command, -1, &statement, 0) != SQLITE_OK) {
-//         printf("sqlite3_prepare_v2 error: %s\n", sqlite3_errmsg(database));
-//         sqlite3_close(database);
-//         exit(EXIT_FAILURE);
-//     }
-
-//     sqlite3_step(statement);
-
-//     char *date = mx_strdup((char *)sqlite3_column_text(statement, 0));
-
-//     sqlite3_finalize(statement);
-
-//     return date;
-// }
-
-void create_messages_table(sqlite3 *database) {
-    char sql_command[SQLITE_COMMAND_SIZE];
-
-    sprintf(sql_command, "CREATE TABLE IF NOT EXISTS %s ( \
-        %s INTEGER PRIMARY KEY AUTOINCREMENT, \
-        %s INTEGER, \
-        %s INTEGER, \
-        %s BLOB NOT NULL DEFAULT ' ', \
-        %s TEXT NOT NULL, \
-        FOREIGN KEY (%s) REFERENCES %s (%s), \
-        FOREIGN KEY (%s) REFERENCES %s (%s), \
-        FOREIGN KEY (%s) REFERENCES %s (%s), \
-        FOREIGN KEY (%s) REFERENCES %s (%s));",
-        
-        MESSAGES_TABLE_NAME,
-
-        MESSAGES_ID_NAME,
-        MESSAGES_CHAT_ID_NAME,
-        MESSAGES_USER_ID_NAME,
-        MESSAGES_CONTEXT_NAME,
-        MESSAGES_DATE_NAME,
-
-        MESSAGES_CHAT_ID_NAME, 
-        PARTY_TABLE_NAME,
-        PARTY_CHAT_ID_NAME,
-
-        MESSAGES_USER_ID_NAME,
-        PARTY_TABLE_NAME,
-        PARTY_USER_ID_NAME,
-
-        MESSAGES_ID_NAME,
-        MESSAGES_STATUSES_TABLE_NAME,
-        MESSAGES_STATUSES_MESSAGES_ID_NAME,
-
-        MESSAGES_USER_ID_NAME,
-        MESSAGES_STATUSES_TABLE_NAME,
-        MESSAGES_STATUSES_USER_ID_NAME
-    );
+void db_create_messages_table() {
+    char *sql_command = "CREATE TABLE IF NOT EXISTS "MESSAGES_TABLE" ( \
+        "MESSAGES_ID"               INTEGER PRIMARY KEY AUTOINCREMENT, \
+        "MESSAGES_CHAT_ID"          INTEGER, \
+        "MESSAGES_USER_ID"          INTEGER, \
+        "MESSAGES_CONTEXT"          BLOB NOT NULL, \
+        "MESSAGES_CREATION_DATE"    TEXT NOT NULL, \
+        FOREIGN KEY ("MESSAGES_CHAT_ID")    REFERENCES "MEMBERS_TABLE" ("MEMBERS_CHAT_ID"), \
+        FOREIGN KEY ("MESSAGES_USER_ID")    REFERENCES "MEMBERS_TABLE" ("MEMBERS_USER_ID"), \
+        FOREIGN KEY ("MESSAGES_ID")         REFERENCES "MESSAGE_STATUSES_TABLE" ("MESSAGE_STATUSES_MESSAGE_ID"), \
+        FOREIGN KEY ("MESSAGES_USER_ID")    REFERENCES "MESSAGE_STATUSES_TABLE" ("MESSAGE_STATUSES_USER_ID"));"
+    ;
     
-    if (sqlite3_exec(database, sql_command, NULL, NULL, NULL) != SQLITE_OK) {
-        fprintf(stderr, "Failed to create/open messages table.\n");
-        sqlite3_close(database);
-        exit(EXIT_FAILURE);
-    } 
+    db_open_and_execute_sql(sql_command);
 }
+
