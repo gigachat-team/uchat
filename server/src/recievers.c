@@ -22,3 +22,14 @@ t_chat_creation_data recieve_chat_creation_data(int client_socket) {
     return chat_cration_data;
 }
 
+t_new_chat_member_data recieve_new_chat_memeber_data(int client_socket) {
+    int chat_id = recieve_unsigned_int(client_socket);
+    send_unsigned_char(client_socket, SUCCESSFULLY_READ);
+
+    char *memeber_login = recieve_string(client_socket, MAX_LOGIN_LENGTH);
+    send_unsigned_char(client_socket, SUCCESSFULLY_READ);
+
+    t_new_chat_member_data new_chat_memeber_data = {chat_id, memeber_login};
+    return new_chat_memeber_data;
+}
+

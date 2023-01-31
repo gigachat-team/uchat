@@ -43,6 +43,7 @@ void handle_registration(int client_socket);
 void handle_login(int client_socket);
 void handle_chat_creation(int client_socket);
 void handle_getting_chats(int client_socket);
+void handle_adding_new_member_to_chat(int client_socket);
 
 sqlite3 *db_open();
 sqlite3_stmt *db_open_statement(sqlite3 *database, char *sql_command);

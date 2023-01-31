@@ -61,10 +61,12 @@ typedef enum e_state_code {
     SUCCESSFUL_LOGIN,
     CHAT_CREATED_SUCCESSFULLY,
     CHATS_ARRAY_TRENSFERRED_SUCCESSFULLY,
+    USER_SUCCESSFULLY_ADDED_TO_CHAT,
     
     SUCH_LOGIN_ALREADY_EXISTS,
     SUCH_LOGIN_DOES_NOT_EXIST,
     WRONG_PASSWORD,
+    SUCH_USER_IS_ALREADY_IN_CHAT,
 
     START_OF_CHATS_ARRAY,
     CONTINUATION_OF_CHATS_ARRAY,
@@ -97,4 +99,5 @@ void free_authentication_data(t_authentication_data authentication_data);
 void free_chat_creation_data(t_chat_creation_data chat_creation_data);
 void free_chat(t_chat chat);
 void free_chats(t_chat *chats, size_t length);
+void free_new_chat_member_data(t_new_chat_member_data new_chat_member_data);
 

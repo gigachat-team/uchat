@@ -1,9 +1,8 @@
 #include "../client.h"
 
 void handle_authenticated_user_commands(t_address server_address, char *user_login) {
-    while (true)
-    {
-        printf("\nEnter a command (newchat, chats, exit): ");
+    while (true) {
+        printf("\nEnter a command (newchat, chats, add_member, exit): ");
         char user_command[100];
         scanf("%s", user_command);
 
@@ -15,7 +14,14 @@ void handle_authenticated_user_commands(t_address server_address, char *user_log
             }
             free_chat_creation_data(chat_creation_data);
         } else if (strcmp(user_command, "add_member") == 0) {
-            printf("Sorry, but this function is currently under developing.");
+            t_new_chat_member_data new_chat_member_data = get_new_chat_member_data();
+            t_state_code adding_new_member_result = send_add_new_member_request(server_address, new_chat_member_data);
+            if (adding_new_member_result == USER_SUCCESSFULLY_ADDED_TO_CHAT) {
+                printf("The user %s successfully added to the chat.\n", new_chat_member_data.member_login);
+            } else if (adding_new_member_result == SUCH_USER_IS_ALREADY_IN_CHAT) {
+                printf("The user %s is already in the chat.\n", new_chat_member_data.member_login);
+            }
+            free_new_chat_member_data(new_chat_member_data);
         } else if (strcmp(user_command, "chats") == 0) {
             t_chat *chats_i_am_in = NULL;
             size_t chats_i_am_in_length = 0;
