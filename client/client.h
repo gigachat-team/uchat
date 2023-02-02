@@ -16,5 +16,5 @@ t_authentication_data get_authentication_data();
 t_chat_creation_data get_chat_creation_data(char *owner_login);
 t_new_chat_member_data get_new_chat_member_data();
 
-t_chat recieve_chat(int socket);
+t_chat receive_chat(int socket);
 

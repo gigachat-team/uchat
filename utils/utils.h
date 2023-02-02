@@ -80,32 +80,32 @@ typedef enum e_state_code {
  * @return 0 for success; -1 for errors; if returns a positive number, this
  * number is number of bytes left to read.
 */
-int recieve(int socket, char *buffer, size_t length);
+int receive(int socket, char *buffer, size_t length);
 /**
  * @brief Reads unsigned char from SOCKET. On errors, sets the erno variable
  * to ECONNABORTED.
  * @return Read unsigned char.
 */
-uint8_t recieve_unsigned_char(int socket);
+uint8_t receive_unsigned_char(int socket);
 /**
  * @brief Reads unsigned short from SOCKET. On errors, sets the erno variable
  * to ECONNABORTED.
  * @return Read unsigned short.
 */
-uint16_t recieve_unsigned_short(int socket);
+uint16_t receive_unsigned_short(int socket);
 /**
  * @brief Reads unsigned int from SOCKET. On errors, sets the erno variable
  * to ECONNABORTED.
  * @return Read unsigned int.
 */
-uint32_t recieve_unsigned_int(int socket);
+uint32_t receive_unsigned_int(int socket);
 /**
  * @brief Reads string from SOCKET. On errors, sets the errno variable to
  * ECONNABORTED. Reading format: int -> string. First, the size of the string
  * is read, and then the string itself.
  * @return Pointer to allocated string.
 */
-char *recieve_string(int socket);
+char *receive_string(int socket);
 
 void send_unsigned_char(int socket, unsigned char character);
 void send_unsigned_short(int socket, uint16_t number);

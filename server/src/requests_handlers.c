@@ -1,7 +1,7 @@
 #include "../server.h"
 
 void handle_registration(int client_socket) {
-    t_authentication_data authentication_data = recieve_authentication_data(client_socket);
+    t_authentication_data authentication_data = receive_authentication_data(client_socket);
     if (db_create_user(authentication_data.login, authentication_data.password)) {
         send_unsigned_char(client_socket, SUCCESSFUL_REGISTRATION);
     } else {
@@ -12,7 +12,7 @@ void handle_registration(int client_socket) {
 }
 
 void handle_login(int client_socket) {
-    t_authentication_data authentication_data = recieve_authentication_data(client_socket);
+    t_authentication_data authentication_data = receive_authentication_data(client_socket);
     char *found_password = NULL;
     if (db_get_password_by_login(authentication_data.login, &found_password)) {
         if (strcmp(authentication_data.password, found_password) == 0) {
@@ -29,7 +29,7 @@ void handle_login(int client_socket) {
 }
 
 void handle_chat_creation(int client_socket) {
-    t_chat_creation_data chat_creation_data = recieve_chat_creation_data(client_socket);
+    t_chat_creation_data chat_creation_data = receive_chat_creation_data(client_socket);
     int owner_id = db_get_user_id_by_login(chat_creation_data.owner_login);
     int created_chat_id = db_create_chat(chat_creation_data.chat_name, owner_id);
     db_add_new_member_to_chat(owner_id, created_chat_id);
@@ -40,7 +40,7 @@ void handle_chat_creation(int client_socket) {
 }
 
 void handle_getting_chats(int client_socket) {
-    char *user_login = recieve_string(client_socket);
+    char *user_login = receive_string(client_socket);
     int user_id = db_get_user_id_by_login(user_login);
 
     size_t number_of_chats = 0;
@@ -67,7 +67,7 @@ void handle_getting_chats(int client_socket) {
 }
 
 void handle_adding_new_member_to_chat(int client_socket) {
-    t_new_chat_member_data new_chat_memeber_data = recieve_new_chat_memeber_data(client_socket);
+    t_new_chat_member_data new_chat_memeber_data = receive_new_chat_memeber_data(client_socket);
     int user_id = db_get_user_id_by_login(new_chat_memeber_data.member_login);
 
     if (db_add_new_member_to_chat(user_id, new_chat_memeber_data.chat_id)) {

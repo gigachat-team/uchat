@@ -33,9 +33,9 @@
 
 void *accept_requests_thread(void *listening_socket_void);
 
-t_authentication_data recieve_authentication_data(int client_socket);
-t_chat_creation_data recieve_chat_creation_data(int client_socket);
-t_new_chat_member_data recieve_new_chat_memeber_data(int client_socket);
+t_authentication_data receive_authentication_data(int client_socket);
+t_chat_creation_data receive_chat_creation_data(int client_socket);
+t_new_chat_member_data receive_new_chat_memeber_data(int client_socket);
 
 void send_chat(int socket, t_chat chat);
 
