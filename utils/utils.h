@@ -80,8 +80,23 @@ typedef enum e_state_code {
  * @return Number of recieved bytes or -1 for errors.
 */
 int recieve(int socket, char *buffer, size_t length);
-unsigned char recieve_unsigned_char(int socket);
+/**
+ * @brief Reads unsigned char from SOCKET. On errors, sets the erno variable
+ * to ECONNABORTED.
+ * @return Read unsigned char.
+*/
+uint8_t recieve_unsigned_char(int socket);
+/**
+ * @brief Reads unsigned short from SOCKET. On errors, sets the erno variable
+ * to ECONNABORTED.
+ * @return Read unsigned short.
+*/
 uint16_t recieve_unsigned_short(int socket);
+/**
+ * @brief Reads unsigned int from SOCKET. On errors, sets the erno variable
+ * to ECONNABORTED.
+ * @return Read unsigned int.
+*/
 uint32_t recieve_unsigned_int(int socket);
 char *recieve_string(int socket, int max_string_length);
 

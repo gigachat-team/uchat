@@ -19,21 +19,33 @@ int recieve(int socket, char *buffer, size_t length) {
     return 0;
 }
 
-unsigned char recieve_unsigned_char(int socket) {
-    unsigned char recieved_character;
-    recv(socket, &recieved_character, sizeof(recieved_character), 0);
+uint8_t recieve_unsigned_char(int socket) {
+    uint8_t recieved_character;
+    int character_size = sizeof(recieved_character);
+    if (recv(socket, &recieved_character, character_size, 0) != character_size) {
+        errno = ECONNABORTED;
+        return 0;
+    }
     return recieved_character;
 }
 
 uint16_t recieve_unsigned_short(int socket) {
     uint16_t recieved_number;
-    recv(socket, &recieved_number, sizeof(recieved_number), 0);
+    int number_size = sizeof(recieved_number);
+    if (recieve(socket, (char *)&recieved_number, number_size) != number_size) {
+        errno = ECONNABORTED;
+        return 0;
+    }
     return ntohs(recieved_number);
 }
 
 uint32_t recieve_unsigned_int(int socket) {
     uint32_t recieved_number;
-    recv(socket, &recieved_number, sizeof(recieved_number), 0);
+    int number_size = sizeof(recieved_number);
+    if (recieve(socket, (char *)&recieved_number, number_size) != number_size) {
+        errno = ECONNABORTED;
+        return 0;
+    }
     return ntohl(recieved_number);
 }
 
