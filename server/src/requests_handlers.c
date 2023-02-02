@@ -40,7 +40,7 @@ void handle_chat_creation(int client_socket) {
 }
 
 void handle_getting_chats(int client_socket) {
-    char *user_login = recieve_string(client_socket, MAX_LOGIN_LENGTH);
+    char *user_login = recieve_string(client_socket);
     send_unsigned_char(client_socket, SUCCESSFULLY_READ);
     int user_id = db_get_user_id_by_login(user_login);
 

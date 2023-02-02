@@ -32,7 +32,7 @@ uint8_t recieve_unsigned_char(int socket) {
 uint16_t recieve_unsigned_short(int socket) {
     uint16_t recieved_number;
     int number_size = sizeof(recieved_number);
-    if (recieve(socket, (char *)&recieved_number, number_size) != number_size) {
+    if (recieve(socket, (char *)&recieved_number, number_size) != 0) {
         errno = ECONNABORTED;
         return 0;
     }
@@ -42,18 +42,26 @@ uint16_t recieve_unsigned_short(int socket) {
 uint32_t recieve_unsigned_int(int socket) {
     uint32_t recieved_number;
     int number_size = sizeof(recieved_number);
-    if (recieve(socket, (char *)&recieved_number, number_size) != number_size) {
+    if (recieve(socket, (char *)&recieved_number, number_size) != 0) {
         errno = ECONNABORTED;
         return 0;
     }
     return ntohl(recieved_number);
 }
 
-char *recieve_string(int socket, int max_string_length) {
-    char *recieved_string = malloc(max_string_length);
-    recv(socket, recieved_string, max_string_length, 0);
-    char *returning_string = mx_strdup(recieved_string);
-    free(recieved_string);
-    return returning_string;
+char *recieve_string(int socket) {
+    int string_len = recieve_unsigned_int(socket);
+    if (errno == ECONNABORTED) {
+        return NULL;
+    }
+    char *string = mx_strnew(string_len);
+
+    if (recieve(socket, string, string_len) != 0) {
+        free(string);
+        errno = ECONNABORTED;
+        return NULL;
+    }
+
+    return string;
 }
 

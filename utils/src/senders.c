@@ -15,6 +15,7 @@ void send_unsigned_int(int socket, uint32_t number) {
 }
 
 void send_string(int socket, char *string) {
-    send(socket, string, strlen(string) + 1, 0);
+    send_unsigned_int(socket, strlen(string));
+    send(socket, string, strlen(string), 0);
 }
 

@@ -98,7 +98,13 @@ uint16_t recieve_unsigned_short(int socket);
  * @return Read unsigned int.
 */
 uint32_t recieve_unsigned_int(int socket);
-char *recieve_string(int socket, int max_string_length);
+/**
+ * @brief Reads string from SOCKET. On errors, sets the errno variable to
+ * ECONNABORTED. Reading format: int -> string. First, the size of the string
+ * is read, and then the string itself.
+ * @return Pointer to allocated string.
+*/
+char *recieve_string(int socket);
 
 void send_unsigned_char(int socket, unsigned char character);
 void send_unsigned_short(int socket, uint16_t number);
