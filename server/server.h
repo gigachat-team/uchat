@@ -60,9 +60,11 @@ void db_create_messages_table();
 void db_create_message_statuses_table();
 
 /**
- * @return false if such login already exists or true if no errors occurred.
+ * @brief Creates new user in the users table with new LOGIN and PASSWORD.
+ * @return Positive user id or -1 if the users table already has the user with
+ * this LOGIN. 
 */
-bool db_create_user(char *login, char *password);
+int db_create_user(char *login, char *password);
 
 /**
  * @param password Found password will be written here.

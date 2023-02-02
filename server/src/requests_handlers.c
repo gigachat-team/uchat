@@ -2,8 +2,12 @@
 
 void handle_registration(int client_socket) {
     t_authentication_data authentication_data = receive_authentication_data(client_socket);
-    if (db_create_user(authentication_data.login, authentication_data.password)) {
+    int user_id = db_create_user(authentication_data.login, authentication_data.password);
+
+    if (user_id != -1) {
         send_unsigned_char(client_socket, SUCCESSFUL_REGISTRATION);
+        // send_unsigned_int(client_socket, user_id);
+        (void)user_id;
     } else {
         send_unsigned_char(client_socket, SUCH_LOGIN_ALREADY_EXISTS);
     }
