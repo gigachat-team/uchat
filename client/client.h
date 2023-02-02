@@ -7,8 +7,8 @@ typedef enum e_authentication_mode {
     LOGIN_MODE = LOGIN
 } t_authentication_mode;
 
-t_state_code send_authenticate_user_request(t_authentication_data authentication_data, t_authentication_mode authentication_mode, t_address server_address);
-t_state_code send_create_chat_request(t_chat_creation_data chat_data, t_address server_address);
+t_state_code send_authenticate_user_request(t_address server_address, t_authentication_data authentication_data, t_authentication_mode authentication_mode);
+t_state_code send_create_chat_request(t_address server_address, t_chat_creation_data chat_data);
 t_state_code get_chats_i_am_in(t_address server_address, char *user_login, t_chat **chats_i_am_in, size_t *chats_i_am_in_length);
 t_state_code send_add_new_member_request(t_address server_address, t_new_chat_member_data new_chat_member_data);
 

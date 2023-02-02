@@ -1,6 +1,6 @@
 #include "../client.h"
 
-t_state_code send_authenticate_user_request(t_authentication_data authentication_data, t_authentication_mode authentication_mode, t_address server_address) {
+t_state_code send_authenticate_user_request(t_address server_address, t_authentication_data authentication_data, t_authentication_mode authentication_mode) {
     int client_socket = create_and_connect_socket(server_address);
 
     send_unsigned_char(client_socket, authentication_mode);
@@ -14,7 +14,7 @@ t_state_code send_authenticate_user_request(t_authentication_data authentication
     return authentication_result;
 }
 
-t_state_code send_create_chat_request(t_chat_creation_data chat_data, t_address server_address) {
+t_state_code send_create_chat_request(t_address server_address, t_chat_creation_data chat_data) {
     int client_socket = create_and_connect_socket(server_address);
 
     send_unsigned_char(client_socket, CREATE_CHAT);
