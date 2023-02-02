@@ -7,7 +7,6 @@ void free_authentication_data(t_authentication_data authentication_data) {
 
 void free_chat_creation_data(t_chat_creation_data chat_creation_data) {
     free(chat_creation_data.chat_name);
-    free(chat_creation_data.owner_login);
 }
 
 void free_chat(t_chat chat) {

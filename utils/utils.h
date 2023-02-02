@@ -33,7 +33,7 @@ typedef struct s_authentication_data {
 
 typedef struct s_chat_creation_data {
     char *chat_name;
-    char *owner_login;
+    int owner_id;
 } t_chat_creation_data;
 
 typedef struct s_new_chat_member_data {

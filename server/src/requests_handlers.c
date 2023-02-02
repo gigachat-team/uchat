@@ -6,8 +6,7 @@ void handle_registration(int client_socket) {
 
     if (user_id != -1) {
         send_unsigned_char(client_socket, SUCCESSFUL_REGISTRATION);
-        // send_unsigned_int(client_socket, user_id);
-        (void)user_id;
+        send_unsigned_int(client_socket, user_id);
     } else {
         send_unsigned_char(client_socket, SUCH_LOGIN_ALREADY_EXISTS);
     }
@@ -22,6 +21,7 @@ void handle_login(int client_socket) {
     if (found_password != NULL) {
         if (strcmp(authentication_data.password, found_password) == 0) {
             send_unsigned_char(client_socket, SUCCESSFUL_LOGIN);
+            send_unsigned_int(client_socket, user_id);
         } else {
             send_unsigned_char(client_socket, WRONG_PASSWORD);
         }
@@ -35,9 +35,8 @@ void handle_login(int client_socket) {
 
 void handle_chat_creation(int client_socket) {
     t_chat_creation_data chat_creation_data = receive_chat_creation_data(client_socket);
-    int owner_id = db_get_user_id_by_login(chat_creation_data.owner_login);
-    int created_chat_id = db_create_chat(chat_creation_data.chat_name, owner_id);
-    db_add_new_member_to_chat(owner_id, created_chat_id);
+    int created_chat_id = db_create_chat(chat_creation_data.chat_name, chat_creation_data.owner_id);
+    db_add_new_member_to_chat(chat_creation_data.owner_id, created_chat_id);
 
     send_unsigned_char(client_socket, CHAT_CREATED_SUCCESSFULLY);
 
@@ -45,8 +44,7 @@ void handle_chat_creation(int client_socket) {
 }
 
 void handle_getting_chats(int client_socket) {
-    char *user_login = receive_string(client_socket);
-    int user_id = db_get_user_id_by_login(user_login);
+    int user_id = receive_unsigned_int(client_socket);
 
     size_t number_of_chats = 0;
     t_chat *chats = db_get_chats_user_is_in(user_id, &number_of_chats);
@@ -67,7 +65,6 @@ void handle_getting_chats(int client_socket) {
 
     send_unsigned_char(client_socket, CHATS_ARRAY_TRENSFERRED_SUCCESSFULLY);
 
-    free(user_login);
     free_chats(chats, number_of_chats);
 }
 

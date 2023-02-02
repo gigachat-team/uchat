@@ -17,12 +17,12 @@ t_authentication_data get_authentication_data() {
     return authentication_data;
 }
 
-t_chat_creation_data get_chat_creation_data(char *owner_login) {
+t_chat_creation_data get_chat_creation_data(int owner_id) {
     printf("Enter the chat name: ");
     char chat_name[MAX_CHAT_NAME_LENGTH];
     scanf("%s", chat_name);
 
-    t_chat_creation_data chat_creation_data = {strdup(chat_name), strdup(owner_login)};
+    t_chat_creation_data chat_creation_data = {strdup(chat_name), owner_id};
     return chat_creation_data;
 }
 

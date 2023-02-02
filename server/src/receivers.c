@@ -10,9 +10,9 @@ t_authentication_data receive_authentication_data(int client_socket) {
 
 t_chat_creation_data receive_chat_creation_data(int client_socket) {
     char *chat_name = receive_string(client_socket);
-    char *owner_login = receive_string(client_socket);
+    int owner_id = receive_unsigned_int(client_socket);
 
-    t_chat_creation_data chat_cration_data = {chat_name, owner_login};
+    t_chat_creation_data chat_cration_data = {chat_name, owner_id};
     return chat_cration_data;
 }
 
