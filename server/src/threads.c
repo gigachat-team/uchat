@@ -5,7 +5,6 @@ void *handle_request_thread(void *client_socket_void) {
     free(client_socket_void);
 
     t_request client_request = recieve_unsigned_char(client_socket);
-    send_unsigned_char(client_socket, SUCCESSFULLY_READ);
 
     if (client_request == LOGIN) {
         handle_login(client_socket);
