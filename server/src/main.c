@@ -6,6 +6,7 @@ int main(int argc, char **argv) {
         return 0;
     }
 
+    daemon_server();
     db_create_users_table();
     db_create_chats_table();
     db_create_message_statuses_table();
