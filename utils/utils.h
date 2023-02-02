@@ -14,6 +14,7 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <pthread.h>
+#include <errno.h>
 #include "../resources/libraries/libmx/inc/libmx.h"
 
 #define MAX_LOGIN_LENGTH 40
