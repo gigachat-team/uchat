@@ -74,6 +74,12 @@ typedef enum e_state_code {
     END_OF_CHATS_ARRAY
 } t_state_code;
 
+/**
+ * @brief Read LENGTH bytes into BUFFER from SOCKET. This function is best used
+ * to read 2 or more bytes.
+ * @return Number of recieved bytes or -1 for errors.
+*/
+int recieve(int socket, char *buffer, size_t length);
 unsigned char recieve_unsigned_char(int socket);
 uint16_t recieve_unsigned_short(int socket);
 uint32_t recieve_unsigned_int(int socket);

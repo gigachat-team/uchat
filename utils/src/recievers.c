@@ -1,5 +1,24 @@
 #include "../utils.h"
 
+int recieve(int socket, char *buffer, size_t length) {
+    int number_of_left_bytes = length;
+    while (number_of_left_bytes > 0) {
+        int recieved_bytes_count = recv(socket, buffer, number_of_left_bytes, 0);
+        if (recieved_bytes_count < 0) {
+            if (errno == EINTR) {
+                continue;
+            }
+            return -1;
+        }
+        if (recieved_bytes_count == 0) {
+            return length - number_of_left_bytes;
+        }
+        buffer += recieved_bytes_count;
+        number_of_left_bytes -= recieved_bytes_count;
+    }
+    return 0;
+}
+
 unsigned char recieve_unsigned_char(int socket) {
     unsigned char recieved_character;
     recv(socket, &recieved_character, sizeof(recieved_character), 0);
