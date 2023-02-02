@@ -31,10 +31,7 @@ void listen_socket(int socket, int queue_len) {
 }
 
 int accept_socket(int this_socket) {
-    struct sockaddr_in accepting_socket_address = {0};
-    socklen_t accepting_socket_address_len = sizeof(accepting_socket_address);
-
-    int accepted_socket = accept(this_socket, (struct sockaddr *)&accepting_socket_address, &accepting_socket_address_len);
+    int accepted_socket = accept(this_socket, NULL, NULL);
     if (accepted_socket == -1) {
         perror("Failed to accept the socket");
         close(this_socket);
