@@ -65,32 +65,25 @@ void db_create_message_statuses_table();
  * this LOGIN. 
 */
 int db_create_user(char *login, char *password);
+int db_create_chat(char *chat_name, int owner_id);
+bool db_add_new_member_to_chat(int user_id, int chat_id);
 
 /**
  * @param password Found password will be written here.
  * @return false if such login does not exist or true if no errors occurred.
 */
 bool db_get_password_by_login(const char *login, char **password);
-
 /**
  * @return -1 if user id didn't find by the login. Positive number if a user id found
 */
 int db_get_user_id_by_login(char *login);
+char *db_get_chat_name_by_id(int chat_id);
+int *db_get_IDs_of_chats_user_is_in(int user_id, size_t *IDs_of_chats_len);
+t_chat *db_get_chats_user_is_in(int user_id, size_t *number_of_chats);
 
 /**
  * @return false if such login does not exist or true if exists
 */
 bool db_users_table_has_login(char *login);
-
-t_chat *db_get_chats_user_is_in(int user_id, size_t *number_of_chats);
-
-char *db_get_chat_name_by_id(int chat_id);
-
-int db_create_chat(char *chat_name, int owner_id);
-
-int *db_get_IDs_of_chats_user_is_in(int user_id, size_t *IDs_of_chats_len);
-
-bool db_add_new_member_to_chat(int user_id, int chat_id);
-
 bool db_user_is_in_chat(int user_id, int chat_id);
 
