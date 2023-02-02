@@ -1,26 +1,26 @@
 #include "../../server.h"
 
-bool db_get_password_by_login(const char *login, char **password) {
+char *db_get_password_by_id(const int id) {
     char *sql_command = NULL;
     asprintf(&sql_command, "SELECT "USERS_PASSWORD" FROM "USERS_TABLE" \
-                            WHERE "USERS_LOGIN" = '%s'", login
+                            WHERE "USERS_ID" = '%d'", id
     );
 
     sqlite3 *database = db_open();
     sqlite3_stmt *statement = db_open_statement(database, sql_command);
 
-    if (sqlite3_step(statement) != SQLITE_ROW) {
-        db_close_statement_and_database(statement, database);
-        free(sql_command);
-        return false;
-    }
-
-    *password = mx_strdup((char *)sqlite3_column_text(statement, 0));
-    
-    db_close_statement_and_database(statement, database);
     free(sql_command);
 
-    return true;
+    if (sqlite3_step(statement) != SQLITE_ROW) {
+        db_close_statement_and_database(statement, database);
+        return NULL;
+    }
+
+    char *password = strdup((char *)sqlite3_column_text(statement, 0));
+
+    db_close_statement_and_database(statement, database);
+
+    return password;
 }
 
 int db_get_user_id_by_login(char *login) {

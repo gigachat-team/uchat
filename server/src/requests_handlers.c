@@ -17,8 +17,9 @@ void handle_registration(int client_socket) {
 
 void handle_login(int client_socket) {
     t_authentication_data authentication_data = receive_authentication_data(client_socket);
-    char *found_password = NULL;
-    if (db_get_password_by_login(authentication_data.login, &found_password)) {
+    int user_id = db_get_user_id_by_login(authentication_data.login);
+    char *found_password = db_get_password_by_id(user_id);
+    if (found_password != NULL) {
         if (strcmp(authentication_data.password, found_password) == 0) {
             send_unsigned_char(client_socket, SUCCESSFUL_LOGIN);
         } else {

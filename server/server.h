@@ -69,10 +69,10 @@ int db_create_chat(char *chat_name, int owner_id);
 bool db_add_new_member_to_chat(int user_id, int chat_id);
 
 /**
- * @param password Found password will be written here.
- * @return false if such login does not exist or true if no errors occurred.
+ * @brief Searches for password by ID.
+ * @return New allocated string or NULL if ID not found.
 */
-bool db_get_password_by_login(const char *login, char **password);
+char *db_get_password_by_id(const int id);
 /**
  * @return -1 if user id didn't find by the login. Positive number if a user id found
 */
