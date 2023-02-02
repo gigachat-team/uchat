@@ -1,17 +1,23 @@
 #include "../../server.h"
 
-void db_create_chats_table() {
-    char *sql_command = "CREATE TABLE IF NOT EXISTS "CHATS_TABLE" ( \
-                                "CHATS_ID"      INTEGER PRIMARY KEY AUTOINCREMENT, \
-                                "CHATS_NAME"    TEXT, \
-                                "CHATS_USER_ID" INTEGER);"
-    ;
+bool db_create_user(char *login, char *password) {
+    if (db_users_table_has_login(login)) {
+        return false;
+    }
+
+    char *sql_command;
+    asprintf(&sql_command, "INSERT INTO "USERS_TABLE" ("USERS_LOGIN", "USERS_PASSWORD") \
+                            VALUES ('%s', '%s');", login, password
+    );
 
     db_open_and_execute_sql(sql_command);
 
+    free(sql_command);
+
+    return true;
 }
 
- int db_create_chat(char *chat_name, int owner_id) {
+int db_create_chat(char *chat_name, int owner_id) {
     char *sql_command = NULL;
     asprintf(&sql_command, "INSERT INTO "CHATS_TABLE" ("CHATS_NAME", "CHATS_USER_ID") \
                             VALUES ('%s', '%d');", chat_name, owner_id
@@ -36,28 +42,20 @@ void db_create_chats_table() {
     return created_chat_id;
 }
 
+bool db_add_new_member_to_chat(int user_id, int chat_id) {
+    if (db_user_is_in_chat(user_id, chat_id)) {
+        return false;
+    }
 
-
-char *db_get_chat_name_by_id(int chat_id) {
     char *sql_command = NULL;
-    asprintf(&sql_command, "SELECT "CHATS_NAME" FROM "CHATS_TABLE" \
-                            WHERE "CHATS_ID" = %d", chat_id
+    asprintf(&sql_command, "INSERT INTO "MEMBERS_TABLE" ("MEMBERS_CHAT_ID", "MEMBERS_USER_ID") \
+                            VALUES (%d, %d)", chat_id, user_id
     );
 
-    sqlite3 *database = db_open();
-    sqlite3_stmt *statement = db_open_statement(database, sql_command);
+    db_open_and_execute_sql(sql_command);
 
     free(sql_command);
 
-    if (sqlite3_step(statement) != SQLITE_ROW) {
-        db_close_statement_and_database(statement, database);
-        return NULL;
-    }
-
-    char *chat_name = strdup((char *)sqlite3_column_text(statement, 0));
-
-    db_close_statement_and_database(statement, database);
-
-    return chat_name;
+    return true;
 }
 
