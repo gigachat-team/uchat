@@ -75,9 +75,10 @@ typedef enum e_state_code {
 } t_state_code;
 
 /**
- * @brief Read LENGTH bytes into BUFFER from SOCKET. This function is best used
+ * @brief Reads LENGTH bytes into BUFFER from SOCKET. This function is best used
  * to read 2 or more bytes.
- * @return Number of recieved bytes or -1 for errors.
+ * @return 0 for success; -1 for errors; if returns a positive number, this
+ * number is number of bytes left to read.
 */
 int recieve(int socket, char *buffer, size_t length);
 /**
