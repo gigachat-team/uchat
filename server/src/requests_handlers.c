@@ -73,7 +73,7 @@ void handle_adding_new_member_to_chat(int client_socket) {
     if (db_add_new_member_to_chat(user_id, new_chat_memeber_data.chat_id)) {
         send_unsigned_char(client_socket, USER_SUCCESSFULLY_ADDED_TO_CHAT);
     } else {
-        send_unsigned_int(client_socket, SUCH_USER_IS_ALREADY_IN_CHAT);
+        send_unsigned_char(client_socket, SUCH_USER_IS_ALREADY_IN_CHAT);
     }
 
     free_new_chat_member_data(new_chat_memeber_data);
