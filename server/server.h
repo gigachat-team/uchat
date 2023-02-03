@@ -23,7 +23,7 @@
 #define MESSAGES_ID "MessageId"
 #define MESSAGES_CHAT_ID "ChatId"
 #define MESSAGES_USER_ID "UserId"
-#define MESSAGES_CONTEXT "Context"
+#define MESSAGES_CONTENT "Content"
 #define MESSAGES_CREATION_DATE "CreationDate"
 
 #define MESSAGE_STATUSES_TABLE "MessageStatuses"
