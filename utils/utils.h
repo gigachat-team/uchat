@@ -46,6 +46,12 @@ typedef struct s_chat_description {
     char *name;
 } t_chat;
 
+typedef struct s_text_message_data {
+    uint32_t user_id;
+    uint32_t chat_id;
+    char *text;
+} t_text_message_data;
+
 typedef enum e_request {
     LOGIN, // -> login -> password
     REGISTER, // -> login -> password
