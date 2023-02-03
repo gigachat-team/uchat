@@ -67,3 +67,17 @@ t_state_code send_add_new_member_request(t_address server_address, t_new_chat_me
     return adding_new_member_to_chat_result;
 }
 
+t_state_code send_text_message_sending_request(t_address server_address, t_text_message_data text_message_data) {
+    int client_socket = create_and_connect_socket(server_address);
+    send_unsigned_char(client_socket, SEND_TEXT_MESSAGE);
+    send_unsigned_int(client_socket, text_message_data.user_id);
+    send_unsigned_int(client_socket, text_message_data.chat_id);
+    send_string(client_socket, text_message_data.text);
+
+    t_state_code response = receive_unsigned_char(client_socket);
+
+    close(client_socket);
+
+    return response;
+}
+

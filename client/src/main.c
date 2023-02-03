@@ -1,8 +1,27 @@
 #include "../client.h"
 
+void handle_chatting(t_address server_address, uint32_t user_id, uint32_t chat_id) {
+    while (true) {
+        printf("\nEnter a command (send, exit)");
+        char command[100];
+        scanf("%s", command);
+
+        if (strcmp(command, "send") == 0) {
+            t_text_message_data text_message_data = get_text_message_data(user_id, chat_id);
+            t_state_code responce = send_text_message_sending_request(server_address, text_message_data);
+            if (responce == TEXT_MESSAGE_SENT_SUCCESSFULLY) {
+                printf("Sent successfully.\n");
+            }
+            free_text_message_data(text_message_data);
+        } else if (strcmp(command, "exit") == 0) {
+            return;
+        }
+    }
+}
+
 void handle_authenticated_user_commands(t_address server_address, int user_id) {
     while (true) {
-        printf("\nEnter a command (newchat, chats, add_member, exit): ");
+        printf("\nEnter a command (newchat, chats, add_member, enter_chat, exit): ");
         char user_command[100];
         scanf("%s", user_command);
 
@@ -32,6 +51,9 @@ void handle_authenticated_user_commands(t_address server_address, int user_id) {
                 }
             }
             free_chats(chats_i_am_in, chats_i_am_in_length);
+        } else if (strcmp(user_command, "enter_chat") == 0) {
+            int chat_id = get_chat_id();
+            handle_chatting(server_address, user_id, chat_id);
         } else if (strcmp(user_command, "exit") == 0) {
             return;
         }
