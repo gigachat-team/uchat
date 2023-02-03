@@ -55,7 +55,7 @@ typedef struct s_text_message_data {
 typedef enum e_request {
     LOGIN, // -> login -> password
     REGISTER, // -> login -> password
-    CREATE_CHAT, // -> chat_name -> owner_login
+    CREATE_CHAT, // -> chat_name -> user_id
     ADD_MEMBER_TO_CHAT, // -> chat_id -> member_login
     GET_CHATS_I_AM_IN, // -> user_id
     SEND_TEXT_MESSAGE // -> user_id -> chat_id -> text_message
@@ -90,20 +90,20 @@ typedef enum e_state_code {
 */
 int receive(int socket, char *buffer, size_t length);
 /**
- * @brief Reads unsigned char from SOCKET. On errors, sets the erno variable
- * to ECONNABORTED.
+ * @brief Reads 1 byte from SOCKET. On errors, sets the erno variable to
+ * ECONNABORTED.
  * @return Read unsigned char.
 */
 uint8_t receive_unsigned_char(int socket);
 /**
- * @brief Reads unsigned short from SOCKET. On errors, sets the erno variable
- * to ECONNABORTED.
+ * @brief Reads 2 bytes from SOCKET. On errors, sets the erno variable to
+ * ECONNABORTED.
  * @return Read unsigned short.
 */
 uint16_t receive_unsigned_short(int socket);
 /**
- * @brief Reads unsigned int from SOCKET. On errors, sets the erno variable
- * to ECONNABORTED.
+ * @brief Reads 4 bytes from SOCKET. On errors, sets the erno variable to
+ * ECONNABORTED.
  * @return Read unsigned int.
 */
 uint32_t receive_unsigned_int(int socket);
