@@ -72,8 +72,8 @@ bool db_add_new_member_to_chat(int user_id, int chat_id) {
 
 void db_add_text_message(uint32_t chat_id, uint32_t user_id, char *text_message) {
     char *sql_command = NULL;
-    asprintf(&sql_command, "INSERT INTO "MESSAGES_TABLE" ("MESSAGES_CHAT_ID", "MESSAGES_USER_ID", "MESSAGES_CONTENT") \
-                            VALUES (%d, %d, %s)", chat_id, user_id, text_message);
+    asprintf(&sql_command, "INSERT INTO "MESSAGES_TABLE" ("MESSAGES_CHAT_ID", "MESSAGES_USER_ID", "MESSAGES_CONTENT", "MESSAGES_CREATION_DATE") \
+                            VALUES (%d, %d, '%s', 'implement later')", chat_id, user_id, text_message);
     db_open_and_execute_sql(sql_command);
     free(sql_command);
 }
