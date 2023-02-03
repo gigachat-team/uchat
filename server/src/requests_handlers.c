@@ -81,3 +81,11 @@ void handle_adding_new_member_to_chat(int client_socket) {
     free_new_chat_member_data(new_chat_memeber_data);
 }
 
+void handle_text_message_sending(int client_socket) {
+    uint32_t user_id = receive_unsigned_int(client_socket);
+    uint32_t chat_id = receive_unsigned_int(client_socket);
+    char *text_message = receive_string(client_socket);
+    db_add_text_message(chat_id, user_id, text_message);
+    send_unsigned_char(client_socket, TEXT_MESSAGE_SENT_SUCCESSFULLY);
+}
+

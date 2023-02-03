@@ -16,6 +16,8 @@ void *handle_request_thread(void *client_socket_void) {
         handle_getting_chats(client_socket);
     } else if (client_request == ADD_MEMBER_TO_CHAT) {
         handle_adding_new_member_to_chat(client_socket);
+    } else if (client_request == SEND_TEXT_MESSAGE) {
+        handle_text_message_sending(client_socket);
     }
 
     close(client_socket);

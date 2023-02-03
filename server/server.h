@@ -44,6 +44,11 @@ void handle_login(int client_socket);
 void handle_chat_creation(int client_socket);
 void handle_getting_chats(int client_socket);
 void handle_adding_new_member_to_chat(int client_socket);
+/**
+ * @brief Receives text message data from CLIENT_SOCKET, creates entry in database
+ * and send response to CLIENT_SOCKET: TEXT_MESSAGE_SEND_SUCCESSFULLY for success.
+*/
+void handle_text_message_sending(int client_socket);
 
 sqlite3 *db_open();
 void db_close(sqlite3 *database);
@@ -67,6 +72,10 @@ void db_create_message_statuses_table();
 int db_create_user(char *login, char *password);
 int db_create_chat(char *chat_name, int owner_id);
 bool db_add_new_member_to_chat(int user_id, int chat_id);
+/**
+ * @brief Creates new text message in the messages table.
+*/
+void db_add_text_message(uint32_t chat_id, uint32_t user_id, char *text_message);
 
 /**
  * @brief Searches for password by ID.

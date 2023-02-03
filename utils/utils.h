@@ -51,7 +51,8 @@ typedef enum e_request {
     REGISTER, // -> login -> password
     CREATE_CHAT, // -> chat_name -> owner_login
     ADD_MEMBER_TO_CHAT, // -> chat_id -> member_login
-    GET_CHATS_I_AM_IN // -> user_id
+    GET_CHATS_I_AM_IN, // -> user_id
+    SEND_TEXT_MESSAGE // -> user_id -> chat_id -> text_message
 } t_request;
 
 typedef enum e_state_code {
@@ -63,6 +64,7 @@ typedef enum e_state_code {
     CHAT_CREATED_SUCCESSFULLY,
     CHATS_ARRAY_TRENSFERRED_SUCCESSFULLY,
     USER_SUCCESSFULLY_ADDED_TO_CHAT,
+    TEXT_MESSAGE_SENT_SUCCESSFULLY,
     
     SUCH_LOGIN_ALREADY_EXISTS,
     SUCH_LOGIN_DOES_NOT_EXIST,
