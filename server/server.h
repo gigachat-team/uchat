@@ -31,7 +31,7 @@
 #define MESSAGE_STATUSES_USER_ID "UserId"
 #define MESSAGE_STATUSES_IS_READ "IsRead"
 
-void *accept_requests_thread(void *listening_socket_void);
+void *handle_request_thread(void *client_socket_void);
 
 t_authentication_data recieve_authentication_data(int client_socket);
 t_chat_creation_data recieve_chat_creation_data(int client_socket);
@@ -92,3 +92,7 @@ bool db_add_new_member_to_chat(int user_id, int chat_id);
 
 bool db_user_is_in_chat(int user_id, int chat_id);
 
+/**
+ * @return nothing but turns server into the daemon state
+*/
+void daemon_server();
