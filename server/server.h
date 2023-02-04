@@ -92,4 +92,7 @@ bool db_add_new_member_to_chat(int user_id, int chat_id);
 
 bool db_user_is_in_chat(int user_id, int chat_id);
 
+/**
+ * @return nothing but turns server into the daemon state
+*/
 void daemon_server();
