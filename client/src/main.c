@@ -2,7 +2,7 @@
 
 void handle_chatting(t_address server_address, uint32_t user_id, uint32_t chat_id) {
     while (true) {
-        printf("\nEnter a command (send, exit)");
+        printf("\nEnter a command (send, last_messages, exit): ");
         char command[100];
         scanf("%s", command);
 
@@ -13,6 +13,13 @@ void handle_chatting(t_address server_address, uint32_t user_id, uint32_t chat_i
                 printf("Sent successfully.\n");
             }
             free_text_message_data(text_message_data);
+        } else if (strcmp(command, "last_message") == 0) {
+            uint32_t messages_count = 0;
+            t_message *messages = rq_get_last_messages(server_address, LAST_LOADING_MESSAGES_COUNT, chat_id, &messages_count);
+            for (size_t i = 0; i < messages_count; i++) {
+                printf("user_id: %d, message: %s\n", messages[i].user_id, messages[i].bytes);
+            }
+            free_messages_array(messages, messages_count);
         } else if (strcmp(command, "exit") == 0) {
             return;
         }
