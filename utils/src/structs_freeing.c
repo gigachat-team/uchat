@@ -7,7 +7,6 @@ void free_authentication_data(t_authentication_data authentication_data) {
 
 void free_chat_creation_data(t_chat_creation_data chat_creation_data) {
     free(chat_creation_data.chat_name);
-    free(chat_creation_data.owner_login);
 }
 
 void free_chat(t_chat chat) {
@@ -23,5 +22,20 @@ void free_chats(t_chat *chats, size_t length) {
 
 void free_new_chat_member_data(t_new_chat_member_data new_chat_member_data) {
     free(new_chat_member_data.member_login);
+}
+
+void free_text_message_data(t_text_message_data text_message_data) {
+    free(text_message_data.text);
+}
+
+void free_message(t_message message) {
+    free(message.bytes);
+}
+
+void free_messages_array(t_message *messages, size_t length) {
+    for (size_t i = 0; i < length; i++) {
+        free_message(messages[i]);
+    }
+    free(messages);
 }
 

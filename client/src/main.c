@@ -1,14 +1,40 @@
 #include "../client.h"
 
-void handle_authenticated_user_commands(t_address server_address, char *user_login) {
+void handle_chatting(t_address server_address, uint32_t user_id, uint32_t chat_id) {
     while (true) {
-        printf("\nEnter a command (newchat, chats, add_member, exit): ");
+        printf("\nEnter a command (send, last_messages, exit): ");
+        char command[100];
+        scanf("%s", command);
+
+        if (strcmp(command, "send") == 0) {
+            t_text_message_data text_message_data = get_text_message_data(user_id, chat_id);
+            t_state_code responce = send_text_message_sending_request(server_address, text_message_data);
+            if (responce == TEXT_MESSAGE_SENT_SUCCESSFULLY) {
+                printf("Sent successfully.\n");
+            }
+            free_text_message_data(text_message_data);
+        } else if (strcmp(command, "last_message") == 0) {
+            uint32_t messages_count = 0;
+            t_message *messages = rq_get_last_messages(server_address, LAST_LOADING_MESSAGES_COUNT, chat_id, &messages_count);
+            for (size_t i = 0; i < messages_count; i++) {
+                printf("user_id: %d, message: %s\n", messages[i].user_id, messages[i].bytes);
+            }
+            free_messages_array(messages, messages_count);
+        } else if (strcmp(command, "exit") == 0) {
+            return;
+        }
+    }
+}
+
+void handle_authenticated_user_commands(t_address server_address, int user_id) {
+    while (true) {
+        printf("\nEnter a command (newchat, chats, add_member, enter_chat, exit): ");
         char user_command[100];
         scanf("%s", user_command);
 
         if (strcmp(user_command, "newchat") == 0) {
-            t_chat_creation_data chat_creation_data = get_chat_creation_data(user_login);
-            t_state_code creating_chat_result = send_create_chat_request(chat_creation_data, server_address);
+            t_chat_creation_data chat_creation_data = get_chat_creation_data(user_id);
+            t_state_code creating_chat_result = send_create_chat_request(server_address, chat_creation_data);
             if (creating_chat_result == CHAT_CREATED_SUCCESSFULLY) {
                 printf("Chat \"%s\" created successfully.", chat_creation_data.chat_name);
             }
@@ -25,13 +51,16 @@ void handle_authenticated_user_commands(t_address server_address, char *user_log
         } else if (strcmp(user_command, "chats") == 0) {
             t_chat *chats_i_am_in = NULL;
             size_t chats_i_am_in_length = 0;
-            if (get_chats_i_am_in(server_address, user_login, &chats_i_am_in, &chats_i_am_in_length) == CHATS_ARRAY_TRENSFERRED_SUCCESSFULLY) {
+            if (get_chats_i_am_in(server_address, user_id, &chats_i_am_in, &chats_i_am_in_length) == CHATS_ARRAY_TRENSFERRED_SUCCESSFULLY) {
                 printf("Chats you're in:\n");
                 for (size_t i = 0; i < chats_i_am_in_length; i++) {
                     printf("id: %i, name: %s\n", chats_i_am_in[i].id, chats_i_am_in[i].name);
                 }
             }
             free_chats(chats_i_am_in, chats_i_am_in_length);
+        } else if (strcmp(user_command, "enter_chat") == 0) {
+            int chat_id = get_chat_id();
+            handle_chatting(server_address, user_id, chat_id);
         } else if (strcmp(user_command, "exit") == 0) {
             return;
         }
@@ -45,6 +74,7 @@ int main(int argc, char **argv) {
     }
 
     t_address server_address = {argv[1], atoi(argv[2])};
+    uint user_id = -1;
 
     while (true) {
         printf("\nEnter a command (login, register, exit): ");
@@ -53,10 +83,10 @@ int main(int argc, char **argv) {
 
         if (strcmp(user_command_str, "login") == 0) {
             t_authentication_data authentication_data = get_authentication_data();
-            t_state_code login_result = send_authenticate_user_request(authentication_data, LOGIN_MODE, server_address);
+            t_state_code login_result = send_authenticate_user_request(server_address, authentication_data, LOGIN_MODE, &user_id);
             if (login_result == SUCCESSFUL_LOGIN) {
                 printf("Successful login.\n");
-                handle_authenticated_user_commands(server_address, authentication_data.login);
+                handle_authenticated_user_commands(server_address, user_id);
             } else if (login_result == SUCH_LOGIN_DOES_NOT_EXIST) {
                 printf("Such login does not exist.\n");
             } else if (login_result == WRONG_PASSWORD) {
@@ -65,10 +95,10 @@ int main(int argc, char **argv) {
             free_authentication_data(authentication_data);
         } else if (strcmp(user_command_str, "register") == 0) {
             t_authentication_data authentication_data = get_authentication_data();
-            t_state_code registration_result = send_authenticate_user_request(authentication_data, REGISTER_MODE, server_address);
+            t_state_code registration_result = send_authenticate_user_request(server_address, authentication_data, REGISTER_MODE, &user_id);
             if (registration_result == SUCCESSFUL_REGISTRATION) {
                 printf("Successful registration.\n");
-                handle_authenticated_user_commands(server_address, authentication_data.login);
+                handle_authenticated_user_commands(server_address, user_id);
             } else if (registration_result == SUCH_LOGIN_ALREADY_EXISTS) {
                 printf("Such login already exists.\n");
             }

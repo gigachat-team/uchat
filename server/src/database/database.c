@@ -1,4 +1,4 @@
-#include "../server.h"
+#include "../../server.h"
 
 sqlite3 *db_open() {
     sqlite3 *database;

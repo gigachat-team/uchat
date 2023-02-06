@@ -4,8 +4,7 @@ void *handle_request_thread(void *client_socket_void) {
     int client_socket = *(int *)client_socket_void;
     free(client_socket_void);
 
-    t_request client_request = recieve_unsigned_char(client_socket);
-    send_unsigned_char(client_socket, SUCCESSFULLY_READ);
+    t_request client_request = receive_unsigned_char(client_socket);
 
     if (client_request == LOGIN) {
         handle_login(client_socket);
@@ -17,6 +16,10 @@ void *handle_request_thread(void *client_socket_void) {
         handle_getting_chats(client_socket);
     } else if (client_request == ADD_MEMBER_TO_CHAT) {
         handle_adding_new_member_to_chat(client_socket);
+    } else if (client_request == SEND_TEXT_MESSAGE) {
+        handle_text_message_sending(client_socket);
+    } else if (client_request == GET_LAST_MESSAGES) {
+        handle_last_messages_getting(client_socket);
     }
 
     close(client_socket);
