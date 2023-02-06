@@ -52,6 +52,11 @@ typedef struct s_text_message_data {
     char *text;
 } t_text_message_data;
 
+typedef struct s_message {
+    uint32_t user_id;
+    char *bytes;
+} t_message;
+
 typedef enum e_request {
     LOGIN, // -> login -> password
     REGISTER, // -> login -> password
@@ -139,4 +144,6 @@ void free_chat(t_chat chat);
 void free_chats(t_chat *chats, size_t length);
 void free_new_chat_member_data(t_new_chat_member_data new_chat_member_data);
 void free_text_message_data(t_text_message_data text_message_data);
+void free_message(t_message message);
+void free_messages_array(t_message *messages, size_t length);
 

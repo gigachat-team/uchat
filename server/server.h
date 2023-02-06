@@ -31,14 +31,6 @@
 #define MESSAGE_STATUSES_USER_ID "UserId"
 #define MESSAGE_STATUSES_IS_READ "IsRead"
 
-typedef struct s_message {
-    uint32_t user_id;
-    char *bytes;
-} t_message;
-
-void free_message(t_message message);
-void free_messages_array(t_message *messages, size_t length);
-
 void *accept_requests_thread(void *listening_socket_void);
 
 t_authentication_data receive_authentication_data(int client_socket);
