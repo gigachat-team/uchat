@@ -13,7 +13,7 @@ void handle_chatting(t_address server_address, uint32_t user_id, uint32_t chat_i
                 printf("Sent successfully.\n");
             }
             free_text_message_data(text_message_data);
-        } else if (strcmp(command, "last_message") == 0) {
+        } else if (strcmp(command, "last_messages") == 0) {
             uint32_t messages_count = 0;
             t_message *messages = rq_get_last_messages(server_address, LAST_LOADING_MESSAGES_COUNT, chat_id, &messages_count);
             for (size_t i = 0; i < messages_count; i++) {
