@@ -93,6 +93,9 @@ t_message *rq_get_last_messages(t_address server_address, uint16_t messages_coun
         found_messages[i].user_id = receive_unsigned_int(client_socket);
         found_messages[i].bytes = receive_string(client_socket);
     }
+
+    close(client_socket);
+
     return found_messages;
 }
 
