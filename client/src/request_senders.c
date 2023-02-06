@@ -1,6 +1,6 @@
 #include "../client.h"
 
-t_state_code send_authenticate_user_request(t_address server_address, t_authentication_data authentication_data, t_authentication_mode authentication_mode, uint *user_id) {
+t_state_code rq_authenticate_user(t_address server_address, t_authentication_data authentication_data, t_authentication_mode authentication_mode, uint *user_id) {
     int client_socket = create_and_connect_socket(server_address);
 
     send_unsigned_char(client_socket, authentication_mode);
@@ -17,7 +17,7 @@ t_state_code send_authenticate_user_request(t_address server_address, t_authenti
     return authentication_result;
 }
 
-t_state_code send_create_chat_request(t_address server_address, t_chat_creation_data chat_data) {
+t_state_code rq_create_chat(t_address server_address, t_chat_creation_data chat_data) {
     int client_socket = create_and_connect_socket(server_address);
 
     send_unsigned_char(client_socket, CREATE_CHAT);
@@ -31,7 +31,7 @@ t_state_code send_create_chat_request(t_address server_address, t_chat_creation_
     return creating_chat_result;
 }
 
-t_state_code get_chats_i_am_in(t_address server_address, int user_id, t_chat **chats_i_am_in, size_t *chats_i_am_in_length) {
+t_state_code rq_get_chats_i_am_in(t_address server_address, int user_id, t_chat **chats_i_am_in, size_t *chats_i_am_in_length) {
     int client_socket = create_and_connect_socket(server_address);
 
     send_unsigned_char(client_socket, GET_CHATS_I_AM_IN);
@@ -53,7 +53,7 @@ t_state_code get_chats_i_am_in(t_address server_address, int user_id, t_chat **c
     return resulting_state_code;
 }
 
-t_state_code send_add_new_member_request(t_address server_address, t_new_chat_member_data new_chat_member_data) {
+t_state_code rq_add_new_member(t_address server_address, t_new_chat_member_data new_chat_member_data) {
     int client_socket = create_and_connect_socket(server_address);
 
     send_unsigned_char(client_socket, ADD_MEMBER_TO_CHAT);
@@ -67,7 +67,7 @@ t_state_code send_add_new_member_request(t_address server_address, t_new_chat_me
     return adding_new_member_to_chat_result;
 }
 
-t_state_code send_text_message_sending_request(t_address server_address, t_text_message_data text_message_data) {
+t_state_code rq_send_text_message(t_address server_address, t_text_message_data text_message_data) {
     int client_socket = create_and_connect_socket(server_address);
     send_unsigned_char(client_socket, SEND_TEXT_MESSAGE);
     send_unsigned_int(client_socket, text_message_data.user_id);

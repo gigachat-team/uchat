@@ -8,7 +8,7 @@ void handle_chatting(t_address server_address, uint32_t user_id, uint32_t chat_i
 
         if (strcmp(command, "send") == 0) {
             t_text_message_data text_message_data = get_text_message_data(user_id, chat_id);
-            t_state_code responce = send_text_message_sending_request(server_address, text_message_data);
+            t_state_code responce = rq_send_text_message(server_address, text_message_data);
             if (responce == TEXT_MESSAGE_SENT_SUCCESSFULLY) {
                 printf("Sent successfully.\n");
             }
@@ -34,14 +34,14 @@ void handle_authenticated_user_commands(t_address server_address, int user_id) {
 
         if (strcmp(user_command, "newchat") == 0) {
             t_chat_creation_data chat_creation_data = get_chat_creation_data(user_id);
-            t_state_code creating_chat_result = send_create_chat_request(server_address, chat_creation_data);
+            t_state_code creating_chat_result = rq_create_chat(server_address, chat_creation_data);
             if (creating_chat_result == CHAT_CREATED_SUCCESSFULLY) {
                 printf("Chat \"%s\" created successfully.", chat_creation_data.chat_name);
             }
             free_chat_creation_data(chat_creation_data);
         } else if (strcmp(user_command, "add_member") == 0) {
             t_new_chat_member_data new_chat_member_data = get_new_chat_member_data();
-            t_state_code adding_new_member_result = send_add_new_member_request(server_address, new_chat_member_data);
+            t_state_code adding_new_member_result = rq_add_new_member(server_address, new_chat_member_data);
             if (adding_new_member_result == USER_SUCCESSFULLY_ADDED_TO_CHAT) {
                 printf("The user %s successfully added to the chat.\n", new_chat_member_data.member_login);
             } else if (adding_new_member_result == SUCH_USER_IS_ALREADY_IN_CHAT) {
@@ -51,7 +51,7 @@ void handle_authenticated_user_commands(t_address server_address, int user_id) {
         } else if (strcmp(user_command, "chats") == 0) {
             t_chat *chats_i_am_in = NULL;
             size_t chats_i_am_in_length = 0;
-            if (get_chats_i_am_in(server_address, user_id, &chats_i_am_in, &chats_i_am_in_length) == CHATS_ARRAY_TRENSFERRED_SUCCESSFULLY) {
+            if (rq_get_chats_i_am_in(server_address, user_id, &chats_i_am_in, &chats_i_am_in_length) == CHATS_ARRAY_TRENSFERRED_SUCCESSFULLY) {
                 printf("Chats you're in:\n");
                 for (size_t i = 0; i < chats_i_am_in_length; i++) {
                     printf("id: %i, name: %s\n", chats_i_am_in[i].id, chats_i_am_in[i].name);
@@ -83,7 +83,7 @@ int main(int argc, char **argv) {
 
         if (strcmp(user_command_str, "login") == 0) {
             t_authentication_data authentication_data = get_authentication_data();
-            t_state_code login_result = send_authenticate_user_request(server_address, authentication_data, LOGIN_MODE, &user_id);
+            t_state_code login_result = rq_authenticate_user(server_address, authentication_data, LOGIN_MODE, &user_id);
             if (login_result == SUCCESSFUL_LOGIN) {
                 printf("Successful login.\n");
                 handle_authenticated_user_commands(server_address, user_id);
@@ -95,7 +95,7 @@ int main(int argc, char **argv) {
             free_authentication_data(authentication_data);
         } else if (strcmp(user_command_str, "register") == 0) {
             t_authentication_data authentication_data = get_authentication_data();
-            t_state_code registration_result = send_authenticate_user_request(server_address, authentication_data, REGISTER_MODE, &user_id);
+            t_state_code registration_result = rq_authenticate_user(server_address, authentication_data, REGISTER_MODE, &user_id);
             if (registration_result == SUCCESSFUL_REGISTRATION) {
                 printf("Successful registration.\n");
                 handle_authenticated_user_commands(server_address, user_id);
