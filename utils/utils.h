@@ -7,7 +7,7 @@
 #include <unistd.h>
 #include <stdbool.h>
 #include <netdb.h>
-#include <fcntl.h>  
+#include <fcntl.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <arpa/inet.h>
@@ -16,6 +16,10 @@
 #include <pthread.h>
 #include <errno.h>
 #include "../resources/libraries/libmx/inc/libmx.h"
+
+/** For daemon**/
+#include <syslog.h>
+#include <signal.h>
 
 #define MAX_LOGIN_LENGTH 40
 #define MAX_PASSWORD_LENGTH 50

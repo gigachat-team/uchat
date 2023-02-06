@@ -31,7 +31,7 @@
 #define MESSAGE_STATUSES_USER_ID "UserId"
 #define MESSAGE_STATUSES_IS_READ "IsRead"
 
-void *accept_requests_thread(void *listening_socket_void);
+void *handle_request_thread(void *client_socket_void);
 
 t_authentication_data receive_authentication_data(int client_socket);
 t_chat_creation_data receive_chat_creation_data(int client_socket);
@@ -103,3 +103,7 @@ t_message *db_get_last_messages(uint32_t chat_id, size_t count, size_t *number_o
 bool db_users_table_has_login(char *login);
 bool db_user_is_in_chat(int user_id, int chat_id);
 
+/**
+ * @return nothing but turns server into the daemon state
+*/
+void daemon_server();
