@@ -58,7 +58,8 @@ typedef enum e_request {
     CREATE_CHAT, // -> chat_name -> user_id
     ADD_MEMBER_TO_CHAT, // -> chat_id -> member_login
     GET_CHATS_I_AM_IN, // -> user_id
-    SEND_TEXT_MESSAGE // -> user_id -> chat_id -> text_message
+    SEND_TEXT_MESSAGE, // -> user_id -> chat_id -> text_message
+    GET_LAST_MESSAGES
 } t_request;
 
 typedef enum e_state_code {

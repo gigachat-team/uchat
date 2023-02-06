@@ -31,6 +31,14 @@
 #define MESSAGE_STATUSES_USER_ID "UserId"
 #define MESSAGE_STATUSES_IS_READ "IsRead"
 
+typedef struct s_message {
+    uint32_t user_id;
+    char *bytes;
+} t_message;
+
+void free_message(t_message message);
+void free_messages_array(t_message *messages, size_t length);
+
 void *accept_requests_thread(void *listening_socket_void);
 
 t_authentication_data receive_authentication_data(int client_socket);
@@ -49,6 +57,7 @@ void handle_adding_new_member_to_chat(int client_socket);
  * and send response to CLIENT_SOCKET: TEXT_MESSAGE_SEND_SUCCESSFULLY for success.
 */
 void handle_text_message_sending(int client_socket);
+void handle_last_messages_getting(int client_socket);
 
 sqlite3 *db_open();
 void db_close(sqlite3 *database);
@@ -89,6 +98,12 @@ int db_get_user_id_by_login(char *login);
 char *db_get_chat_name_by_id(int chat_id);
 int *db_get_IDs_of_chats_user_is_in(int user_id, size_t *IDs_of_chats_len);
 t_chat *db_get_chats_user_is_in(int user_id, size_t *number_of_chats);
+/**
+ * @brief Searches for last COUNT messages by CHAT_ID in messages table. Number of found
+ * messages writes to NUMBER_OF_FOUND variable.
+ * @return Allocated array of messages
+*/
+t_message *db_get_last_messages(uint32_t chat_id, size_t count, size_t *number_of_found);
 
 /**
  * @return false if such login does not exist or true if exists

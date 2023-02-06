@@ -89,3 +89,19 @@ void handle_text_message_sending(int client_socket) {
     send_unsigned_char(client_socket, TEXT_MESSAGE_SENT_SUCCESSFULLY);
 }
 
+void handle_last_messages_getting(int client_socket) {
+    uint16_t messages_count = receive_unsigned_int(client_socket);
+    uint32_t chat_id = receive_unsigned_int(client_socket);
+
+    size_t number_of_found = 0;
+    t_message *last_messages = db_get_last_messages(chat_id, messages_count, &number_of_found);
+
+    send_unsigned_short(client_socket, number_of_found);
+    for (size_t i = 0; i < number_of_found; i++) {
+        send_unsigned_int(client_socket, last_messages[i].user_id);
+        send_string(client_socket, last_messages[i].bytes);
+    }
+
+    free_messages_array(last_messages, number_of_found);
+}
+

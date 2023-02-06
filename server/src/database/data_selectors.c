@@ -106,3 +106,33 @@ t_chat *db_get_chats_user_is_in(int user_id, size_t *number_of_chats) {
     return descriptions_of_chats;
 }
 
+t_message *db_get_last_messages(uint32_t chat_id, size_t count, size_t *number_of_found) {
+    char *sql = NULL;
+    asprintf(&sql, "SELECT "MESSAGES_USER_ID", "MESSAGES_CONTENT" FROM "MESSAGES_TABLE" \
+                    WHERE "MESSAGES_CHAT_ID" = %d ORDER BY "MESSAGES_ID" DESC", chat_id);
+
+    sqlite3 *database = db_open();
+    sqlite3_stmt *statement = db_open_statement(database, sql);
+
+    free(sql);
+
+    t_message *messages = malloc(count * sizeof(t_message));
+
+    *number_of_found = 0;
+    for (; sqlite3_step(statement) == SQLITE_ROW && *number_of_found <= count; (*number_of_found)++) {
+        messages[*number_of_found].user_id = sqlite3_column_int(statement, 0);
+        messages[*number_of_found].bytes = strdup(sqlite3_column_blob(statement, 1));
+    }
+    db_close_statement_and_database(statement, database);
+
+    if (*number_of_found == 0) {
+        free(messages);
+        return NULL;
+    }
+    if (*number_of_found != count) {
+        messages = realloc(messages, *number_of_found * sizeof(t_message));
+    }
+
+    return messages;
+}
+
