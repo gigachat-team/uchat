@@ -90,7 +90,7 @@ void handle_text_message_sending(int client_socket) {
 }
 
 void handle_last_messages_getting(int client_socket) {
-    uint16_t messages_count = receive_unsigned_int(client_socket);
+    uint16_t messages_count = receive_unsigned_short(client_socket);
     uint32_t chat_id = receive_unsigned_int(client_socket);
 
     size_t number_of_found = 0;
