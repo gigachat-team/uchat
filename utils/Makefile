@@ -22,7 +22,7 @@ $(LIBNAME): $(SOURCES) $(OBJDIR) $(OBJECTS)
 
 -include $(DEPENDS)
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.c
+$(OBJDIR)/%.o: $(SRCDIR)/%.c Makefile
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(OBJDIR):

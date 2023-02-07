@@ -26,7 +26,7 @@ $(BINARYNAME): $(SOURCES) $(OBJDIR) $(OBJECTS) $(UTILS_LIB)
 
 -include $(DEPENDS)
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.c
+$(OBJDIR)/%.o: $(SRCDIR)/%.c Makefile
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(OBJDIR):
