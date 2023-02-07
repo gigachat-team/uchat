@@ -59,49 +59,49 @@ void db_close_statement_and_database(sqlite3_stmt *statement, sqlite3 *database)
 void db_execute_sql(sqlite3 *database, char* sql_command);
 void db_open_and_execute_sql(char *sql_command);
 
-void db_create_users_table();
-void db_create_chats_table();
-void db_create_members_table();
-void db_create_messages_table();
-void db_create_message_statuses_table();
+void db_create_users_table(sqlite3 *db);
+void db_create_chats_table(sqlite3 *db);
+void db_create_members_table(sqlite3 *db);
+void db_create_messages_table(sqlite3 *db);
+void db_create_message_statuses_table(sqlite3 *db);
 
 /**
  * @brief Creates new user in the users table with new LOGIN and PASSWORD.
  * @return Positive user id or -1 if the users table already has the user with
  * this LOGIN. 
 */
-int db_create_user(char *login, char *password);
-int db_create_chat(char *chat_name, int owner_id);
-bool db_add_new_member_to_chat(int user_id, int chat_id);
+int db_create_user(sqlite3 *db, char *login, char *password);
+int db_create_chat(sqlite3 *db, char *chat_name, int owner_id);
+bool db_add_new_member_to_chat(sqlite3 *db, int user_id, int chat_id);
 /**
  * @brief Creates new text message in the messages table.
 */
-void db_add_text_message(uint32_t chat_id, uint32_t user_id, char *text_message);
+void db_add_text_message(sqlite3 *db, uint32_t chat_id, uint32_t user_id, char *text_message);
 
 /**
  * @brief Searches for password by ID.
  * @return New allocated string or NULL if ID not found.
 */
-char *db_get_password_by_id(const int id);
+char *db_get_password_by_id(sqlite3 *db, const int id);
 /**
  * @return -1 if user id didn't find by the login. Positive number if a user id found
 */
-int db_get_user_id_by_login(char *login);
-char *db_get_chat_name_by_id(int chat_id);
-int *db_get_IDs_of_chats_user_is_in(int user_id, size_t *IDs_of_chats_len);
-t_chat *db_get_chats_user_is_in(int user_id, size_t *number_of_chats);
+int db_get_user_id_by_login(sqlite3 *db, char *login);
+char *db_get_chat_name_by_id(sqlite3 *db, int chat_id);
+int *db_get_IDs_of_chats_user_is_in(sqlite3 *db, int user_id, size_t *IDs_of_chats_len);
+t_chat *db_get_chats_user_is_in(sqlite3 *db, int user_id, size_t *number_of_chats);
 /**
  * @brief Searches for last COUNT messages by CHAT_ID in messages table. Number of found
  * messages writes to NUMBER_OF_FOUND variable.
  * @return Allocated array of messages
 */
-t_message *db_get_last_messages(uint32_t chat_id, size_t count, size_t *number_of_found);
+t_message *db_get_last_messages(sqlite3 *db, uint32_t chat_id, size_t count, size_t *number_of_found);
 
 /**
  * @return false if such login does not exist or true if exists
 */
-bool db_users_table_has_login(char *login);
-bool db_user_is_in_chat(int user_id, int chat_id);
+bool db_users_table_has_login(sqlite3 *db, char *login);
+bool db_user_is_in_chat(sqlite3 *db, int user_id, int chat_id);
 
 /**
  * @return nothing but turns server into the daemon state

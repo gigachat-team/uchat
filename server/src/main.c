@@ -7,11 +7,14 @@ int main(int argc, char **argv) {
     }
 
     daemon_server();
-    db_create_users_table();
-    db_create_chats_table();
-    db_create_message_statuses_table();
-    db_create_messages_table();
-    db_create_members_table();
+
+    sqlite3 *db = db_open();
+    db_create_users_table(db);
+    db_create_chats_table(db);
+    db_create_message_statuses_table(db);
+    db_create_messages_table(db);
+    db_create_members_table(db);
+    db_close(db);
 
     int listening_socket = create_socket();
     bind_socket(listening_socket, atoi(argv[1]));

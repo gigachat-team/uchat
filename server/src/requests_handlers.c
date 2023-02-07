@@ -2,7 +2,10 @@
 
 void handle_registration(int client_socket) {
     t_authentication_data authentication_data = receive_authentication_data(client_socket);
-    int user_id = db_create_user(authentication_data.login, authentication_data.password);
+
+    sqlite3 *db = db_open();
+    int user_id = db_create_user(db, authentication_data.login, authentication_data.password);
+    db_close(db);
 
     if (user_id != -1) {
         send_unsigned_char(client_socket, SUCCESSFUL_REGISTRATION);
@@ -16,8 +19,12 @@ void handle_registration(int client_socket) {
 
 void handle_login(int client_socket) {
     t_authentication_data authentication_data = receive_authentication_data(client_socket);
-    int user_id = db_get_user_id_by_login(authentication_data.login);
-    char *found_password = db_get_password_by_id(user_id);
+
+    sqlite3 *db = db_open();
+    int user_id = db_get_user_id_by_login(db, authentication_data.login);
+    char *found_password = db_get_password_by_id(db, user_id);
+    db_close(db);
+
     if (found_password != NULL) {
         if (strcmp(authentication_data.password, found_password) == 0) {
             send_unsigned_char(client_socket, SUCCESSFUL_LOGIN);
@@ -35,8 +42,11 @@ void handle_login(int client_socket) {
 
 void handle_chat_creation(int client_socket) {
     t_chat_creation_data chat_creation_data = receive_chat_creation_data(client_socket);
-    int created_chat_id = db_create_chat(chat_creation_data.chat_name, chat_creation_data.owner_id);
-    db_add_new_member_to_chat(chat_creation_data.owner_id, created_chat_id);
+
+    sqlite3 *db = db_open();
+    int created_chat_id = db_create_chat(db, chat_creation_data.chat_name, chat_creation_data.owner_id);
+    db_add_new_member_to_chat(db, chat_creation_data.owner_id, created_chat_id);
+    db_close(db);
 
     send_unsigned_char(client_socket, CHAT_CREATED_SUCCESSFULLY);
 
@@ -47,7 +57,10 @@ void handle_getting_chats(int client_socket) {
     int user_id = receive_unsigned_int(client_socket);
 
     size_t number_of_chats = 0;
-    t_chat *chats = db_get_chats_user_is_in(user_id, &number_of_chats);
+
+    sqlite3 *db = db_open();
+    t_chat *chats = db_get_chats_user_is_in(db, user_id, &number_of_chats);
+    db_close(db);
 
     if (number_of_chats > 0) {
         send_unsigned_char(client_socket, START_OF_CHATS_ARRAY);
@@ -70,9 +83,13 @@ void handle_getting_chats(int client_socket) {
 
 void handle_adding_new_member_to_chat(int client_socket) {
     t_new_chat_member_data new_chat_memeber_data = receive_new_chat_memeber_data(client_socket);
-    int user_id = db_get_user_id_by_login(new_chat_memeber_data.member_login);
 
-    if (db_add_new_member_to_chat(user_id, new_chat_memeber_data.chat_id)) {
+    sqlite3 *db = db_open();
+    int user_id = db_get_user_id_by_login(db, new_chat_memeber_data.member_login);
+    bool new_member_added = db_add_new_member_to_chat(db, user_id, new_chat_memeber_data.chat_id);
+    db_close(db);
+
+    if (new_member_added) {
         send_unsigned_char(client_socket, USER_SUCCESSFULLY_ADDED_TO_CHAT);
     } else {
         send_unsigned_char(client_socket, SUCH_USER_IS_ALREADY_IN_CHAT);
@@ -85,7 +102,9 @@ void handle_text_message_sending(int client_socket) {
     uint32_t user_id = receive_unsigned_int(client_socket);
     uint32_t chat_id = receive_unsigned_int(client_socket);
     char *text_message = receive_string(client_socket);
-    db_add_text_message(chat_id, user_id, text_message);
+    sqlite3 *db = db_open();
+    db_add_text_message(db, chat_id, user_id, text_message);
+    db_close(db);
     send_unsigned_char(client_socket, TEXT_MESSAGE_SENT_SUCCESSFULLY);
 }
 
@@ -94,7 +113,10 @@ void handle_last_messages_getting(int client_socket) {
     uint32_t chat_id = receive_unsigned_int(client_socket);
 
     size_t number_of_found = 0;
-    t_message *last_messages = db_get_last_messages(chat_id, messages_count, &number_of_found);
+
+    sqlite3 *db = db_open();
+    t_message *last_messages = db_get_last_messages(db, chat_id, messages_count, &number_of_found);
+    db_close(db);
 
     send_unsigned_short(client_socket, number_of_found);
     for (size_t i = 0; i < number_of_found; i++) {
