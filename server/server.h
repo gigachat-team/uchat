@@ -55,9 +55,7 @@ sqlite3 *db_open();
 void db_close(sqlite3 *db);
 sqlite3_stmt *db_open_statement(sqlite3 *db, char *sql);
 void db_close_statement(sqlite3_stmt *statement, sqlite3 *db);
-void db_close_statement_and_database(sqlite3_stmt *statement, sqlite3 *db);
 void db_execute_sql(sqlite3 *db, char* sql);
-void db_open_and_execute_sql(char *sql);
 
 void db_create_users_table(sqlite3 *db);
 void db_create_chats_table(sqlite3 *db);

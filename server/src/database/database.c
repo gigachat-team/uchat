@@ -36,11 +36,6 @@ void db_close_statement(sqlite3_stmt *statement, sqlite3 *db) {
     }
 }
 
-void db_close_statement_and_database(sqlite3_stmt *statement, sqlite3 *db) {
-    db_close_statement(statement, db);
-    db_close(db);
-}
-
 void db_execute_sql(sqlite3 *db, char* sql) {
     char *error_message;
     if (sqlite3_exec(db, sql, NULL, NULL, &error_message) != SQLITE_OK) {
@@ -48,11 +43,5 @@ void db_execute_sql(sqlite3 *db, char* sql) {
         db_close(db);
         exit(EXIT_FAILURE);
     }
-}
-
-void db_open_and_execute_sql(char *sql) {
-    sqlite3 *database = db_open();
-    db_execute_sql(database, sql);
-    db_close(database);
 }
 
