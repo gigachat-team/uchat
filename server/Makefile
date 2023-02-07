@@ -1,7 +1,7 @@
 BINARYNAME = ../uchat_server
 
 CC = clang
-CFLAGS = -std=c11 -Wall -Wextra -Werror -Wpedantic -gdwarf-4 -pthread
+CFLAGS = -std=c11 -Wall -Wextra -Werror -Wpedantic -gdwarf-4 -pthread -MMD -MP
 
 OBJDIR = obj
 UTILS_OBJDIR = ../utils/obj
@@ -9,6 +9,7 @@ SRCDIR = src
 
 SOURCES = $(subst ./,,$(shell find . -name "*.c"))
 OBJECTS = $(subst $(SRCDIR)/,,$(addprefix $(OBJDIR)/, $(SOURCES:.c=.o)))
+DEPENDS = $(subst $(SRCDIR)/,,$(addprefix $(OBJDIR)/, $(SOURCES:.c=.d)))
 
 UTILS_LIB = ../utils/libutils.a
 LIBMX_LIB = ../resources/libraries/libmx/libmx.a
@@ -25,7 +26,9 @@ $(BINARYNAME): $(SOURCES) $(OBJDIR) $(OBJECTS) $(UTILS_LIB)
 	@$(CC) $(CFLAGS) $(OBJECTS) $(INCLUDE_UTILS) $(INCLUDE_LIBMX) $(INCLUDE_SQLITE) -o $@
 	@printf "$(notdir $@)\tcreated\n"
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.c
+-include $(DEPENDS)
+
+$(OBJDIR)/%.o: $(SRCDIR)/%.c Makefile
 	@mkdir -p $(@D)
 	@$(CC) $(CFLAGS) -c $< -o $@
 

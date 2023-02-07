@@ -1,7 +1,7 @@
 LIBNAME = libutils.a
 
 CC = clang
-CFLAGS = -std=c11 -Wall -Wextra -Werror -Wpedantic -gdwarf-4
+CFLAGS = -std=c11 -Wall -Wextra -Werror -Wpedantic -gdwarf-4 -MMD -MP
 
 LIBCREATOR = ar
 LIBCREATOR_FLAGS = rsc
@@ -11,6 +11,7 @@ SRCDIR = src
 
 SOURCES = $(subst ./,,$(shell find . -name "*.c"))
 OBJECTS = $(subst $(SRCDIR)/,,$(addprefix $(OBJDIR)/, $(SOURCES:.c=.o)))
+DEPENDS = $(subst $(SRCDIR)/,,$(addprefix $(OBJDIR)/, $(SOURCES:.c=.d)))
 
 all: $(LIBNAME)
 	@:
@@ -19,7 +20,9 @@ $(LIBNAME): $(SOURCES) $(OBJDIR) $(OBJECTS)
 	@$(LIBCREATOR) $(LIBCREATOR_FLAGS) $@ $(OBJECTS)
 	@printf "$(notdir $@)\tcreated\n"
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.c
+-include $(DEPENDS)
+
+$(OBJDIR)/%.o: $(SRCDIR)/%.c Makefile
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(OBJDIR):
