@@ -51,10 +51,27 @@ void handle_adding_new_member_to_chat(int client_socket);
 void handle_text_message_sending(int client_socket);
 void handle_last_messages_getting(int client_socket);
 
+/**
+ * @brief Opens new database connection. Prints error and close application on error.
+ * @return New sqlite3 database connection.
+*/
 sqlite3 *db_open();
+/**
+ * @brief Closes database connection. Prints error and close application on error.
+*/
 void db_close(sqlite3 *db);
+/**
+ * @brief Prepares sqlite3 statement. Prints error and close application on error.
+ * @return Prepared sqlite3 statement.
+*/
 sqlite3_stmt *db_open_statement(sqlite3 *db, char *sql);
+/**
+ * @brief Finalizes sqlite3 statement. Prints error and close application on error.
+*/
 void db_close_statement(sqlite3_stmt *statement, sqlite3 *db);
+/**
+ * @brief Executes SQL command. Prints error and close application on error.
+*/
 void db_execute_sql(sqlite3 *db, char* sql);
 
 void db_create_users_table(sqlite3 *db);
