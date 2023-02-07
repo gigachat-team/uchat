@@ -32,6 +32,9 @@ reinstall:
 	$(make_command) $(CLIENT_DIR) reinstall
 	$(make_command) $(SERVER_DIR) reinstall
 
-reinstall_with_libs: reinstall
+reinstall_with_libs:
 	$(make_command) $(LIBRARIES_DIR) reinstall
+	$(make_command) $(UTILS_DIR) reinstall
+	$(make_command) $(CLIENT_DIR) reinstall
+	$(make_command) $(SERVER_DIR) reinstall
 
