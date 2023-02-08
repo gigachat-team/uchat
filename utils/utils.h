@@ -37,27 +37,27 @@ typedef struct s_authentication_data {
 
 typedef struct s_chat_creation_data {
     char *chat_name;
-    int owner_id;
+    id_t owner_id;
 } t_chat_creation_data;
 
 typedef struct s_new_chat_member_data {
-    int chat_id;
+    id_t chat_id;
     char *member_login;
 } t_new_chat_member_data;
 
 typedef struct s_chat_description {
-    int id;
+    id_t id;
     char *name;
 } t_chat;
 
 typedef struct s_text_message_data {
-    uint32_t user_id;
-    uint32_t chat_id;
+    id_t user_id;
+    id_t chat_id;
     char *text;
 } t_text_message_data;
 
 typedef struct s_user_message {
-    uint32_t user_id;
+    id_t user_id;
     char *user_login;
     char *bytes;
 } t_user_message;
@@ -79,18 +79,13 @@ typedef enum e_state_code {
     SUCCESSFUL_REGISTRATION,
     SUCCESSFUL_LOGIN,
     CHAT_CREATED_SUCCESSFULLY,
-    CHATS_ARRAY_TRENSFERRED_SUCCESSFULLY,
     USER_SUCCESSFULLY_ADDED_TO_CHAT,
     TEXT_MESSAGE_SENT_SUCCESSFULLY,
     
     SUCH_LOGIN_ALREADY_EXISTS,
     SUCH_LOGIN_DOES_NOT_EXIST,
     WRONG_PASSWORD,
-    SUCH_USER_IS_ALREADY_IN_CHAT,
-
-    START_OF_CHATS_ARRAY,
-    CONTINUATION_OF_CHATS_ARRAY,
-    END_OF_CHATS_ARRAY
+    SUCH_USER_IS_ALREADY_IN_CHAT
 } t_state_code;
 
 /**
@@ -137,7 +132,7 @@ void join_thread(pthread_t thread, void **thread_return);
 void cancel_thread(pthread_t thread);
 
 int create_socket();
-void bind_socket(int socket, unsigned int port);
+void bind_socket(int socket, uint16_t port);
 void listen_socket(int socket, int queue_len);
 int accept_socket(int this_socket);
 void connect_socket(int socket, t_address address);

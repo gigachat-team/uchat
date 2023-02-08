@@ -16,7 +16,7 @@ bool db_users_table_has_login(sqlite3 *database, char *login) {
     return has_login;
 }
 
-bool db_user_is_in_chat(sqlite3 *database, int user_id, int chat_id) {
+bool db_user_is_in_chat(sqlite3 *database, id_t user_id, id_t chat_id) {
     char *sql = NULL;
     asprintf(&sql, "SELECT * FROM "MEMBERS_TABLE" \
         WHERE "MEMBERS_USER_ID" = %d AND "MEMBERS_CHAT_ID" = %d", user_id, chat_id
