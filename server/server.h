@@ -20,7 +20,7 @@
 #define MEMBERS_USER_ID "UserId"
 
 #define MESSAGES_TABLE "Messages"
-#define MESSAGES_ID "MessageId"
+#define MESSAGES_ID "Id"
 #define MESSAGES_CHAT_ID "ChatId"
 #define MESSAGES_USER_ID "UserId"
 #define MESSAGES_CONTENT "Content"
