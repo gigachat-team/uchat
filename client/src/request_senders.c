@@ -31,7 +31,7 @@ t_state_code rq_create_chat(t_address server_address, t_chat_creation_data chat_
     return creating_chat_result;
 }
 
-t_chat *rq_get_chats_i_am_in(t_address server_address, int user_id, size_t *chats_count) {
+t_chat *rq_get_chats_i_am_in(t_address server_address, id_t user_id, size_t *chats_count) {
     int client_socket = create_and_connect_socket(server_address);
 
     send_unsigned_char(client_socket, GET_CHATS_I_AM_IN);
@@ -77,7 +77,7 @@ t_state_code rq_send_text_message(t_address server_address, t_text_message_data 
     return response;
 }
 
-t_user_message *rq_get_last_messages(t_address server_address, uint16_t messages_count, uint32_t chat_id, uint32_t *found_messages_count) {
+t_user_message *rq_get_last_messages(t_address server_address, uint16_t messages_count, id_t chat_id, uint16_t *found_messages_count) {
     int client_socket = create_and_connect_socket(server_address);
     send_unsigned_char(client_socket, GET_LAST_MESSAGES);
     send_unsigned_short(client_socket, messages_count);

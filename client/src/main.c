@@ -1,6 +1,6 @@
 #include "../client.h"
 
-void handle_chatting(t_address server_address, uint32_t user_id, uint32_t chat_id) {
+void handle_chatting(t_address server_address, id_t user_id, id_t chat_id) {
     while (true) {
         printf("\nEnter a command (send, last_messages, exit): ");
         char command[100];
@@ -14,7 +14,7 @@ void handle_chatting(t_address server_address, uint32_t user_id, uint32_t chat_i
             }
             free_text_message_data(text_message_data);
         } else if (strcmp(command, "last_messages") == 0) {
-            uint32_t messages_count = 0;
+            uint16_t messages_count = 0;
             t_user_message *messages = rq_get_last_messages(server_address, LAST_LOADING_MESSAGES_COUNT, chat_id, &messages_count);
             for (size_t i = 0; i < messages_count; i++) {
                 printf("user_login: %s, message: %s\n", messages[i].user_login, messages[i].bytes);
@@ -26,7 +26,7 @@ void handle_chatting(t_address server_address, uint32_t user_id, uint32_t chat_i
     }
 }
 
-void handle_authenticated_user_commands(t_address server_address, int user_id) {
+void handle_authenticated_user_commands(t_address server_address, id_t user_id) {
     while (true) {
         printf("\nEnter a command (newchat, chats, add_member, enter_chat, exit): ");
         char user_command[100];
@@ -61,7 +61,7 @@ void handle_authenticated_user_commands(t_address server_address, int user_id) {
             }
             free_chats(chats, chats_count);
         } else if (strcmp(user_command, "enter_chat") == 0) {
-            int chat_id = get_chat_id();
+            id_t chat_id = get_chat_id();
             handle_chatting(server_address, user_id, chat_id);
         } else if (strcmp(user_command, "exit") == 0) {
             return;

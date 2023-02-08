@@ -5,10 +5,10 @@ void handle_registration(int client_socket) {
     char *password = receive_string(client_socket);
 
     sqlite3 *db = db_open();
-    int user_id = db_create_user(db, login, password);
+    id_t user_id = db_create_user(db, login, password);
     db_close(db);
 
-    if (user_id != -1) {
+    if (user_id != 0) {
         send_unsigned_char(client_socket, SUCCESSFUL_REGISTRATION);
         send_unsigned_int(client_socket, user_id);
     } else {
@@ -21,7 +21,7 @@ void handle_login(int client_socket) {
     char *password = receive_string(client_socket);
 
     sqlite3 *db = db_open();
-    int user_id = db_get_user_id_by_login(db, login);
+    id_t user_id = db_get_user_id_by_login(db, login);
     char *found_password = db_get_password_by_id(db, user_id);
     db_close(db);
 
@@ -41,10 +41,10 @@ void handle_login(int client_socket) {
 
 void handle_chat_creation(int client_socket) {
     char *chat_name = receive_string(client_socket);
-    int owner_id = receive_unsigned_int(client_socket);
+    id_t owner_id = receive_unsigned_int(client_socket);
 
     sqlite3 *db = db_open();
-    int created_chat_id = db_create_chat(db, chat_name, owner_id);
+    id_t created_chat_id = db_create_chat(db, chat_name, owner_id);
     db_add_new_member_to_chat(db, owner_id, created_chat_id);
     db_close(db);
 
@@ -52,7 +52,7 @@ void handle_chat_creation(int client_socket) {
 }
 
 void handle_getting_chats(int client_socket) {
-    int user_id = receive_unsigned_int(client_socket);
+    id_t user_id = receive_unsigned_int(client_socket);
 
     size_t number_of_chats = 0;
 
@@ -70,11 +70,11 @@ void handle_getting_chats(int client_socket) {
 }
 
 void handle_adding_new_member_to_chat(int client_socket) {
-    int chat_id = receive_unsigned_int(client_socket);
+    id_t chat_id = receive_unsigned_int(client_socket);
     char *member_login = receive_string(client_socket);
 
     sqlite3 *db = db_open();
-    int user_id = db_get_user_id_by_login(db, member_login);
+    id_t user_id = db_get_user_id_by_login(db, member_login);
     bool new_member_added = db_add_new_member_to_chat(db, user_id, chat_id);
     db_close(db);
 
@@ -86,8 +86,8 @@ void handle_adding_new_member_to_chat(int client_socket) {
 }
 
 void handle_text_message_sending(int client_socket) {
-    uint32_t user_id = receive_unsigned_int(client_socket);
-    uint32_t chat_id = receive_unsigned_int(client_socket);
+    id_t user_id = receive_unsigned_int(client_socket);
+    id_t chat_id = receive_unsigned_int(client_socket);
     char *text_message = receive_string(client_socket);
     sqlite3 *db = db_open();
     db_add_text_message(db, chat_id, user_id, text_message);
@@ -97,7 +97,7 @@ void handle_text_message_sending(int client_socket) {
 
 void handle_last_messages_getting(int client_socket) {
     uint16_t messages_count = receive_unsigned_short(client_socket);
-    uint32_t chat_id = receive_unsigned_int(client_socket);
+    id_t chat_id = receive_unsigned_int(client_socket);
 
     size_t number_of_found = 0;
 

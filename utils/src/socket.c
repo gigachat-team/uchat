@@ -10,7 +10,7 @@ int create_socket() {
     return created_socket;
 }
 
-void bind_socket(int socket, unsigned int port) {
+void bind_socket(int socket, uint16_t port) {
     struct sockaddr_in socket_address = {0};
     socket_address.sin_family = AF_INET;
     socket_address.sin_port = htons(port);
