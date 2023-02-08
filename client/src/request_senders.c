@@ -91,6 +91,7 @@ t_message *rq_get_last_messages(t_address server_address, uint16_t messages_coun
     t_message *found_messages = malloc(*found_messages_count * sizeof(t_message));
     for (size_t i = 0; i < *found_messages_count; i++) {
         found_messages[i].user_id = receive_unsigned_int(client_socket);
+        found_messages[i].user_login = receive_string(client_socket);
         found_messages[i].bytes = receive_string(client_socket);
     }
 

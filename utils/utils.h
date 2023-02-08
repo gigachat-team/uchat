@@ -58,6 +58,7 @@ typedef struct s_text_message_data {
 
 typedef struct s_message {
     uint32_t user_id;
+    char *user_login;
     char *bytes;
 } t_message;
 

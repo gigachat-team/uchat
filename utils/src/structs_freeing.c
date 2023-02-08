@@ -29,6 +29,7 @@ void free_text_message_data(t_text_message_data text_message_data) {
 }
 
 void free_message(t_message message) {
+    free(message.user_login);
     free(message.bytes);
 }
 
