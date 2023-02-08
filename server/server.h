@@ -33,10 +33,6 @@
 
 void *handle_request_thread(void *client_socket_void);
 
-t_authentication_data receive_authentication_data(int client_socket);
-t_chat_creation_data receive_chat_creation_data(int client_socket);
-t_new_chat_member_data receive_new_chat_memeber_data(int client_socket);
-
 void send_chat(int socket, t_chat chat);
 
 void handle_registration(int client_socket);

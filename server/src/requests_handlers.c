@@ -1,10 +1,11 @@
 #include "../server.h"
 
 void handle_registration(int client_socket) {
-    t_authentication_data authentication_data = receive_authentication_data(client_socket);
+    char *login = receive_string(client_socket);
+    char *password = receive_string(client_socket);
 
     sqlite3 *db = db_open();
-    int user_id = db_create_user(db, authentication_data.login, authentication_data.password);
+    int user_id = db_create_user(db, login, password);
     db_close(db);
 
     if (user_id != -1) {
@@ -13,20 +14,19 @@ void handle_registration(int client_socket) {
     } else {
         send_unsigned_char(client_socket, SUCH_LOGIN_ALREADY_EXISTS);
     }
-
-    free_authentication_data(authentication_data);
 }
 
 void handle_login(int client_socket) {
-    t_authentication_data authentication_data = receive_authentication_data(client_socket);
+    char *login = receive_string(client_socket);
+    char *password = receive_string(client_socket);
 
     sqlite3 *db = db_open();
-    int user_id = db_get_user_id_by_login(db, authentication_data.login);
+    int user_id = db_get_user_id_by_login(db, login);
     char *found_password = db_get_password_by_id(db, user_id);
     db_close(db);
 
     if (found_password != NULL) {
-        if (strcmp(authentication_data.password, found_password) == 0) {
+        if (strcmp(password, found_password) == 0) {
             send_unsigned_char(client_socket, SUCCESSFUL_LOGIN);
             send_unsigned_int(client_socket, user_id);
         } else {
@@ -37,20 +37,18 @@ void handle_login(int client_socket) {
     }
 
     free(found_password);
-    free_authentication_data(authentication_data);
 }
 
 void handle_chat_creation(int client_socket) {
-    t_chat_creation_data chat_creation_data = receive_chat_creation_data(client_socket);
+    char *chat_name = receive_string(client_socket);
+    int owner_id = receive_unsigned_int(client_socket);
 
     sqlite3 *db = db_open();
-    int created_chat_id = db_create_chat(db, chat_creation_data.chat_name, chat_creation_data.owner_id);
-    db_add_new_member_to_chat(db, chat_creation_data.owner_id, created_chat_id);
+    int created_chat_id = db_create_chat(db, chat_name, owner_id);
+    db_add_new_member_to_chat(db, owner_id, created_chat_id);
     db_close(db);
 
     send_unsigned_char(client_socket, CHAT_CREATED_SUCCESSFULLY);
-
-    free_chat_creation_data(chat_creation_data);
 }
 
 void handle_getting_chats(int client_socket) {
@@ -82,11 +80,12 @@ void handle_getting_chats(int client_socket) {
 }
 
 void handle_adding_new_member_to_chat(int client_socket) {
-    t_new_chat_member_data new_chat_memeber_data = receive_new_chat_memeber_data(client_socket);
+    int chat_id = receive_unsigned_int(client_socket);
+    char *member_login = receive_string(client_socket);
 
     sqlite3 *db = db_open();
-    int user_id = db_get_user_id_by_login(db, new_chat_memeber_data.member_login);
-    bool new_member_added = db_add_new_member_to_chat(db, user_id, new_chat_memeber_data.chat_id);
+    int user_id = db_get_user_id_by_login(db, member_login);
+    bool new_member_added = db_add_new_member_to_chat(db, user_id, chat_id);
     db_close(db);
 
     if (new_member_added) {
@@ -94,8 +93,6 @@ void handle_adding_new_member_to_chat(int client_socket) {
     } else {
         send_unsigned_char(client_socket, SUCH_USER_IS_ALREADY_IN_CHAT);
     }
-
-    free_new_chat_member_data(new_chat_memeber_data);
 }
 
 void handle_text_message_sending(int client_socket) {
