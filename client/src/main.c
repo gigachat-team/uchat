@@ -15,11 +15,11 @@ void handle_chatting(t_address server_address, uint32_t user_id, uint32_t chat_i
             free_text_message_data(text_message_data);
         } else if (strcmp(command, "last_messages") == 0) {
             uint32_t messages_count = 0;
-            t_message *messages = rq_get_last_messages(server_address, LAST_LOADING_MESSAGES_COUNT, chat_id, &messages_count);
+            t_user_message *messages = rq_get_last_messages(server_address, LAST_LOADING_MESSAGES_COUNT, chat_id, &messages_count);
             for (size_t i = 0; i < messages_count; i++) {
-                printf("user_id: %d, message: %s\n", messages[i].user_id, messages[i].bytes);
+                printf("user_login: %s, message: %s\n", messages[i].user_login, messages[i].bytes);
             }
-            free_messages_array(messages, messages_count);
+            free_user_messages_array(messages, messages_count);
         } else if (strcmp(command, "exit") == 0) {
             return;
         }

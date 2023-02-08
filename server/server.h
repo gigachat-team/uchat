@@ -20,7 +20,7 @@
 #define MEMBERS_USER_ID "UserId"
 
 #define MESSAGES_TABLE "Messages"
-#define MESSAGES_ID "MessageId"
+#define MESSAGES_ID "Id"
 #define MESSAGES_CHAT_ID "ChatId"
 #define MESSAGES_USER_ID "UserId"
 #define MESSAGES_CONTENT "Content"
@@ -102,6 +102,7 @@ char *db_get_password_by_id(sqlite3 *db, const int id);
  * @return -1 if user id didn't find by the login. Positive number if a user id found
 */
 int db_get_user_id_by_login(sqlite3 *db, char *login);
+char *db_get_user_login_by_id(sqlite3 *db, int user_id);
 char *db_get_chat_name_by_id(sqlite3 *db, int chat_id);
 int *db_get_IDs_of_chats_user_is_in(sqlite3 *db, int user_id, size_t *IDs_of_chats_len);
 t_chat *db_get_chats_user_is_in(sqlite3 *db, int user_id, size_t *number_of_chats);
@@ -110,7 +111,7 @@ t_chat *db_get_chats_user_is_in(sqlite3 *db, int user_id, size_t *number_of_chat
  * messages writes to NUMBER_OF_FOUND variable.
  * @return Allocated array of messages
 */
-t_message *db_get_last_messages(sqlite3 *db, uint32_t chat_id, size_t count, size_t *number_of_found);
+t_user_message *db_get_last_messages(sqlite3 *db, uint32_t chat_id, size_t count, size_t *number_of_found);
 
 /**
  * @return false if such login does not exist or true if exists

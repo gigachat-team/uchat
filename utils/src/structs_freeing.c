@@ -28,13 +28,14 @@ void free_text_message_data(t_text_message_data text_message_data) {
     free(text_message_data.text);
 }
 
-void free_message(t_message message) {
+void free_user_message(t_user_message message) {
+    free(message.user_login);
     free(message.bytes);
 }
 
-void free_messages_array(t_message *messages, size_t length) {
+void free_user_messages_array(t_user_message *messages, size_t length) {
     for (size_t i = 0; i < length; i++) {
-        free_message(messages[i]);
+        free_user_message(messages[i]);
     }
     free(messages);
 }
