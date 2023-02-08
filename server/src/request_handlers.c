@@ -60,21 +60,11 @@ void handle_getting_chats(int client_socket) {
     t_chat *chats = db_get_chats_user_is_in(db, user_id, &number_of_chats);
     db_close(db);
 
-    if (number_of_chats > 0) {
-        send_unsigned_char(client_socket, START_OF_CHATS_ARRAY);
-    } else {
-        send_unsigned_char(client_socket, END_OF_CHATS_ARRAY);
+    send_unsigned_int(client_socket, number_of_chats);
+    for (size_t i = 0; i < number_of_chats; i++){
+        send_unsigned_int(client_socket, chats[i].id);
+        send_string(client_socket, chats[i].name);
     }
-    for (size_t i = 0; i < number_of_chats; i++) {
-        send_chat(client_socket, chats[i]);
-        if (i + 1 == number_of_chats) {
-            send_unsigned_char(client_socket, END_OF_CHATS_ARRAY);
-        } else {
-            send_unsigned_char(client_socket, CONTINUATION_OF_CHATS_ARRAY);
-        }
-    }
-
-    send_unsigned_char(client_socket, CHATS_ARRAY_TRENSFERRED_SUCCESSFULLY);
 
     free_chats(chats, number_of_chats);
 }

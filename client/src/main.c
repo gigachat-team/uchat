@@ -49,15 +49,17 @@ void handle_authenticated_user_commands(t_address server_address, int user_id) {
             }
             free_new_chat_member_data(new_chat_member_data);
         } else if (strcmp(user_command, "chats") == 0) {
-            t_chat *chats_i_am_in = NULL;
-            size_t chats_i_am_in_length = 0;
-            if (rq_get_chats_i_am_in(server_address, user_id, &chats_i_am_in, &chats_i_am_in_length) == CHATS_ARRAY_TRENSFERRED_SUCCESSFULLY) {
+            size_t chats_count = 0;
+            t_chat *chats = rq_get_chats_i_am_in(server_address, user_id, &chats_count);
+            if (chats_count != 0) {
                 printf("Chats you're in:\n");
-                for (size_t i = 0; i < chats_i_am_in_length; i++) {
-                    printf("id: %i, name: %s\n", chats_i_am_in[i].id, chats_i_am_in[i].name);
+                for (size_t i = 0; i < chats_count; i++) {
+                    printf("id: %i, name: %s\n", chats[i].id, chats[i].name);
                 }
+            } else {
+                printf("You aren't in any chats.\n");
             }
-            free_chats(chats_i_am_in, chats_i_am_in_length);
+            free_chats(chats, chats_count);
         } else if (strcmp(user_command, "enter_chat") == 0) {
             int chat_id = get_chat_id();
             handle_chatting(server_address, user_id, chat_id);
