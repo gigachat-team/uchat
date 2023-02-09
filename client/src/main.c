@@ -8,8 +8,8 @@ void handle_chatting(t_address server_address, id_t user_id, id_t chat_id) {
 
         if (strcmp(command, "send") == 0) {
             t_text_message_data text_message_data = get_text_message_data(user_id, chat_id);
-            t_state_code responce = rq_send_text_message(server_address, text_message_data);
-            if (responce == TEXT_MESSAGE_SENT_SUCCESSFULLY) {
+            t_state_code response = rq_send_text_message(server_address, text_message_data);
+            if (response == TEXT_MESSAGE_SENT_SUCCESSFULLY) {
                 printf("Sent successfully.\n");
             }
             free_text_message_data(text_message_data);
