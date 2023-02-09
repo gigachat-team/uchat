@@ -16,11 +16,12 @@ t_state_code rq_add_new_member(t_address server_address, t_new_chat_member_data 
 t_state_code rq_send_text_message(t_address server_address, t_text_message_data text_message_data);
 t_user_message *rq_get_last_messages(t_address server_address, uint16_t messages_count, id_t chat_id, uint16_t *found_messages_count);
 t_user *rq_get_chat_members(t_address server_address, id_t chat_id, uint32_t *members_count);
+t_state_code rq_remove_member_from_chat(t_address server_address, id_t user_id, id_t chat_id);
 
 t_authentication_data get_authentication_data();
 t_chat_creation_data get_chat_creation_data(id_t owner_id);
 t_new_chat_member_data get_new_chat_member_data(id_t chat_id);
-id_t get_chat_id();
+int console_input_int(char *message);
 t_text_message_data get_text_message_data(id_t user_id, id_t chat_id);
 
 t_chat receive_chat(int socket);

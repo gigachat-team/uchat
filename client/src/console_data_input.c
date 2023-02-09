@@ -35,11 +35,11 @@ t_new_chat_member_data get_new_chat_member_data(id_t chat_id) {
     return new_chat_member_data;
 }
 
-id_t get_chat_id() {
-    printf("Enter chat id: ");
-    id_t chat_id;
-    scanf("%d", &chat_id);
-    return chat_id;
+int console_input_int(char *message) {
+    printf("%s", message);
+    int number;
+    scanf("%d", &number);
+    return number;
 }
 
 t_text_message_data get_text_message_data(id_t user_id, id_t chat_id) {

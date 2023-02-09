@@ -2,7 +2,7 @@
 
 void handle_chatting(t_address server_address, id_t user_id, id_t chat_id) {
     while (true) {
-        printf("\nEnter a command (send, last_messages, members, add_member, exit): ");
+        printf("\nEnter a command (send, last_messages, members, add_member, remove_member, exit): ");
         char command[100];
         scanf("%s", command);
 
@@ -36,6 +36,12 @@ void handle_chatting(t_address server_address, id_t user_id, id_t chat_id) {
                 printf("The user %s is already in the chat.\n", new_chat_member_data.member_login);
             }
             free_new_chat_member_data(new_chat_member_data);
+        } else if (strcmp(command, "remove_member") == 0) {
+            id_t user_id = console_input_int("Enter user id: ");
+            t_state_code response = rq_remove_member_from_chat(server_address, user_id, chat_id);
+            if (response == USER_REMOVED_FROM_CHAT_SUCCESSFULLY) {
+                printf("The user removed from the chat.\n");
+            }
         } else if (strcmp(command, "exit") == 0) {
             return;
         }
@@ -68,7 +74,7 @@ void handle_authenticated_user_commands(t_address server_address, id_t user_id) 
             }
             free_chats(chats, chats_count);
         } else if (strcmp(user_command, "enter_chat") == 0) {
-            id_t chat_id = get_chat_id();
+            id_t chat_id = console_input_int("Enter chat id: ");
             handle_chatting(server_address, user_id, chat_id);
         } else if (strcmp(user_command, "exit") == 0) {
             return;

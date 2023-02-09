@@ -113,3 +113,17 @@ t_user *rq_get_chat_members(t_address server_address, id_t chat_id, uint32_t *me
 
     return members;
 }
+
+t_state_code rq_remove_member_from_chat(t_address server_address, id_t user_id, id_t chat_id) {
+    int client_socket = create_and_connect_socket(server_address);
+
+    send_unsigned_char(client_socket, REMOVE_USER_FROM_CHAT);
+    send_unsigned_int(client_socket, user_id);
+    send_unsigned_int(client_socket, chat_id);
+
+    t_state_code removing_member_from_chat_result = receive_unsigned_char(client_socket);
+
+    close(client_socket);
+
+    return removing_member_from_chat_result;
+}
