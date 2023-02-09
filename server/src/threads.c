@@ -22,6 +22,8 @@ void *handle_request_thread(void *client_socket_void) {
         handle_last_messages_getting(client_socket);
     } else if (client_request == REMOVE_USER_FROM_CHAT) {
         handle_removing_user_from_chat(client_socket);
+    } else if (client_request == GET_CHAT_MEMBERS) {
+        handle_getting_chat_members(client_socket);
     }
 
     close(client_socket);

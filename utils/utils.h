@@ -62,6 +62,11 @@ typedef struct s_user_message {
     char *bytes;
 } t_user_message;
 
+typedef struct s_user {
+    id_t id;
+    char *login;
+} t_user;
+
 typedef enum e_request {
     LOGIN, // -> login -> password
     REGISTER, // -> login -> password
@@ -70,7 +75,8 @@ typedef enum e_request {
     GET_CHATS_I_AM_IN, // -> user_id
     SEND_TEXT_MESSAGE, // -> user_id -> chat_id -> text_message
     GET_LAST_MESSAGES,
-    REMOVE_USER_FROM_CHAT
+    REMOVE_USER_FROM_CHAT,
+    GET_CHAT_MEMBERS
 } t_request;
 
 typedef enum e_state_code {
@@ -148,4 +154,6 @@ void free_new_chat_member_data(t_new_chat_member_data new_chat_member_data);
 void free_text_message_data(t_text_message_data text_message_data);
 void free_user_message(t_user_message message);
 void free_user_messages_array(t_user_message *messages, size_t length);
+void free_user(t_user user);
+void free_users(t_user *users, size_t users_count);
 
