@@ -19,7 +19,7 @@ t_user *rq_get_chat_members(t_address server_address, id_t chat_id, uint32_t *me
 
 t_authentication_data get_authentication_data();
 t_chat_creation_data get_chat_creation_data(id_t owner_id);
-t_new_chat_member_data get_new_chat_member_data();
+t_new_chat_member_data get_new_chat_member_data(id_t chat_id);
 id_t get_chat_id();
 t_text_message_data get_text_message_data(id_t user_id, id_t chat_id);
 
