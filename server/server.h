@@ -46,6 +46,7 @@ void handle_adding_new_member_to_chat(int client_socket);
 */
 void handle_text_message_sending(int client_socket);
 void handle_last_messages_getting(int client_socket);
+void handle_removing_user_from_chat(int client_socket);
 
 /**
  * @brief Opens new database connection. Prints error and close application on error.
@@ -75,6 +76,8 @@ void db_create_chats_table(sqlite3 *db);
 void db_create_members_table(sqlite3 *db);
 void db_create_messages_table(sqlite3 *db);
 void db_create_message_statuses_table(sqlite3 *db);
+
+void db_remove_user_from_chat(sqlite3 *db, id_t user_id, id_t chat_id);
 
 /**
  * @brief Creates new user in the users table with new LOGIN and PASSWORD.
