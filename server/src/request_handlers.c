@@ -115,3 +115,32 @@ void handle_last_messages_getting(int client_socket) {
     free_user_messages_array(last_messages, number_of_found);
 }
 
+void handle_removing_user_from_chat(int client_socket) {
+    uint32_t user_id = receive_unsigned_int(client_socket);
+    uint32_t chat_id = receive_unsigned_int(client_socket);
+
+    sqlite3 *db = db_open();
+    db_remove_user_from_chat(db, user_id, chat_id);
+    db_close(db);
+
+    send_unsigned_char(client_socket, USER_REMOVED_FROM_CHAT_SUCCESSFULLY);
+}
+
+void handle_getting_chat_members(int client_socket) {
+    uint32_t chat_id = receive_unsigned_int(client_socket);
+
+    size_t members_count = 0;
+
+    sqlite3 *db = db_open();
+    t_user *members = db_get_chat_members(db, chat_id, &members_count);
+    db_close(db);
+
+    send_unsigned_int(client_socket, members_count);
+    for (size_t i = 0; i < members_count; i++) {
+        send_unsigned_int(client_socket, members[i].id);
+        send_string(client_socket, members[i].login);
+    }
+
+    free_users(members, members_count);
+}
+

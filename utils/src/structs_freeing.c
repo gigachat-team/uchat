@@ -40,3 +40,14 @@ void free_user_messages_array(t_user_message *messages, size_t length) {
     free(messages);
 }
 
+void free_user(t_user user) {
+    free(user.login);
+}
+
+void free_users(t_user *users, size_t users_count) {
+    for (size_t i = 0; i < users_count; i++) {
+        free_user(users[i]);
+    }
+    free(users);
+}
+

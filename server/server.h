@@ -46,6 +46,8 @@ void handle_adding_new_member_to_chat(int client_socket);
 */
 void handle_text_message_sending(int client_socket);
 void handle_last_messages_getting(int client_socket);
+void handle_removing_user_from_chat(int client_socket);
+void handle_getting_chat_members(int client_socket);
 
 /**
  * @brief Opens new database connection. Prints error and close application on error.
@@ -75,6 +77,8 @@ void db_create_chats_table(sqlite3 *db);
 void db_create_members_table(sqlite3 *db);
 void db_create_messages_table(sqlite3 *db);
 void db_create_message_statuses_table(sqlite3 *db);
+
+void db_remove_user_from_chat(sqlite3 *db, id_t user_id, id_t chat_id);
 
 /**
  * @brief Creates new user in the users table with new LOGIN and PASSWORD.
@@ -108,6 +112,12 @@ t_chat *db_get_chats_user_is_in(sqlite3 *db, id_t user_id, size_t *number_of_cha
  * @return Allocated array of messages
 */
 t_user_message *db_get_last_messages(sqlite3 *db, id_t chat_id, size_t count, size_t *number_of_found);
+/**
+ * @brief Searches for members in chat by CHAT_ID. Number of found members writes to
+ * MEMBERS_COUNT variable.
+ * @return Allocated array of members.
+*/
+t_user *db_get_chat_members(sqlite3 *db, id_t chat_id, size_t *members_count);
 
 /**
  * @return false if such login does not exist or true if exists

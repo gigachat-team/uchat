@@ -154,3 +154,34 @@ t_user_message *db_get_last_messages(sqlite3 *db, id_t chat_id, size_t count, si
     return messages;
 }
 
+t_user *db_get_chat_members(sqlite3 *db, id_t chat_id, size_t *members_count) {
+    char *sql = NULL;
+    asprintf(&sql, "SELECT COUNT(*) FROM "MEMBERS_TABLE" \
+                    WHERE "MEMBERS_CHAT_ID" = %d", chat_id);
+    sqlite3_stmt *statement = db_open_statement(db, sql);
+    free(sql);
+    sqlite3_step(statement);
+    *members_count = sqlite3_column_int(statement, 0);
+    db_close_statement(statement, db);
+
+    if (*members_count == 0) {
+        return NULL;
+    }
+
+    asprintf(&sql, "SELECT "MEMBERS_USER_ID", \
+                        (SELECT "USERS_LOGIN" FROM "USERS_TABLE" \
+                        WHERE "USERS_TABLE"."USERS_ID" = "MEMBERS_TABLE"."MEMBERS_USER_ID") \
+                    FROM "MEMBERS_TABLE" WHERE "MEMBERS_CHAT_ID" = %d", chat_id);
+    statement = db_open_statement(db, sql);
+    free(sql);
+    sqlite3_step(statement);
+    t_user *members = malloc(*members_count * sizeof(t_user));
+    for (size_t i = 0; i < *members_count; i++) {
+        members[i].id = sqlite3_column_int(statement, 0);
+        members[i].login = strdup((char *)sqlite3_column_text(statement, 1));
+        sqlite3_step(statement);
+    }
+    db_close_statement(statement, db);
+
+    return members;
+}
