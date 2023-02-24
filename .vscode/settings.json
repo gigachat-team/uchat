@@ -3,6 +3,7 @@
         "stdio.h": "c",
         "header.h": "c",
         "sqlite3.h": "c",
-        "main.h": "c"
+        "main.h": "c",
+        "utils.h": "c"
     }
 }
