@@ -127,7 +127,7 @@ void gui_init(int argc, char **argv)
 
     GError *err = NULL;
     GtkBuilder *builder = gtk_builder_new();
-    if (0 == gtk_builder_add_from_file(builder, "./client/src/TestGUI.glade", &err))
+    if (0 == gtk_builder_add_from_file(builder, "./client/src/gui/TestGUI.glade", &err))
     {
         fprintf(stderr, "Error adding build from file. Error: %s\n", err->message);
     }

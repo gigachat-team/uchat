@@ -1,6 +1,6 @@
 #include "../../server.h"
 
-char *db_get_password_by_id(sqlite3 *db, const int id) {
+char *db_get_password_by_id(sqlite3 *db, id_t id) {
     char *sql = NULL;
     asprintf(&sql, "SELECT "USERS_PASSWORD" FROM "USERS_TABLE" \
                     WHERE "USERS_ID" = '%d'", id
@@ -22,7 +22,7 @@ char *db_get_password_by_id(sqlite3 *db, const int id) {
     return password;
 }
 
-int db_get_user_id_by_login(sqlite3 *db, char *login) {
+id_t db_get_user_id_by_login(sqlite3 *db, char *login) {
     char *sql = NULL;
     asprintf(&sql, "SELECT "USERS_ID" FROM "USERS_TABLE" \
                     WHERE "USERS_LOGIN" = '%s'", login
@@ -34,17 +34,17 @@ int db_get_user_id_by_login(sqlite3 *db, char *login) {
 
     if (sqlite3_step(statement) != SQLITE_ROW) {
         db_close_statement(statement, db);
-        return -1;
+        return 0;
     }
 
-    int user_id = sqlite3_column_int(statement, 0);
+    id_t user_id = sqlite3_column_int(statement, 0);
 
     db_close_statement(statement, db);
 
     return user_id;
 }
 
-char *db_get_user_login_by_id(sqlite3 *db, int user_id) {
+char *db_get_user_login_by_id(sqlite3 *db, id_t user_id) {
     char *sql = NULL;
     asprintf(&sql, "SELECT "USERS_LOGIN" FROM "USERS_TABLE" \
                     WHERE "USERS_ID" = %d", user_id);
@@ -65,7 +65,7 @@ char *db_get_user_login_by_id(sqlite3 *db, int user_id) {
     return user_login;
 }
 
-char *db_get_chat_name_by_id(sqlite3 *db, int chat_id) {
+char *db_get_chat_name_by_id(sqlite3 *db, id_t chat_id) {
     char *sql = NULL;
     asprintf(&sql, "SELECT "CHATS_NAME" FROM "CHATS_TABLE" \
                     WHERE "CHATS_ID" = %d", chat_id
@@ -87,7 +87,7 @@ char *db_get_chat_name_by_id(sqlite3 *db, int chat_id) {
     return chat_name;
 }
 
-int *db_get_IDs_of_chats_user_is_in(sqlite3 *db, int user_id, size_t *IDs_of_chats_len) {
+id_t *db_get_IDs_of_chats_user_is_in(sqlite3 *db, id_t user_id, size_t *IDs_of_chats_len) {
     char *sql = NULL;
     asprintf(&sql, "SELECT "MEMBERS_CHAT_ID" FROM "MEMBERS_TABLE" \
                     WHERE "MEMBERS_USER_ID" = %d", user_id
@@ -98,9 +98,9 @@ int *db_get_IDs_of_chats_user_is_in(sqlite3 *db, int user_id, size_t *IDs_of_cha
     free(sql);
 
     *IDs_of_chats_len = 0;
-    int *IDs_of_chats = NULL;
+    id_t *IDs_of_chats = NULL;
     while (sqlite3_step(statement) == SQLITE_ROW) {
-        IDs_of_chats = realloc(IDs_of_chats, sizeof(int) * ++(*IDs_of_chats_len));
+        IDs_of_chats = realloc(IDs_of_chats, sizeof(id_t) * ++(*IDs_of_chats_len));
         IDs_of_chats[*IDs_of_chats_len - 1] = sqlite3_column_int(statement, 0);
     }
 
@@ -109,8 +109,8 @@ int *db_get_IDs_of_chats_user_is_in(sqlite3 *db, int user_id, size_t *IDs_of_cha
     return IDs_of_chats;
 }
 
-t_chat *db_get_chats_user_is_in(sqlite3 *db, int user_id, size_t *number_of_chats) {
-    int *IDs_of_chats_user_is_in = db_get_IDs_of_chats_user_is_in(db, user_id,  number_of_chats);
+t_chat *db_get_chats_user_is_in(sqlite3 *db, id_t user_id, size_t *number_of_chats) {
+    id_t *IDs_of_chats_user_is_in = db_get_IDs_of_chats_user_is_in(db, user_id,  number_of_chats);
 
     t_chat *descriptions_of_chats = malloc(*number_of_chats * sizeof(t_chat));
 
@@ -124,7 +124,7 @@ t_chat *db_get_chats_user_is_in(sqlite3 *db, int user_id, size_t *number_of_chat
     return descriptions_of_chats;
 }
 
-t_user_message *db_get_last_messages(sqlite3 *db, uint32_t chat_id, size_t count, size_t *number_of_found) {
+t_user_message *db_get_last_messages(sqlite3 *db, id_t chat_id, size_t count, size_t *number_of_found) {
     char *sql = NULL;
     asprintf(&sql, "SELECT "MESSAGES_USER_ID", "MESSAGES_CONTENT" FROM "MESSAGES_TABLE" \
                     WHERE "MESSAGES_CHAT_ID" = %d ORDER BY "MESSAGES_ID" DESC", chat_id);
@@ -154,3 +154,34 @@ t_user_message *db_get_last_messages(sqlite3 *db, uint32_t chat_id, size_t count
     return messages;
 }
 
+t_user *db_get_chat_members(sqlite3 *db, id_t chat_id, size_t *members_count) {
+    char *sql = NULL;
+    asprintf(&sql, "SELECT COUNT(*) FROM "MEMBERS_TABLE" \
+                    WHERE "MEMBERS_CHAT_ID" = %d", chat_id);
+    sqlite3_stmt *statement = db_open_statement(db, sql);
+    free(sql);
+    sqlite3_step(statement);
+    *members_count = sqlite3_column_int(statement, 0);
+    db_close_statement(statement, db);
+
+    if (*members_count == 0) {
+        return NULL;
+    }
+
+    asprintf(&sql, "SELECT "MEMBERS_USER_ID", \
+                        (SELECT "USERS_LOGIN" FROM "USERS_TABLE" \
+                        WHERE "USERS_TABLE"."USERS_ID" = "MEMBERS_TABLE"."MEMBERS_USER_ID") \
+                    FROM "MEMBERS_TABLE" WHERE "MEMBERS_CHAT_ID" = %d", chat_id);
+    statement = db_open_statement(db, sql);
+    free(sql);
+    sqlite3_step(statement);
+    t_user *members = malloc(*members_count * sizeof(t_user));
+    for (size_t i = 0; i < *members_count; i++) {
+        members[i].id = sqlite3_column_int(statement, 0);
+        members[i].login = strdup((char *)sqlite3_column_text(statement, 1));
+        sqlite3_step(statement);
+    }
+    db_close_statement(statement, db);
+
+    return members;
+}

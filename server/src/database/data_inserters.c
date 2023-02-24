@@ -1,8 +1,8 @@
 #include "../../server.h"
 
-int db_create_user(sqlite3 *db, char *login, char *password) {
+id_t db_create_user(sqlite3 *db, char *login, char *password) {
     if (db_users_table_has_login(db, login)) {
-        return -1;
+        return 0;
     }
 
     char *sql;
@@ -18,7 +18,7 @@ int db_create_user(sqlite3 *db, char *login, char *password) {
     );
     sqlite3_stmt *statement = db_open_statement(db, sql);
     sqlite3_step(statement);
-    int created_user_id = sqlite3_column_int(statement, 0);
+    id_t created_user_id = sqlite3_column_int(statement, 0);
 
     free(sql);
     db_close_statement(statement, db);
@@ -26,7 +26,7 @@ int db_create_user(sqlite3 *db, char *login, char *password) {
     return created_user_id;
 }
 
-int db_create_chat(sqlite3 *db, char *chat_name, int owner_id) {
+id_t db_create_chat(sqlite3 *db, char *chat_name, id_t owner_id) {
     char *sql = NULL;
     asprintf(&sql, "INSERT INTO "CHATS_TABLE" ("CHATS_NAME", "CHATS_USER_ID") \
                     VALUES ('%s', '%d');", chat_name, owner_id
@@ -40,7 +40,7 @@ int db_create_chat(sqlite3 *db, char *chat_name, int owner_id) {
     );
     sqlite3_stmt *statement = db_open_statement(db, sql);
     sqlite3_step(statement);
-    int created_chat_id = sqlite3_column_int(statement, 0);
+    id_t created_chat_id = sqlite3_column_int(statement, 0);
     
     free(sql);
     db_close_statement(statement, db);
@@ -48,7 +48,7 @@ int db_create_chat(sqlite3 *db, char *chat_name, int owner_id) {
     return created_chat_id;
 }
 
-bool db_add_new_member_to_chat(sqlite3 *db, int user_id, int chat_id) {
+bool db_add_new_member_to_chat(sqlite3 *db, id_t user_id, id_t chat_id) {
     if (db_user_is_in_chat(db, user_id, chat_id)) {
         return false;
     }
@@ -64,7 +64,7 @@ bool db_add_new_member_to_chat(sqlite3 *db, int user_id, int chat_id) {
     return true;
 }
 
-void db_add_text_message(sqlite3 *db, uint32_t chat_id, uint32_t user_id, char *text_message) {
+void db_add_text_message(sqlite3 *db, id_t chat_id, id_t user_id, char *text_message) {
     char *sql = NULL;
     asprintf(&sql, "INSERT INTO "MESSAGES_TABLE" ("MESSAGES_CHAT_ID", "MESSAGES_USER_ID", "MESSAGES_CONTENT", "MESSAGES_CREATION_DATE") \
                     VALUES (%d, %d, '%s', 'implement later')", chat_id, user_id, text_message);
