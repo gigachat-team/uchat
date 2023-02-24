@@ -23,6 +23,7 @@ $(LIBNAME): $(SOURCES) $(OBJDIR) $(OBJECTS)
 -include $(DEPENDS)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c Makefile
+	@mkdir -p $(@D)
 	@$(CC) $(CFLAGS) $(LIBGTK) -c $< -o $@
 
 $(OBJDIR):

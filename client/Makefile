@@ -31,6 +31,7 @@ $(BINARYNAME): $(SOURCES) $(OBJDIR) $(OBJECTS) $(UTILS_LIB)
 -include $(DEPENDS)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c Makefile
+	@mkdir -p $(@D)
 	@$(CC) $(GTK_INC) $(CFLAGS) -c $< -o $@ $(PACKAGE)
 
 
