@@ -1,4 +1,4 @@
-#include "../client.h"
+#include "../../client.h"
 
 static t_gui_data gui_data_init(char **argv, GtkBuilder *builder)
 {
