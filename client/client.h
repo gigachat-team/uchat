@@ -21,6 +21,7 @@ typedef struct s_gui_data
 
 // GUI
 void gui_init(int argc, char **argv);
+void exit_app();
 
 void handle_authenticated_user_commands(t_address server_address, int user_id);
 
