@@ -1,18 +1,11 @@
-#include "../client.h"
+#include "../../client.h"
 
-t_authentication_data get_authentication_data() {
+t_authentication_data get_authentication_data(GtkWidget *enter_login, GtkWidget *enter_password)
+{
     t_authentication_data authentication_data;
 
-    printf("Enter login: ");
-    char login[MAX_LOGIN_LENGTH];
-    scanf("%s", login);
-
-    printf("Enter password: ");
-    char password[MAX_PASSWORD_LENGTH];
-    scanf("%s", password);
-
-    authentication_data.login = mx_strdup(login);
-    authentication_data.password = mx_strdup(password);
+    authentication_data.login = (char *)gtk_entry_get_text(GTK_ENTRY(enter_login));
+    authentication_data.password = (char *)gtk_entry_get_text(GTK_ENTRY(enter_password));
 
     return authentication_data;
 }
@@ -50,4 +43,3 @@ t_text_message_data get_text_message_data(id_t user_id, id_t chat_id) {
     t_text_message_data text_message_data = {user_id, chat_id, strdup(text_message)};
     return text_message_data;
 }
-

@@ -76,7 +76,9 @@ void handle_authenticated_user_commands(t_address server_address, id_t user_id) 
         } else if (strcmp(user_command, "enter_chat") == 0) {
             id_t chat_id = console_input_int("Enter chat id: ");
             handle_chatting(server_address, user_id, chat_id);
-        } else if (strcmp(user_command, "exit") == 0) {
+        }
+        else if (strcmp(user_command, "exit") == 0)
+        {
             return;
         }
     }
@@ -88,40 +90,7 @@ int main(int argc, char **argv) {
         return 0;
     }
 
-    t_address server_address = {argv[1], atoi(argv[2])};
-    uint user_id = -1;
-
-    while (true) {
-        printf("\nEnter a command (login, register, exit): ");
-        char user_command_str[1024];
-        scanf("%s", user_command_str);
-
-        if (strcmp(user_command_str, "login") == 0) {
-            t_authentication_data authentication_data = get_authentication_data();
-            t_state_code login_result = rq_authenticate_user(server_address, authentication_data, LOGIN_MODE, &user_id);
-            if (login_result == SUCCESSFUL_LOGIN) {
-                printf("Successful login.\n");
-                handle_authenticated_user_commands(server_address, user_id);
-            } else if (login_result == SUCH_LOGIN_DOES_NOT_EXIST) {
-                printf("Such login does not exist.\n");
-            } else if (login_result == WRONG_PASSWORD) {
-                printf("Wrong password.\n");
-            }
-            free_authentication_data(authentication_data);
-        } else if (strcmp(user_command_str, "register") == 0) {
-            t_authentication_data authentication_data = get_authentication_data();
-            t_state_code registration_result = rq_authenticate_user(server_address, authentication_data, REGISTER_MODE, &user_id);
-            if (registration_result == SUCCESSFUL_REGISTRATION) {
-                printf("Successful registration.\n");
-                handle_authenticated_user_commands(server_address, user_id);
-            } else if (registration_result == SUCH_LOGIN_ALREADY_EXISTS) {
-                printf("Such login already exists.\n");
-            }
-            free_authentication_data(authentication_data);
-        } else if (strcmp(user_command_str, "exit") == 0) {
-            return 0;
-        }
-    }
+    gui_init(argc, argv);
 
     return 0;
 }
