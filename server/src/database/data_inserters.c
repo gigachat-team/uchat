@@ -67,7 +67,7 @@ bool db_add_new_member_to_chat(sqlite3 *db, id_t user_id, id_t chat_id) {
 void db_add_text_message(sqlite3 *db, id_t chat_id, id_t user_id, char *text_message) {
     char *sql = NULL;
     asprintf(&sql, "INSERT INTO "MESSAGES_TABLE" ("MESSAGES_CHAT_ID", "MESSAGES_USER_ID", "MESSAGES_CONTENT", "MESSAGES_CREATION_DATE") \
-                    VALUES (%d, %d, '%s', 'implement later')", chat_id, user_id, text_message);
+                    VALUES (%d, %d, '%s', datetime('now'))", chat_id, user_id, text_message);
     db_execute_sql(db, sql);
     free(sql);
 }

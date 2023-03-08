@@ -17,9 +17,11 @@ void handle_chatting(t_address server_address, id_t user_id, id_t chat_id) {
             uint16_t messages_count = 0;
             t_user_message *messages = rq_get_last_messages(server_address, LAST_LOADING_MESSAGES_COUNT, chat_id, &messages_count);
             for (size_t i = 0; i < messages_count; i++) {
-                printf("user_login: %s, message: %s\n", messages[i].user_login, messages[i].bytes);
+                char datetime[DEFAULT_TIME_FORMAT_LEN];
+                strftime(datetime, DEFAULT_TIME_FORMAT_LEN, DEFAULT_TIME_FORMAT, &messages[i].creation_date);
+                printf("%s, login: %s, message: %s\n", datetime, messages[i].user_login, messages[i].bytes);
             }
-            free_user_messages_array(messages, messages_count);
+            free_user_messages(messages, messages_count);
         } else if (strcmp(command, "members") == 0) {
             uint32_t members_count = 0;
             t_user *members = rq_get_chat_members(server_address, chat_id, &members_count);

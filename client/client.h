@@ -19,6 +19,13 @@ typedef struct s_gui_data
     uint user_id;
 } t_gui_data;
 
+typedef struct s_user_message {
+    id_t user_id;
+    char *user_login;
+    char *bytes;
+    struct tm creation_date;
+} t_user_message;
+
 // GUI
 void gui_init(int argc, char **argv);
 void exit_app();
@@ -42,3 +49,6 @@ int console_input_int(char *message);
 t_text_message_data get_text_message_data(id_t user_id, id_t chat_id);
 
 t_chat receive_chat(int socket);
+
+void free_user_message(t_user_message message);
+void free_user_messages(t_user_message *messages, size_t length);

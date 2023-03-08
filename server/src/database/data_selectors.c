@@ -126,7 +126,7 @@ t_chat *db_get_chats_user_is_in(sqlite3 *db, id_t user_id, size_t *number_of_cha
 
 t_user_message *db_get_last_messages(sqlite3 *db, id_t chat_id, size_t count, size_t *number_of_found) {
     char *sql = NULL;
-    asprintf(&sql, "SELECT "MESSAGES_USER_ID", "MESSAGES_CONTENT" FROM "MESSAGES_TABLE" \
+    asprintf(&sql, "SELECT "MESSAGES_USER_ID", "MESSAGES_CONTENT", "MESSAGES_CREATION_DATE" FROM "MESSAGES_TABLE" \
                     WHERE "MESSAGES_CHAT_ID" = %d ORDER BY "MESSAGES_ID" DESC", chat_id);
 
     sqlite3_stmt *statement = db_open_statement(db, sql);
@@ -140,6 +140,7 @@ t_user_message *db_get_last_messages(sqlite3 *db, id_t chat_id, size_t count, si
         messages[*number_of_found].user_id = sqlite3_column_int(statement, 0);
         messages[*number_of_found].user_login = db_get_user_login_by_id(db, messages[*number_of_found].user_id);
         messages[*number_of_found].bytes = strdup(sqlite3_column_blob(statement, 1));
+        messages[*number_of_found].creation_date = strdup(sqlite3_column_blob(statement, 2));
     }
     db_close_statement(statement, db);
 

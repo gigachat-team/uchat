@@ -89,6 +89,9 @@ t_user_message *rq_get_last_messages(t_address server_address, uint16_t messages
         found_messages[i].user_id = receive_unsigned_int(client_socket);
         found_messages[i].user_login = receive_string(client_socket);
         found_messages[i].bytes = receive_string(client_socket);
+        char *received_creation_date = receive_string(client_socket);
+        found_messages[i].creation_date = utc_str_to_localtime_tm(received_creation_date, DEFAULT_TIME_FORMAT);
+        free(received_creation_date);
     }
 
     close(client_socket);
