@@ -14,6 +14,9 @@ void handle_registration(int client_socket) {
     } else {
         send_unsigned_char(client_socket, SUCH_LOGIN_ALREADY_EXISTS);
     }
+
+    free(login);
+    free(password);
 }
 
 void handle_login(int client_socket) {
@@ -36,6 +39,8 @@ void handle_login(int client_socket) {
         send_unsigned_char(client_socket, SUCH_LOGIN_DOES_NOT_EXIST);
     }
 
+    free(login);
+    free(password);
     free(found_password);
 }
 
@@ -49,6 +54,8 @@ void handle_chat_creation(int client_socket) {
     db_close(db);
 
     send_unsigned_char(client_socket, CHAT_CREATED_SUCCESSFULLY);
+
+    free(chat_name);
 }
 
 void handle_getting_chats(int client_socket) {
@@ -83,6 +90,8 @@ void handle_adding_new_member_to_chat(int client_socket) {
     } else {
         send_unsigned_char(client_socket, SUCH_USER_IS_ALREADY_IN_CHAT);
     }
+
+    free(member_login);
 }
 
 void handle_text_message_sending(int client_socket) {
@@ -93,6 +102,8 @@ void handle_text_message_sending(int client_socket) {
     db_add_text_message(db, chat_id, user_id, text_message);
     db_close(db);
     send_unsigned_char(client_socket, TEXT_MESSAGE_SENT_SUCCESSFULLY);
+
+    free(text_message);
 }
 
 void handle_last_messages_getting(int client_socket) {
