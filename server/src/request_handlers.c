@@ -110,9 +110,10 @@ void handle_last_messages_getting(int client_socket) {
         send_unsigned_int(client_socket, last_messages[i].user_id);
         send_string(client_socket, last_messages[i].user_login);
         send_string(client_socket, last_messages[i].bytes);
+        send_string(client_socket, last_messages[i].creation_date);
     }
 
-    free_user_messages_array(last_messages, number_of_found);
+    free_user_messages(last_messages, number_of_found);
 }
 
 void handle_removing_user_from_chat(int client_socket) {

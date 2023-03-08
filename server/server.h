@@ -31,6 +31,13 @@
 #define MESSAGE_STATUSES_USER_ID "UserId"
 #define MESSAGE_STATUSES_IS_READ "IsRead"
 
+typedef struct s_user_message {
+    id_t user_id;
+    char *user_login;
+    char *bytes;
+    char *creation_date;
+} t_user_message;
+
 void *handle_request_thread(void *client_socket_void);
 
 void send_chat(int socket, t_chat chat);
@@ -129,3 +136,6 @@ bool db_user_is_in_chat(sqlite3 *db, id_t user_id, id_t chat_id);
  * @return nothing but turns server into the daemon state
 */
 void daemon_server();
+
+void free_user_message(t_user_message message);
+void free_user_messages(t_user_message *messages, size_t length);
