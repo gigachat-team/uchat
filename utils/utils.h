@@ -2,6 +2,7 @@
 
 #define _GNU_SOURCE
 #include <stdio.h>
+#include <time.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
@@ -27,6 +28,9 @@
 #define MAX_LOGIN_LENGTH 40
 #define MAX_PASSWORD_LENGTH 50
 #define MAX_CHAT_NAME_LENGTH 30
+
+#define DEFAULT_TIME_FORMAT "%4Y-%2m-%2d %2H:%2M:%2S"
+#define DEFAULT_TIME_FORMAT_LEN 20
 
 typedef struct s_address {
     char *ip;
@@ -159,4 +163,8 @@ void free_user_message(t_user_message message);
 void free_user_messages_array(t_user_message *messages, size_t length);
 void free_user(t_user user);
 void free_users(t_user *users, size_t users_count);
+
+struct tm str_to_tm(char *datetime_str, char *datetime_format);
+struct tm utc_to_localtime(struct tm utc);
+struct tm utc_str_to_localtime_tm(char *utc_str, char *datetime_format);
 
