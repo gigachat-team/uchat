@@ -113,7 +113,7 @@ void handle_last_messages_getting(int client_socket) {
     size_t number_of_found = 0;
 
     sqlite3 *db = db_open();
-    t_user_message *last_messages = db_get_last_messages(db, chat_id, messages_count, &number_of_found);
+    t_user_message *last_messages = db_get_last_messages(db, chat_id, UINT32_MAX, messages_count, &number_of_found);
     db_close(db);
 
     send_unsigned_short(client_socket, number_of_found);

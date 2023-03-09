@@ -124,10 +124,13 @@ t_chat *db_get_chats_user_is_in(sqlite3 *db, id_t user_id, size_t *number_of_cha
     return descriptions_of_chats;
 }
 
-t_user_message *db_get_last_messages(sqlite3 *db, id_t chat_id, size_t count, size_t *number_of_found) {
+t_user_message *db_get_last_messages(sqlite3 *db, id_t chat_id, uint32_t last_message_order, size_t count, size_t *number_of_found) {
     char *sql = NULL;
-    asprintf(&sql, "SELECT "MESSAGES_USER_ID", "MESSAGES_CONTENT", "MESSAGES_CREATION_DATE", "MESSAGES_ORDER" FROM "MESSAGES_TABLE" \
-                    WHERE "MESSAGES_CHAT_ID" = %d ORDER BY "MESSAGES_ID" DESC", chat_id);
+    asprintf(&sql,
+        "SELECT "MESSAGES_USER_ID", "MESSAGES_CONTENT", "MESSAGES_CREATION_DATE", "MESSAGES_ORDER" \
+            FROM "MESSAGES_TABLE" \
+            WHERE "MESSAGES_CHAT_ID" = %u AND "MESSAGES_ORDER" <= %u \
+            ORDER BY "MESSAGES_ID" DESC", chat_id, last_message_order);
 
     sqlite3_stmt *statement = db_open_statement(db, sql);
 
