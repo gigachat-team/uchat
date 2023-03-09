@@ -92,6 +92,7 @@ t_user_message *rq_get_last_messages(t_address server_address, uint16_t messages
         char *received_creation_date = receive_string(client_socket);
         found_messages[i].creation_date = utc_str_to_localtime_tm(received_creation_date, DEFAULT_TIME_FORMAT);
         free(received_creation_date);
+        found_messages[i].order_in_chat = receive_unsigned_int(client_socket);
     }
 
     close(client_socket);

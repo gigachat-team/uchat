@@ -122,6 +122,7 @@ void handle_last_messages_getting(int client_socket) {
         send_string(client_socket, last_messages[i].user_login);
         send_string(client_socket, last_messages[i].bytes);
         send_string(client_socket, last_messages[i].creation_date);
+        send_unsigned_int(client_socket, last_messages[i].order_in_chat);
     }
 
     free_user_messages(last_messages, number_of_found);

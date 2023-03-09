@@ -24,6 +24,7 @@ typedef struct s_user_message {
     char *user_login;
     char *bytes;
     struct tm creation_date;
+    uint32_t order_in_chat;
 } t_user_message;
 
 // GUI
