@@ -109,11 +109,12 @@ void handle_text_message_sending(int client_socket) {
 void handle_last_messages_getting(int client_socket) {
     uint16_t messages_count = receive_unsigned_short(client_socket);
     id_t chat_id = receive_unsigned_int(client_socket);
+    uint32_t msg_number = receive_unsigned_int(client_socket);
 
     size_t number_of_found = 0;
 
     sqlite3 *db = db_open();
-    t_user_message *last_messages = db_get_last_messages(db, chat_id, messages_count, &number_of_found);
+    t_user_message *last_messages = db_get_last_messages(db, chat_id, msg_number, messages_count, &number_of_found);
     db_close(db);
 
     send_unsigned_short(client_socket, number_of_found);
@@ -122,6 +123,7 @@ void handle_last_messages_getting(int client_socket) {
         send_string(client_socket, last_messages[i].user_login);
         send_string(client_socket, last_messages[i].bytes);
         send_string(client_socket, last_messages[i].creation_date);
+        send_unsigned_int(client_socket, last_messages[i].order_in_chat);
     }
 
     free_user_messages(last_messages, number_of_found);
