@@ -74,9 +74,9 @@ void db_add_text_message(sqlite3 *db, id_t chat_id, id_t user_id, char *text_mes
     uint32_t new_message_order = sqlite3_step(statement) == SQLITE_ROW ? sqlite3_column_int(statement, 0) + 1 : 1;
     db_close_statement(statement, db);
 
-    asprintf(&sql, "INSERT INTO "MESSAGES_TABLE" ("MESSAGES_CHAT_ID", "MESSAGES_USER_ID", "MESSAGES_CONTENT", "MESSAGES_CREATION_DATE", "MESSAGES_ORDER") \
-                    VALUES (%d, %d, '%s', datetime('now'), %d)", chat_id, user_id, text_message, new_message_order);
+    sql = sqlite3_mprintf("INSERT INTO "MESSAGES_TABLE" ("MESSAGES_CHAT_ID", "MESSAGES_USER_ID", "MESSAGES_CONTENT", "MESSAGES_CREATION_DATE", "MESSAGES_ORDER") \
+                    VALUES (%d, %d, %Q, datetime('now'), %d)", chat_id, user_id, text_message, new_message_order);
     db_execute_sql(db, sql);
-    free(sql);
+    sqlite3_free(sql);
 }
 
