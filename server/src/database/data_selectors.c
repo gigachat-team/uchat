@@ -1,14 +1,12 @@
 #include "../../server.h"
 
 char *db_get_password_by_id(sqlite3 *db, id_t id) {
-    char *sql = NULL;
-    asprintf(&sql, "SELECT "USERS_PASSWORD" FROM "USERS_TABLE" \
-                    WHERE "USERS_ID" = '%d'", id
+    char *sql = sqlite3_mprintf(" \
+        SELECT "USERS_PASSWORD" FROM "USERS_TABLE" \
+        WHERE "USERS_ID" = %d", id
     );
-
     sqlite3_stmt *statement = db_open_statement(db, sql);
-
-    free(sql);
+    sqlite3_free(sql);
 
     if (sqlite3_step(statement) != SQLITE_ROW) {
         db_close_statement(statement, db);
@@ -23,14 +21,12 @@ char *db_get_password_by_id(sqlite3 *db, id_t id) {
 }
 
 id_t db_get_user_id_by_login(sqlite3 *db, char *login) {
-    char *sql = NULL;
-    asprintf(&sql, "SELECT "USERS_ID" FROM "USERS_TABLE" \
-                    WHERE "USERS_LOGIN" = '%s'", login
+    char *sql = sqlite3_mprintf(" \
+        SELECT "USERS_ID" FROM "USERS_TABLE" \
+        WHERE "USERS_LOGIN" = %Q", login
     );
-    
     sqlite3_stmt *statement = db_open_statement(db, sql);
-
-    free(sql);
+    sqlite3_free(sql);
 
     if (sqlite3_step(statement) != SQLITE_ROW) {
         db_close_statement(statement, db);
@@ -45,13 +41,12 @@ id_t db_get_user_id_by_login(sqlite3 *db, char *login) {
 }
 
 char *db_get_user_login_by_id(sqlite3 *db, id_t user_id) {
-    char *sql = NULL;
-    asprintf(&sql, "SELECT "USERS_LOGIN" FROM "USERS_TABLE" \
-                    WHERE "USERS_ID" = %d", user_id);
-
+    char *sql = sqlite3_mprintf(" \
+        SELECT "USERS_LOGIN" FROM "USERS_TABLE" \
+        WHERE "USERS_ID" = %d", user_id
+    );
     sqlite3_stmt *statement = db_open_statement(db, sql);
-
-    free(sql);
+    sqlite3_free(sql);
 
     if (sqlite3_step(statement) != SQLITE_ROW) {
         db_close_statement(statement, db);
@@ -66,14 +61,12 @@ char *db_get_user_login_by_id(sqlite3 *db, id_t user_id) {
 }
 
 char *db_get_chat_name_by_id(sqlite3 *db, id_t chat_id) {
-    char *sql = NULL;
-    asprintf(&sql, "SELECT "CHATS_NAME" FROM "CHATS_TABLE" \
-                    WHERE "CHATS_ID" = %d", chat_id
+    char *sql = sqlite3_mprintf(" \
+        SELECT "CHATS_NAME" FROM "CHATS_TABLE" \
+        WHERE "CHATS_ID" = %d", chat_id
     );
-
     sqlite3_stmt *statement = db_open_statement(db, sql);
-
-    free(sql);
+    sqlite3_free(sql);
 
     if (sqlite3_step(statement) != SQLITE_ROW) {
         db_close_statement(statement, db);
@@ -88,14 +81,12 @@ char *db_get_chat_name_by_id(sqlite3 *db, id_t chat_id) {
 }
 
 id_t *db_get_IDs_of_chats_user_is_in(sqlite3 *db, id_t user_id, size_t *IDs_of_chats_len) {
-    char *sql = NULL;
-    asprintf(&sql, "SELECT "MEMBERS_CHAT_ID" FROM "MEMBERS_TABLE" \
-                    WHERE "MEMBERS_USER_ID" = %d", user_id
+    char *sql = sqlite3_mprintf(" \
+        SELECT "MEMBERS_CHAT_ID" FROM "MEMBERS_TABLE" \
+        WHERE "MEMBERS_USER_ID" = %d", user_id
     );
-
     sqlite3_stmt *statement = db_open_statement(db, sql);
-
-    free(sql);
+    sqlite3_free(sql);
 
     *IDs_of_chats_len = 0;
     id_t *IDs_of_chats = NULL;
@@ -125,16 +116,14 @@ t_chat *db_get_chats_user_is_in(sqlite3 *db, id_t user_id, size_t *number_of_cha
 }
 
 t_user_message *db_get_last_messages(sqlite3 *db, id_t chat_id, uint32_t last_message_order, size_t count, size_t *number_of_found) {
-    char *sql = NULL;
-    asprintf(&sql,
-        "SELECT "MESSAGES_USER_ID", "MESSAGES_CONTENT", "MESSAGES_CREATION_DATE", "MESSAGES_ORDER" \
-            FROM "MESSAGES_TABLE" \
-            WHERE "MESSAGES_CHAT_ID" = %u AND "MESSAGES_ORDER" <= %u \
-            ORDER BY "MESSAGES_ID" DESC", chat_id, last_message_order);
-
+    char *sql = sqlite3_mprintf(" \
+        SELECT "MESSAGES_USER_ID", "MESSAGES_CONTENT", "MESSAGES_CREATION_DATE", "MESSAGES_ORDER" \
+        FROM "MESSAGES_TABLE" \
+        WHERE "MESSAGES_CHAT_ID" = %u AND "MESSAGES_ORDER" <= %u \
+        ORDER BY "MESSAGES_ID" DESC", chat_id, last_message_order
+    );
     sqlite3_stmt *statement = db_open_statement(db, sql);
-
-    free(sql);
+    sqlite3_free(sql);
 
     t_user_message *messages = malloc(count * sizeof(t_user_message));
 
@@ -160,11 +149,12 @@ t_user_message *db_get_last_messages(sqlite3 *db, id_t chat_id, uint32_t last_me
 }
 
 t_user *db_get_chat_members(sqlite3 *db, id_t chat_id, size_t *members_count) {
-    char *sql = NULL;
-    asprintf(&sql, "SELECT COUNT(*) FROM "MEMBERS_TABLE" \
-                    WHERE "MEMBERS_CHAT_ID" = %d", chat_id);
+    char *sql = sqlite3_mprintf(" \
+        SELECT COUNT(*) FROM "MEMBERS_TABLE" \
+        WHERE "MEMBERS_CHAT_ID" = %d", chat_id
+    );
     sqlite3_stmt *statement = db_open_statement(db, sql);
-    free(sql);
+    sqlite3_free(sql);
     sqlite3_step(statement);
     *members_count = sqlite3_column_int(statement, 0);
     db_close_statement(statement, db);
@@ -173,12 +163,14 @@ t_user *db_get_chat_members(sqlite3 *db, id_t chat_id, size_t *members_count) {
         return NULL;
     }
 
-    asprintf(&sql, "SELECT "MEMBERS_USER_ID", \
-                        (SELECT "USERS_LOGIN" FROM "USERS_TABLE" \
-                        WHERE "USERS_TABLE"."USERS_ID" = "MEMBERS_TABLE"."MEMBERS_USER_ID") \
-                    FROM "MEMBERS_TABLE" WHERE "MEMBERS_CHAT_ID" = %d", chat_id);
+    sql = sqlite3_mprintf(" \
+        SELECT "MEMBERS_USER_ID", \
+            (SELECT "USERS_LOGIN" FROM "USERS_TABLE" \
+            WHERE "USERS_TABLE"."USERS_ID" = "MEMBERS_TABLE"."MEMBERS_USER_ID") \
+        FROM "MEMBERS_TABLE" WHERE "MEMBERS_CHAT_ID" = %d", chat_id
+    );
     statement = db_open_statement(db, sql);
-    free(sql);
+    sqlite3_free(sql);
     sqlite3_step(statement);
     t_user *members = malloc(*members_count * sizeof(t_user));
     for (size_t i = 0; i < *members_count; i++) {
