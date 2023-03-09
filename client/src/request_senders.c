@@ -77,11 +77,12 @@ t_state_code rq_send_text_message(t_address server_address, t_text_message_data 
     return response;
 }
 
-t_user_message *rq_get_last_messages(t_address server_address, uint16_t messages_count, id_t chat_id, uint16_t *found_messages_count) {
+t_user_message *rq_get_last_messages(t_address server_address, uint32_t msg_number, uint16_t messages_count, id_t chat_id, uint16_t *found_messages_count) {
     int client_socket = create_and_connect_socket(server_address);
     send_unsigned_char(client_socket, GET_LAST_MESSAGES);
     send_unsigned_short(client_socket, messages_count);
     send_unsigned_int(client_socket, chat_id);
+    send_unsigned_int(client_socket, msg_number);
 
     *found_messages_count = receive_unsigned_short(client_socket);
     t_user_message *found_messages = malloc(*found_messages_count * sizeof(t_user_message));
