@@ -5,14 +5,12 @@
 
 #define LAST_LOADING_MESSAGES_COUNT 30
 
-typedef enum e_authentication_mode
-{
+typedef enum e_authentication_mode {
     REGISTER_MODE = REGISTER,
     LOGIN_MODE = LOGIN
 } t_authentication_mode;
 
-typedef struct s_gui_data
-{
+typedef struct s_gui_data {
     GtkBuilder *builder;
 
     t_address server_address;
