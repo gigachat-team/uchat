@@ -3,7 +3,7 @@
 char *db_get_password_by_id(sqlite3 *db, id_t id) {
     char *sql = sqlite3_mprintf(" \
         SELECT "USERS_PASSWORD" FROM "USERS_TABLE" \
-        WHERE "USERS_ID" = %d", id
+        WHERE "USERS_ID" = %u", id
     );
     sqlite3_stmt *statement = db_open_statement(db, sql);
     sqlite3_free(sql);
@@ -43,7 +43,7 @@ id_t db_get_user_id_by_login(sqlite3 *db, char *login) {
 char *db_get_user_login_by_id(sqlite3 *db, id_t user_id) {
     char *sql = sqlite3_mprintf(" \
         SELECT "USERS_LOGIN" FROM "USERS_TABLE" \
-        WHERE "USERS_ID" = %d", user_id
+        WHERE "USERS_ID" = %u", user_id
     );
     sqlite3_stmt *statement = db_open_statement(db, sql);
     sqlite3_free(sql);
@@ -63,7 +63,7 @@ char *db_get_user_login_by_id(sqlite3 *db, id_t user_id) {
 char *db_get_chat_name_by_id(sqlite3 *db, id_t chat_id) {
     char *sql = sqlite3_mprintf(" \
         SELECT "CHATS_NAME" FROM "CHATS_TABLE" \
-        WHERE "CHATS_ID" = %d", chat_id
+        WHERE "CHATS_ID" = %u", chat_id
     );
     sqlite3_stmt *statement = db_open_statement(db, sql);
     sqlite3_free(sql);
@@ -83,7 +83,7 @@ char *db_get_chat_name_by_id(sqlite3 *db, id_t chat_id) {
 id_t *db_get_IDs_of_chats_user_is_in(sqlite3 *db, id_t user_id, size_t *IDs_of_chats_len) {
     char *sql = sqlite3_mprintf(" \
         SELECT "MEMBERS_CHAT_ID" FROM "MEMBERS_TABLE" \
-        WHERE "MEMBERS_USER_ID" = %d", user_id
+        WHERE "MEMBERS_USER_ID" = %u", user_id
     );
     sqlite3_stmt *statement = db_open_statement(db, sql);
     sqlite3_free(sql);
@@ -151,7 +151,7 @@ t_user_message *db_get_last_messages(sqlite3 *db, id_t chat_id, uint32_t last_me
 t_user *db_get_chat_members(sqlite3 *db, id_t chat_id, size_t *members_count) {
     char *sql = sqlite3_mprintf(" \
         SELECT COUNT(*) FROM "MEMBERS_TABLE" \
-        WHERE "MEMBERS_CHAT_ID" = %d", chat_id
+        WHERE "MEMBERS_CHAT_ID" = %u", chat_id
     );
     sqlite3_stmt *statement = db_open_statement(db, sql);
     sqlite3_free(sql);
@@ -167,7 +167,7 @@ t_user *db_get_chat_members(sqlite3 *db, id_t chat_id, size_t *members_count) {
         SELECT "MEMBERS_USER_ID", \
             (SELECT "USERS_LOGIN" FROM "USERS_TABLE" \
             WHERE "USERS_TABLE"."USERS_ID" = "MEMBERS_TABLE"."MEMBERS_USER_ID") \
-        FROM "MEMBERS_TABLE" WHERE "MEMBERS_CHAT_ID" = %d", chat_id
+        FROM "MEMBERS_TABLE" WHERE "MEMBERS_CHAT_ID" = %u", chat_id
     );
     statement = db_open_statement(db, sql);
     sqlite3_free(sql);

@@ -30,7 +30,7 @@ id_t db_create_user(sqlite3 *db, char *login, char *password) {
 id_t db_create_chat(sqlite3 *db, char *chat_name, id_t owner_id) {
     char *sql = sqlite3_mprintf(" \
         INSERT INTO "CHATS_TABLE" ("CHATS_NAME", "CHATS_USER_ID") \
-        VALUES (%Q, '%d');", chat_name, owner_id
+        VALUES (%Q, '%u');", chat_name, owner_id
     );
     db_execute_sql(db, sql);
     sqlite3_free(sql);
@@ -57,7 +57,7 @@ bool db_add_new_member_to_chat(sqlite3 *db, id_t user_id, id_t chat_id) {
 
     char *sql = sqlite3_mprintf(" \
         INSERT INTO "MEMBERS_TABLE" ("MEMBERS_CHAT_ID", "MEMBERS_USER_ID") \
-        VALUES (%d, %d)", chat_id, user_id
+        VALUES (%u, %u)", chat_id, user_id
     );
     db_execute_sql(db, sql);
 
@@ -80,7 +80,7 @@ void db_add_text_message(sqlite3 *db, id_t chat_id, id_t user_id, char *text_mes
     sql = sqlite3_mprintf(" \
         INSERT INTO "MESSAGES_TABLE" ("MESSAGES_CHAT_ID", "MESSAGES_USER_ID", "MESSAGES_CONTENT", \
                                       "MESSAGES_CREATION_DATE", "MESSAGES_ORDER") \
-        VALUES (%d, %d, %Q, datetime('now'), %d)",
+        VALUES (%u, %u, %Q, datetime('now'), %u)",
         chat_id, user_id, text_message, new_message_order
     );
     db_execute_sql(db, sql);

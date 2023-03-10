@@ -19,7 +19,7 @@ bool db_users_table_has_login(sqlite3 *db, char *login) {
 bool db_user_is_in_chat(sqlite3 *db, id_t user_id, id_t chat_id) {
     char *sql = sqlite3_mprintf(" \
         SELECT * FROM "MEMBERS_TABLE" \
-        WHERE "MEMBERS_USER_ID" = %d AND "MEMBERS_CHAT_ID" = %d",
+        WHERE "MEMBERS_USER_ID" = %u AND "MEMBERS_CHAT_ID" = %u",
         user_id, chat_id
     );
 
