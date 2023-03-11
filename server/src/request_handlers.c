@@ -14,7 +14,7 @@ void handle_registration(int client_socket) {
         pack_uint32(user_id, &package);
         send_and_free_package(client_socket, package);
     } else {
-        send_unsigned_char(client_socket, SUCH_LOGIN_ALREADY_EXISTS);
+        send_byte(client_socket, SUCH_LOGIN_ALREADY_EXISTS);
     }
 
     free(login);
@@ -37,10 +37,10 @@ void handle_login(int client_socket) {
             pack_uint32(user_id, &package);
             send_and_free_package(client_socket, package);
         } else {
-            send_unsigned_char(client_socket, WRONG_PASSWORD);
+            send_byte(client_socket, WRONG_PASSWORD);
         }
     } else {
-        send_unsigned_char(client_socket, SUCH_LOGIN_DOES_NOT_EXIST);
+        send_byte(client_socket, SUCH_LOGIN_DOES_NOT_EXIST);
     }
 
     free(login);
@@ -57,7 +57,7 @@ void handle_chat_creation(int client_socket) {
     db_add_new_member_to_chat(db, owner_id, created_chat_id);
     db_close(db);
 
-    send_unsigned_char(client_socket, CHAT_CREATED_SUCCESSFULLY);
+    send_byte(client_socket, CHAT_CREATED_SUCCESSFULLY);
 
     free(chat_name);
 }
@@ -92,9 +92,9 @@ void handle_adding_new_member_to_chat(int client_socket) {
     db_close(db);
 
     if (new_member_added) {
-        send_unsigned_char(client_socket, USER_SUCCESSFULLY_ADDED_TO_CHAT);
+        send_byte(client_socket, USER_SUCCESSFULLY_ADDED_TO_CHAT);
     } else {
-        send_unsigned_char(client_socket, SUCH_USER_IS_ALREADY_IN_CHAT);
+        send_byte(client_socket, SUCH_USER_IS_ALREADY_IN_CHAT);
     }
 
     free(member_login);
@@ -107,7 +107,7 @@ void handle_text_message_sending(int client_socket) {
     sqlite3 *db = db_open();
     db_add_text_message(db, chat_id, user_id, text_message);
     db_close(db);
-    send_unsigned_char(client_socket, TEXT_MESSAGE_SENT_SUCCESSFULLY);
+    send_byte(client_socket, TEXT_MESSAGE_SENT_SUCCESSFULLY);
 
     free(text_message);
 }
@@ -145,7 +145,7 @@ void handle_removing_user_from_chat(int client_socket) {
     db_remove_user_from_chat(db, user_id, chat_id);
     db_close(db);
 
-    send_unsigned_char(client_socket, USER_REMOVED_FROM_CHAT_SUCCESSFULLY);
+    send_byte(client_socket, USER_REMOVED_FROM_CHAT_SUCCESSFULLY);
 }
 
 void handle_getting_chat_members(int client_socket) {

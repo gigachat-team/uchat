@@ -1,7 +1,7 @@
 #include "../utils.h"
 
-void send_unsigned_char(int socket, unsigned char character) {
-    send(socket, &character, sizeof(character), 0);
+void send_byte(int socket, uint8_t byte) {
+    send(socket, &byte, sizeof(byte), 0);
 }
 
 void send_unsigned_short(int socket, uint16_t number) {

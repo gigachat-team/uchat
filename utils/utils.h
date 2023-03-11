@@ -146,7 +146,7 @@ uint32_t receive_unsigned_int(int socket);
 */
 char *receive_string(int socket);
 
-void send_unsigned_char(int socket, unsigned char character);
+void send_byte(int socket, uint8_t byte);
 void send_unsigned_short(int socket, uint16_t number);
 void send_unsigned_int(int socket, uint32_t number);
 
