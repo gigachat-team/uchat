@@ -9,9 +9,9 @@ t_state_code rq_authenticate_user(t_address server_address, t_authentication_dat
     pack_bytes(authentication_data.password, &package);
     send_and_free_package(client_socket, package);
 
-    t_state_code authentication_result = receive_unsigned_char(client_socket);
+    t_state_code authentication_result = receive_byte(client_socket);
     if (authentication_result == SUCCESSFUL_LOGIN || authentication_result == SUCCESSFUL_REGISTRATION) {
-        *user_id = receive_unsigned_int(client_socket);
+        *user_id = receive_uint32(client_socket);
     }
 
     close(client_socket);
@@ -28,7 +28,7 @@ t_state_code rq_create_chat(t_address server_address, t_chat_creation_data chat_
     pack_uint32(chat_data.owner_id, &package);
     send_and_free_package(client_socket, package);
 
-    t_state_code creating_chat_result = receive_unsigned_char(client_socket);
+    t_state_code creating_chat_result = receive_byte(client_socket);
 
     close(client_socket);
 
@@ -43,11 +43,11 @@ t_chat *rq_get_chats_i_am_in(t_address server_address, id_t user_id, size_t *cha
     pack_uint32(user_id, &package);
     send_and_free_package(client_socket, package);
 
-    *chats_count = receive_unsigned_int(client_socket);
+    *chats_count = receive_uint32(client_socket);
     t_chat *chats_i_am_in = *chats_count == 0 ? NULL : malloc(*chats_count * sizeof(t_chat));
     for (size_t i = 0; i < *chats_count; i++) {
-        chats_i_am_in[i].id = receive_unsigned_int(client_socket);
-        chats_i_am_in[i].name = receive_string(client_socket);
+        chats_i_am_in[i].id = receive_uint32(client_socket);
+        chats_i_am_in[i].name = receive_bytes(client_socket);
     }
 
     close(client_socket);
@@ -64,7 +64,7 @@ t_state_code rq_add_new_member(t_address server_address, t_new_chat_member_data 
     pack_bytes(new_chat_member_data.member_login, &package);
     send_and_free_package(client_socket, package);
 
-    t_state_code adding_new_member_to_chat_result = receive_unsigned_char(client_socket);
+    t_state_code adding_new_member_to_chat_result = receive_byte(client_socket);
 
     close(client_socket);
 
@@ -81,7 +81,7 @@ t_state_code rq_send_text_message(t_address server_address, t_text_message_data 
     pack_bytes(text_message_data.text, &package);
     send_and_free_package(client_socket, package);
 
-    t_state_code response = receive_unsigned_char(client_socket);
+    t_state_code response = receive_byte(client_socket);
 
     close(client_socket);
 
@@ -98,16 +98,16 @@ t_user_message *rq_get_last_messages(t_address server_address, uint32_t msg_numb
     pack_uint32(msg_number, &package);
     send_and_free_package(client_socket, package);
 
-    *found_messages_count = receive_unsigned_short(client_socket);
+    *found_messages_count = receive_uint16(client_socket);
     t_user_message *found_messages = malloc(*found_messages_count * sizeof(t_user_message));
     for (size_t i = 0; i < *found_messages_count; i++) {
-        found_messages[i].user_id = receive_unsigned_int(client_socket);
-        found_messages[i].user_login = receive_string(client_socket);
-        found_messages[i].bytes = receive_string(client_socket);
-        char *received_creation_date = receive_string(client_socket);
+        found_messages[i].user_id = receive_uint32(client_socket);
+        found_messages[i].user_login = receive_bytes(client_socket);
+        found_messages[i].bytes = receive_bytes(client_socket);
+        char *received_creation_date = receive_bytes(client_socket);
         found_messages[i].creation_date = utc_str_to_localtime_tm(received_creation_date, DEFAULT_TIME_FORMAT);
         free(received_creation_date);
-        found_messages[i].order_in_chat = receive_unsigned_int(client_socket);
+        found_messages[i].order_in_chat = receive_uint32(client_socket);
     }
 
     close(client_socket);
@@ -123,11 +123,11 @@ t_user *rq_get_chat_members(t_address server_address, id_t chat_id, uint32_t *me
     pack_uint32(chat_id, &package);
     send_and_free_package(client_socket, package);
 
-    *members_count = receive_unsigned_int(client_socket);
+    *members_count = receive_uint32(client_socket);
     t_user *members = malloc(*members_count * sizeof(t_user));
     for (size_t i = 0; i < *members_count; i++) {
-        members[i].id = receive_unsigned_int(client_socket);
-        members[i].login = receive_string(client_socket);
+        members[i].id = receive_uint32(client_socket);
+        members[i].login = receive_bytes(client_socket);
     }
 
     close(client_socket);
@@ -144,7 +144,7 @@ t_state_code rq_remove_member_from_chat(t_address server_address, id_t user_id, 
     pack_uint32(chat_id, &package);
     send_and_free_package(client_socket, package);
 
-    t_state_code removing_member_from_chat_result = receive_unsigned_char(client_socket);
+    t_state_code removing_member_from_chat_result = receive_byte(client_socket);
 
     close(client_socket);
 

@@ -4,7 +4,7 @@ void *handle_request_thread(void *client_socket_void) {
     int client_socket = *(int *)client_socket_void;
     free(client_socket_void);
 
-    t_request client_request = receive_unsigned_char(client_socket);
+    t_request client_request = receive_byte(client_socket);
 
     if (client_request == LOGIN) {
         handle_login(client_socket);

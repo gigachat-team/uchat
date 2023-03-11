@@ -125,26 +125,26 @@ int receive(int socket, char *buffer, size_t length);
  * ECONNABORTED.
  * @return Read unsigned char.
 */
-uint8_t receive_unsigned_char(int socket);
+uint8_t receive_byte(int socket);
 /**
  * @brief Reads 2 bytes from SOCKET. On errors, sets the erno variable to
  * ECONNABORTED.
  * @return Read unsigned short.
 */
-uint16_t receive_unsigned_short(int socket);
+uint16_t receive_uint16(int socket);
 /**
  * @brief Reads 4 bytes from SOCKET. On errors, sets the erno variable to
  * ECONNABORTED.
  * @return Read unsigned int.
 */
-uint32_t receive_unsigned_int(int socket);
+uint32_t receive_uint32(int socket);
 /**
  * @brief Reads string from SOCKET. On errors, sets the errno variable to
  * ECONNABORTED. Reading format: int -> string. First, the size of the string
  * is read, and then the string itself.
  * @return Pointer to allocated string.
 */
-char *receive_string(int socket);
+char *receive_bytes(int socket);
 
 void send_byte(int socket, uint8_t byte);
 void send_uint16(int socket, uint16_t number);

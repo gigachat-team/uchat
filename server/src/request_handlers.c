@@ -1,8 +1,8 @@
 #include "../server.h"
 
 void handle_registration(int client_socket) {
-    char *login = receive_string(client_socket);
-    char *password = receive_string(client_socket);
+    char *login = receive_bytes(client_socket);
+    char *password = receive_bytes(client_socket);
 
     sqlite3 *db = db_open();
     id_t user_id = db_create_user(db, login, password);
@@ -22,8 +22,8 @@ void handle_registration(int client_socket) {
 }
 
 void handle_login(int client_socket) {
-    char *login = receive_string(client_socket);
-    char *password = receive_string(client_socket);
+    char *login = receive_bytes(client_socket);
+    char *password = receive_bytes(client_socket);
 
     sqlite3 *db = db_open();
     id_t user_id = db_get_user_id_by_login(db, login);
@@ -49,8 +49,8 @@ void handle_login(int client_socket) {
 }
 
 void handle_chat_creation(int client_socket) {
-    char *chat_name = receive_string(client_socket);
-    id_t owner_id = receive_unsigned_int(client_socket);
+    char *chat_name = receive_bytes(client_socket);
+    id_t owner_id = receive_uint32(client_socket);
 
     sqlite3 *db = db_open();
     id_t created_chat_id = db_create_chat(db, chat_name, owner_id);
@@ -63,7 +63,7 @@ void handle_chat_creation(int client_socket) {
 }
 
 void handle_getting_chats(int client_socket) {
-    id_t user_id = receive_unsigned_int(client_socket);
+    id_t user_id = receive_uint32(client_socket);
 
     size_t number_of_chats = 0;
 
@@ -83,8 +83,8 @@ void handle_getting_chats(int client_socket) {
 }
 
 void handle_adding_new_member_to_chat(int client_socket) {
-    id_t chat_id = receive_unsigned_int(client_socket);
-    char *member_login = receive_string(client_socket);
+    id_t chat_id = receive_uint32(client_socket);
+    char *member_login = receive_bytes(client_socket);
 
     sqlite3 *db = db_open();
     id_t user_id = db_get_user_id_by_login(db, member_login);
@@ -101,9 +101,9 @@ void handle_adding_new_member_to_chat(int client_socket) {
 }
 
 void handle_text_message_sending(int client_socket) {
-    id_t user_id = receive_unsigned_int(client_socket);
-    id_t chat_id = receive_unsigned_int(client_socket);
-    char *text_message = receive_string(client_socket);
+    id_t user_id = receive_uint32(client_socket);
+    id_t chat_id = receive_uint32(client_socket);
+    char *text_message = receive_bytes(client_socket);
     sqlite3 *db = db_open();
     db_add_text_message(db, chat_id, user_id, text_message);
     db_close(db);
@@ -113,9 +113,9 @@ void handle_text_message_sending(int client_socket) {
 }
 
 void handle_last_messages_getting(int client_socket) {
-    uint16_t messages_count = receive_unsigned_short(client_socket);
-    id_t chat_id = receive_unsigned_int(client_socket);
-    uint32_t msg_number = receive_unsigned_int(client_socket);
+    uint16_t messages_count = receive_uint16(client_socket);
+    id_t chat_id = receive_uint32(client_socket);
+    uint32_t msg_number = receive_uint32(client_socket);
 
     size_t number_of_found = 0;
 
@@ -138,8 +138,8 @@ void handle_last_messages_getting(int client_socket) {
 }
 
 void handle_removing_user_from_chat(int client_socket) {
-    uint32_t user_id = receive_unsigned_int(client_socket);
-    uint32_t chat_id = receive_unsigned_int(client_socket);
+    uint32_t user_id = receive_uint32(client_socket);
+    uint32_t chat_id = receive_uint32(client_socket);
 
     sqlite3 *db = db_open();
     db_remove_user_from_chat(db, user_id, chat_id);
@@ -149,7 +149,7 @@ void handle_removing_user_from_chat(int client_socket) {
 }
 
 void handle_getting_chat_members(int client_socket) {
-    uint32_t chat_id = receive_unsigned_int(client_socket);
+    uint32_t chat_id = receive_uint32(client_socket);
 
     size_t members_count = 0;
 
