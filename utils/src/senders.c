@@ -13,9 +13,3 @@ void send_unsigned_int(int socket, uint32_t number) {
     uint32_t converted_number = htonl(number);
     send(socket, &converted_number, sizeof(converted_number), 0);
 }
-
-void send_string(int socket, char *string) {
-    send_unsigned_int(socket, strlen(string));
-    send(socket, string, strlen(string), 0);
-}
-

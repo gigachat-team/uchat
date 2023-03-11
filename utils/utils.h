@@ -149,7 +149,6 @@ char *receive_string(int socket);
 void send_unsigned_char(int socket, unsigned char character);
 void send_unsigned_short(int socket, uint16_t number);
 void send_unsigned_int(int socket, uint32_t number);
-void send_string(int socket, char *string);
 
 pthread_t create_default_thread(void *(*func)(void *), void *arg);
 void create_detached_thread(void *(*func)(void *), void *arg);
