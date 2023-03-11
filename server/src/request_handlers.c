@@ -9,8 +9,10 @@ void handle_registration(int client_socket) {
     db_close(db);
 
     if (user_id != 0) {
-        send_unsigned_char(client_socket, SUCCESSFUL_REGISTRATION);
-        send_unsigned_int(client_socket, user_id);
+        t_package package = create_package(2);
+        pack_byte(SUCCESSFUL_REGISTRATION, &package);
+        pack_uint32(user_id, &package);
+        send_and_free_package(client_socket, package);
     } else {
         send_unsigned_char(client_socket, SUCH_LOGIN_ALREADY_EXISTS);
     }
@@ -30,8 +32,10 @@ void handle_login(int client_socket) {
 
     if (found_password != NULL) {
         if (strcmp(password, found_password) == 0) {
-            send_unsigned_char(client_socket, SUCCESSFUL_LOGIN);
-            send_unsigned_int(client_socket, user_id);
+            t_package package = create_package(2);
+            pack_byte(SUCCESSFUL_LOGIN, &package);
+            pack_uint32(user_id, &package);
+            send_and_free_package(client_socket, package);
         } else {
             send_unsigned_char(client_socket, WRONG_PASSWORD);
         }
@@ -67,11 +71,13 @@ void handle_getting_chats(int client_socket) {
     t_chat *chats = db_get_chats_user_is_in(db, user_id, &number_of_chats);
     db_close(db);
 
-    send_unsigned_int(client_socket, number_of_chats);
-    for (size_t i = 0; i < number_of_chats; i++){
-        send_unsigned_int(client_socket, chats[i].id);
-        send_string(client_socket, chats[i].name);
+    t_package package = create_package(1 + number_of_chats * 2);
+    pack_uint32(number_of_chats, &package);
+    for (size_t i = 0; i < number_of_chats; i++) {
+        pack_uint32(chats[i].id, &package);
+        pack_bytes(chats[i].name, &package);
     }
+    send_and_free_package(client_socket, package);
 
     free_chats(chats, number_of_chats);
 }
@@ -117,14 +123,16 @@ void handle_last_messages_getting(int client_socket) {
     t_user_message *last_messages = db_get_last_messages(db, chat_id, msg_number, messages_count, &number_of_found);
     db_close(db);
 
-    send_unsigned_short(client_socket, number_of_found);
+    t_package package = create_package(1 + number_of_found * 5);
+    pack_uint16(number_of_found, &package);
     for (size_t i = 0; i < number_of_found; i++) {
-        send_unsigned_int(client_socket, last_messages[i].user_id);
-        send_string(client_socket, last_messages[i].user_login);
-        send_string(client_socket, last_messages[i].bytes);
-        send_string(client_socket, last_messages[i].creation_date);
-        send_unsigned_int(client_socket, last_messages[i].order_in_chat);
+        pack_uint32(last_messages[i].user_id, &package);
+        pack_bytes(last_messages[i].user_login, &package);
+        pack_bytes(last_messages[i].bytes, &package);
+        pack_bytes(last_messages[i].creation_date, &package);
+        pack_uint32(last_messages[i].order_in_chat, &package);
     }
+    send_and_free_package(client_socket, package);
 
     free_user_messages(last_messages, number_of_found);
 }
@@ -149,11 +157,13 @@ void handle_getting_chat_members(int client_socket) {
     t_user *members = db_get_chat_members(db, chat_id, &members_count);
     db_close(db);
 
-    send_unsigned_int(client_socket, members_count);
+    t_package package = create_package(1 + members_count * 2);
+    pack_uint32(members_count, &package);
     for (size_t i = 0; i < members_count; i++) {
-        send_unsigned_int(client_socket, members[i].id);
-        send_string(client_socket, members[i].login);
+        pack_uint32(members[i].id, &package);
+        pack_bytes(members[i].login, &package);
     }
+    send_and_free_package(client_socket, package);
 
     free_users(members, members_count);
 }
