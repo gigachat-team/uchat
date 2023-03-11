@@ -23,12 +23,12 @@ void handle_packer_error(t_package package, char *message) {
     }
 }
 
-void pack_byte(uint8_t character, t_package *package) {
+void pack_byte(uint8_t byte, t_package *package) {
     handle_packer_error(*package, "Failed to pack a byte");
-    uint8_t *allocated_value = malloc(sizeof(character));
-    *allocated_value = character;
+    uint8_t *allocated_value = malloc(sizeof(byte));
+    *allocated_value = byte;
     package->buffer[package->filled_size].iov_base = allocated_value;
-    package->buffer[package->filled_size++].iov_len = sizeof(character);
+    package->buffer[package->filled_size++].iov_len = sizeof(byte);
 }
 
 void pack_uint16(uint16_t number, t_package *package) {
