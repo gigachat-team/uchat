@@ -55,7 +55,7 @@ void pack_bytes(char *bytes, t_package *package) {
     const size_t number_of_sending_bytes = sizeof(uint32_t) + (number_of_bytes * sizeof(char));
     char *sending_bytes = malloc(number_of_sending_bytes);
     memcpy(sending_bytes, &converted_number_of_bytes, sizeof(uint32_t));
-    strcpy(sending_bytes + sizeof(uint32_t), bytes);
+    strncpy(sending_bytes + sizeof(uint32_t), bytes, number_of_bytes);
 
     package->buffer[package->filled_size].iov_base = sending_bytes;
     package->buffer[package->filled_size++].iov_len = number_of_sending_bytes;
