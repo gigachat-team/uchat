@@ -12,6 +12,7 @@
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+#include <sys/uio.h>
 #include <arpa/inet.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -69,6 +70,20 @@ typedef struct s_user {
     char *login;
 } t_user;
 
+typedef struct s_package {
+    struct iovec *const buffer;
+    const size_t size;
+    size_t filled_size;
+} t_package;
+t_package create_package(size_t size);
+void free_package(t_package package);
+void pack_byte(uint8_t byte, t_package *package);
+void pack_uint16(uint16_t number, t_package *package);
+void pack_uint32(uint32_t number, t_package *package);
+void pack_bytes(char *bytes, t_package *package);
+void send_package(int socket, t_package package);
+void send_and_free_package(int socket, t_package package);
+
 typedef enum e_request {
     LOGIN, // -> login -> password
     REGISTER, // -> login -> password
@@ -110,31 +125,30 @@ int receive(int socket, char *buffer, size_t length);
  * ECONNABORTED.
  * @return Read unsigned char.
 */
-uint8_t receive_unsigned_char(int socket);
+uint8_t receive_byte(int socket);
 /**
  * @brief Reads 2 bytes from SOCKET. On errors, sets the erno variable to
  * ECONNABORTED.
  * @return Read unsigned short.
 */
-uint16_t receive_unsigned_short(int socket);
+uint16_t receive_uint16(int socket);
 /**
  * @brief Reads 4 bytes from SOCKET. On errors, sets the erno variable to
  * ECONNABORTED.
  * @return Read unsigned int.
 */
-uint32_t receive_unsigned_int(int socket);
+uint32_t receive_uint32(int socket);
 /**
  * @brief Reads string from SOCKET. On errors, sets the errno variable to
  * ECONNABORTED. Reading format: int -> string. First, the size of the string
  * is read, and then the string itself.
  * @return Pointer to allocated string.
 */
-char *receive_string(int socket);
+char *receive_bytes(int socket);
 
-void send_unsigned_char(int socket, unsigned char character);
-void send_unsigned_short(int socket, uint16_t number);
-void send_unsigned_int(int socket, uint32_t number);
-void send_string(int socket, char *string);
+void send_byte(int socket, uint8_t byte);
+void send_uint16(int socket, uint16_t number);
+void send_uint32(int socket, uint32_t number);
 
 pthread_t create_default_thread(void *(*func)(void *), void *arg);
 void create_detached_thread(void *(*func)(void *), void *arg);

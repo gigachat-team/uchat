@@ -19,17 +19,17 @@ int receive(int socket, char *buffer, size_t length) {
     return 0;
 }
 
-uint8_t receive_unsigned_char(int socket) {
-    uint8_t received_character;
-    int character_size = sizeof(received_character);
-    if (recv(socket, &received_character, character_size, 0) != character_size) {
+uint8_t receive_byte(int socket) {
+    uint8_t received_byte;
+    int byte_size = sizeof(received_byte);
+    if (recv(socket, &received_byte, byte_size, 0) != byte_size) {
         errno = ECONNABORTED;
         return 0;
     }
-    return received_character;
+    return received_byte;
 }
 
-uint16_t receive_unsigned_short(int socket) {
+uint16_t receive_uint16(int socket) {
     uint16_t received_number;
     int number_size = sizeof(received_number);
     if (receive(socket, (char *)&received_number, number_size) != 0) {
@@ -39,7 +39,7 @@ uint16_t receive_unsigned_short(int socket) {
     return ntohs(received_number);
 }
 
-uint32_t receive_unsigned_int(int socket) {
+uint32_t receive_uint32(int socket) {
     uint32_t received_number;
     int number_size = sizeof(received_number);
     if (receive(socket, (char *)&received_number, number_size) != 0) {
@@ -49,8 +49,8 @@ uint32_t receive_unsigned_int(int socket) {
     return ntohl(received_number);
 }
 
-char *receive_string(int socket) {
-    int string_len = receive_unsigned_int(socket);
+char *receive_bytes(int socket) {
+    int string_len = receive_uint32(socket);
     if (errno == ECONNABORTED) {
         return NULL;
     }
