@@ -58,10 +58,8 @@ void handle_authenticated_user_commands(t_address server_address, id_t user_id) 
 
         if (strcmp(user_command, "newchat") == 0) {
             t_chat_creation_data chat_creation_data = get_chat_creation_data(user_id);
-            t_state_code creating_chat_result = rq_create_chat(server_address, chat_creation_data);
-            if (creating_chat_result == CHAT_CREATED_SUCCESSFULLY) {
-                printf("Chat \"%s\" created successfully.", chat_creation_data.chat_name);
-            }
+            id_t created_chat_id = rq_create_chat(server_address, chat_creation_data);
+            printf("Chat \"%s\" with id %u created successfully.", chat_creation_data.chat_name, created_chat_id);
             free_chat_creation_data(chat_creation_data);
         } else if (strcmp(user_command, "chats") == 0) {
             size_t chats_count = 0;

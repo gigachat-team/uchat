@@ -57,7 +57,7 @@ void handle_chat_creation(int client_socket) {
     db_add_new_member_to_chat(db, owner_id, created_chat_id);
     db_close(db);
 
-    send_byte(client_socket, CHAT_CREATED_SUCCESSFULLY);
+    send_uint32(client_socket, created_chat_id);
 
     free(chat_name);
 }
