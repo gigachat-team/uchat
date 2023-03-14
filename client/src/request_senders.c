@@ -19,7 +19,7 @@ t_state_code rq_authenticate_user(t_address server_address, t_authentication_dat
     return authentication_result;
 }
 
-t_state_code rq_create_chat(t_address server_address, t_chat_creation_data chat_data) {
+id_t rq_create_chat(t_address server_address, t_chat_creation_data chat_data) {
     int client_socket = create_and_connect_socket(server_address);
 
     t_package package = create_package(3);
@@ -28,11 +28,11 @@ t_state_code rq_create_chat(t_address server_address, t_chat_creation_data chat_
     pack_uint32(chat_data.owner_id, &package);
     send_and_free_package(client_socket, package);
 
-    t_state_code creating_chat_result = receive_byte(client_socket);
+    id_t created_chat_id = receive_uint32(client_socket);
 
     close(client_socket);
 
-    return creating_chat_result;
+    return created_chat_id;
 }
 
 t_chat *rq_get_chats_i_am_in(t_address server_address, id_t user_id, size_t *chats_count) {
