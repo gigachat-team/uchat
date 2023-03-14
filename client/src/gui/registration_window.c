@@ -1,20 +1,27 @@
 #include "../../client.h"
 
-static t_gui_data gui_data_init(char **argv, GtkBuilder *builder)
+static t_gui_data gui_data_init(char **argv)
 {
     t_gui_data data;
 
+    // User data
     t_address server_address = {argv[1], atoi(argv[2])};
     uint user_id = -1;
 
     data.server_address = server_address;
     data.user_id = user_id;
+
+    // GTK data
+    GError *err = NULL;
+    GtkBuilder *builder = gtk_builder_new();
+    if (0 == gtk_builder_add_from_file(builder, "./client/src/gui/TestGUI.glade", &err))
+        fprintf(stderr, "Error adding build from file. Error: %s\n", err->message);
     data.builder = builder;
 
     return data;
 }
 
-bool validation_authentication_data(t_authentication_data authentication_data, GtkWidget *error_message)
+static bool validation_authentication_data(t_authentication_data authentication_data, GtkWidget *error_message)
 {
     if (strlen(authentication_data.login) <= MIN_LOGIN_LENGTH)
     {
@@ -31,15 +38,10 @@ bool validation_authentication_data(t_authentication_data authentication_data, G
     return true;
 }
 
-void close_window(GtkBuilder *builder)
-{
-    GtkWidget *window = GTK_WIDGET(gtk_builder_get_object(builder, "Authorization"));
-    gtk_widget_destroy(GTK_WIDGET(window));
-}
-
+// Buttons-events-----------------------------------
 void login(GtkButton *bconfirm, gpointer user_data)
 {
-    t_gui_data data = *(t_gui_data *)user_data;
+    t_gui_data data = GUI_DATA(user_data);
 
     GtkBuilder *builder = data.builder;
     GtkWidget *enter_login = GTK_WIDGET(gtk_builder_get_object(builder, "wlogin"));
@@ -56,9 +58,7 @@ void login(GtkButton *bconfirm, gpointer user_data)
     switch (rq_authenticate_user(data.server_address, authentication_data, LOGIN_MODE, &data.user_id))
     {
     case SUCCESSFUL_LOGIN:
-        // close_window(builder);
-        handle_authenticated_user_commands(data.server_address, data.user_id);
-        exit_app();
+        open_messenger_window(data);
         break;
     case SUCH_LOGIN_DOES_NOT_EXIST:
         gtk_label_set_text(GTK_LABEL(error_message), "Such login does not exist.");
@@ -70,12 +70,12 @@ void login(GtkButton *bconfirm, gpointer user_data)
         break;
     }
 
-    bconfirm = NULL;
+    (void)bconfirm;
 }
 
 void regist(GtkButton *bconfirm, gpointer user_data)
 {
-    t_gui_data data = *(t_gui_data *)user_data;
+    t_gui_data data = GUI_DATA(user_data);
 
     GtkBuilder *builder = data.builder;
     GtkWidget *enter_newlogin = GTK_WIDGET(gtk_builder_get_object(builder, "wnewlogin"));
@@ -100,12 +100,10 @@ void regist(GtkButton *bconfirm, gpointer user_data)
     switch (rq_authenticate_user(data.server_address, authentication_data, REGISTER_MODE, &data.user_id))
     {
     case SUCCESSFUL_REGISTRATION:
-        // close_window(builder);
-        handle_authenticated_user_commands(data.server_address, data.user_id);
-        gtk_main_quit();
+        open_messenger_window(data);
         break;
     case SUCH_LOGIN_ALREADY_EXISTS:
-        gtk_label_set_text(GTK_LABEL(error_message), "Such login already exists.");
+        write_label_text(data.builder, "error_message_register", "Such login already exists.");
         break;
     default:
         break;
@@ -113,32 +111,21 @@ void regist(GtkButton *bconfirm, gpointer user_data)
 
     free_authentication_data(authentication_data);
 
-    bconfirm = NULL;
+    (void)bconfirm;
 }
+//-------------------------------------------------
 
-void exit_app()
-{
-    gtk_main_quit();
-}
-
+// Memmory leak:) -> data.builder
 void gui_init(int argc, char **argv)
 {
     gtk_init(&argc, &argv);
 
-    GError *err = NULL;
-    GtkBuilder *builder = gtk_builder_new();
-    if (0 == gtk_builder_add_from_file(builder, "./client/src/gui/TestGUI.glade", &err))
-    {
-        fprintf(stderr, "Error adding build from file. Error: %s\n", err->message);
-    }
+    t_gui_data data = gui_data_init(argv);
+    gtk_builder_connect_signals(data.builder, &data);
 
-    t_gui_data data = gui_data_init(argv, builder);
-    gtk_builder_connect_signals(builder, &data);
+    // open_messenger_window(data);
 
-    // g_object_unref(builder);
-
-    GtkWidget *window = GTK_WIDGET(gtk_builder_get_object(builder, "Authorization"));
-    gtk_widget_show_all(window);
+    open_window(data.builder, "Authorization");
 
     gtk_main();
 }

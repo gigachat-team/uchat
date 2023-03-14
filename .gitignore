@@ -1,6 +1,7 @@
 obj
 uchat
 uchat_server
+/home/nicel/Campus/Uchat/uchat/client/src/gui/TestGUI.glade~
 *.a
 *.db
 *.o
