@@ -25,7 +25,8 @@ void handle_chatting(t_address server_address, id_t user_id, id_t chat_id) {
         } else if (strcmp(command, "members") == 0) {
             uint32_t members_count = 0;
             t_user *members = rq_get_chat_members(server_address, chat_id, &members_count);
-            for (size_t i = 0; i < members_count; i++) {
+            for (size_t i = 0; i < members_count; i++)
+            {
                 printf("Id: %d; Login: %s\n", members[i].id, members[i].login);
             }
             free_users(members, members_count);
@@ -34,7 +35,8 @@ void handle_chatting(t_address server_address, id_t user_id, id_t chat_id) {
             t_state_code adding_new_member_result = rq_add_new_member(server_address, new_chat_member_data);
             if (adding_new_member_result == USER_SUCCESSFULLY_ADDED_TO_CHAT) {
                 printf("The user %s successfully added to the chat.\n", new_chat_member_data.member_login);
-            } else if (adding_new_member_result == SUCH_USER_IS_ALREADY_IN_CHAT) {
+            }
+            else if (adding_new_member_result == SUCH_USER_IS_ALREADY_IN_CHAT) {
                 printf("The user %s is already in the chat.\n", new_chat_member_data.member_login);
             }
             free_new_chat_member_data(new_chat_member_data);
@@ -57,10 +59,10 @@ void handle_authenticated_user_commands(t_address server_address, id_t user_id) 
         scanf("%s", user_command);
 
         if (strcmp(user_command, "newchat") == 0) {
-            t_chat_creation_data chat_creation_data = get_chat_creation_data(user_id);
-            id_t created_chat_id = rq_create_chat(server_address, chat_creation_data);
-            printf("Chat \"%s\" with id %u created successfully.", chat_creation_data.chat_name, created_chat_id);
-            free_chat_creation_data(chat_creation_data);
+            // t_chat_creation_data chat_creation_data = get_chat_creation_data(user_id);
+            // id_t created_chat_id = rq_create_chat(server_address, chat_creation_data);
+            // printf("Chat \"%s\" with id %u created successfully.", chat_creation_data.chat_name, created_chat_id);
+            // free_chat_creation_data(chat_creation_data);
         } else if (strcmp(user_command, "chats") == 0) {
             size_t chats_count = 0;
             t_chat *chats = rq_get_chats_i_am_in(server_address, user_id, &chats_count);
@@ -69,19 +71,25 @@ void handle_authenticated_user_commands(t_address server_address, id_t user_id) 
                 for (size_t i = 0; i < chats_count; i++) {
                     printf("id: %i, name: %s\n", chats[i].id, chats[i].name);
                 }
-            } else {
+            }
+            else {
                 printf("You aren't in any chats.\n");
             }
             free_chats(chats, chats_count);
         } else if (strcmp(user_command, "enter_chat") == 0) {
             id_t chat_id = console_input_int("Enter chat id: ");
             handle_chatting(server_address, user_id, chat_id);
-        }
-        else if (strcmp(user_command, "exit") == 0)
-        {
+        } else if (strcmp(user_command, "exit") == 0) {
             return;
         }
     }
+}
+
+void create_new_chat_in_server(t_address server_address, id_t user_id, char *chat_name) {
+    t_chat_creation_data chat_creation_data = get_chat_creation_data(user_id, chat_name);
+    id_t created_chat_id = rq_create_chat(server_address, chat_creation_data);
+    printf("Chat \"%s\" with id %u created successfully.", chat_creation_data.chat_name, created_chat_id);
+    free_chat_creation_data(chat_creation_data);
 }
 
 int main(int argc, char **argv) {
