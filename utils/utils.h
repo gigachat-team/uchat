@@ -18,7 +18,6 @@
 #include <netinet/in.h>
 #include <pthread.h>
 #include <errno.h>
-#include "../resources/libraries/libmx/inc/libmx.h"
 
 /** For daemon**/
 #include <syslog.h>

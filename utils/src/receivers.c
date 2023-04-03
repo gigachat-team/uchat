@@ -54,7 +54,7 @@ char *receive_bytes(int socket) {
     if (errno == ECONNABORTED) {
         return NULL;
     }
-    char *string = mx_strnew(string_len);
+    char *string = malloc(string_len + 1);
 
     if (receive(socket, string, string_len) != 0) {
         free(string);
@@ -64,4 +64,3 @@ char *receive_bytes(int socket) {
 
     return string;
 }
-
