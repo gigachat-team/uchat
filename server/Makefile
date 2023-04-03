@@ -12,18 +12,16 @@ OBJECTS = $(subst $(SRCDIR)/,,$(addprefix $(OBJDIR)/, $(SOURCES:.c=.o)))
 DEPENDS = $(subst $(SRCDIR)/,,$(addprefix $(OBJDIR)/, $(SOURCES:.c=.d)))
 
 UTILS_LIB = ../utils/libutils.a
-LIBMX_LIB = ../resources/libraries/libmx/libmx.a
 SQLITE_LIB = ../resources/libraries/sqlite3/libsqlite3.a
 
 INCLUDE_UTILS = -L$(dir $(UTILS_LIB)) -l$(patsubst lib%.a,%,$(notdir $(UTILS_LIB)))
-INCLUDE_LIBMX = -L$(dir $(LIBMX_LIB)) -l$(patsubst lib%.a,%,$(notdir $(LIBMX_LIB)))
 INCLUDE_SQLITE = -L$(dir $(SQLITE_LIB)) -l$(patsubst lib%.a,%,$(notdir $(SQLITE_LIB))) -ldl
 
 all: $(BINARYNAME)
 	@:
 
 $(BINARYNAME): $(SOURCES) $(OBJDIR) $(OBJECTS) $(UTILS_LIB)
-	@$(CC) $(CFLAGS) $(OBJECTS) $(INCLUDE_UTILS) $(INCLUDE_LIBMX) $(INCLUDE_SQLITE) -o $@
+	@$(CC) $(CFLAGS) $(OBJECTS) $(INCLUDE_UTILS) $(INCLUDE_SQLITE) -o $@
 	@printf "$(notdir $@)\tcreated\n"
 
 -include $(DEPENDS)
@@ -44,4 +42,3 @@ uninstall: clean
 	@printf "$(notdir $(BINARYNAME))\t$@ed\n"
 
 reinstall: uninstall all
-
