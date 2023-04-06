@@ -14,7 +14,7 @@ void bind_socket(int socket, uint16_t port) {
     struct sockaddr_in socket_address = {0};
     socket_address.sin_family = AF_INET;
     socket_address.sin_port = htons(port);
-    
+
     if (bind(socket, (struct sockaddr *)&socket_address, sizeof(socket_address)) == -1) {
         perror("Failed to bind the socket");
         close(socket);
@@ -37,7 +37,7 @@ int accept_socket(int this_socket) {
         close(this_socket);
         exit(EXIT_FAILURE);
     }
-    
+
     return accepted_socket;
 }
 
@@ -57,4 +57,3 @@ int create_and_connect_socket(t_address address) {
     connect_socket(socket, address);
     return socket;
 }
-
