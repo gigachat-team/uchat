@@ -98,6 +98,8 @@ typedef enum e_request {
 typedef enum e_state_code {
     NONE,
 
+    CONNECTION_REFUSED,
+
     SUCCESSFULLY_READ,
     SUCCESSFUL_REGISTRATION,
     SUCCESSFUL_LOGIN,

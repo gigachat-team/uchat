@@ -48,9 +48,7 @@ void connect_socket(int socket, t_address address) {
     socket_address.sin_port = htons(address.port);
 
     if (connect(socket, (struct sockaddr *)&socket_address, sizeof(socket_address)) != 0) {
-		perror("Failed to connect the socket");
         close(socket);
-		exit(EXIT_FAILURE);
 	}
 }
 
