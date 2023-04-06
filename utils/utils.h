@@ -1,4 +1,4 @@
-#pragma once 
+#pragma once
 
 #define _GNU_SOURCE
 #include <stdio.h>
@@ -98,13 +98,15 @@ typedef enum e_request {
 typedef enum e_state_code {
     NONE,
 
+    CONNECTION_REFUSED,
+
     SUCCESSFULLY_READ,
     SUCCESSFUL_REGISTRATION,
     SUCCESSFUL_LOGIN,
     USER_SUCCESSFULLY_ADDED_TO_CHAT,
     TEXT_MESSAGE_SENT_SUCCESSFULLY,
     USER_REMOVED_FROM_CHAT_SUCCESSFULLY,
-    
+
     SUCH_LOGIN_ALREADY_EXISTS,
     SUCH_LOGIN_DOES_NOT_EXIST,
     WRONG_PASSWORD,
@@ -172,4 +174,3 @@ void free_users(t_user *users, size_t users_count);
 struct tm str_to_tm(char *datetime_str, char *datetime_format);
 struct tm utc_to_localtime(struct tm utc);
 struct tm utc_str_to_localtime_tm(char *utc_str, char *datetime_format);
-
