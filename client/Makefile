@@ -7,7 +7,7 @@ OBJDIR = obj
 UTILS_OBJDIR = ../utils/obj
 SRCDIR = src
 
-SOURCES = $(subst ./,,$(shell find . -name "*.c"))
+SOURCES = $(wildcard $(SRCDIR).c) $(wildcard $(SRCDIR)/*.c) $(wildcard $(SRCDIR)/*/*.c)
 OBJECTS = $(subst $(SRCDIR)/,,$(addprefix $(OBJDIR)/, $(SOURCES:.c=.o)))
 DEPENDS = $(subst $(SRCDIR)/,,$(addprefix $(OBJDIR)/, $(SOURCES:.c=.d)))
 
