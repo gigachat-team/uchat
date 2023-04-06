@@ -1,6 +1,6 @@
 LIBRARIES_DIR = resources/libraries
 UTILS_DIR = utils
-CLIENT_DIR = client 
+CLIENT_DIR = client
 SERVER_DIR = server
 
 define make_command

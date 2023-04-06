@@ -4,7 +4,6 @@ CC = clang
 CFLAGS = -std=c11 -Wall -Wextra -Werror -Wpedantic -gdwarf-4 -pthread -MMD -MP
 
 OBJDIR = obj
-UTILS_OBJDIR = ../utils/obj
 SRCDIR = src
 
 SOURCES = $(wildcard $(SRCDIR).c) $(wildcard $(SRCDIR)/*.c) $(wildcard $(SRCDIR)/*/*.c)
@@ -16,23 +15,20 @@ GTK_LIBS = -rdynamic `pkg-config --cflags --libs gtk+-3.0`
 GTK_INC = `pkg-config --cflags gtk+-3.0`
 
 INCLUDE_UTILS = -L$(dir $(UTILS_LIB)) -l$(patsubst lib%.a,%,$(notdir $(UTILS_LIB)))
-LIBS = $(GTK_LIBS) -L/usr/local/opt/openssl/lib \
--lssl -lcjson -lcrypto -lsqlite3 -lpthread
 
 PHONY := all
 all: $(BINARYNAME)
 	@:
 
 $(BINARYNAME): $(SOURCES) $(OBJDIR) $(OBJECTS) $(UTILS_LIB)
-	@$(CC) $(PACKAGE) $(CFLAGS) $(OBJECTS) $(INCLUDE_UTILS) -o $@ $(GTK_LIBS)
+	@$(CC) $(CFLAGS) $(OBJECTS) $(INCLUDE_UTILS) -o $@ $(GTK_LIBS)
 	@printf "$(notdir $@)\t\tcreated\n"
 
 -include $(DEPENDS)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c Makefile
 	@mkdir -p $(@D)
-	@$(CC) $(GTK_INC) $(CFLAGS) -c $< -o $@ $(PACKAGE)
-
+	@$(CC) $(GTK_INC) $(CFLAGS) -c $< -o $@
 
 $(OBJDIR):
 	@mkdir -p $@

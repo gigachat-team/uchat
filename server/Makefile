@@ -4,7 +4,6 @@ CC = clang
 CFLAGS = -std=c11 -Wall -Wextra -Werror -Wpedantic -gdwarf-4 -pthread -MMD -MP
 
 OBJDIR = obj
-UTILS_OBJDIR = ../utils/obj
 SRCDIR = src
 
 SOURCES = $(wildcard $(SRCDIR).c) $(wildcard $(SRCDIR)/*.c) $(wildcard $(SRCDIR)/*/*.c)
