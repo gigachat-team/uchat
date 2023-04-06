@@ -17,6 +17,7 @@ SQLITE_LIB = ../resources/libraries/sqlite3/libsqlite3.a
 INCLUDE_UTILS = -L$(dir $(UTILS_LIB)) -l$(patsubst lib%.a,%,$(notdir $(UTILS_LIB)))
 INCLUDE_SQLITE = -L$(dir $(SQLITE_LIB)) -l$(patsubst lib%.a,%,$(notdir $(SQLITE_LIB))) -ldl
 
+PHONY := all
 all: $(BINARYNAME)
 	@:
 
@@ -33,12 +34,17 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c Makefile
 $(OBJDIR):
 	@mkdir -p $@
 
+PHONY += clean
 clean:
 	@rm -rf $(OBJDIR)
 	@printf "$(notdir $(BINARYNAME))\t$@ed\n"
 
+PHONY += uninstall
 uninstall: clean
 	@rm -rf $(BINARYNAME)
 	@printf "$(notdir $(BINARYNAME))\t$@ed\n"
 
+PHONY += reinstall
 reinstall: uninstall all
+
+.PHONY: $(PHONY)
