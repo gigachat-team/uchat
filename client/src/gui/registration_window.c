@@ -6,10 +6,9 @@ static t_gui_data gui_data_init(char **argv)
 
     // User data
     t_address server_address = {argv[1], atoi(argv[2])};
-    uint user_id = -1;
 
     data.server_address = server_address;
-    data.user_id = user_id;
+    data.user_id = 9;
 
     // GTK data
     GError *err = NULL;
@@ -41,9 +40,9 @@ static bool validation_authentication_data(t_authentication_data authentication_
 // Buttons-events-----------------------------------
 void login(GtkButton *bconfirm, gpointer user_data)
 {
-    t_gui_data data = GUI_DATA(user_data);
+    t_gui_data *data = &GUI_DATA(user_data);
 
-    GtkBuilder *builder = data.builder;
+    GtkBuilder *builder = (*data).builder;
     GtkWidget *enter_login = GTK_WIDGET(gtk_builder_get_object(builder, "wlogin"));
     GtkWidget *enter_password = GTK_WIDGET(gtk_builder_get_object(builder, "wpassword"));
     GtkWidget *error_message = GTK_WIDGET(gtk_builder_get_object(builder, "error_message_login"));
@@ -55,10 +54,10 @@ void login(GtkButton *bconfirm, gpointer user_data)
         return;
     }
 
-    switch (rq_authenticate_user(data.server_address, authentication_data, LOGIN_MODE, &data.user_id))
+    switch (rq_authenticate_user((*data).server_address, authentication_data, LOGIN_MODE, &(*data).user_id))
     {
     case SUCCESSFUL_LOGIN:
-        open_messenger_window(data);
+        open_messenger_window(*data);
         break;
     case SUCH_LOGIN_DOES_NOT_EXIST:
         gtk_label_set_text(GTK_LABEL(error_message), "Such login does not exist.");
@@ -70,14 +69,16 @@ void login(GtkButton *bconfirm, gpointer user_data)
         break;
     }
 
+    free_authentication_data(authentication_data);
+
     (void)bconfirm;
 }
 
 void regist(GtkButton *bconfirm, gpointer user_data)
 {
-    t_gui_data data = GUI_DATA(user_data);
+    t_gui_data *data = &GUI_DATA(user_data);
 
-    GtkBuilder *builder = data.builder;
+    GtkBuilder *builder = (*data).builder;
     GtkWidget *enter_newlogin = GTK_WIDGET(gtk_builder_get_object(builder, "wnewlogin"));
     GtkWidget *enter_newpassword = GTK_WIDGET(gtk_builder_get_object(builder, "wnewpassword"));
     GtkWidget *enter_newpassword_repeat = GTK_WIDGET(gtk_builder_get_object(builder, "wnewpassword_r"));
@@ -97,13 +98,13 @@ void regist(GtkButton *bconfirm, gpointer user_data)
         return;
     }
 
-    switch (rq_authenticate_user(data.server_address, authentication_data, REGISTER_MODE, &data.user_id))
+    switch (rq_authenticate_user((*data).server_address, authentication_data, REGISTER_MODE,  &(*data).user_id))
     {
     case SUCCESSFUL_REGISTRATION:
-        open_messenger_window(data);
+        open_messenger_window(*data);
         break;
     case SUCH_LOGIN_ALREADY_EXISTS:
-        write_label_text(data.builder, "error_message_register", "Such login already exists.");
+        write_label_text((*data).builder, "error_message_register", "Such login already exists.");
         break;
     default:
         break;
@@ -115,7 +116,6 @@ void regist(GtkButton *bconfirm, gpointer user_data)
 }
 //-------------------------------------------------
 
-// Memmory leak:) -> data.builder
 void gui_init(int argc, char **argv)
 {
     gtk_init(&argc, &argv);
@@ -126,6 +126,8 @@ void gui_init(int argc, char **argv)
     // open_messenger_window(data);
 
     open_window(data.builder, "Authorization");
+   
 
-    gtk_main();
+    gtk_main(); 
+    g_object_unref(data.builder);
 }
