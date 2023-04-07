@@ -87,7 +87,7 @@ void regist(GtkButton *bconfirm, gpointer user_data) {
         case SUCCESSFUL_REGISTRATION:
             open_messenger_window(*data);
         break; case SUCH_LOGIN_ALREADY_EXISTS:
-            write_label_text(data.builder, "error_message_register", "Such login already exists.");
+            write_label_text(data->builder, "error_message_register", "Such login already exists.");
         break; case CONNECTION_REFUSED:
             gtk_label_set_text(GTK_LABEL(error_message), "Failed to connect to the server.");
         break; default:
