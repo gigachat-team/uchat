@@ -2,22 +2,18 @@
 
 static t_gui_data gui_data_init(char **argv)
 {
-    t_gui_data data;
-
-    // User data
-    t_address server_address = {argv[1], atoi(argv[2])};
-
-    data.server_address = server_address;
-    data.user_id = 9;
-
-    // GTK data
     GError *err = NULL;
     GtkBuilder *builder = gtk_builder_new();
     if (0 == gtk_builder_add_from_file(builder, "./client/src/gui/TestGUI.glade", &err))
         fprintf(stderr, "Error adding build from file. Error: %s\n", err->message);
-    data.builder = builder;
 
-    return data;
+    t_gui_data gui_data = {
+        .builder = builder,
+        .server_address = {argv[1], atoi(argv[2])},
+        .user_id = 0
+    };
+
+    return gui_data;
 }
 
 static bool validation_authentication_data(t_authentication_data authentication_data, GtkWidget *error_message)
@@ -126,8 +122,8 @@ void gui_init(int argc, char **argv)
     // open_messenger_window(data);
 
     open_window(data.builder, "Authorization");
-   
 
-    gtk_main(); 
+
+    gtk_main();
     g_object_unref(data.builder);
 }
