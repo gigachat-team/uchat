@@ -40,9 +40,9 @@ static bool validation_authentication_data(t_authentication_data authentication_
 // Buttons-events-----------------------------------
 void login(GtkButton *bconfirm, gpointer user_data)
 {
-    t_gui_data *data = &GUI_DATA(user_data);
+    t_gui_data *data = (t_gui_data *)user_data;
 
-    GtkBuilder *builder = (*data).builder;
+    GtkBuilder *builder = data->builder;
     GtkWidget *enter_login = GTK_WIDGET(gtk_builder_get_object(builder, "wlogin"));
     GtkWidget *enter_password = GTK_WIDGET(gtk_builder_get_object(builder, "wpassword"));
     GtkWidget *error_message = GTK_WIDGET(gtk_builder_get_object(builder, "error_message_login"));
@@ -54,7 +54,7 @@ void login(GtkButton *bconfirm, gpointer user_data)
         return;
     }
 
-    switch (rq_authenticate_user((*data).server_address, authentication_data, LOGIN_MODE, &(*data).user_id))
+    switch (rq_authenticate_user(data->server_address, authentication_data, LOGIN_MODE, &data->user_id))
     {
     case SUCCESSFUL_LOGIN:
         open_messenger_window(*data);
@@ -76,9 +76,9 @@ void login(GtkButton *bconfirm, gpointer user_data)
 
 void regist(GtkButton *bconfirm, gpointer user_data)
 {
-    t_gui_data *data = &GUI_DATA(user_data);
+    t_gui_data *data = (t_gui_data *)user_data;
 
-    GtkBuilder *builder = (*data).builder;
+    GtkBuilder *builder = data->builder;
     GtkWidget *enter_newlogin = GTK_WIDGET(gtk_builder_get_object(builder, "wnewlogin"));
     GtkWidget *enter_newpassword = GTK_WIDGET(gtk_builder_get_object(builder, "wnewpassword"));
     GtkWidget *enter_newpassword_repeat = GTK_WIDGET(gtk_builder_get_object(builder, "wnewpassword_r"));
@@ -98,13 +98,13 @@ void regist(GtkButton *bconfirm, gpointer user_data)
         return;
     }
 
-    switch (rq_authenticate_user((*data).server_address, authentication_data, REGISTER_MODE,  &(*data).user_id))
+    switch (rq_authenticate_user(data->server_address, authentication_data, REGISTER_MODE,  &data->user_id))
     {
     case SUCCESSFUL_REGISTRATION:
         open_messenger_window(*data);
         break;
     case SUCH_LOGIN_ALREADY_EXISTS:
-        write_label_text((*data).builder, "error_message_register", "Such login already exists.");
+        write_label_text(data->builder, "error_message_register", "Such login already exists.");
         break;
     default:
         break;
