@@ -129,9 +129,9 @@ t_user_message *db_get_last_messages(sqlite3 *db, id_t chat_id, uint32_t last_me
 
     *number_of_found = 0;
     for (; sqlite3_step(statement) == SQLITE_ROW && *number_of_found <= count; (*number_of_found)++) {
-        messages[*number_of_found].user_id = sqlite3_column_int(statement, 0);
-        messages[*number_of_found].user_login = db_get_user_login_by_id(db, messages[*number_of_found].user_id);
-        messages[*number_of_found].bytes = strdup(sqlite3_column_blob(statement, 1));
+        messages[*number_of_found].sender_id = sqlite3_column_int(statement, 0);
+        messages[*number_of_found].sender_login = db_get_user_login_by_id(db, messages[*number_of_found].sender_id);
+        messages[*number_of_found].data = strdup(sqlite3_column_blob(statement, 1));
         messages[*number_of_found].creation_date = strdup(sqlite3_column_blob(statement, 2));
         messages[*number_of_found].order_in_chat = sqlite3_column_int(statement, 3);
     }

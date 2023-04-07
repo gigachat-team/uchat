@@ -1,8 +1,8 @@
 #include "../client.h"
 
 void free_user_message(t_user_message message) {
-    free(message.user_login);
-    free(message.bytes);
+    free(message.sender_login);
+    free(message.data);
 }
 
 void free_user_messages(t_user_message *messages, size_t length) {

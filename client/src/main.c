@@ -19,7 +19,7 @@ void handle_chatting(t_address server_address, id_t user_id, id_t chat_id) {
             for (size_t i = 0; i < messages_count; i++) {
                 char datetime[DEFAULT_TIME_FORMAT_LEN];
                 strftime(datetime, DEFAULT_TIME_FORMAT_LEN, DEFAULT_TIME_FORMAT, &messages[i].creation_date);
-                printf("%s, login: %s, message: %s\n", datetime, messages[i].user_login, messages[i].bytes);
+                printf("%s, login: %s, message: %s\n", datetime, messages[i].sender_login, messages[i].data);
             }
             free_user_messages(messages, messages_count);
         } else if (strcmp(command, "members") == 0) {

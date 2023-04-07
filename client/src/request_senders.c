@@ -104,9 +104,9 @@ t_user_message *rq_get_last_messages(t_address server_address, uint32_t msg_numb
     *found_messages_count = receive_uint16(client_socket);
     t_user_message *found_messages = malloc(*found_messages_count * sizeof(t_user_message));
     for (size_t i = 0; i < *found_messages_count; i++) {
-        found_messages[i].user_id = receive_uint32(client_socket);
-        found_messages[i].user_login = receive_bytes(client_socket);
-        found_messages[i].bytes = receive_bytes(client_socket);
+        found_messages[i].sender_id = receive_uint32(client_socket);
+        found_messages[i].sender_login = receive_bytes(client_socket);
+        found_messages[i].data = receive_bytes(client_socket);
         char *received_creation_date = receive_bytes(client_socket);
         found_messages[i].creation_date = utc_str_to_localtime_tm(received_creation_date, DEFAULT_TIME_FORMAT);
         free(received_creation_date);

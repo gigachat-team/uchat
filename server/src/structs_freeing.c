@@ -1,8 +1,8 @@
 #include "../server.h"
 
 void free_user_message(t_user_message message) {
-    free(message.user_login);
-    free(message.bytes);
+    free(message.sender_login);
+    free(message.data);
     free(message.creation_date);
 }
 

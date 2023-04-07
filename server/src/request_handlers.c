@@ -126,9 +126,9 @@ void handle_last_messages_getting(int client_socket) {
     t_package package = create_package(1 + number_of_found * 5);
     pack_uint16(number_of_found, &package);
     for (size_t i = 0; i < number_of_found; i++) {
-        pack_uint32(last_messages[i].user_id, &package);
-        pack_bytes(last_messages[i].user_login, &package);
-        pack_bytes(last_messages[i].bytes, &package);
+        pack_uint32(last_messages[i].sender_id, &package);
+        pack_bytes(last_messages[i].sender_login, &package);
+        pack_bytes(last_messages[i].data, &package);
         pack_bytes(last_messages[i].creation_date, &package);
         pack_uint32(last_messages[i].order_in_chat, &package);
     }
