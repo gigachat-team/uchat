@@ -3,6 +3,8 @@
 #include "../utils/utils.h"
 #include <gtk/gtk.h>
 
+#define DEFAULT_CSS_FILE_PATH "./client/src/common.css"
+
 #define LAST_LOADING_MESSAGES_COUNT 30
 #define GUI_DATA(data) (*(t_gui_data *)data)
 
@@ -89,3 +91,15 @@ t_chat receive_chat(int socket);
 
 void free_user_message(t_user_message message);
 void free_user_messages(t_user_message *messages, size_t length);
+
+
+
+/* ------- css.c ------- */
+
+
+/**
+ * @brief loads css to gtk. Should be called after gtk_init function
+ * @param css_file_path path to a css file that will be included. 
+ * If variable is NULL, it'll use DEFAULT_CSS_FILE_PATH 
+*/
+void load_css(char *css_file_path);
