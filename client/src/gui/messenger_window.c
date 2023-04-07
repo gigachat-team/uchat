@@ -60,9 +60,8 @@ void create_new_chat(GtkButton *bconfirm, gpointer user_data)
 
 void open_messenger_window(t_gui_data data)
 {
+    close_window(data.builder, "Authorization");
     open_window(data.builder, "Messenger");
-
-    printf("%d\n", data.user_id);
 
     init_chats_list(data);
 }
