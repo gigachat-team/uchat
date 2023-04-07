@@ -2,6 +2,9 @@
 
 t_state_code rq_authenticate_user(t_address server_address, t_authentication_data authentication_data, t_authentication_mode authentication_mode, uint *user_id) {
     int client_socket = create_and_connect_socket(server_address);
+    if (errno == ECONNREFUSED) {
+        return CONNECTION_REFUSED;
+    }
 
     t_package package = create_package(3);
     pack_byte(authentication_mode, &package);
