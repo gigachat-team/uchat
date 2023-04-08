@@ -112,31 +112,6 @@ void handle_text_message_sending(int client_socket) {
     free(text_message);
 }
 
-void handle_last_messages_getting(int client_socket) {
-    uint16_t messages_count = receive_uint16(client_socket);
-    id_t chat_id = receive_uint32(client_socket);
-    uint32_t msg_number = receive_uint32(client_socket);
-
-    size_t number_of_found = 0;
-
-    sqlite3 *db = db_open();
-    t_user_message *last_messages = db_get_last_messages(db, chat_id, msg_number, messages_count, &number_of_found);
-    db_close(db);
-
-    t_package package = create_package(1 + number_of_found * 5);
-    pack_uint16(number_of_found, &package);
-    for (size_t i = 0; i < number_of_found; i++) {
-        pack_uint32(last_messages[i].sender_id, &package);
-        pack_bytes(last_messages[i].sender_login, &package);
-        pack_bytes(last_messages[i].data, &package);
-        pack_bytes(last_messages[i].creation_date, &package);
-        pack_uint32(last_messages[i].order_in_chat, &package);
-    }
-    send_and_free_package(client_socket, package);
-
-    free_user_messages(last_messages, number_of_found);
-}
-
 void handle_messages_in_chat_getting(int client_socket) {
     uint32_t chat_id = receive_uint32(client_socket);
 

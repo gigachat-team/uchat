@@ -115,39 +115,6 @@ t_chat *db_get_chats_user_is_in(sqlite3 *db, id_t user_id, size_t *number_of_cha
     return descriptions_of_chats;
 }
 
-t_user_message *db_get_last_messages(sqlite3 *db, id_t chat_id, uint32_t last_message_order, size_t count, size_t *number_of_found) {
-    char *sql = sqlite3_mprintf(" \
-        SELECT "MESSAGES_USER_ID", "MESSAGES_CONTENT", "MESSAGES_CREATION_DATE", "MESSAGES_ORDER" \
-        FROM "MESSAGES_TABLE" \
-        WHERE "MESSAGES_CHAT_ID" = %u AND "MESSAGES_ORDER" <= %u \
-        ORDER BY "MESSAGES_ID" DESC", chat_id, last_message_order
-    );
-    sqlite3_stmt *statement = db_open_statement(db, sql);
-    sqlite3_free(sql);
-
-    t_user_message *messages = malloc(count * sizeof(t_user_message));
-
-    *number_of_found = 0;
-    for (; sqlite3_step(statement) == SQLITE_ROW && *number_of_found <= count; (*number_of_found)++) {
-        messages[*number_of_found].sender_id = sqlite3_column_int(statement, 0);
-        messages[*number_of_found].sender_login = db_get_user_login_by_id(db, messages[*number_of_found].sender_id);
-        messages[*number_of_found].data = strdup(sqlite3_column_blob(statement, 1));
-        messages[*number_of_found].creation_date = strdup(sqlite3_column_blob(statement, 2));
-        messages[*number_of_found].order_in_chat = sqlite3_column_int(statement, 3);
-    }
-    db_close_statement(statement, db);
-
-    if (*number_of_found == 0) {
-        free(messages);
-        return NULL;
-    }
-    if (*number_of_found != count) {
-        messages = realloc(messages, *number_of_found * sizeof(t_user_message));
-    }
-
-    return messages;
-}
-
 t_list *db_get_messages_in_chat(sqlite3 *db, id_t chat_id, size_t *found_messages_count) {
     char *sql = sqlite3_mprintf(" \
         SELECT "MESSAGES_USER_ID", (SELECT "USERS_LOGIN" FROM "USERS_TABLE" WHERE "USERS_TABLE"."USERS_ID" = "MESSAGES_TABLE"."MESSAGES_USER_ID"), "MESSAGES_CONTENT", "MESSAGES_CREATION_DATE" \
