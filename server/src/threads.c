@@ -33,4 +33,3 @@ void *handle_request_thread(void *client_socket_void) {
 
     pthread_exit(NULL);
 }
-

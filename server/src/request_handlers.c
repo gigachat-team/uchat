@@ -190,4 +190,3 @@ void handle_getting_chat_members(int client_socket) {
 
     free_users(members, members_count);
 }
-

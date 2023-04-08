@@ -11,4 +11,3 @@ void free_user_messages(t_user_message *messages, size_t length) {
     }
     free(messages);
 }
-

@@ -93,7 +93,7 @@ void db_remove_user_from_chat(sqlite3 *db, id_t user_id, id_t chat_id);
 /**
  * @brief Creates new user in the users table with new LOGIN and PASSWORD.
  * @return Positive user id or 0 if the users table already has the user with
- * this LOGIN. 
+ * this LOGIN.
 */
 id_t db_create_user(sqlite3 *db, char *login, char *password);
 id_t db_create_chat(sqlite3 *db, char *chat_name, id_t owner_id);
