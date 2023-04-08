@@ -31,12 +31,3 @@ int console_input_int(char *message) {
     scanf("%d", &number);
     return number;
 }
-
-t_text_message_data get_text_message_data(id_t user_id, id_t chat_id) {
-    printf("Enter text message: ");
-    char text_message[1000];
-    scanf("%s", text_message);
-
-    t_text_message_data text_message_data = {user_id, chat_id, strdup(text_message)};
-    return text_message_data;
-}

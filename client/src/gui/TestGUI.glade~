@@ -7,6 +7,7 @@
     <property name="title" translatable="yes">Authorization</property>
     <property name="resizable">False</property>
     <property name="window_position">center</property>
+    <property name="deletable">False</property>
     <signal name="destroy" handler="exit_app" swapped="no"/>
     <child type="titlebar">
       <placeholder/>
@@ -418,13 +419,14 @@
                 <property name="height_request">610</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
+                <property name="hscrollbar_policy">never</property>
                 <property name="shadow_type">in</property>
                 <child>
                   <object class="GtkViewport">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <child>
-                      <object class="GtkBox" id="chats_box">
+                      <object class="GtkBox" id="chats_contener">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="orientation">vertical</property>
@@ -486,6 +488,7 @@
                 <property name="height_request">656</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
+                <property name="hscrollbar_policy">never</property>
                 <property name="shadow_type">in</property>
                 <child>
                   <object class="GtkViewport">
@@ -497,13 +500,48 @@
                         <property name="can_focus">False</property>
                         <property name="orientation">vertical</property>
                         <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
+                          <object class="GtkBox">
+                            <property name="height_request">45</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <child>
+                              <object class="GtkImage">
+                                <property name="width_request">45</property>
+                                <property name="height_request">45</property>
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="stock">gtk-orientation-portrait</property>
+                                <property name="icon_size">6</property>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">0</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkLabel">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="label" translatable="yes">Ruslan:
+
+Nu suka nakonets</property>
+                                <property name="wrap">True</property>
+                                <property name="wrap_mode">char</property>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">1</property>
+                              </packing>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="pack_type">end</property>
+                            <property name="position">0</property>
+                          </packing>
                         </child>
                       </object>
                     </child>
@@ -517,10 +555,11 @@
               </packing>
             </child>
             <child>
-              <object class="GtkEntry">
+              <object class="GtkEntry" id="message_field">
                 <property name="width_request">1000</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
+                <signal name="activate" handler="send_message" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">False</property>

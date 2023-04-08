@@ -8,7 +8,7 @@ static t_gui_data gui_data_init(char **argv)
     t_address server_address = {argv[1], atoi(argv[2])};
 
     data.server_address = server_address;
-    data.user_id = 9;
+    data.user_id = -1;
 
     // GTK data
     GError *err = NULL;
@@ -123,10 +123,9 @@ void gui_init(int argc, char **argv)
     t_gui_data data = gui_data_init(argv);
     gtk_builder_connect_signals(data.builder, &data);
 
-    // open_messenger_window(data);
+    open_messenger_window(data);
 
-    open_window(data.builder, "Authorization");
-   
+    // open_window(data.builder, "Authorization");
 
     gtk_main(); 
     g_object_unref(data.builder);

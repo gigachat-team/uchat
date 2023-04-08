@@ -6,5 +6,10 @@
         "numeric": "c",
         "cmath": "c",
         "typeinfo": "c"
-    }
+    },
+    "C_Cpp.vcFormat.newLine.beforeElse": false,
+    "C_Cpp.vcFormat.space.betweenEmptyBraces": false,
+    "C_Cpp.vcFormat.newLine.closeBraceSameLine.emptyType": true,
+    "notebook.formatOnSave.enabled": false,
+    "editor.formatOnSave": false
 }
