@@ -16,3 +16,11 @@ void load_css(char *css_file_path) {
 
     gtk_css_provider_load_from_path(provider, css_file_path, NULL);
 }
+
+void apply_style_to_widget(GtkWidget *widget, char *class) {
+    if (!class || !widget) return;
+    
+    GtkStyleContext *context = gtk_widget_get_style_context(widget);
+
+    gtk_style_context_add_class(context, class);
+}
