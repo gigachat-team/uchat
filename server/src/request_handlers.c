@@ -137,6 +137,29 @@ void handle_last_messages_getting(int client_socket) {
     free_user_messages(last_messages, number_of_found);
 }
 
+void handle_messages_in_chat_getting(int client_socket) {
+    uint32_t chat_id = receive_uint32(client_socket);
+
+    size_t found_messages_count = 0;
+
+    sqlite3 *db = db_open();
+    t_list *messages_list = db_get_messages_in_chat(db, chat_id, &found_messages_count);
+    db_close(db);
+
+    t_package package = create_package(1 + found_messages_count * 4);
+    pack_uint32(found_messages_count, &package);
+    for (t_list *i = messages_list; i != NULL; i = i->next) {
+        t_user_message *user_message = (t_user_message *)i->data;
+        pack_uint32(user_message->sender_id, &package);
+        pack_bytes(user_message->sender_login, &package);
+        pack_bytes(user_message->data, &package);
+        pack_bytes(user_message->creation_date, &package);
+    }
+    send_and_free_package(client_socket, package);
+
+    free_user_messages_list(&messages_list);
+}
+
 void handle_removing_user_from_chat(int client_socket) {
     uint32_t user_id = receive_uint32(client_socket);
     uint32_t chat_id = receive_uint32(client_socket);

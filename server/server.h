@@ -55,6 +55,7 @@ void handle_adding_new_member_to_chat(int client_socket);
 */
 void handle_text_message_sending(int client_socket);
 void handle_last_messages_getting(int client_socket);
+void handle_messages_in_chat_getting(int client_socket);
 void handle_removing_user_from_chat(int client_socket);
 void handle_getting_chat_members(int client_socket);
 
