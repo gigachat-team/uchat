@@ -151,3 +151,4 @@ void daemon_server();
 
 void free_user_message(t_user_message message);
 void free_user_messages(t_user_message *messages, size_t length);
+void free_user_messages_list(t_list **messages_list);
