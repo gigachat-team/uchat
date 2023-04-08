@@ -37,7 +37,6 @@ typedef struct s_user_message {
     char *sender_login;
     char *data;
     char *creation_date;
-    uint32_t order_in_chat;
 } t_user_message;
 
 void *handle_request_thread(void *client_socket_void);
