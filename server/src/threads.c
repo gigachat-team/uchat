@@ -21,6 +21,8 @@ void *handle_request_thread(void *client_socket_void) {
         handle_text_message_sending(client_socket); break;
     case GET_LAST_MESSAGES:
         handle_last_messages_getting(client_socket); break;
+    case GET_MESSAGES_IN_CHAT:
+        handle_messages_in_chat_getting(client_socket); break;
     case REMOVE_USER_FROM_CHAT:
         handle_removing_user_from_chat(client_socket); break;
     case GET_CHAT_MEMBERS:
