@@ -75,6 +75,7 @@ t_state_code rq_send_text_message(t_address server_address, t_text_message_data 
  * @return Allocated array of messages
 */
 t_user_message *rq_get_last_messages(t_address server_address, uint32_t msg_number, uint16_t messages_count, id_t chat_id, uint16_t *found_messages_count);
+t_user_message *rq_get_messages_in_chat(t_address server_address, id_t chat_id, size_t *found_messages_count);
 t_user *rq_get_chat_members(t_address server_address, id_t chat_id, uint32_t *members_count);
 t_state_code rq_remove_member_from_chat(t_address server_address, id_t user_id, id_t chat_id);
 

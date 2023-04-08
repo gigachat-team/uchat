@@ -118,6 +118,30 @@ t_user_message *rq_get_last_messages(t_address server_address, uint32_t msg_numb
     return found_messages;
 }
 
+t_user_message *rq_get_messages_in_chat(t_address server_address, id_t chat_id, size_t *found_messages_count) {
+    int client_socket = create_and_connect_socket(server_address);
+
+    t_package package = create_package(2);
+    pack_byte(GET_MESSAGES_IN_CHAT, &package);
+    pack_uint32(chat_id, &package);
+    send_and_free_package(client_socket, package);
+
+    *found_messages_count = receive_uint32(client_socket);
+    t_user_message *found_messages = malloc(*found_messages_count * sizeof(t_user_message));
+    for (size_t i = 0; i < *found_messages_count; i++) {
+        found_messages[i].sender_id = receive_uint32(client_socket);
+        found_messages[i].sender_login = receive_bytes(client_socket);
+        found_messages[i].data = receive_bytes(client_socket);
+        char *received_creation_date = receive_bytes(client_socket);
+        found_messages[i].creation_date = utc_str_to_localtime_tm(received_creation_date, DEFAULT_TIME_FORMAT);
+        free(received_creation_date);
+    }
+
+    close(client_socket);
+
+    return found_messages;
+}
+
 t_user *rq_get_chat_members(t_address server_address, id_t chat_id, uint32_t *members_count) {
     int client_socket = create_and_connect_socket(server_address);
 
