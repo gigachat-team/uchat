@@ -1,0 +1,33 @@
+window {
+    background: url("../../resources/img/notebook_paper.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-color: lightgrey;
+}
+
+button {
+    font-family: Arial, sans-serif;
+    border: 5px solid;
+    border-radius: 50px;
+    color: rgb(155, 167, 186);
+    margin: 5px;
+    background-image: url("../../resources/img/notebook_paper_button.jpg");
+}
+
+button:active {
+    font-family:Arial, sans-serif;
+    border: 10px outset;
+    border-radius: 70px;
+    color: rgb(98, 141, 194);
+    margin: 5px;
+}
+
+.error-message {
+    background-color: white;
+    border: 5px outset;
+    border-color: red;
+    font-family: Arial, sans-serif;
+    border-radius: 50px;
+    margin: 5px;
+}
