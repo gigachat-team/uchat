@@ -3,7 +3,7 @@
 #include "../utils/utils.h"
 #include <gtk/gtk.h>
 
-#define DEFAULT_CSS_FILE_PATH "./client/src/common.css"
+#define DEFAULT_CSS_FILE_PATH "./client/style/common.css"
 
 #define LAST_LOADING_MESSAGES_COUNT 30
 #define GUI_DATA(data) (*(t_gui_data *)data)
@@ -96,10 +96,18 @@ void free_user_messages(t_user_message *messages, size_t length);
 
 /* ------- css.c ------- */
 
-
 /**
  * @brief loads css to gtk. Should be called after gtk_init function
  * @param css_file_path path to a css file that will be included. 
  * If variable is NULL, it'll use DEFAULT_CSS_FILE_PATH 
 */
 void load_css(char *css_file_path);
+
+/**
+ * @brief applies a style from a loaded css file to a widget.
+ * If one of the pointers in NULL, then the function does nothing
+ * @param widget in which a new style will be loaded
+ * @param class css class-name for a style 
+*/
+void apply_style_to_widget(GtkWidget *widget, char *class);
+
