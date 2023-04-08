@@ -14,8 +14,8 @@ void handle_chatting(t_address server_address, id_t user_id, id_t chat_id) {
             }
             free_text_message_data(text_message_data);
         } else if (strcmp(command, "last_messages") == 0) {
-            uint16_t messages_count = 0;
-            t_user_message *messages = rq_get_last_messages(server_address, UINT32_MAX, LAST_LOADING_MESSAGES_COUNT, chat_id, &messages_count);
+            size_t messages_count = 0;
+            t_user_message *messages = rq_get_messages_in_chat(server_address, chat_id, &messages_count);
             for (size_t i = 0; i < messages_count; i++) {
                 char datetime[DEFAULT_TIME_FORMAT_LEN];
                 strftime(datetime, DEFAULT_TIME_FORMAT_LEN, DEFAULT_TIME_FORMAT, &messages[i].creation_date);
