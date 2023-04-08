@@ -130,6 +130,7 @@ t_chat *db_get_chats_user_is_in(sqlite3 *db, id_t user_id, size_t *number_of_cha
  * @return Allocated array of messages
 */
 t_user_message *db_get_last_messages(sqlite3 *db, id_t chat_id, uint32_t last_message_order, size_t count, size_t *number_of_found);
+t_list *db_get_messages_in_chat(sqlite3 *db, id_t chat_id, size_t *found_messages_count);
 /**
  * @brief Searches for members in chat by CHAT_ID. Number of found members writes to
  * MEMBERS_COUNT variable.
