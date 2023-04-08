@@ -495,53 +495,15 @@
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <child>
-                      <object class="GtkBox">
+                      <object class="GtkBox" id="chat_field">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="halign">baseline</property>
+                        <property name="valign">end</property>
                         <property name="orientation">vertical</property>
+                        <property name="baseline_position">top</property>
                         <child>
-                          <object class="GtkBox">
-                            <property name="height_request">45</property>
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <child>
-                              <object class="GtkImage">
-                                <property name="width_request">45</property>
-                                <property name="height_request">45</property>
-                                <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <property name="stock">gtk-orientation-portrait</property>
-                                <property name="icon_size">6</property>
-                              </object>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">True</property>
-                                <property name="position">0</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkLabel">
-                                <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <property name="label" translatable="yes">Ruslan:
-
-Nu suka nakonets</property>
-                                <property name="wrap">True</property>
-                                <property name="wrap_mode">char</property>
-                              </object>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">True</property>
-                                <property name="position">1</property>
-                              </packing>
-                            </child>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="pack_type">end</property>
-                            <property name="position">0</property>
-                          </packing>
+                          <placeholder/>
                         </child>
                       </object>
                     </child>
@@ -559,7 +521,6 @@ Nu suka nakonets</property>
                 <property name="width_request">1000</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
-                <signal name="activate" handler="send_message" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">False</property>

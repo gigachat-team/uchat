@@ -7,9 +7,11 @@
         "cmath": "c",
         "typeinfo": "c"
     },
-    "C_Cpp.vcFormat.newLine.beforeElse": false,
+    "C_Cpp.vcFormat.newLine.beforeElse": true,
     "C_Cpp.vcFormat.space.betweenEmptyBraces": false,
     "C_Cpp.vcFormat.newLine.closeBraceSameLine.emptyType": true,
     "notebook.formatOnSave.enabled": false,
-    "editor.formatOnSave": false
+    "editor.formatOnSave": false,
+    "C_Cpp.vcFormat.newLine.beforeOpenBrace.block": "sameLine",
+    "C_Cpp.vcFormat.newLine.beforeOpenBrace.function": "sameLine"
 }
