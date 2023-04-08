@@ -23,7 +23,6 @@ typedef struct s_user_message {
     char *sender_login;
     char *data;
     struct tm creation_date;
-    uint32_t order_in_chat;
 } t_user_message;
 
 typedef struct s_chat_data {
