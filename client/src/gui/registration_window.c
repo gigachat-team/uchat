@@ -117,7 +117,7 @@ void gui_init(int argc, char **argv) {
 
     open_messenger_window(data);
 
-    // open_window(data.builder, "Authorization");
+    open_window(data.builder, "Authorization");
 
     gtk_main();
     g_object_unref(data.builder);

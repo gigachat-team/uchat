@@ -137,7 +137,7 @@ static t_list *select_messages_list(sqlite3 *db, char *sql, size_t *found_messag
 
 t_list *db_get_messages_in_chat(sqlite3 *db, id_t chat_id, size_t *found_messages_count) {
     char *sql = sqlite3_mprintf(" \
-        SELECT "MESSAGES_ID" "MESSAGES_USER_ID", (SELECT "USERS_LOGIN" FROM "USERS_TABLE" WHERE "USERS_TABLE"."USERS_ID" = "MESSAGES_TABLE"."MESSAGES_USER_ID"), "MESSAGES_CONTENT", "MESSAGES_CREATION_DATE" \
+        SELECT "MESSAGES_ID", "MESSAGES_USER_ID", (SELECT "USERS_LOGIN" FROM "USERS_TABLE" WHERE "USERS_TABLE"."USERS_ID" = "MESSAGES_TABLE"."MESSAGES_USER_ID"), "MESSAGES_CONTENT", "MESSAGES_CREATION_DATE" \
         FROM "MESSAGES_TABLE" \
         WHERE "MESSAGES_CHAT_ID" = %u", chat_id
     );
