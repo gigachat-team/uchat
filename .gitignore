@@ -1,6 +1,7 @@
 obj
 uchat
 uchat_server
+*.glade#
 *.glade~
 *.a
 *.db
