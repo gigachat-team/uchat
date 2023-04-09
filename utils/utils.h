@@ -163,6 +163,8 @@ uint32_t receive_uint32(int socket);
 */
 char *receive_bytes(int socket);
 
+int64_t binary_search_uint32(uint32_t sorted_array[], uint32_t left, uint32_t right, uint32_t element);
+
 void send_byte(int socket, uint8_t byte);
 void send_uint16(int socket, uint16_t number);
 void send_uint32(int socket, uint32_t number);
