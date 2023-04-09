@@ -1,18 +1,38 @@
 #include "../../client.h"
 
-static void create_button_in_chat_list(t_gui_data data, char *chat_name) {
-    GtkWidget *new_button = gtk_button_new_with_label(chat_name);
-    g_signal_connect(new_button, "clicked", G_CALLBACK(open_chat), create_chat_data(chat_name, data));
-    add_to_box(data.builder, new_button, "chats_box");
+// Create new button in chats list
+static void create_button_in_chat_list(t_gui_data data, t_chat *chat_data)
+{
+    GtkWidget *new_button = gtk_button_new_with_label(chat_data->name);
+    g_signal_connect(new_button, "clicked", G_CALLBACK(open_chat), create_chat_data(chat_data, data));
+    add_to_box_start(data.builder, new_button, "chats_contener", 0);
+}
+
+// Destroy chats button in chat list
+static void clear_chats_list(t_gui_data data)
+{
+    GList *list = gtk_container_get_children(GTK_CONTAINER(gtk_builder_get_object(data.builder, "chats_contener")));
+
+    while (list != NULL)
+    {
+        gtk_widget_destroy(list->data);
+        list = list->next;
+    }
+
+    g_list_free(list);
 }
 
 static void init_chats_list(t_gui_data data) {
     size_t chats_count = 0;
     t_chat *chats = rq_get_chats_i_am_in(data.server_address, data.user_id, &chats_count);
 
-    if (chats_count != 0) {
-        for (size_t i = 0; i < chats_count; i++) {
-            create_button_in_chat_list(data, chats[i].name);
+    if (chats_count != 0)
+    {
+        clear_chats_list(data);
+
+        for (size_t i = 0; i < chats_count; i++)
+        {
+            create_button_in_chat_list(data, &chats[i]);
         }
     }
     else {
@@ -45,7 +65,7 @@ void create_new_chat(GtkButton *bconfirm, gpointer user_data) {
 
     create_new_chat_in_server(data.server_address, data.user_id, chat_name);
     close_creater_chat_window(bconfirm, user_data);
-    create_button_in_chat_list(data, chat_name);
+    init_chats_list(data);
 }
 //-------------------------------------------------
 

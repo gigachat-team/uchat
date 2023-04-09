@@ -8,5 +8,21 @@
         "-I/usr/include/cairo",
         "-I/usr/include/gdk-pixbuf-2.0",
         "-I/usr/include/atk-1.0"
-    ]
+    ],
+
+    "files.associations": {
+        "*.tcc": "c",
+        "optional": "c",
+        "memory": "c",
+        "numeric": "c",
+        "cmath": "c",
+        "typeinfo": "c"
+    },
+    "C_Cpp.vcFormat.newLine.beforeElse": true,
+    "C_Cpp.vcFormat.space.betweenEmptyBraces": false,
+    "C_Cpp.vcFormat.newLine.closeBraceSameLine.emptyType": true,
+    "notebook.formatOnSave.enabled": false,
+    "editor.formatOnSave": false,
+    "C_Cpp.vcFormat.newLine.beforeOpenBrace.block": "sameLine",
+    "C_Cpp.vcFormat.newLine.beforeOpenBrace.function": "sameLine"
 }

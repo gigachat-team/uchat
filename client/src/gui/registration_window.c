@@ -115,7 +115,7 @@ void gui_init(int argc, char **argv) {
     t_gui_data data = gui_data_init(argv);
     gtk_builder_connect_signals(data.builder, &data);
 
-    // open_messenger_window(data);
+    open_messenger_window(data);
 
     open_window(data.builder, "Authorization");
 

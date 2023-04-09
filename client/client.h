@@ -6,6 +6,7 @@
 #define DEFAULT_CSS_FILE_PATH "./client/style/common.css"
 
 #define LAST_LOADING_MESSAGES_COUNT 30
+#define CHAT_DATA(data) (*(t_chat_data *)data)
 #define GUI_DATA(data) (*(t_gui_data *)data)
 
 typedef enum e_authentication_mode {
@@ -37,18 +38,26 @@ char *get_entry_text(GtkBuilder *builder, char *entry_name);
 void open_messenger_window(t_gui_data data);
 void gui_init(int argc, char **argv);
 void open_chat(GtkButton *bconfirm, gpointer user_data);
-t_chat_data *create_chat_data(char *name, t_gui_data gui_data);
+t_chat_data *create_chat_data(t_chat *chat, t_gui_data gui_data);
 
-// GUI-Utils-----------------------------------------------------------------------
-void add_to_box(GtkBuilder *builder, GtkWidget *new_element, char *box_name);
+#pragma region GUIUtils
+
+// x, y is new size image
+GtkWidget *get_image_from_path(char *path, gint x, gint y);
+
+// Add widget in box contener whith in builder
+void add_to_box_start(GtkBuilder *builder, GtkWidget *new_element, gchar *box_name, gint padding);
+
 void write_label_text(GtkBuilder *builder, char *label_name, char *text);
 void open_window(GtkBuilder *builder, char *window_name);
 void close_window(GtkBuilder *builder, char *window_name);
 void exit_app();
-//--------------------------------------------------------------------------------
+
+#pragma endregion GUIUtils
 
 // Ne otnositsa k GUI
 void create_new_chat_in_server(t_address server_address, id_t user_id, char *chat_name);
+void send_message_in_server(t_address server_address, id_t user_id, id_t chat_id, char *text_message);
 void handle_chatting(t_address server_address, id_t user_id, id_t chat_id);
 
 void handle_authenticated_user_commands(t_address server_address, id_t user_id);
@@ -70,7 +79,6 @@ t_authentication_data get_authentication_data(GtkWidget *enter_login, GtkWidget 
 t_chat_creation_data get_chat_creation_data(id_t owner_id, char *chat_name);
 t_new_chat_member_data get_new_chat_member_data(id_t chat_id);
 int console_input_int(char *message);
-t_text_message_data get_text_message_data(id_t user_id, id_t chat_id);
 
 t_chat receive_chat(int socket);
 
