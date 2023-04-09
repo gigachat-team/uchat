@@ -1,7 +1,6 @@
 #include "../../client.h"
 
-t_authentication_data get_authentication_data(GtkWidget *enter_login, GtkWidget *enter_password)
-{
+t_authentication_data get_authentication_data(GtkWidget *enter_login, GtkWidget *enter_password) {
     t_authentication_data authentication_data;
 
     authentication_data.login = (char *)gtk_entry_get_text(GTK_ENTRY(enter_login));
