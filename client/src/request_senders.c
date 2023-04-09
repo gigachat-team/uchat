@@ -116,6 +116,34 @@ t_user_message *rq_get_messages_in_chat(t_address server_address, id_t chat_id, 
     return found_messages;
 }
 
+t_user_messages_array rq_get_messages_updates(t_address server_address, id_t chat_id, t_user_messages_array *messages_array) {
+    int client_socket = create_and_connect_socket(server_address);
+
+    t_package package = create_package(3 + (messages_array->size));
+    pack_byte(GET_MESSAGES_UPDATES, &package);
+    pack_uint32(chat_id, &package);
+    pack_uint32(messages_array->size, &package);
+    for (size_t i = 0; i < messages_array->size; i++) {
+        pack_uint32(messages_array->arr[i].message_id, &package);
+    }
+    send_and_free_package(client_socket, package);
+
+    t_user_messages_array updated_messages_array = allocate_user_messages_array(receive_uint32(client_socket));
+    for (size_t i = 0; i < updated_messages_array.size; i++) {
+        updated_messages_array.arr[i].message_id = receive_uint32(client_socket);
+        updated_messages_array.arr[i].sender_id = receive_uint32(client_socket);
+        updated_messages_array.arr[i].sender_login = receive_bytes(client_socket);
+        updated_messages_array.arr[i].data = receive_bytes(client_socket);
+        char *received_creation_date = receive_bytes(client_socket);
+        updated_messages_array.arr[i].creation_date = utc_str_to_localtime_tm(received_creation_date, DEFAULT_TIME_FORMAT);
+        free(received_creation_date);
+    }
+
+    close(client_socket);
+
+    return updated_messages_array;
+}
+
 t_user *rq_get_chat_members(t_address server_address, id_t chat_id, uint32_t *members_count) {
     int client_socket = create_and_connect_socket(server_address);
 
