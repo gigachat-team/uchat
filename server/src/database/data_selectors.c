@@ -148,6 +148,38 @@ t_list *db_get_messages_in_chat(sqlite3 *db, id_t chat_id, size_t *found_message
     return messages_list;
 }
 
+t_list *db_select_messages(sqlite3 *db, id_t chat_id , t_uint32_array *exclude_message_IDs, size_t *found_messages_count) {
+    char *sql = sqlite3_mprintf(" \
+        SELECT "MESSAGES_ID", "MESSAGES_USER_ID", (SELECT "USERS_LOGIN" FROM "USERS_TABLE" WHERE "USERS_TABLE"."USERS_ID" = "MESSAGES_TABLE"."MESSAGES_USER_ID"), "MESSAGES_CONTENT", "MESSAGES_CREATION_DATE" \
+        FROM "MESSAGES_TABLE" \
+        WHERE "MESSAGES_CHAT_ID" = %u", chat_id
+    );
+
+    sqlite3_stmt *statement = db_open_statement(db, sql);
+
+    t_list *messages_list = NULL;
+
+    *found_messages_count = 0;
+    for (;sqlite3_step(statement) == SQLITE_ROW;) {
+        int message_id = sqlite3_column_int(statement, 0);
+        if (binary_search_uint32(exclude_message_IDs, message_id) != -1) {
+            continue;
+        }
+
+        t_user_message *user_message = malloc(sizeof(t_user_message));
+        user_message->message_id = message_id;
+        user_message->sender_id = sqlite3_column_int(statement, 1);
+        user_message->sender_login = strdup((char *)sqlite3_column_text(statement, 2));
+        user_message->data = strdup(sqlite3_column_blob(statement, 3));
+        user_message->creation_date = strdup(sqlite3_column_blob(statement, 4));
+        mx_push_front(&messages_list, user_message);
+        (*found_messages_count)++;
+    }
+    db_close_statement(statement, db);
+
+    return messages_list;
+}
+
 t_user *db_get_chat_members(sqlite3 *db, id_t chat_id, size_t *members_count) {
     char *sql = sqlite3_mprintf(" \
         SELECT COUNT(*) FROM "MEMBERS_TABLE" \
