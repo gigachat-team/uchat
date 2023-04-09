@@ -32,6 +32,7 @@
 #define MESSAGE_STATUSES_IS_READ "IsRead"
 
 typedef struct s_user_message {
+    id_t message_id;
     id_t sender_id;
     char *sender_login;
     char *data;

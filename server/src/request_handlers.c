@@ -121,10 +121,11 @@ void handle_messages_in_chat_getting(int client_socket) {
     t_list *messages_list = db_get_messages_in_chat(db, chat_id, &found_messages_count);
     db_close(db);
 
-    t_package package = create_package(1 + found_messages_count * 4);
+    t_package package = create_package(1 + found_messages_count * 5);
     pack_uint32(found_messages_count, &package);
     for (t_list *i = messages_list; i != NULL; i = i->next) {
         t_user_message *user_message = (t_user_message *)i->data;
+        pack_uint32(user_message->message_id, &package);
         pack_uint32(user_message->sender_id, &package);
         pack_bytes(user_message->sender_login, &package);
         pack_bytes(user_message->data, &package);

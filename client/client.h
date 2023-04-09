@@ -22,6 +22,7 @@ typedef struct s_gui_data {
 } t_gui_data;
 
 typedef struct s_user_message {
+    id_t message_id;
     id_t sender_id;
     char *sender_login;
     char *data;
