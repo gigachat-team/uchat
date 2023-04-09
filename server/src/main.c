@@ -28,4 +28,3 @@ int main(int argc, char **argv) {
         create_detached_thread(handle_request_thread, mallocated_client_socket);
     }
 }
-

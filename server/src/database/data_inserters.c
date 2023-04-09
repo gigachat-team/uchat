@@ -43,7 +43,7 @@ id_t db_create_chat(sqlite3 *db, char *chat_name, id_t owner_id) {
     sqlite3_stmt *statement = db_open_statement(db, sql);
     sqlite3_step(statement);
     id_t created_chat_id = sqlite3_column_int(statement, 0);
-    
+
     sqlite3_free(sql);
     db_close_statement(statement, db);
 
@@ -76,4 +76,3 @@ void db_add_text_message(sqlite3 *db, id_t chat_id, id_t user_id, char *text_mes
     db_execute_sql(db, sql);
     sqlite3_free(sql);
 }
-

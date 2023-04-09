@@ -47,4 +47,3 @@ void db_create_message_statuses_table(sqlite3 *db) {
                     "MESSAGE_STATUSES_IS_READ"      INTEGER NOT NULL);";
     db_execute_sql(db, sql);
 }
-

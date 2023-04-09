@@ -44,4 +44,3 @@ void db_execute_sql(sqlite3 *db, char* sql) {
         exit(EXIT_FAILURE);
     }
 }
-
