@@ -25,6 +25,7 @@
 #define MESSAGES_USER_ID "UserId"
 #define MESSAGES_CONTENT "Content"
 #define MESSAGES_CREATION_DATE "CreationDate"
+#define MESSAGES_ORDER "OrderInChat"
 
 #define MESSAGE_STATUSES_TABLE "MessageStatuses"
 #define MESSAGE_STATUSES_MESSAGE_ID "MessageId"
