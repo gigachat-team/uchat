@@ -1,15 +1,15 @@
 #include "../../client.h"
 
-t_authentication_data get_authentication_data(GtkWidget* enter_login, GtkWidget* enter_password) {
+t_authentication_data get_authentication_data(GtkWidget *enter_login, GtkWidget *enter_password) {
     t_authentication_data authentication_data;
 
-    authentication_data.login = (char*)gtk_entry_get_text(GTK_ENTRY(enter_login));
-    authentication_data.password = (char*)gtk_entry_get_text(GTK_ENTRY(enter_password));
+    authentication_data.login = (char *)gtk_entry_get_text(GTK_ENTRY(enter_login));
+    authentication_data.password = (char *)gtk_entry_get_text(GTK_ENTRY(enter_password));
 
     return authentication_data;
 }
 
-t_chat_creation_data get_chat_creation_data(id_t owner_id, char* chat_name) {
+t_chat_creation_data get_chat_creation_data(id_t owner_id, char *chat_name) {
 
     t_chat_creation_data chat_creation_data = { strdup(chat_name), owner_id };
     return chat_creation_data;
@@ -24,7 +24,7 @@ t_new_chat_member_data get_new_chat_member_data(id_t chat_id) {
     return new_chat_member_data;
 }
 
-int console_input_int(char* message) {
+int console_input_int(char *message) {
     printf("%s", message);
     int number;
     scanf("%d", &number);

@@ -50,7 +50,7 @@ GtkWidget *get_image_from_path(char *path, gint x, gint y);
 void add_to_box_start(GtkBuilder *builder, GtkWidget *new_element, gchar *box_name, gint padding);
 
 // Destroy all widgets in container whith in builder
-void clear_container(GtkBuilder* builder, char* contener_name);
+void clear_container(GtkBuilder *builder, char *contener_name);
 
 void write_label_text(GtkBuilder *builder, char *label_name, char *text);
 void open_window(GtkBuilder *builder, char *window_name);
@@ -107,3 +107,4 @@ void load_css(char *css_file_path);
  * @param class css class-name for a style
 */
 void apply_style_to_widget(GtkWidget *widget, char *class);
+

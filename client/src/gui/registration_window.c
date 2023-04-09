@@ -1,8 +1,8 @@
 #include "../../client.h"
 
-static t_gui_data gui_data_init(char** argv) {
-    GError* err = NULL;
-    GtkBuilder* builder = gtk_builder_new();
+static t_gui_data gui_data_init(char **argv) {
+    GError *err = NULL;
+    GtkBuilder *builder = gtk_builder_new();
 
     if (0 == gtk_builder_add_from_file(builder, "./client/src/gui/TestGUI.glade", &err))
         fprintf(stderr, "Error adding build from file. Error: %s\n", err->message);
@@ -16,7 +16,7 @@ static t_gui_data gui_data_init(char** argv) {
     return gui_data;
 }
 
-static bool validation_authentication_data(t_authentication_data authentication_data, GtkWidget* error_message) {
+static bool validation_authentication_data(t_authentication_data authentication_data, GtkWidget *error_message) {
     if (strlen(authentication_data.login) <= MIN_LOGIN_LENGTH) {
         gtk_label_set_text(GTK_LABEL(error_message), "Login must be longer.");
         return false;
@@ -31,13 +31,13 @@ static bool validation_authentication_data(t_authentication_data authentication_
 }
 
 // Buttons-events-----------------------------------
-void login(GtkButton* bconfirm, gpointer user_data) {
-    t_gui_data* data = (t_gui_data*)user_data;
+void login(GtkButton *bconfirm, gpointer user_data) {
+    t_gui_data *data = (t_gui_data *)user_data;
 
-    GtkBuilder* builder = data->builder;
-    GtkWidget* enter_login = GTK_WIDGET(gtk_builder_get_object(builder, "wlogin"));
-    GtkWidget* enter_password = GTK_WIDGET(gtk_builder_get_object(builder, "wpassword"));
-    GtkWidget* error_message = GTK_WIDGET(gtk_builder_get_object(builder, "error_message_login"));
+    GtkBuilder *builder = data->builder;
+    GtkWidget *enter_login = GTK_WIDGET(gtk_builder_get_object(builder, "wlogin"));
+    GtkWidget *enter_password = GTK_WIDGET(gtk_builder_get_object(builder, "wpassword"));
+    GtkWidget *error_message = GTK_WIDGET(gtk_builder_get_object(builder, "error_message_login"));
 
     apply_style_to_widget(error_message, "error-message");
 
@@ -67,19 +67,19 @@ void login(GtkButton* bconfirm, gpointer user_data) {
     (void)bconfirm;
 }
 
-void regist(GtkButton* bconfirm, gpointer user_data) {
-    t_gui_data* data = (t_gui_data*)user_data;
+void regist(GtkButton *bconfirm, gpointer user_data) {
+    t_gui_data *data = (t_gui_data *)user_data;
 
-    GtkBuilder* builder = data->builder;
-    GtkWidget* enter_newpassword = GTK_WIDGET(gtk_builder_get_object(builder, "wnewpassword"));
-    GtkWidget* enter_newpassword_repeat = GTK_WIDGET(gtk_builder_get_object(builder, "wnewpassword_r"));
-    GtkWidget* error_message = GTK_WIDGET(gtk_builder_get_object(builder, "error_message_register"));
-    GtkWidget* enter_newlogin = GTK_WIDGET(gtk_builder_get_object(builder, "wnewlogin"));
+    GtkBuilder *builder = data->builder;
+    GtkWidget *enter_newpassword = GTK_WIDGET(gtk_builder_get_object(builder, "wnewpassword"));
+    GtkWidget *enter_newpassword_repeat = GTK_WIDGET(gtk_builder_get_object(builder, "wnewpassword_r"));
+    GtkWidget *error_message = GTK_WIDGET(gtk_builder_get_object(builder, "error_message_register"));
+    GtkWidget *enter_newlogin = GTK_WIDGET(gtk_builder_get_object(builder, "wnewlogin"));
 
     apply_style_to_widget(error_message, "error-message");
 
     t_authentication_data authentication_data = get_authentication_data(enter_newlogin, enter_newpassword);
-    char* password_repeat = (char*)gtk_entry_get_text(GTK_ENTRY(enter_newpassword_repeat));
+    char *password_repeat = (char *)gtk_entry_get_text(GTK_ENTRY(enter_newpassword_repeat));
 
     if (!validation_authentication_data(authentication_data, error_message)) {
         return;
@@ -107,7 +107,7 @@ void regist(GtkButton* bconfirm, gpointer user_data) {
 }
 //-------------------------------------------------
 
-void gui_init(int argc, char** argv) {
+void gui_init(int argc, char **argv) {
     gtk_init(&argc, &argv);
 
     // load_css(DEFAULT_CSS_FILE_PATH);
