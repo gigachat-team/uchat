@@ -30,4 +30,3 @@ void cancel_thread(pthread_t thread) {
         exit(EXIT_FAILURE);
     }
 }
-

@@ -23,4 +23,3 @@ struct tm utc_str_to_localtime_tm(char *utc_str, char *datetime_format) {
     struct tm utc = str_to_tm(utc_str, datetime_format);
     return utc_to_localtime(utc);
 }
-

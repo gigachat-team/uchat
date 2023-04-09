@@ -38,4 +38,3 @@ void free_users(t_user *users, size_t users_count) {
     }
     free(users);
 }
-
