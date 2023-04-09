@@ -68,20 +68,10 @@ bool db_add_new_member_to_chat(sqlite3 *db, id_t user_id, id_t chat_id) {
 
 void db_add_text_message(sqlite3 *db, id_t chat_id, id_t user_id, char *text_message) {
     char *sql = sqlite3_mprintf(" \
-        SELECT "MESSAGES_ORDER" FROM "MESSAGES_TABLE" \
-        WHERE "MESSAGES_CHAT_ID" = %d ORDER BY "MESSAGES_ORDER" DESC", chat_id
-    );
-    sqlite3_stmt *statement = db_open_statement(db, sql);
-    sqlite3_free(sql);
-
-    uint32_t new_message_order = sqlite3_step(statement) == SQLITE_ROW ? sqlite3_column_int(statement, 0) + 1 : 1;
-    db_close_statement(statement, db);
-
-    sql = sqlite3_mprintf(" \
-        INSERT INTO "MESSAGES_TABLE" ("MESSAGES_CHAT_ID", "MESSAGES_USER_ID", "MESSAGES_CONTENT", \
-                                      "MESSAGES_CREATION_DATE", "MESSAGES_ORDER") \
-        VALUES (%u, %u, %Q, datetime('now'), %u)",
-        chat_id, user_id, text_message, new_message_order
+        INSERT INTO "MESSAGES_TABLE" \
+        ("MESSAGES_CHAT_ID", "MESSAGES_USER_ID", "MESSAGES_CONTENT", "MESSAGES_CREATION_DATE") \
+        VALUES (%u, %u, %Q, datetime('now'))",
+        chat_id, user_id, text_message
     );
     db_execute_sql(db, sql);
     sqlite3_free(sql);
