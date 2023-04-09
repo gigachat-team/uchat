@@ -139,7 +139,8 @@ t_list *db_get_messages_in_chat(sqlite3 *db, id_t chat_id, size_t *found_message
     char *sql = sqlite3_mprintf(" \
         SELECT "MESSAGES_ID", "MESSAGES_USER_ID", (SELECT "USERS_LOGIN" FROM "USERS_TABLE" WHERE "USERS_TABLE"."USERS_ID" = "MESSAGES_TABLE"."MESSAGES_USER_ID"), "MESSAGES_CONTENT", "MESSAGES_CREATION_DATE" \
         FROM "MESSAGES_TABLE" \
-        WHERE "MESSAGES_CHAT_ID" = %u", chat_id
+        WHERE "MESSAGES_CHAT_ID" = %u \
+        ORDER BY "MESSAGES_ID" DESC", chat_id
     );
 
     t_list *messages_list = select_messages_list(db, sql, found_messages_count);
@@ -152,7 +153,8 @@ t_list *db_select_messages(sqlite3 *db, id_t chat_id , t_uint32_array *exclude_m
     char *sql = sqlite3_mprintf(" \
         SELECT "MESSAGES_ID", "MESSAGES_USER_ID", (SELECT "USERS_LOGIN" FROM "USERS_TABLE" WHERE "USERS_TABLE"."USERS_ID" = "MESSAGES_TABLE"."MESSAGES_USER_ID"), "MESSAGES_CONTENT", "MESSAGES_CREATION_DATE" \
         FROM "MESSAGES_TABLE" \
-        WHERE "MESSAGES_CHAT_ID" = %u", chat_id
+        WHERE "MESSAGES_CHAT_ID" = %u \
+        ORDER BY "MESSAGES_ID" DESC", chat_id
     );
 
     sqlite3_stmt *statement = db_open_statement(db, sql);
