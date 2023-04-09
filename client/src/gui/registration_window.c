@@ -110,7 +110,7 @@ void regist(GtkButton *bconfirm, gpointer user_data) {
 void gui_init(int argc, char **argv) {
     gtk_init(&argc, &argv);
 
-    // load_css(DEFAULT_CSS_FILE_PATH);
+    load_css(DEFAULT_CSS_FILE_PATH);
 
     t_gui_data data = gui_data_init(argv);
     gtk_builder_connect_signals(data.builder, &data);
