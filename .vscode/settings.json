@@ -16,7 +16,10 @@
         "memory": "c",
         "numeric": "c",
         "cmath": "c",
-        "typeinfo": "c"
+        "typeinfo": "c",
+        "glib.h": "c",
+        "gtk.h": "c",
+        "gsignal.h": "c"
     },
     "C_Cpp.vcFormat.newLine.beforeElse": true,
     "C_Cpp.vcFormat.space.betweenEmptyBraces": false,
