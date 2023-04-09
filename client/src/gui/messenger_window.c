@@ -22,8 +22,7 @@ static void clear_chats_list(t_gui_data data)
     g_list_free(list);
 }
 
-static void init_chats_list(t_gui_data data)
-{
+static void init_chats_list(t_gui_data data) {
     size_t chats_count = 0;
     t_chat *chats = rq_get_chats_i_am_in(data.server_address, data.user_id, &chats_count);
 
@@ -36,8 +35,7 @@ static void init_chats_list(t_gui_data data)
             create_button_in_chat_list(data, &chats[i]);
         }
     }
-    else
-    {
+    else {
         printf("You aren't in any chats.\n");
     }
 
@@ -45,8 +43,7 @@ static void init_chats_list(t_gui_data data)
 }
 
 // Buttons-events-----------------------------------
-void open_creater_chat_window(GtkButton *bconfirm, gpointer user_data)
-{
+void open_creater_chat_window(GtkButton *bconfirm, gpointer user_data) {
     t_gui_data data = GUI_DATA(user_data);
 
     open_window(data.builder, "Create_room_window");
@@ -54,8 +51,7 @@ void open_creater_chat_window(GtkButton *bconfirm, gpointer user_data)
     (void)bconfirm;
 }
 
-void close_creater_chat_window(GtkButton *bconfirm, gpointer user_data)
-{
+void close_creater_chat_window(GtkButton *bconfirm, gpointer user_data) {
     t_gui_data data = GUI_DATA(user_data);
 
     close_window(data.builder, "Create_room_window");
@@ -63,8 +59,7 @@ void close_creater_chat_window(GtkButton *bconfirm, gpointer user_data)
     (void)bconfirm;
 }
 
-void create_new_chat(GtkButton *bconfirm, gpointer user_data)
-{
+void create_new_chat(GtkButton *bconfirm, gpointer user_data) {
     t_gui_data data = GUI_DATA(user_data);
     char *chat_name = get_entry_text(data.builder, "wname_room");
 
@@ -74,8 +69,7 @@ void create_new_chat(GtkButton *bconfirm, gpointer user_data)
 }
 //-------------------------------------------------
 
-void open_messenger_window(t_gui_data data)
-{
+void open_messenger_window(t_gui_data data) {
     close_window(data.builder, "Authorization");
     open_window(data.builder, "Messenger");
 

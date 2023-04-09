@@ -2,6 +2,9 @@
 
 t_state_code rq_authenticate_user(t_address server_address, t_authentication_data authentication_data, t_authentication_mode authentication_mode, uint *user_id) {
     int client_socket = create_and_connect_socket(server_address);
+    if (errno == ECONNREFUSED) {
+        return CONNECTION_REFUSED;
+    }
 
     t_package package = create_package(3);
     pack_byte(authentication_mode, &package);
@@ -88,26 +91,23 @@ t_state_code rq_send_text_message(t_address server_address, t_text_message_data 
     return response;
 }
 
-t_user_message *rq_get_last_messages(t_address server_address, uint32_t msg_number, uint16_t messages_count, id_t chat_id, uint16_t *found_messages_count) {
+t_user_message *rq_get_messages_in_chat(t_address server_address, id_t chat_id, size_t *found_messages_count) {
     int client_socket = create_and_connect_socket(server_address);
 
-    t_package package = create_package(4);
-    pack_byte(GET_LAST_MESSAGES, &package);
-    pack_uint16(messages_count, &package);
+    t_package package = create_package(2);
+    pack_byte(GET_MESSAGES_IN_CHAT, &package);
     pack_uint32(chat_id, &package);
-    pack_uint32(msg_number, &package);
     send_and_free_package(client_socket, package);
 
-    *found_messages_count = receive_uint16(client_socket);
+    *found_messages_count = receive_uint32(client_socket);
     t_user_message *found_messages = malloc(*found_messages_count * sizeof(t_user_message));
     for (size_t i = 0; i < *found_messages_count; i++) {
-        found_messages[i].user_id = receive_uint32(client_socket);
-        found_messages[i].user_login = receive_bytes(client_socket);
-        found_messages[i].bytes = receive_bytes(client_socket);
+        found_messages[i].sender_id = receive_uint32(client_socket);
+        found_messages[i].sender_login = receive_bytes(client_socket);
+        found_messages[i].data = receive_bytes(client_socket);
         char *received_creation_date = receive_bytes(client_socket);
         found_messages[i].creation_date = utc_str_to_localtime_tm(received_creation_date, DEFAULT_TIME_FORMAT);
         free(received_creation_date);
-        found_messages[i].order_in_chat = receive_uint32(client_socket);
     }
 
     close(client_socket);

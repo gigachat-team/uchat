@@ -1,4 +1,4 @@
-#pragma once 
+#pragma once
 
 #define _GNU_SOURCE
 #include <stdio.h>
@@ -90,7 +90,7 @@ typedef enum e_request {
     ADD_MEMBER_TO_CHAT, // -> chat_id -> member_login
     GET_CHATS_I_AM_IN, // -> user_id
     SEND_TEXT_MESSAGE, // -> user_id -> chat_id -> text_message
-    GET_LAST_MESSAGES,
+    GET_MESSAGES_IN_CHAT,
     REMOVE_USER_FROM_CHAT,
     GET_CHAT_MEMBERS
 } t_request;
@@ -98,18 +98,37 @@ typedef enum e_request {
 typedef enum e_state_code {
     NONE,
 
+    CONNECTION_REFUSED,
+
     SUCCESSFULLY_READ,
     SUCCESSFUL_REGISTRATION,
     SUCCESSFUL_LOGIN,
     USER_SUCCESSFULLY_ADDED_TO_CHAT,
     TEXT_MESSAGE_SENT_SUCCESSFULLY,
     USER_REMOVED_FROM_CHAT_SUCCESSFULLY,
-    
+
     SUCH_LOGIN_ALREADY_EXISTS,
     SUCH_LOGIN_DOES_NOT_EXIST,
     WRONG_PASSWORD,
     SUCH_USER_IS_ALREADY_IN_CHAT
 } t_state_code;
+
+typedef struct s_list {
+    void *data;
+    struct s_list *next;
+} t_list;
+void mx_clear_list(t_list **list);
+t_list *mx_create_node(void *data);
+t_list *mx_get_by_index(t_list *head, int index);
+int mx_list_size(t_list *list);
+void mx_reverse_list(t_list *head);
+t_list *mx_sort_list(t_list *lst, bool (*cmp)(void *, void *));
+void mx_pop_front(t_list **head);
+void mx_pop_back(t_list **head);
+void mx_pop_index(t_list **list, int index);
+void mx_pop_node(t_list **head, t_list *node);
+void mx_push_front(t_list **list, void *data);
+void mx_push_back(t_list **list, void *data);
 
 /**
  * @brief Reads LENGTH bytes into BUFFER from SOCKET. This function is best used
@@ -172,4 +191,3 @@ void free_users(t_user *users, size_t users_count);
 struct tm str_to_tm(char *datetime_str, char *datetime_format);
 struct tm utc_to_localtime(struct tm utc);
 struct tm utc_str_to_localtime_tm(char *utc_str, char *datetime_format);
-

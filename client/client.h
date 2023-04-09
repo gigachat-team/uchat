@@ -3,6 +3,8 @@
 #include "../utils/utils.h"
 #include <gtk/gtk.h>
 
+#define DEFAULT_CSS_FILE_PATH "./client/style/common.css"
+
 #define LAST_LOADING_MESSAGES_COUNT 30
 #define CHAT_DATA(data) (*(t_chat_data *)data)
 #define GUI_DATA(data) (*(t_gui_data *)data)
@@ -20,11 +22,10 @@ typedef struct s_gui_data {
 } t_gui_data;
 
 typedef struct s_user_message {
-    id_t user_id;
-    char *user_login;
-    char *bytes;
+    id_t sender_id;
+    char *sender_login;
+    char *data;
     struct tm creation_date;
-    uint32_t order_in_chat;
 } t_user_message;
 
 typedef struct s_chat_data {
@@ -69,21 +70,7 @@ id_t rq_create_chat(t_address server_address, t_chat_creation_data chat_data);
 t_chat *rq_get_chats_i_am_in(t_address server_address, id_t user_id, size_t *chats_count);
 t_state_code rq_add_new_member(t_address server_address, t_new_chat_member_data new_chat_member_data);
 t_state_code rq_send_text_message(t_address server_address, t_text_message_data text_message_data);
-/**
- * @brief Searches MESSAGES_COUNT messages from MSG_NUMBER by CHAT_ID in messages table.
- * Number of found messages writes to FOUND_MESSAGES-COUNT variable.
- *
- * Examples:
- * 1) There're 50 messages in chat;
- * rq_get_last_messages(addr, 25, 6, id, count) will return messages with orders:
- * 25, 24, 23, 22, 21, 20;
- *
- * 2) There're 100 messages in chat;
- * rq_get_last_messages(addr, UINT32_MAX, 6, id, count) will return messages with orders:
- * 100, 99, 98, 97, 96, 95.
- * @return Allocated array of messages
-*/
-t_user_message *rq_get_last_messages(t_address server_address, uint32_t msg_number, uint16_t messages_count, id_t chat_id, uint16_t *found_messages_count);
+t_user_message *rq_get_messages_in_chat(t_address server_address, id_t chat_id, size_t *found_messages_count);
 t_user *rq_get_chat_members(t_address server_address, id_t chat_id, uint32_t *members_count);
 t_state_code rq_remove_member_from_chat(t_address server_address, id_t user_id, id_t chat_id);
 
@@ -97,3 +84,23 @@ t_chat receive_chat(int socket);
 
 void free_user_message(t_user_message message);
 void free_user_messages(t_user_message *messages, size_t length);
+
+
+
+/* ------- css.c ------- */
+
+/**
+ * @brief loads css to gtk. Should be called after gtk_init function
+ * @param css_file_path path to a css file that will be included. 
+ * If variable is NULL, it'll use DEFAULT_CSS_FILE_PATH 
+*/
+void load_css(char *css_file_path);
+
+/**
+ * @brief applies a style from a loaded css file to a widget.
+ * If one of the pointers in NULL, then the function does nothing
+ * @param widget in which a new style will be loaded
+ * @param class css class-name for a style 
+*/
+void apply_style_to_widget(GtkWidget *widget, char *class);
+

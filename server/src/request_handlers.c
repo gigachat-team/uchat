@@ -112,29 +112,27 @@ void handle_text_message_sending(int client_socket) {
     free(text_message);
 }
 
-void handle_last_messages_getting(int client_socket) {
-    uint16_t messages_count = receive_uint16(client_socket);
-    id_t chat_id = receive_uint32(client_socket);
-    uint32_t msg_number = receive_uint32(client_socket);
+void handle_messages_in_chat_getting(int client_socket) {
+    uint32_t chat_id = receive_uint32(client_socket);
 
-    size_t number_of_found = 0;
+    size_t found_messages_count = 0;
 
     sqlite3 *db = db_open();
-    t_user_message *last_messages = db_get_last_messages(db, chat_id, msg_number, messages_count, &number_of_found);
+    t_list *messages_list = db_get_messages_in_chat(db, chat_id, &found_messages_count);
     db_close(db);
 
-    t_package package = create_package(1 + number_of_found * 5);
-    pack_uint16(number_of_found, &package);
-    for (size_t i = 0; i < number_of_found; i++) {
-        pack_uint32(last_messages[i].user_id, &package);
-        pack_bytes(last_messages[i].user_login, &package);
-        pack_bytes(last_messages[i].bytes, &package);
-        pack_bytes(last_messages[i].creation_date, &package);
-        pack_uint32(last_messages[i].order_in_chat, &package);
+    t_package package = create_package(1 + found_messages_count * 4);
+    pack_uint32(found_messages_count, &package);
+    for (t_list *i = messages_list; i != NULL; i = i->next) {
+        t_user_message *user_message = (t_user_message *)i->data;
+        pack_uint32(user_message->sender_id, &package);
+        pack_bytes(user_message->sender_login, &package);
+        pack_bytes(user_message->data, &package);
+        pack_bytes(user_message->creation_date, &package);
     }
     send_and_free_package(client_socket, package);
 
-    free_user_messages(last_messages, number_of_found);
+    free_user_messages_list(&messages_list);
 }
 
 void handle_removing_user_from_chat(int client_socket) {
@@ -167,4 +165,3 @@ void handle_getting_chat_members(int client_socket) {
 
     free_users(members, members_count);
 }
-
