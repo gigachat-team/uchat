@@ -32,10 +32,9 @@ $(OBJDIR):
 clean:
 	@rm -rf $(OBJDIR)
 	@printf "$(patsubst lib%.a,%,$(LIBNAME))\t\t$@ed\n"
-	
+
 uninstall: clean
 	@rm -rf $(LIBNAME)
 	@printf "$(patsubst lib%.a,%,$(LIBNAME))\t\t$@ed\n"
 
 reinstall: uninstall all
-

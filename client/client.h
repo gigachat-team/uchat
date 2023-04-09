@@ -22,6 +22,7 @@ typedef struct s_gui_data {
 } t_gui_data;
 
 typedef struct s_user_message {
+    id_t message_id;
     id_t sender_id;
     char *sender_login;
     char *data;
@@ -49,7 +50,7 @@ GtkWidget *get_image_from_path(char *path, gint x, gint y);
 void add_to_box_start(GtkBuilder *builder, GtkWidget *new_element, gchar *box_name, gint padding);
 
 // Destroy all widgets in container whith in builder
-void clear_container(GtkBuilder* builder, char* contener_name);
+void clear_container(GtkBuilder *builder, char *contener_name);
 
 void write_label_text(GtkBuilder *builder, char *label_name, char *text);
 void open_window(GtkBuilder *builder, char *window_name);
@@ -94,8 +95,8 @@ void free_user_messages(t_user_message *messages, size_t length);
 
 /**
  * @brief loads css to gtk. Should be called after gtk_init function
- * @param css_file_path path to a css file that will be included. 
- * If variable is NULL, it'll use DEFAULT_CSS_FILE_PATH 
+ * @param css_file_path path to a css file that will be included.
+ * If variable is NULL, it'll use DEFAULT_CSS_FILE_PATH
 */
 void load_css(char *css_file_path);
 
@@ -103,7 +104,7 @@ void load_css(char *css_file_path);
  * @brief applies a style from a loaded css file to a widget.
  * If one of the pointers in NULL, then the function does nothing
  * @param widget in which a new style will be loaded
- * @param class css class-name for a style 
+ * @param class css class-name for a style
 */
 void apply_style_to_widget(GtkWidget *widget, char *class);
 

@@ -1,9 +1,8 @@
 obj
 uchat
 uchat_server
-*.glade#
+\#*.glade\#
 *.glade~
 *.a
 *.db
 *.o
-

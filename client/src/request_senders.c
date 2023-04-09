@@ -102,6 +102,7 @@ t_user_message *rq_get_messages_in_chat(t_address server_address, id_t chat_id, 
     *found_messages_count = receive_uint32(client_socket);
     t_user_message *found_messages = malloc(*found_messages_count * sizeof(t_user_message));
     for (size_t i = 0; i < *found_messages_count; i++) {
+        found_messages[i].message_id = receive_uint32(client_socket);
         found_messages[i].sender_id = receive_uint32(client_socket);
         found_messages[i].sender_login = receive_bytes(client_socket);
         found_messages[i].data = receive_bytes(client_socket);
