@@ -66,6 +66,12 @@ void handle_chatting(t_address server_address, id_t user_id, id_t chat_id);
 
 void handle_authenticated_user_commands(t_address server_address, id_t user_id);
 
+typedef struct s_user_messages_array {
+    t_user_message *arr;
+    size_t size;
+} t_user_messages_array;
+t_user_messages_array allocate_user_messages_array(size_t size);
+
 t_state_code rq_authenticate_user(t_address server_address, t_authentication_data authentication_data, t_authentication_mode authentication_mode, uint *user_id);
 /**
  * @return The id of created chat

@@ -112,17 +112,9 @@ void handle_text_message_sending(int client_socket) {
     free(text_message);
 }
 
-void handle_messages_in_chat_getting(int client_socket) {
-    uint32_t chat_id = receive_uint32(client_socket);
-
-    size_t found_messages_count = 0;
-
-    sqlite3 *db = db_open();
-    t_list *messages_list = db_get_messages_in_chat(db, chat_id, &found_messages_count);
-    db_close(db);
-
-    t_package package = create_package(1 + found_messages_count * 5);
-    pack_uint32(found_messages_count, &package);
+static void send_messages_list(int client_socket, t_list *messages_list, size_t messages_count) {
+    t_package package = create_package(1 + messages_count * 5);
+    pack_uint32(messages_count, &package);
     for (t_list *i = messages_list; i != NULL; i = i->next) {
         t_user_message *user_message = (t_user_message *)i->data;
         pack_uint32(user_message->message_id, &package);
@@ -132,6 +124,18 @@ void handle_messages_in_chat_getting(int client_socket) {
         pack_bytes(user_message->creation_date, &package);
     }
     send_and_free_package(client_socket, package);
+}
+
+void handle_messages_in_chat_getting(int client_socket) {
+    uint32_t chat_id = receive_uint32(client_socket);
+
+    size_t found_messages_count = 0;
+
+    sqlite3 *db = db_open();
+    t_list *messages_list = db_get_messages_in_chat(db, chat_id, &found_messages_count);
+    db_close(db);
+
+    send_messages_list(client_socket, messages_list, found_messages_count);
 
     free_user_messages_list(&messages_list);
 }

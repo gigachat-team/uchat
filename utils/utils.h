@@ -69,6 +69,12 @@ typedef struct s_user {
     char *login;
 } t_user;
 
+typedef struct s_uint32_array {
+    uint32_t *arr;
+    size_t size;
+} t_uint32_array;
+t_uint32_array allocate_uint32_array(size_t size);
+
 typedef struct s_package {
     struct iovec *const buffer;
     const size_t size;
@@ -162,6 +168,8 @@ uint32_t receive_uint32(int socket);
  * @return Pointer to allocated string.
 */
 char *receive_bytes(int socket);
+
+int64_t binary_search_uint32(uint32_t sorted_array[], uint32_t left, uint32_t right, uint32_t element);
 
 void send_byte(int socket, uint8_t byte);
 void send_uint16(int socket, uint16_t number);
