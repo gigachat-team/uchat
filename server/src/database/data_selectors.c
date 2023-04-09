@@ -115,14 +115,8 @@ t_chat *db_get_chats_user_is_in(sqlite3 *db, id_t user_id, size_t *number_of_cha
     return descriptions_of_chats;
 }
 
-t_list *db_get_messages_in_chat(sqlite3 *db, id_t chat_id, size_t *found_messages_count) {
-    char *sql = sqlite3_mprintf(" \
-        SELECT "MESSAGES_ID" "MESSAGES_USER_ID", (SELECT "USERS_LOGIN" FROM "USERS_TABLE" WHERE "USERS_TABLE"."USERS_ID" = "MESSAGES_TABLE"."MESSAGES_USER_ID"), "MESSAGES_CONTENT", "MESSAGES_CREATION_DATE" \
-        FROM "MESSAGES_TABLE" \
-        WHERE "MESSAGES_CHAT_ID" = %u", chat_id
-    );
+static t_list *select_messages_list(sqlite3 *db, char *sql, size_t *found_messages_count) {
     sqlite3_stmt *statement = db_open_statement(db, sql);
-    sqlite3_free(sql);
 
     t_list *messages_list = NULL;
 
@@ -137,6 +131,19 @@ t_list *db_get_messages_in_chat(sqlite3 *db, id_t chat_id, size_t *found_message
         mx_push_front(&messages_list, user_message);
     }
     db_close_statement(statement, db);
+
+    return messages_list;
+}
+
+t_list *db_get_messages_in_chat(sqlite3 *db, id_t chat_id, size_t *found_messages_count) {
+    char *sql = sqlite3_mprintf(" \
+        SELECT "MESSAGES_ID" "MESSAGES_USER_ID", (SELECT "USERS_LOGIN" FROM "USERS_TABLE" WHERE "USERS_TABLE"."USERS_ID" = "MESSAGES_TABLE"."MESSAGES_USER_ID"), "MESSAGES_CONTENT", "MESSAGES_CREATION_DATE" \
+        FROM "MESSAGES_TABLE" \
+        WHERE "MESSAGES_CHAT_ID" = %u", chat_id
+    );
+
+    t_list *messages_list = select_messages_list(db, sql, found_messages_count);
+    sqlite3_free(sql);
 
     return messages_list;
 }
