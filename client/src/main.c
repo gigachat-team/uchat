@@ -122,19 +122,24 @@ void send_message_in_server(t_address server_address, id_t user_id, id_t chat_id
     free_text_message_data(text_message_data);
 }
 
-static t_gui_data gui_data_init(char **argv) {
+static GtkBuilder *create_gtk_builder() {
     GError *err = NULL;
     GtkBuilder *builder = gtk_builder_new();
 
-    if (0 == gtk_builder_add_from_file(builder, GLADE_FILE_PATH, &err))
+    if (gtk_builder_add_from_file(builder, GLADE_FILE_PATH, &err) == 0) {
         fprintf(stderr, "Error adding build from file. Error: %s\n", err->message);
+        exit(EXIT_FAILURE);
+    }
 
+    return builder;
+}
+
+static t_gui_data create_gui_data(char *ip, in_port_t port) {
     t_gui_data gui_data = {
-        .builder = builder,
-        .server_address = {argv[1], atoi(argv[2])},
+        .builder = create_gtk_builder(),
+        .server_address = {ip, port},
         .user_id = 0
     };
-
     return gui_data;
 }
 
@@ -145,16 +150,12 @@ int main(int argc, char **argv) {
     }
 
     gtk_init(&argc, &argv);
-
     load_css(DEFAULT_CSS_FILE_PATH);
-
-    t_gui_data data = gui_data_init(argv);
-    gtk_builder_connect_signals(data.builder, &data);
-
-    open_window(data.builder, "Authorization");
-
+    t_gui_data gui_data = create_gui_data(argv[1], atoi(argv[2]));
+    gtk_builder_connect_signals(gui_data.builder, &gui_data);
+    open_window(gui_data.builder, "Authorization");
     gtk_main();
-    g_object_unref(data.builder);
+    g_object_unref(gui_data.builder);
 
     return 0;
 }
