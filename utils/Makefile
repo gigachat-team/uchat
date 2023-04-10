@@ -9,10 +9,11 @@ LIBCREATOR_FLAGS = rsc
 OBJDIR = obj
 SRCDIR = src
 
-SOURCES = $(subst ./,,$(shell find . -name "*.c"))
+SOURCES = $(wildcard $(SRCDIR)/*.c) $(wildcard $(SRCDIR)/*/*.c) $(wildcard $(SRCDIR)/*/*/*.c)
 OBJECTS = $(subst $(SRCDIR)/,,$(addprefix $(OBJDIR)/, $(SOURCES:.c=.o)))
 DEPENDS = $(subst $(SRCDIR)/,,$(addprefix $(OBJDIR)/, $(SOURCES:.c=.d)))
 
+PHONY := all
 all: $(LIBNAME)
 	@:
 
@@ -29,12 +30,17 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c Makefile
 $(OBJDIR):
 	@mkdir -p $@
 
+PHONY += clean
 clean:
 	@rm -rf $(OBJDIR)
 	@printf "$(patsubst lib%.a,%,$(LIBNAME))\t\t$@ed\n"
 
+PHONY += uninstall
 uninstall: clean
 	@rm -rf $(LIBNAME)
 	@printf "$(patsubst lib%.a,%,$(LIBNAME))\t\t$@ed\n"
 
+PHONY += reinstall
 reinstall: uninstall all
+
+.PHONY: $(PHONY)

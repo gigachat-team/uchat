@@ -6,7 +6,7 @@ CFLAGS = -std=c11 -Wall -Wextra -Werror -Wpedantic -gdwarf-4 -pthread -MMD -MP
 OBJDIR = obj
 SRCDIR = src
 
-SOURCES = $(wildcard $(SRCDIR).c) $(wildcard $(SRCDIR)/*.c) $(wildcard $(SRCDIR)/*/*.c)
+SOURCES = $(wildcard $(SRCDIR)/*.c) $(wildcard $(SRCDIR)/*/*.c) $(wildcard $(SRCDIR)/*/*/*.c)
 OBJECTS = $(subst $(SRCDIR)/,,$(addprefix $(OBJDIR)/, $(SOURCES:.c=.o)))
 DEPENDS = $(subst $(SRCDIR)/,,$(addprefix $(OBJDIR)/, $(SOURCES:.c=.d)))
 
