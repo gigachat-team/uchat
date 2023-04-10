@@ -126,7 +126,7 @@ static t_gui_data gui_data_init(char **argv) {
     GError *err = NULL;
     GtkBuilder *builder = gtk_builder_new();
 
-    if (0 == gtk_builder_add_from_file(builder, "./client/src/gui/TestGUI.glade", &err))
+    if (0 == gtk_builder_add_from_file(builder, GLADE_FILE_PATH, &err))
         fprintf(stderr, "Error adding build from file. Error: %s\n", err->message);
 
     t_gui_data gui_data = {

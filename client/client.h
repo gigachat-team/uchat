@@ -4,6 +4,7 @@
 #include <gtk/gtk.h>
 
 #define DEFAULT_CSS_FILE_PATH "./client/style/common.css"
+#define GLADE_FILE_PATH "./client/src/gui/uchat.glade"
 
 #define LAST_LOADING_MESSAGES_COUNT 30
 #define CHAT_DATA(data) (*(t_chat_data *)data)
