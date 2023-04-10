@@ -110,7 +110,7 @@ static t_gui_data create_gui_data(char *ip, in_port_t port) {
 int main(int argc, char **argv) {
     if (argc != 3) {
         printf("usage: ./uchat [ip] [port]");
-        return 0;
+        return EXIT_FAILURE;
     }
 
     gtk_init(&argc, &argv);
@@ -121,5 +121,5 @@ int main(int argc, char **argv) {
     gtk_main();
     g_object_unref(gui_data.builder);
 
-    return 0;
+    return EXIT_SUCCESS;
 }
