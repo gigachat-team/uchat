@@ -38,7 +38,6 @@ typedef struct s_chat_data {
 // GUI-----------------------------------------------------------------------------
 char *get_entry_text(GtkBuilder *builder, char *entry_name);
 void open_messenger_window(t_gui_data data);
-void gui_init(int argc, char **argv);
 void open_chat(GtkButton *bconfirm, gpointer user_data);
 t_chat_data *create_chat_data(t_chat *chat, t_gui_data gui_data);
 
@@ -113,4 +112,3 @@ void load_css(char *css_file_path);
  * @param class css class-name for a style
 */
 void apply_style_to_widget(GtkWidget *widget, char *class);
-
