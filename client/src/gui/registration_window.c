@@ -1,21 +1,5 @@
 #include "../../client.h"
 
-static t_gui_data gui_data_init(char **argv) {
-    GError *err = NULL;
-    GtkBuilder *builder = gtk_builder_new();
-
-    if (0 == gtk_builder_add_from_file(builder, "./client/src/gui/TestGUI.glade", &err))
-        fprintf(stderr, "Error adding build from file. Error: %s\n", err->message);
-
-    t_gui_data gui_data = {
-        .builder = builder,
-        .server_address = {argv[1], atoi(argv[2])},
-        .user_id = 0
-    };
-
-    return gui_data;
-}
-
 static bool validation_authentication_data(t_authentication_data authentication_data, GtkWidget *error_message) {
     if (strlen(authentication_data.login) <= MIN_LOGIN_LENGTH) {
         gtk_label_set_text(GTK_LABEL(error_message), "Login must be longer.");
@@ -106,19 +90,3 @@ void regist(GtkButton *bconfirm, gpointer user_data) {
     (void)bconfirm;
 }
 //-------------------------------------------------
-
-void gui_init(int argc, char **argv) {
-    gtk_init(&argc, &argv);
-
-    load_css(DEFAULT_CSS_FILE_PATH);
-
-    t_gui_data data = gui_data_init(argv);
-    gtk_builder_connect_signals(data.builder, &data);
-
-    open_messenger_window(data);
-
-    open_window(data.builder, "Authorization");
-
-    gtk_main();
-    g_object_unref(data.builder);
-}

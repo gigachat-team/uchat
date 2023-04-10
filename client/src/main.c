@@ -122,13 +122,39 @@ void send_message_in_server(t_address server_address, id_t user_id, id_t chat_id
     free_text_message_data(text_message_data);
 }
 
+static t_gui_data gui_data_init(char **argv) {
+    GError *err = NULL;
+    GtkBuilder *builder = gtk_builder_new();
+
+    if (0 == gtk_builder_add_from_file(builder, "./client/src/gui/TestGUI.glade", &err))
+        fprintf(stderr, "Error adding build from file. Error: %s\n", err->message);
+
+    t_gui_data gui_data = {
+        .builder = builder,
+        .server_address = {argv[1], atoi(argv[2])},
+        .user_id = 0
+    };
+
+    return gui_data;
+}
+
 int main(int argc, char **argv) {
     if (argc != 3) {
         printf("usage: ./uchat [ip] [port]");
         return 0;
     }
 
-    gui_init(argc, argv);
+    gtk_init(&argc, &argv);
+
+    load_css(DEFAULT_CSS_FILE_PATH);
+
+    t_gui_data data = gui_data_init(argv);
+    gtk_builder_connect_signals(data.builder, &data);
+
+    open_window(data.builder, "Authorization");
+
+    gtk_main();
+    g_object_unref(data.builder);
 
     return 0;
 }
