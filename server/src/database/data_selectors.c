@@ -149,7 +149,7 @@ t_list *db_get_messages_in_chat(sqlite3 *db, id_t chat_id, size_t *found_message
     return messages_list;
 }
 
-t_list *db_select_messages(sqlite3 *db, id_t chat_id , t_uint32_array *exclude_message_IDs, size_t *found_messages_count) {
+t_list_with_size db_select_message_updates(sqlite3 *db, id_t chat_id, t_uint32_array *message_IDs, bool ignore_last_selected_message_data) {
     char *sql = sqlite3_mprintf(" \
         SELECT "MESSAGES_ID", "MESSAGES_USER_ID", (SELECT "USERS_LOGIN" FROM "USERS_TABLE" WHERE "USERS_TABLE"."USERS_ID" = "MESSAGES_TABLE"."MESSAGES_USER_ID"), "MESSAGES_CONTENT", "MESSAGES_CREATION_DATE" \
         FROM "MESSAGES_TABLE" \
@@ -159,12 +159,10 @@ t_list *db_select_messages(sqlite3 *db, id_t chat_id , t_uint32_array *exclude_m
 
     sqlite3_stmt *statement = db_open_statement(db, sql);
 
-    t_list *messages_list = NULL;
-
-    *found_messages_count = 0;
-    for (;sqlite3_step(statement) == SQLITE_ROW;) {
+    t_list_with_size list_with_size = {NULL, 0};
+    for (size_t i = 0;sqlite3_step(statement) == SQLITE_ROW; i++) {
         int message_id = sqlite3_column_int(statement, 0);
-        if (binary_search_uint32(exclude_message_IDs, message_id) != -1) {
+        if (binary_search_uint32(message_IDs, message_id) != -1) {
             continue;
         }
 
@@ -172,14 +170,17 @@ t_list *db_select_messages(sqlite3 *db, id_t chat_id , t_uint32_array *exclude_m
         user_message->message_id = message_id;
         user_message->sender_id = sqlite3_column_int(statement, 1);
         user_message->sender_login = strdup((char *)sqlite3_column_text(statement, 2));
-        user_message->data = strdup(sqlite3_column_blob(statement, 3));
+        if (ignore_last_selected_message_data && i == 0)
+            user_message->data = strdup("ne to otrenderiv, ruslanchik");
+        else
+            user_message->data = strdup(sqlite3_column_blob(statement, 3));
         user_message->creation_date = strdup(sqlite3_column_blob(statement, 4));
-        mx_push_front(&messages_list, user_message);
-        (*found_messages_count)++;
+        mx_push_front(&list_with_size.list, user_message);
+        list_with_size.size++;
     }
     db_close_statement(statement, db);
 
-    return messages_list;
+    return list_with_size;
 }
 
 t_user *db_get_chat_members(sqlite3 *db, id_t chat_id, size_t *members_count) {

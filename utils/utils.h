@@ -74,6 +74,10 @@ typedef struct s_uint32_array {
     size_t size;
 } t_uint32_array;
 t_uint32_array allocate_uint32_array(size_t size);
+typedef struct s_list_with_size {
+    struct s_list *list;
+    size_t size;
+} t_list_with_size;
 
 typedef struct s_package {
     struct iovec *const buffer;
@@ -97,7 +101,7 @@ typedef enum e_request {
     GET_CHATS_I_AM_IN, // -> user_id
     SEND_TEXT_MESSAGE, // -> user_id -> chat_id -> text_message
     GET_MESSAGES_IN_CHAT,
-    GET_MESSAGES_UPDATES,
+    SEND_MESSAGE_AND_GET_MESSAGE_UPDATES,
     REMOVE_USER_FROM_CHAT,
     GET_CHAT_MEMBERS
 } t_request;

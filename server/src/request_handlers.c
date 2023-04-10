@@ -140,22 +140,24 @@ void handle_messages_in_chat_getting(int client_socket) {
     free_user_messages_list(&messages_list);
 }
 
-void handle_messages_updates_getting(int client_socket) {
-    uint32_t chat_id = receive_uint32(client_socket);
+void handle_message_sending_and_messages_updates_getting(int client_socket) {
+    id_t user_id = receive_uint32(client_socket);
+    id_t chat_id = receive_uint32(client_socket);
+    char *data = receive_bytes(client_socket);
     t_uint32_array all_message_IDs_array = allocate_uint32_array(receive_uint32(client_socket));
     for (size_t i = 0; i < all_message_IDs_array.size; i++) {
         all_message_IDs_array.arr[i] = receive_uint32(client_socket);
     }
 
-    size_t updated_messages_count = 0;
-
     sqlite3 *db = db_open();
-    t_list *messages_list = db_select_messages(db, chat_id, &all_message_IDs_array, &updated_messages_count);
+    db_add_text_message(db, chat_id, user_id, data);
+    t_list_with_size list_with_size = db_select_message_updates(db, chat_id, &all_message_IDs_array, true);
     db_close(db);
 
-    send_messages_list(client_socket, messages_list, updated_messages_count);
+    send_messages_list(client_socket, list_with_size.list, list_with_size.size);
 
-    free_user_messages_list(&messages_list);
+    free(data);
+    free_user_messages_list(&list_with_size.list);
     free(all_message_IDs_array.arr);
 }
 

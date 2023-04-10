@@ -116,12 +116,14 @@ t_user_message *rq_get_messages_in_chat(t_address server_address, id_t chat_id, 
     return found_messages;
 }
 
-t_user_messages_array rq_get_messages_updates(t_address server_address, id_t chat_id, t_user_messages_array *messages_array) {
+t_user_messages_array rq_send_message_and_get_messages_updates(t_address server_address, id_t user_id, id_t chat_id, char *message, t_user_messages_array *messages_array) {
     int client_socket = create_and_connect_socket(server_address);
 
-    t_package package = create_package(3 + (messages_array->size));
-    pack_byte(GET_MESSAGES_UPDATES, &package);
+    t_package package = create_package(5 + messages_array->size);
+    pack_byte(SEND_MESSAGE_AND_GET_MESSAGE_UPDATES, &package);
+    pack_uint32(user_id, &package);
     pack_uint32(chat_id, &package);
+    pack_bytes(message, &package);
     pack_uint32(messages_array->size, &package);
     for (size_t i = 0; i < messages_array->size; i++) {
         pack_uint32(messages_array->arr[i].message_id, &package);

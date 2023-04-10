@@ -54,7 +54,7 @@ void handle_adding_new_member_to_chat(int client_socket);
 */
 void handle_text_message_sending(int client_socket);
 void handle_messages_in_chat_getting(int client_socket);
-void handle_messages_updates_getting(int client_socket);
+void handle_message_sending_and_messages_updates_getting(int client_socket);
 void handle_removing_user_from_chat(int client_socket);
 void handle_getting_chat_members(int client_socket);
 
@@ -116,7 +116,7 @@ char *db_get_chat_name_by_id(sqlite3 *db, id_t chat_id);
 id_t *db_get_IDs_of_chats_user_is_in(sqlite3 *db, id_t user_id, size_t *IDs_of_chats_len);
 t_chat *db_get_chats_user_is_in(sqlite3 *db, id_t user_id, size_t *number_of_chats);
 t_list *db_get_messages_in_chat(sqlite3 *db, id_t chat_id, size_t *found_messages_count);
-t_list *db_select_messages(sqlite3 *db, id_t chat_id , t_uint32_array *exclude_message_IDs, size_t *found_messages_count);
+t_list_with_size db_select_message_updates(sqlite3 *db, id_t chat_id, t_uint32_array *message_IDs, bool ignore_last_selected_message_data);
 /**
  * @brief Searches for members in chat by CHAT_ID. Number of found members writes to
  * MEMBERS_COUNT variable.
