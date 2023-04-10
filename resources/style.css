@@ -1,5 +1,5 @@
 window {
-    background: url("../../resources/img/notebook_paper.jpg");
+    background: url("img/notebook_paper.jpg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -12,7 +12,7 @@ button {
     border-radius: 50px;
     color: rgb(155, 167, 186);
     margin: 5px;
-    background-image: url("../../resources/img/notebook_paper_button.jpg");
+    background-image: url("img/notebook_paper_button.jpg");
     background-repeat: repeat;
 }
 
@@ -37,7 +37,7 @@ button:hover {
     100% {
         background-position: 160%;
     }
-    
+
 }
 
 .error-message {

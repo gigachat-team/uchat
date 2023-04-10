@@ -3,7 +3,7 @@
 #include "../utils/utils.h"
 #include <gtk/gtk.h>
 
-#define DEFAULT_CSS_FILE_PATH "./client/style/common.css"
+#define DEFAULT_CSS_FILE_PATH "resources/style.css"
 #define GLADE_FILE_PATH "resources/markup/uchat.glade"
 
 #define LAST_LOADING_MESSAGES_COUNT 30
