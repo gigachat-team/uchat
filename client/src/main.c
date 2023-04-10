@@ -70,42 +70,6 @@
 //     }
 // }
 
-void handle_authenticated_user_commands(t_address server_address, id_t user_id) {
-    while (true) {
-        printf("\nEnter a command (newchat, chats, enter_chat, exit): ");
-        char user_command[100];
-        scanf("%s", user_command);
-
-        if (strcmp(user_command, "newchat") == 0) {
-            // t_chat_creation_data chat_creation_data = get_chat_creation_data(user_id);
-            // id_t created_chat_id = rq_create_chat(server_address, chat_creation_data);
-            // printf("Chat \"%s\" with id %u created successfully.", chat_creation_data.chat_name, created_chat_id);
-            // free_chat_creation_data(chat_creation_data);
-        }
-        else if (strcmp(user_command, "chats") == 0) {
-            size_t chats_count = 0;
-            t_chat *chats = rq_get_chats_i_am_in(server_address, user_id, &chats_count);
-            if (chats_count != 0) {
-                printf("Chats you're in:\n");
-                for (size_t i = 0; i < chats_count; i++) {
-                    printf("id: %i, name: %s\n", chats[i].id, chats[i].name);
-                }
-            }
-            else {
-                printf("You aren't in any chats.\n");
-            }
-            free_chats(chats, chats_count);
-        }
-        else if (strcmp(user_command, "enter_chat") == 0) {
-            // id_t chat_id = console_input_int("Enter chat id: ");
-            // handle_chatting(server_address, user_id, chat_id);
-        }
-        else if (strcmp(user_command, "exit") == 0) {
-            return;
-        }
-    }
-}
-
 void create_new_chat_in_server(t_address server_address, id_t user_id, char *chat_name) {
     t_chat_creation_data chat_creation_data = get_chat_creation_data(user_id, chat_name);
     id_t created_chat_id = rq_create_chat(server_address, chat_creation_data);

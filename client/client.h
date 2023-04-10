@@ -65,8 +65,6 @@ void create_new_chat_in_server(t_address server_address, id_t user_id, char *cha
 void send_message_in_server(t_address server_address, id_t user_id, id_t chat_id, char *text_message);
 void handle_chatting(t_address server_address, id_t user_id, id_t chat_id);
 
-void handle_authenticated_user_commands(t_address server_address, id_t user_id);
-
 typedef struct s_user_messages_array {
     t_user_message *arr;
     size_t size;
