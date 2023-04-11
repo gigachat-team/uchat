@@ -28,9 +28,9 @@ void load_messages(t_chat_data data) {
     size_t messages_count = 0;
     t_user_message *messages = rq_get_messages_in_chat(data.gui_data.server_address, data.chat.id, &messages_count);
 
-    // for (size_t i = 0; i < messages_count; i++) {
-    //     create_chat_message(data.gui_data, messages[i].data);
-    // }
+    for (size_t i = 0; i < messages_count; i++) {
+        create_chat_message(data.gui_data, messages[i].data);
+    }
 
     free_user_messages(messages, messages_count);
 }
