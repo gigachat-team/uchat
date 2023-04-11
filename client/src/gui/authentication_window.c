@@ -1,6 +1,6 @@
 #include "../../client.h"
 
-void gui_login(GtkBuilder *gtk_builder, t_address *server_address, id_t user_id) {
+void gui_login(GtkBuilder *gtk_builder, t_address *server_address, id_t *user_id) {
     GtkWidget *error_message = get_widget(gtk_builder, ERROR_MESSAGE_LOGIN_LABEL_ID);
 
     apply_style_to_widget(error_message, "error-message");
@@ -17,9 +17,9 @@ void gui_login(GtkBuilder *gtk_builder, t_address *server_address, id_t user_id)
         return;
     }
 
-    switch (rq_authenticate_user(*server_address, login, password, LOGIN_MODE, &user_id)) {
+    switch (rq_authenticate_user(*server_address, login, password, LOGIN_MODE, user_id)) {
     case SUCCESSFUL_LOGIN:
-        open_messenger_window(gtk_builder, server_address, user_id);
+        open_messenger_window(gtk_builder, server_address, *user_id);
     break; case SUCH_LOGIN_DOES_NOT_EXIST:
         set_label_text(error_message, "Such login does not exist.");
     break; case WRONG_PASSWORD:
