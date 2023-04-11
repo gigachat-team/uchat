@@ -15,13 +15,13 @@ static bool validation_authentication_data(t_authentication_data authentication_
 }
 
 void gui_login(GtkBuilder *gtk_builder, t_address *server_address, id_t user_id) {
-    GtkWidget *enter_login = GTK_WIDGET(gtk_builder_get_object(gtk_builder, "wlogin"));
-    GtkWidget *enter_password = GTK_WIDGET(gtk_builder_get_object(gtk_builder, "wpassword"));
-    GtkWidget *error_message = GTK_WIDGET(gtk_builder_get_object(gtk_builder, "error_message_login"));
+    GtkWidget *login = GTK_WIDGET(gtk_builder_get_object(gtk_builder, LOGIN_FIELD_ID));
+    GtkWidget *password = GTK_WIDGET(gtk_builder_get_object(gtk_builder, PASSWORD_FIELD_ID));
+    GtkWidget *error_message = GTK_WIDGET(gtk_builder_get_object(gtk_builder, ERROR_MESSAGE_LOGIN_LABEL_ID));
 
     apply_style_to_widget(error_message, "error-message");
 
-    t_authentication_data authentication_data = get_authentication_data(enter_login, enter_password);
+    t_authentication_data authentication_data = get_authentication_data(login, password);
 
     if (!validation_authentication_data(authentication_data, error_message)) {
         return;

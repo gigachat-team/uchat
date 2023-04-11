@@ -12,6 +12,9 @@
 #define NEW_PASSWORD_FIELD_ID "new_password"
 #define NEW_PASSWORD_AGAIN_FIELD_ID "new_password_again"
 #define ERROR_MESSAGE_REGISTRATION_LABEL_ID "error_message_registration"
+#define LOGIN_FIELD_ID "login_field"
+#define PASSWORD_FIELD_ID "password_field"
+#define ERROR_MESSAGE_LOGIN_LABEL_ID "error_message_login_label"
 
 #define LAST_LOADING_MESSAGES_COUNT 30
 #define CHAT_DATA(data) (*(t_chat_data *)data)

@@ -170,7 +170,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkEntry" id="wlogin">
+                  <object class="GtkEntry" id="login_field">
                     <property name="width_request">243</property>
                     <property name="height_request">30</property>
                     <property name="visible">True</property>
@@ -196,7 +196,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkEntry" id="wpassword">
+                  <object class="GtkEntry" id="password_field">
                     <property name="width_request">243</property>
                     <property name="height_request">30</property>
                     <property name="visible">True</property>
@@ -226,7 +226,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel" id="error_message_login">
+                  <object class="GtkLabel" id="error_message_login_label">
                     <property name="width_request">243</property>
                     <property name="height_request">80</property>
                     <property name="visible">True</property>
