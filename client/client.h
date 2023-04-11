@@ -102,6 +102,7 @@ t_chat receive_chat(int socket);
 void free_user_message(t_user_message message);
 void free_user_messages(t_user_message *messages, size_t length);
 
+void gui_login(GtkBuilder *gtk_builder, t_address *server_address, id_t user_id);
 void gui_register(GtkBuilder *gtk_builder, t_address *server_address, id_t *user_id);
 
 
