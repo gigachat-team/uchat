@@ -118,7 +118,7 @@ int main(int argc, char **argv) {
     load_css(DEFAULT_CSS_FILE_PATH);
     t_gui_data gui_data = create_gui_data(argv[1], atoi(argv[2]));
     gtk_builder_connect_signals(gui_data.builder, &gui_data);
-    open_window(gui_data.builder, "Authorization");
+    open_window(gui_data.builder, AUTHENTICATION_WINDOW_ID);
     gtk_main();
     g_object_unref(gui_data.builder);
 

@@ -2,9 +2,9 @@
 <!-- Generated with glade 3.22.2 -->
 <interface>
   <requires lib="gtk+" version="3.20"/>
-  <object class="GtkWindow" id="Authorization">
+  <object class="GtkWindow" id="authentication_window">
     <property name="can_focus">False</property>
-    <property name="title" translatable="yes">Authorization</property>
+    <property name="title" translatable="yes">Authentication</property>
     <property name="resizable">False</property>
     <property name="window_position">center</property>
     <property name="deletable">False</property>
@@ -271,7 +271,7 @@
       </object>
     </child>
   </object>
-  <object class="GtkDialog" id="Create_room_window">
+  <object class="GtkDialog" id="create_chat_window">
     <property name="can_focus">False</property>
     <property name="resizable">False</property>
     <property name="modal">True</property>
@@ -377,7 +377,7 @@
       </object>
     </child>
   </object>
-  <object class="GtkWindow" id="Messenger">
+  <object class="GtkWindow" id="messenger_window">
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">Messenger</property>
     <property name="window_position">center</property>
