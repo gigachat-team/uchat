@@ -15,9 +15,9 @@ static bool validation_authentication_data(t_authentication_data authentication_
 }
 
 void gui_login(GtkBuilder *gtk_builder, t_address *server_address, id_t user_id) {
-    GtkWidget *login = GTK_WIDGET(gtk_builder_get_object(gtk_builder, LOGIN_FIELD_ID));
-    GtkWidget *password = GTK_WIDGET(gtk_builder_get_object(gtk_builder, PASSWORD_FIELD_ID));
-    GtkWidget *error_message = GTK_WIDGET(gtk_builder_get_object(gtk_builder, ERROR_MESSAGE_LOGIN_LABEL_ID));
+    GtkWidget *login = get_widget(gtk_builder, LOGIN_FIELD_ID);
+    GtkWidget *password = get_widget(gtk_builder, PASSWORD_FIELD_ID);
+    GtkWidget *error_message = get_widget(gtk_builder, ERROR_MESSAGE_LOGIN_LABEL_ID);
 
     apply_style_to_widget(error_message, "error-message");
 
@@ -46,10 +46,10 @@ void gui_login(GtkBuilder *gtk_builder, t_address *server_address, id_t user_id)
 }
 
 void gui_register(GtkBuilder *gtk_builder, t_address *server_address, id_t *user_id) {
-    GtkWidget *new_login = GTK_WIDGET(gtk_builder_get_object(gtk_builder, NEW_LOGIN_FIELD_ID));
-    GtkWidget *new_password = GTK_WIDGET(gtk_builder_get_object(gtk_builder, NEW_PASSWORD_FIELD_ID));
-    GtkWidget *new_password_again = GTK_WIDGET(gtk_builder_get_object(gtk_builder, NEW_PASSWORD_AGAIN_FIELD_ID));
-    GtkWidget *error_message = GTK_WIDGET(gtk_builder_get_object(gtk_builder, ERROR_MESSAGE_REGISTRATION_LABEL_ID));
+    GtkWidget *new_login = get_widget(gtk_builder, NEW_LOGIN_FIELD_ID);
+    GtkWidget *new_password = get_widget(gtk_builder, NEW_PASSWORD_FIELD_ID);
+    GtkWidget *new_password_again = get_widget(gtk_builder, NEW_PASSWORD_AGAIN_FIELD_ID);
+    GtkWidget *error_message = get_widget(gtk_builder, ERROR_MESSAGE_REGISTRATION_LABEL_ID);
 
     apply_style_to_widget(error_message, "error-message");
 

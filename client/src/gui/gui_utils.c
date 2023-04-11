@@ -15,6 +15,10 @@ GtkWidget *get_image_from_path(char *path, gint x, gint y) {
     return image;
 }
 
+GtkWidget *get_widget(GtkBuilder *gtk_builder, char *name) {
+    return GTK_WIDGET(gtk_builder_get_object(gtk_builder, name));
+}
+
 char *get_entry_text(GtkBuilder *builder, char *entry_name) {
     GtkWidget *entry = GTK_WIDGET(gtk_builder_get_object(builder, entry_name));
 

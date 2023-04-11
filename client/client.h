@@ -47,6 +47,7 @@ typedef struct s_chat_data {
 t_chat_data *create_chat_data_ptr(GtkBuilder *gtk_builder, t_address *server_address, id_t user_id, char *chat_name, id_t chat_id);
 
 // GUI-----------------------------------------------------------------------------
+GtkWidget *get_widget(GtkBuilder *gtk_builder, char *name);
 char *get_entry_text(GtkBuilder *builder, char *entry_name);
 void open_messenger_window(GtkBuilder *gtk_builder, t_address *server_address, id_t user_id);
 void open_chat(GtkButton *bconfirm, gpointer user_data);
