@@ -33,7 +33,7 @@ void login(GtkButton *bconfirm, gpointer user_data) {
 
     switch (rq_authenticate_user(data->server_address, authentication_data, LOGIN_MODE, &data->user_id)) {
     case SUCCESSFUL_LOGIN:
-        open_messenger_window(*data);
+        open_messenger_window(data->builder, &data->server_address, data->user_id);
     break; case SUCH_LOGIN_DOES_NOT_EXIST:
         gtk_label_set_text(GTK_LABEL(error_message), "Such login does not exist.");
     break; case WRONG_PASSWORD:
@@ -51,14 +51,11 @@ void login(GtkButton *bconfirm, gpointer user_data) {
     (void)bconfirm;
 }
 
-void regist(GtkButton *bconfirm, gpointer user_data) {
-    t_gui_data *data = (t_gui_data *)user_data;
-
-    GtkBuilder *builder = data->builder;
-    GtkWidget *enter_newpassword = GTK_WIDGET(gtk_builder_get_object(builder, "wnewpassword"));
-    GtkWidget *enter_newpassword_repeat = GTK_WIDGET(gtk_builder_get_object(builder, "wnewpassword_r"));
-    GtkWidget *error_message = GTK_WIDGET(gtk_builder_get_object(builder, "error_message_register"));
-    GtkWidget *enter_newlogin = GTK_WIDGET(gtk_builder_get_object(builder, "wnewlogin"));
+void gui_register(GtkBuilder *gtk_builder, t_address *server_address, id_t *user_id) {
+    GtkWidget *enter_newpassword = GTK_WIDGET(gtk_builder_get_object(gtk_builder, "wnewpassword"));
+    GtkWidget *enter_newpassword_repeat = GTK_WIDGET(gtk_builder_get_object(gtk_builder, "wnewpassword_r"));
+    GtkWidget *error_message = GTK_WIDGET(gtk_builder_get_object(gtk_builder, "error_message_register"));
+    GtkWidget *enter_newlogin = GTK_WIDGET(gtk_builder_get_object(gtk_builder, "wnewlogin"));
 
     apply_style_to_widget(error_message, "error-message");
 
@@ -74,11 +71,11 @@ void regist(GtkButton *bconfirm, gpointer user_data) {
         return;
     }
 
-    switch (rq_authenticate_user(data->server_address, authentication_data, REGISTER_MODE, &data->user_id)) {
+    switch (rq_authenticate_user(*server_address, authentication_data, REGISTER_MODE, user_id)) {
     case SUCCESSFUL_REGISTRATION:
-        open_messenger_window(*data);
+        open_messenger_window(gtk_builder, server_address, *user_id);
     break; case SUCH_LOGIN_ALREADY_EXISTS:
-        write_label_text(data->builder, "error_message_register", "Such login already exists.");
+        write_label_text(gtk_builder, "error_message_register", "Such login already exists.");
     break; case CONNECTION_REFUSED:
         gtk_label_set_text(GTK_LABEL(error_message), "Failed to connect to the server.");
     break; default:
@@ -86,7 +83,5 @@ void regist(GtkButton *bconfirm, gpointer user_data) {
     }
 
     free_authentication_data(authentication_data);
-
-    (void)bconfirm;
 }
 //-------------------------------------------------

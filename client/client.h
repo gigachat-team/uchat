@@ -36,10 +36,11 @@ typedef struct s_chat_data {
     t_gui_data gui_data;
     t_chat chat;
 } t_chat_data;
+t_chat_data *create_chat_data_ptr(GtkBuilder *gtk_builder, t_address *server_address, id_t user_id, char *chat_name, id_t chat_id);
 
 // GUI-----------------------------------------------------------------------------
 char *get_entry_text(GtkBuilder *builder, char *entry_name);
-void open_messenger_window(t_gui_data data);
+void open_messenger_window(GtkBuilder *gtk_builder, t_address *server_address, id_t user_id);
 void open_chat(GtkButton *bconfirm, gpointer user_data);
 t_chat_data *create_chat_data(t_chat *chat, t_gui_data gui_data);
 
@@ -95,6 +96,8 @@ t_chat receive_chat(int socket);
 
 void free_user_message(t_user_message message);
 void free_user_messages(t_user_message *messages, size_t length);
+
+void gui_register(GtkBuilder *gtk_builder, t_address *server_address, id_t *user_id);
 
 
 

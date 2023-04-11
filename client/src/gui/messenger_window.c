@@ -1,22 +1,23 @@
 #include "../../client.h"
 
 // Create new button in chats list
-static void create_button_in_chat_list(t_gui_data data, t_chat *chat_data) {
-    GtkWidget *new_button = gtk_button_new_with_label(chat_data->name);
-    g_signal_connect(new_button, "clicked", G_CALLBACK(open_chat), create_chat_data(chat_data, data));
-    add_to_box_start(data.builder, new_button, "chats_contener", 0);
+static void create_button_in_chat_list(GtkBuilder *gtk_builder, t_address *server_address, id_t user_id, t_chat *chat) {
+    GtkWidget *new_button = gtk_button_new_with_label(chat->name);
+    t_chat_data *chat_data = create_chat_data_ptr(gtk_builder, server_address, user_id, chat->name, chat->id);
+    g_signal_connect(new_button, "clicked", G_CALLBACK(open_chat), chat_data);
+    add_to_box_start(gtk_builder, new_button, "chats_contener", 0);
 }
 
 
-static void init_chats_list(t_gui_data data) {
+static void init_chats_list(GtkBuilder *gtk_builder, t_address *server_address, id_t user_id) {
     size_t chats_count = 0;
-    t_chat *chats = rq_get_chats_i_am_in(data.server_address, data.user_id, &chats_count);
+    t_chat *chats = rq_get_chats_i_am_in(*server_address, user_id, &chats_count);
 
     if (chats_count != 0) {
-        clear_container(data.builder, "chats_contener");
+        clear_container(gtk_builder, "chats_contener");
 
         for (size_t i = 0; i < chats_count; i++) {
-            create_button_in_chat_list(data, &chats[i]);
+            create_button_in_chat_list(gtk_builder, server_address, user_id, &chats[i]);
         }
     }
     else {
@@ -49,13 +50,13 @@ void create_new_chat(GtkButton *bconfirm, gpointer user_data) {
 
     create_new_chat_in_server(data.server_address, data.user_id, chat_name);
     close_creater_chat_window(bconfirm, user_data);
-    init_chats_list(data);
+    init_chats_list(data.builder, &data.server_address, data.user_id);
 }
 //-------------------------------------------------
 
-void open_messenger_window(t_gui_data data) {
-    close_window(data.builder, "Authorization");
-    open_window(data.builder, "Messenger");
+void open_messenger_window(GtkBuilder *gtk_builder, t_address *server_address, id_t user_id) {
+    close_window(gtk_builder, "Authorization");
+    open_window(gtk_builder, "Messenger");
 
-    init_chats_list(data);
+    init_chats_list(gtk_builder, server_address, user_id);
 }
