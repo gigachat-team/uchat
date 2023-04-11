@@ -2,7 +2,7 @@
 
 int main(int argc, char **argv) {
     if (argc != 2) {
-        printf("usage: ./uchat_server [port]\n");
+        printf(USAGE_MESSAGE);
         return 0;
     }
 

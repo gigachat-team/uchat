@@ -6,6 +6,8 @@
 #define DEFAULT_CSS_FILE_PATH "resources/style.css"
 #define GLADE_FILE_PATH "resources/markup.glade"
 
+#define USAGE_MESSAGE "usage: ./uchat_server [port]\n"
+
 #define LAST_LOADING_MESSAGES_COUNT 30
 #define CHAT_DATA(data) (*(t_chat_data *)data)
 #define GUI_DATA(data) (*(t_gui_data *)data)

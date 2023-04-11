@@ -3,6 +3,8 @@
 #include "../utils/utils.h"
 #include "../resources/libraries/sqlite3/sqlite3.h"
 
+#define USAGE_MESSAGE "usage: ./uchat [ip] [port]\n"
+
 #define DATABASE_NAME "uchat.db"
 
 #define USERS_TABLE "Users"

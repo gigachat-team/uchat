@@ -109,7 +109,7 @@ static t_gui_data create_gui_data(char *ip, in_port_t port) {
 
 int main(int argc, char **argv) {
     if (argc != 3) {
-        printf("usage: ./uchat [ip] [port]");
+        printf(USAGE_MESSAGE);
         return EXIT_FAILURE;
     }
 
