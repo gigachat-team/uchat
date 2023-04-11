@@ -1,33 +1,23 @@
 #include "../../client.h"
 
-static bool validation_authentication_data(t_authentication_data authentication_data, GtkWidget *error_message) {
-    if (strlen(authentication_data.login) <= MIN_LOGIN_LENGTH) {
-        gtk_label_set_text(GTK_LABEL(error_message), "Login must be longer.");
-        return false;
-    }
-
-    if (strlen(authentication_data.password) <= MIN_PASSWORD_LENGTH) {
-        gtk_label_set_text(GTK_LABEL(error_message), "Password must be longer.");
-        return false;
-    }
-
-    return true;
-}
-
 void gui_login(GtkBuilder *gtk_builder, t_address *server_address, id_t user_id) {
-    GtkWidget *login = get_widget(gtk_builder, LOGIN_FIELD_ID);
-    GtkWidget *password = get_widget(gtk_builder, PASSWORD_FIELD_ID);
     GtkWidget *error_message = get_widget(gtk_builder, ERROR_MESSAGE_LOGIN_LABEL_ID);
 
     apply_style_to_widget(error_message, "error-message");
 
-    t_authentication_data authentication_data = get_authentication_data(login, password);
+    char *login = get_entry_text(gtk_builder, LOGIN_FIELD_ID);
+    char *password = get_entry_text(gtk_builder, PASSWORD_FIELD_ID);
 
-    if (!validation_authentication_data(authentication_data, error_message)) {
+    if (strlen(login) < MIN_LOGIN_LENGTH) {
+        gtk_label_set_text(GTK_LABEL(error_message), "Login must be longer.");
+        return;
+    }
+    if (strlen(password) < MIN_PASSWORD_LENGTH) {
+        gtk_label_set_text(GTK_LABEL(error_message), "Password must be longer.");
         return;
     }
 
-    switch (rq_authenticate_user(*server_address, authentication_data, LOGIN_MODE, &user_id)) {
+    switch (rq_authenticate_user(*server_address, login, password, LOGIN_MODE, &user_id)) {
     case SUCCESSFUL_LOGIN:
         open_messenger_window(gtk_builder, server_address, user_id);
     break; case SUCH_LOGIN_DOES_NOT_EXIST:
@@ -39,33 +29,23 @@ void gui_login(GtkBuilder *gtk_builder, t_address *server_address, id_t user_id)
     break; default:
         break;
     }
-
-    if (authentication_data.login != NULL && authentication_data.password != NULL) {
-        free_authentication_data(authentication_data);
-    }
 }
 
 void gui_register(GtkBuilder *gtk_builder, t_address *server_address, id_t *user_id) {
-    GtkWidget *new_login = get_widget(gtk_builder, NEW_LOGIN_FIELD_ID);
-    GtkWidget *new_password = get_widget(gtk_builder, NEW_PASSWORD_FIELD_ID);
-    GtkWidget *new_password_again = get_widget(gtk_builder, NEW_PASSWORD_AGAIN_FIELD_ID);
     GtkWidget *error_message = get_widget(gtk_builder, ERROR_MESSAGE_REGISTRATION_LABEL_ID);
 
     apply_style_to_widget(error_message, "error-message");
 
-    t_authentication_data authentication_data = get_authentication_data(new_login, new_password);
-    char *password_repeat = (char *)gtk_entry_get_text(GTK_ENTRY(new_password_again));
+    char *new_login = get_entry_text(gtk_builder, NEW_LOGIN_FIELD_ID);
+    char *new_password = get_entry_text(gtk_builder, NEW_PASSWORD_FIELD_ID);
+    char *new_password_again = get_entry_text(gtk_builder, NEW_PASSWORD_AGAIN_FIELD_ID);
 
-    if (!validation_authentication_data(authentication_data, error_message)) {
-        return;
-    }
-
-    if (strcmp(authentication_data.password, password_repeat) != 0) {
+    if (strcmp(new_password, new_password_again) != 0) {
         gtk_label_set_text(GTK_LABEL(error_message), "Password mismatch.");
         return;
     }
 
-    switch (rq_authenticate_user(*server_address, authentication_data, REGISTER_MODE, user_id)) {
+    switch (rq_authenticate_user(*server_address, new_login, new_password, REGISTER_MODE, user_id)) {
     case SUCCESSFUL_REGISTRATION:
         open_messenger_window(gtk_builder, server_address, *user_id);
     break; case SUCH_LOGIN_ALREADY_EXISTS:
@@ -75,6 +55,4 @@ void gui_register(GtkBuilder *gtk_builder, t_address *server_address, id_t *user
     break; default:
         break;
     }
-
-    free_authentication_data(authentication_data);
 }

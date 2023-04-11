@@ -1,10 +1,5 @@
 #include "../utils.h"
 
-void free_authentication_data(t_authentication_data authentication_data) {
-    free(authentication_data.login);
-    free(authentication_data.password);
-}
-
 void free_chat_creation_data(t_chat_creation_data chat_creation_data) {
     free(chat_creation_data.chat_name);
 }

@@ -1,6 +1,6 @@
 #include "../client.h"
 
-t_state_code rq_authenticate_user(t_address server_address, t_authentication_data authentication_data, t_authentication_mode authentication_mode, uint *user_id) {
+t_state_code rq_authenticate_user(t_address server_address, char *login, char *password, t_authentication_mode authentication_mode, uint *user_id) {
     int client_socket = create_and_connect_socket(server_address);
     if (errno == ECONNREFUSED) {
         return CONNECTION_REFUSED;
@@ -8,8 +8,8 @@ t_state_code rq_authenticate_user(t_address server_address, t_authentication_dat
 
     t_package package = create_package(3);
     pack_byte(authentication_mode, &package);
-    pack_bytes(authentication_data.login, &package);
-    pack_bytes(authentication_data.password, &package);
+    pack_bytes(login, &package);
+    pack_bytes(password, &package);
     send_and_free_package(client_socket, package);
 
     t_state_code authentication_result = receive_byte(client_socket);

@@ -38,11 +38,6 @@ typedef struct s_address {
     in_port_t port;
 } t_address;
 
-typedef struct s_authentication_data {
-    char *login;
-    char *password;
-} t_authentication_data;
-
 typedef struct s_chat_creation_data {
     char *chat_name;
     id_t owner_id;
@@ -192,7 +187,6 @@ int accept_socket(int this_socket);
 void connect_socket(int socket, t_address address);
 int create_and_connect_socket(t_address address);
 
-void free_authentication_data(t_authentication_data authentication_data);
 void free_chat_creation_data(t_chat_creation_data chat_creation_data);
 void free_chat(t_chat chat);
 void free_chats(t_chat *chats, size_t length);

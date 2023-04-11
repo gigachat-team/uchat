@@ -82,7 +82,7 @@ typedef struct s_user_messages_array {
 } t_user_messages_array;
 t_user_messages_array allocate_user_messages_array(size_t size);
 
-t_state_code rq_authenticate_user(t_address server_address, t_authentication_data authentication_data, t_authentication_mode authentication_mode, uint *user_id);
+t_state_code rq_authenticate_user(t_address server_address, char *login, char *password, t_authentication_mode authentication_mode, uint *user_id);
 /**
  * @return The id of created chat
 */
@@ -96,7 +96,6 @@ t_user *rq_get_chat_members(t_address server_address, id_t chat_id, uint32_t *me
 t_state_code rq_remove_member_from_chat(t_address server_address, id_t user_id, id_t chat_id);
 
 // Data Input
-t_authentication_data get_authentication_data(GtkWidget *enter_login, GtkWidget *enter_password);
 t_chat_creation_data get_chat_creation_data(id_t owner_id, char *chat_name);
 t_new_chat_member_data get_new_chat_member_data(id_t chat_id);
 int console_input_int(char *message);
