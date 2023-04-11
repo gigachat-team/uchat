@@ -52,15 +52,15 @@ void login(GtkButton *bconfirm, gpointer user_data) {
 }
 
 void gui_register(GtkBuilder *gtk_builder, t_address *server_address, id_t *user_id) {
-    GtkWidget *enter_newpassword = GTK_WIDGET(gtk_builder_get_object(gtk_builder, "wnewpassword"));
-    GtkWidget *enter_newpassword_repeat = GTK_WIDGET(gtk_builder_get_object(gtk_builder, "wnewpassword_r"));
-    GtkWidget *error_message = GTK_WIDGET(gtk_builder_get_object(gtk_builder, "error_message_register"));
-    GtkWidget *enter_newlogin = GTK_WIDGET(gtk_builder_get_object(gtk_builder, "wnewlogin"));
+    GtkWidget *new_login = GTK_WIDGET(gtk_builder_get_object(gtk_builder, NEW_LOGIN_FIELD_ID));
+    GtkWidget *new_password = GTK_WIDGET(gtk_builder_get_object(gtk_builder, NEW_PASSWORD_FIELD_ID));
+    GtkWidget *new_password_again = GTK_WIDGET(gtk_builder_get_object(gtk_builder, NEW_PASSWORD_AGAIN_FIELD_ID));
+    GtkWidget *error_message = GTK_WIDGET(gtk_builder_get_object(gtk_builder, ERROR_MESSAGE_REGISTRATION_LABEL_ID));
 
     apply_style_to_widget(error_message, "error-message");
 
-    t_authentication_data authentication_data = get_authentication_data(enter_newlogin, enter_newpassword);
-    char *password_repeat = (char *)gtk_entry_get_text(GTK_ENTRY(enter_newpassword_repeat));
+    t_authentication_data authentication_data = get_authentication_data(new_login, new_password);
+    char *password_repeat = (char *)gtk_entry_get_text(GTK_ENTRY(new_password_again));
 
     if (!validation_authentication_data(authentication_data, error_message)) {
         return;
@@ -75,7 +75,7 @@ void gui_register(GtkBuilder *gtk_builder, t_address *server_address, id_t *user
     case SUCCESSFUL_REGISTRATION:
         open_messenger_window(gtk_builder, server_address, *user_id);
     break; case SUCH_LOGIN_ALREADY_EXISTS:
-        write_label_text(gtk_builder, "error_message_register", "Such login already exists.");
+        write_label_text(gtk_builder, ERROR_MESSAGE_REGISTRATION_LABEL_ID, "Such login already exists.");
     break; case CONNECTION_REFUSED:
         gtk_label_set_text(GTK_LABEL(error_message), "Failed to connect to the server.");
     break; default:

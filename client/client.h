@@ -8,6 +8,11 @@
 
 #define USAGE_MESSAGE "usage: ./uchat_server [port]\n"
 
+#define NEW_LOGIN_FIELD_ID "new_login"
+#define NEW_PASSWORD_FIELD_ID "new_password"
+#define NEW_PASSWORD_AGAIN_FIELD_ID "new_password_again"
+#define ERROR_MESSAGE_REGISTRATION_LABEL_ID "error_message_registration"
+
 #define LAST_LOADING_MESSAGES_COUNT 30
 #define CHAT_DATA(data) (*(t_chat_data *)data)
 #define GUI_DATA(data) (*(t_gui_data *)data)

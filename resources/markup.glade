@@ -27,7 +27,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <child>
-                  <object class="GtkEntry" id="wnewlogin">
+                  <object class="GtkEntry" id="new_login">
                     <property name="width_request">243</property>
                     <property name="height_request">34</property>
                     <property name="visible">True</property>
@@ -68,7 +68,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkEntry" id="wnewpassword">
+                  <object class="GtkEntry" id="new_password">
                     <property name="width_request">243</property>
                     <property name="height_request">34</property>
                     <property name="visible">True</property>
@@ -97,7 +97,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkEntry" id="wnewpassword_r">
+                  <object class="GtkEntry" id="new_password_again">
                     <property name="width_request">243</property>
                     <property name="height_request">34</property>
                     <property name="visible">True</property>
@@ -128,7 +128,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel" id="error_message_register">
+                  <object class="GtkLabel" id="error_message_registration">
                     <property name="width_request">243</property>
                     <property name="height_request">80</property>
                     <property name="visible">True</property>
