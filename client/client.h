@@ -33,7 +33,6 @@ typedef enum e_authentication_mode {
 
 typedef struct s_gui_data {
     GtkBuilder *builder;
-
     t_address server_address;
     uint user_id;
 } t_gui_data;
@@ -51,13 +50,18 @@ typedef struct s_chat_data {
     t_chat chat;
 } t_chat_data;
 
+typedef struct s_user_messages_array {
+    t_user_message *arr;
+    size_t size;
+} t_user_messages_array;
+t_user_messages_array allocate_user_messages_array(size_t size);
+void free_user_message(t_user_message message);
+void free_user_messages(t_user_message *messages, size_t length);
+
 // GUI-----------------------------------------------------------------------------
 GtkWidget *get_widget(GtkBuilder *gtk_builder, char *name);
-void gui_render_chats_list(GtkBuilder *gtk_builder, t_address *server_address, id_t user_id);
 void set_label_text(GtkWidget *gtk_widget, char *text);
 char *get_entry_text(GtkBuilder *builder, char *entry_name);
-void gui_create_chat(GtkBuilder *builder, t_address *server_address, id_t user_id);
-void open_chat(GtkButton *bconfirm, gpointer user_data);
 
 #pragma region GUIUtils
 
@@ -77,15 +81,6 @@ void exit_app();
 
 #pragma endregion GUIUtils
 
-// Ne otnositsa k GUI
-void handle_chatting(t_address server_address, id_t user_id, id_t chat_id);
-
-typedef struct s_user_messages_array {
-    t_user_message *arr;
-    size_t size;
-} t_user_messages_array;
-t_user_messages_array allocate_user_messages_array(size_t size);
-
 t_state_code rq_authenticate_user(t_address server_address, char *login, char *password, t_authentication_mode authentication_mode, uint *user_id);
 /**
  * @return The id of created chat
@@ -103,19 +98,12 @@ t_state_code rq_remove_member_from_chat(t_address server_address, id_t user_id, 
 t_new_chat_member_data get_new_chat_member_data(id_t chat_id);
 int console_input_int(char *message);
 
-t_chat receive_chat(int socket);
-
-void free_user_message(t_user_message message);
-void free_user_messages(t_user_message *messages, size_t length);
-
 void gui_login(GtkBuilder *gtk_builder, t_address *server_address, id_t *user_id);
 void gui_register(GtkBuilder *gtk_builder, t_address *server_address, id_t *user_id);
 void gui_send_message(GtkBuilder *builder, t_address *server_address, id_t user_id, id_t chat_id, char *message);
 void gui_open_chat(t_chat_data *chat_data);
-
-
-
-/* ------- css.c ------- */
+void gui_render_chats_list(GtkBuilder *gtk_builder, t_address *server_address, id_t user_id);
+void gui_create_chat(GtkBuilder *builder, t_address *server_address, id_t user_id);
 
 /**
  * @brief loads css to gtk. Should be called after gtk_init function
@@ -123,7 +111,6 @@ void gui_open_chat(t_chat_data *chat_data);
  * If variable is NULL, it'll use DEFAULT_CSS_FILE_PATH
 */
 void load_css(char *css_file_path);
-
 /**
  * @brief applies a style from a loaded css file to a widget.
  * If one of the pointers in NULL, then the function does nothing
