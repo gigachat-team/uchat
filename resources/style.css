@@ -7,25 +7,22 @@ window {
 }
 
 button {
-    opacity: 0.7;
     border: 5px solid;
     border-radius: 50px;
-    color: rgb(155, 167, 186);
+    color: rgb(9, 20, 34);
     margin: 5px;
     background-image: url("img/notebook_paper_button.jpg");
     background-repeat: repeat;
 }
 
 button:active {
-    border: 5px dotted;
+    border: 5px dashed;
     border-radius: 70px;
-    opacity: 1;
-    color: rgb(9, 20, 34);
+    color: rgb(155, 167, 186);
 }
 
 button:hover {
     opacity: 1;
-    color: rgb(9, 20, 34);
     border-radius: 60px;
     animation: animate 3s linear infinite;
 }
