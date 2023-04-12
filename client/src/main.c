@@ -71,13 +71,6 @@
 //     }
 // }
 
-void create_new_chat_in_server(t_address server_address, id_t user_id, char *chat_name) {
-    t_chat_creation_data chat_creation_data = get_chat_creation_data(user_id, chat_name);
-    id_t created_chat_id = rq_create_chat(server_address, chat_creation_data);
-    printf("Chat \"%s\" with id %u created successfully.\n", chat_creation_data.chat_name, created_chat_id);
-    free_chat_creation_data(chat_creation_data);
-}
-
 void send_message_in_server(t_address server_address, id_t user_id, id_t chat_id, char *text_message) {
     t_text_message_data text_message_data = { user_id, chat_id, strdup(text_message) };
     t_state_code response = rq_send_text_message(server_address, text_message_data);

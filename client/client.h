@@ -77,7 +77,6 @@ void exit_app();
 #pragma endregion GUIUtils
 
 // Ne otnositsa k GUI
-void create_new_chat_in_server(t_address server_address, id_t user_id, char *chat_name);
 void send_message_in_server(t_address server_address, id_t user_id, id_t chat_id, char *text_message);
 void handle_chatting(t_address server_address, id_t user_id, id_t chat_id);
 
@@ -91,7 +90,7 @@ t_state_code rq_authenticate_user(t_address server_address, char *login, char *p
 /**
  * @return The id of created chat
 */
-id_t rq_create_chat(t_address server_address, t_chat_creation_data chat_data);
+id_t rq_create_chat(t_address server_address, char *chat_name, id_t owner_id);
 t_chat *rq_get_chats_i_am_in(t_address server_address, id_t user_id, size_t *chats_count);
 t_state_code rq_add_new_member(t_address server_address, t_new_chat_member_data new_chat_member_data);
 t_state_code rq_send_text_message(t_address server_address, t_text_message_data text_message_data);
@@ -101,7 +100,6 @@ t_user *rq_get_chat_members(t_address server_address, id_t chat_id, uint32_t *me
 t_state_code rq_remove_member_from_chat(t_address server_address, id_t user_id, id_t chat_id);
 
 // Data Input
-t_chat_creation_data get_chat_creation_data(id_t owner_id, char *chat_name);
 t_new_chat_member_data get_new_chat_member_data(id_t chat_id);
 int console_input_int(char *message);
 

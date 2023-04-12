@@ -1,11 +1,5 @@
 #include "../../client.h"
 
-t_chat_creation_data get_chat_creation_data(id_t owner_id, char *chat_name) {
-
-    t_chat_creation_data chat_creation_data = { strdup(chat_name), owner_id };
-    return chat_creation_data;
-}
-
 t_new_chat_member_data get_new_chat_member_data(id_t chat_id) {
     printf("Enter new member login: ");
     char member_login[MAX_LOGIN_LENGTH];

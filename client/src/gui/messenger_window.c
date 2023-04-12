@@ -28,29 +28,27 @@ static void init_chats_list(GtkBuilder *gtk_builder, t_address *server_address, 
 }
 
 // Buttons-events-----------------------------------
-void on_open_chat_creator_button_clicked(GtkButton *bconfirm, gpointer user_data) {
-    t_gui_data data = GUI_DATA(user_data);
-
-    open_window(data.builder, CREATE_CHAT_WINDOW_ID);
-
-    (void)bconfirm;
+void on_open_chat_creator_button_clicked(GtkButton *b, gpointer user_data) {
+    t_gui_data *gui_data = (t_gui_data *)user_data;
+    open_window(gui_data->builder, CREATE_CHAT_WINDOW_ID);
+    (void)b;
 }
 
-void on_close_chat_creator_button_clicked(GtkButton *bconfirm, gpointer user_data) {
-    t_gui_data data = GUI_DATA(user_data);
-
-    close_window(data.builder, CREATE_CHAT_WINDOW_ID);
-
-    (void)bconfirm;
+void on_close_chat_creator_button_clicked(GtkButton *b, gpointer user_data) {
+    t_gui_data *gui_data = (t_gui_data *)user_data;
+    close_window(gui_data->builder, CREATE_CHAT_WINDOW_ID);
+    (void)b;
 }
 
-void on_create_chat_button_clicked(GtkButton *bconfirm, gpointer user_data) {
-    t_gui_data data = GUI_DATA(user_data);
-    char *chat_name = get_entry_text(data.builder, "wname_room");
+void on_create_chat_button_clicked(GtkButton *b, gpointer user_data) {
+    t_gui_data *gui_data = (t_gui_data *)user_data;
+    char *chat_name = get_entry_text(gui_data->builder, "wname_room");
 
-    create_new_chat_in_server(data.server_address, data.user_id, chat_name);
-    on_close_chat_creator_button_clicked(bconfirm, user_data);
-    init_chats_list(data.builder, &data.server_address, data.user_id);
+    id_t created_chat_id = rq_create_chat(gui_data->server_address, chat_name, gui_data->user_id);
+    printf("Chat \"%s\" with id %u created successfully.\n", chat_name, created_chat_id);
+    close_window(gui_data->builder, CREATE_CHAT_WINDOW_ID);
+    init_chats_list(gui_data->builder, &gui_data->server_address, gui_data->user_id);
+    (void)b;
 }
 //-------------------------------------------------
 

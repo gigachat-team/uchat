@@ -22,13 +22,13 @@ t_state_code rq_authenticate_user(t_address server_address, char *login, char *p
     return authentication_result;
 }
 
-id_t rq_create_chat(t_address server_address, t_chat_creation_data chat_data) {
+id_t rq_create_chat(t_address server_address, char *chat_name, id_t owner_id) {
     int client_socket = create_and_connect_socket(server_address);
 
     t_package package = create_package(3);
     pack_byte(CREATE_CHAT, &package);
-    pack_bytes(chat_data.chat_name, &package);
-    pack_uint32(chat_data.owner_id, &package);
+    pack_bytes(chat_name, &package);
+    pack_uint32(owner_id, &package);
     send_and_free_package(client_socket, package);
 
     id_t created_chat_id = receive_uint32(client_socket);

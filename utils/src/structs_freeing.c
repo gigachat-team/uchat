@@ -1,9 +1,5 @@
 #include "../utils.h"
 
-void free_chat_creation_data(t_chat_creation_data chat_creation_data) {
-    free(chat_creation_data.chat_name);
-}
-
 void free_chat(t_chat chat) {
     free(chat.name);
 }
