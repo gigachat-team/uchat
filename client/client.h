@@ -15,6 +15,8 @@
 #define LOGIN_FIELD_ID "login_field"
 #define PASSWORD_FIELD_ID "password_field"
 #define ERROR_MESSAGE_LOGIN_LABEL_ID "error_message_login_label"
+#define NEW_CHAT_NAME_FIELD_ID "new_chat_name_field"
+#define CHATS_LIST_CONTAINER_ID "chats_list_container"
 
 #define AUTHENTICATION_WINDOW_ID "authentication_window"
 #define MESSENGER_WINDOW_ID "messenger_window"

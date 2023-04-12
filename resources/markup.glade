@@ -356,7 +356,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkEntry" id="wname_room">
+              <object class="GtkEntry" id="new_chat_name_field">
                 <property name="height_request">40</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -425,7 +425,7 @@
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <child>
-                      <object class="GtkBox" id="chats_contener">
+                      <object class="GtkBox" id="chats_list_container">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="orientation">vertical</property>
