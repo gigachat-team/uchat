@@ -8,15 +8,6 @@ void gui_login(GtkBuilder *gtk_builder, t_address *server_address, id_t *user_id
     char *login = get_entry_text(gtk_builder, LOGIN_FIELD_ID);
     char *password = get_entry_text(gtk_builder, PASSWORD_FIELD_ID);
 
-    if (strlen(login) < MIN_LOGIN_LENGTH) {
-        set_label_text(error_message, "Login must be longer.");
-        return;
-    }
-    if (strlen(password) < MIN_PASSWORD_LENGTH) {
-        set_label_text(error_message, "Password must be longer.");
-        return;
-    }
-
     switch (rq_authenticate_user(*server_address, login, password, LOGIN_MODE, user_id)) {
     case SUCCESSFUL_LOGIN:
         open_messenger_window(gtk_builder, server_address, *user_id);
@@ -40,6 +31,14 @@ void gui_register(GtkBuilder *gtk_builder, t_address *server_address, id_t *user
     char *new_password = get_entry_text(gtk_builder, NEW_PASSWORD_FIELD_ID);
     char *new_password_again = get_entry_text(gtk_builder, NEW_PASSWORD_AGAIN_FIELD_ID);
 
+    if (strlen(new_login) < MIN_LOGIN_LENGTH) {
+        set_label_text(error_message, "Login must be longer.");
+        return;
+    }
+    if (strlen(new_password) < MIN_PASSWORD_LENGTH) {
+        set_label_text(error_message, "Password must be longer.");
+        return;
+    }
     if (strcmp(new_password, new_password_again) != 0) {
         set_label_text(error_message, "Password mismatch.");
         return;
