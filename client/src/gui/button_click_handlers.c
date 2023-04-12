@@ -29,3 +29,15 @@ void on_create_chat_button_clicked(GtkButton *b, gpointer user_data) {
     gui_create_chat(gui_data->builder, &gui_data->server_address, gui_data->user_id);
     (void)b;
 }
+
+void on_chat_clicked(GtkButton *b, gpointer user_data) {
+    t_chat_data *chat_data = (t_chat_data *)user_data;
+    gui_open_chat(chat_data);
+    (void)b;
+}
+
+void on_send_message_clicked(GtkEntry *entry, gpointer *user_data) {
+    t_chat_data *chat_data = (t_chat_data *)user_data;
+    char *message_text = (char *)gtk_entry_get_text(entry);
+    gui_send_message(chat_data->gui_data.builder, &chat_data->gui_data.server_address, chat_data->gui_data.user_id, chat_data->chat.id, message_text);
+}

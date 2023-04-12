@@ -78,7 +78,6 @@ void exit_app();
 #pragma endregion GUIUtils
 
 // Ne otnositsa k GUI
-void send_message_in_server(t_address server_address, id_t user_id, id_t chat_id, char *text_message);
 void handle_chatting(t_address server_address, id_t user_id, id_t chat_id);
 
 typedef struct s_user_messages_array {
@@ -94,7 +93,7 @@ t_state_code rq_authenticate_user(t_address server_address, char *login, char *p
 id_t rq_create_chat(t_address server_address, char *chat_name, id_t owner_id);
 t_chat *rq_get_chats_i_am_in(t_address server_address, id_t user_id, size_t *chats_count);
 t_state_code rq_add_new_member(t_address server_address, t_new_chat_member_data new_chat_member_data);
-t_state_code rq_send_text_message(t_address server_address, t_text_message_data text_message_data);
+t_state_code rq_send_text_message(t_address server_address, id_t user_id, id_t chat_id, char *data);
 t_user_message *rq_get_messages_in_chat(t_address server_address, id_t chat_id, size_t *found_messages_count);
 t_user_messages_array rq_send_message_and_get_messages_updates(t_address server_address, id_t user_id, id_t chat_id, char *message, t_user_messages_array *messages_array);
 t_user *rq_get_chat_members(t_address server_address, id_t chat_id, uint32_t *members_count);
@@ -111,6 +110,8 @@ void free_user_messages(t_user_message *messages, size_t length);
 
 void gui_login(GtkBuilder *gtk_builder, t_address *server_address, id_t *user_id);
 void gui_register(GtkBuilder *gtk_builder, t_address *server_address, id_t *user_id);
+void gui_send_message(GtkBuilder *builder, t_address *server_address, id_t user_id, id_t chat_id, char *message);
+void gui_open_chat(t_chat_data *chat_data);
 
 
 

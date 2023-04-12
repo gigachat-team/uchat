@@ -48,12 +48,6 @@ typedef struct s_chat_description {
     char *name;
 } t_chat;
 
-typedef struct s_text_message_data {
-    id_t user_id;
-    id_t chat_id;
-    char *text;
-} t_text_message_data;
-
 typedef struct s_user {
     id_t id;
     char *login;
@@ -185,7 +179,6 @@ int create_and_connect_socket(t_address address);
 void free_chat(t_chat chat);
 void free_chats(t_chat *chats, size_t length);
 void free_new_chat_member_data(t_new_chat_member_data new_chat_member_data);
-void free_text_message_data(t_text_message_data text_message_data);
 void free_user(t_user user);
 void free_users(t_user *users, size_t users_count);
 

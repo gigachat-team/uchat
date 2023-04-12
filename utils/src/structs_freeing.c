@@ -15,10 +15,6 @@ void free_new_chat_member_data(t_new_chat_member_data new_chat_member_data) {
     free(new_chat_member_data.member_login);
 }
 
-void free_text_message_data(t_text_message_data text_message_data) {
-    free(text_message_data.text);
-}
-
 void free_user(t_user user) {
     free(user.login);
 }

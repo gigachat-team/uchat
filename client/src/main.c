@@ -1,5 +1,4 @@
 #include "../client.h"
-#include <stdlib.h>
 
 // void handle_chatting(t_address server_address, id_t user_id, id_t chat_id)
 // {
@@ -70,15 +69,6 @@
 //         }
 //     }
 // }
-
-void send_message_in_server(t_address server_address, id_t user_id, id_t chat_id, char *text_message) {
-    t_text_message_data text_message_data = { user_id, chat_id, strdup(text_message) };
-    t_state_code response = rq_send_text_message(server_address, text_message_data);
-    if (response == TEXT_MESSAGE_SENT_SUCCESSFULLY) {
-        printf("Sent successfully.\n");
-    }
-    free_text_message_data(text_message_data);
-}
 
 static GtkBuilder *create_gtk_builder() {
     GError *err = NULL;

@@ -74,14 +74,14 @@ t_state_code rq_add_new_member(t_address server_address, t_new_chat_member_data 
     return adding_new_member_to_chat_result;
 }
 
-t_state_code rq_send_text_message(t_address server_address, t_text_message_data text_message_data) {
+t_state_code rq_send_text_message(t_address server_address, id_t user_id, id_t chat_id, char *data) {
     int client_socket = create_and_connect_socket(server_address);
 
     t_package package = create_package(4);
     pack_byte(SEND_TEXT_MESSAGE, &package);
-    pack_uint32(text_message_data.user_id, &package);
-    pack_uint32(text_message_data.chat_id, &package);
-    pack_bytes(text_message_data.text, &package);
+    pack_uint32(user_id, &package);
+    pack_uint32(chat_id, &package);
+    pack_bytes(data, &package);
     send_and_free_package(client_socket, package);
 
     t_state_code response = receive_byte(client_socket);
