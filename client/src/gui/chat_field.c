@@ -17,11 +17,11 @@ void create_chat_message(t_gui_data data, char *message_text) {
 }
 
 void send_message(GtkEntry *entry, gpointer user_data) {
-    t_chat_data data = CHAT_DATA(user_data);
+    t_chat_data *chat_data = (t_chat_data *)user_data;
     char *message_text = (char *)gtk_entry_get_text(GTK_ENTRY(entry));
 
-    send_message_in_server(data.gui_data.server_address, data.gui_data.user_id, data.chat.id, message_text);
-    create_chat_message(data.gui_data, message_text);
+    send_message_in_server(chat_data->gui_data.server_address, chat_data->gui_data.user_id, chat_data->chat.id, message_text);
+    create_chat_message(chat_data->gui_data, message_text);
 }
 
 void load_messages(t_chat_data data) {
@@ -36,12 +36,12 @@ void load_messages(t_chat_data data) {
 }
 
 void open_chat(GtkButton *bconfirm, gpointer user_data) {
-    t_chat_data data = CHAT_DATA(user_data);
-    GtkWidget *message_field = GTK_WIDGET(gtk_builder_get_object(data.gui_data.builder, "message_field"));
+    t_chat_data *chat_data = (t_chat_data *)user_data;
+    GtkWidget *message_field = GTK_WIDGET(gtk_builder_get_object(chat_data->gui_data.builder, "message_field"));
 
-    clear_container(data.gui_data.builder, "chat_field");
-    write_label_text(data.gui_data.builder, "chat_name", data.chat.name);
-    load_messages(data);
+    clear_container(chat_data->gui_data.builder, "chat_field");
+    write_label_text(chat_data->gui_data.builder, "chat_name", chat_data->chat.name);
+    load_messages(*chat_data);
 
     g_signal_handlers_destroy(message_field);
     g_signal_connect(message_field, "activate", G_CALLBACK(send_message), user_data);

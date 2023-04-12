@@ -23,8 +23,6 @@
 #define CREATE_CHAT_WINDOW_ID "create_chat_window"
 
 #define LAST_LOADING_MESSAGES_COUNT 30
-#define CHAT_DATA(data) (*(t_chat_data *)data)
-#define GUI_DATA(data) (*(t_gui_data *)data)
 
 typedef enum e_authentication_mode {
     REGISTER_MODE = REGISTER,
