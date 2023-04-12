@@ -308,7 +308,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <signal name="clicked" handler="close_creater_chat_window" swapped="no"/>
+                <signal name="clicked" handler="on_close_chat_creator_button_clicked" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -322,7 +322,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <signal name="clicked" handler="create_new_chat" swapped="no"/>
+                <signal name="clicked" handler="on_create_chat_button_clicked" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -450,7 +450,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <signal name="clicked" handler="open_creater_chat_window" swapped="no"/>
+                <signal name="clicked" handler="on_open_chat_creator_button_clicked" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">False</property>
