@@ -58,14 +58,3 @@ t_chat_data *create_chat_data_ptr(GtkBuilder *gtk_builder, t_address *server_add
     chat_data->chat.id = chat_id;
     return chat_data;
 }
-
-// Memmory leak:)
-t_chat_data *create_chat_data(t_chat *chat, t_gui_data gui_data) {
-    t_chat_data *chat_data = malloc(sizeof(t_chat_data));
-
-    chat_data->gui_data = gui_data;
-    chat_data->chat.name = strdup(chat->name);
-    chat_data->chat.id = chat->id;
-
-    return chat_data;
-}
