@@ -34,7 +34,6 @@ void gui_send_message(GtkBuilder *builder, t_address *server_address, id_t user_
     create_chat_message(builder, message);
 }
 
-void on_send_message_clicked(GtkEntry *entry, gpointer *user_data);
 void gui_open_chat(t_chat_data *chat_data) {
     GtkWidget *message_field = get_widget(chat_data->gui_data.builder, "message_field");
 

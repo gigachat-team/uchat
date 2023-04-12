@@ -10,7 +10,6 @@ static t_chat_data *create_chat_data_ptr(GtkBuilder *gtk_builder, t_address *ser
     return chat_data;
 }
 
-void on_chat_clicked(GtkButton *b, gpointer user_data);
 // Create new button in chats list
 static void create_button_in_chat_list(GtkBuilder *gtk_builder, t_address *server_address, id_t user_id, t_chat *chat) {
     GtkWidget *new_button = gtk_button_new_with_label(chat->name);

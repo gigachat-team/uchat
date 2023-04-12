@@ -98,6 +98,9 @@ t_state_code rq_remove_member_from_chat(t_address server_address, id_t user_id, 
 t_new_chat_member_data get_new_chat_member_data(id_t chat_id);
 int console_input_int(char *message);
 
+void on_chat_clicked(GtkButton *b, gpointer user_data);
+void on_send_message_clicked(GtkEntry *entry, gpointer *user_data);
+
 void gui_login(GtkBuilder *gtk_builder, t_address *server_address, id_t *user_id);
 void gui_register(GtkBuilder *gtk_builder, t_address *server_address, id_t *user_id);
 void gui_send_message(GtkBuilder *builder, t_address *server_address, id_t user_id, id_t chat_id, char *message);
