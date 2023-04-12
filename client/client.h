@@ -8,14 +8,16 @@
 
 #define USAGE_MESSAGE "usage: ./uchat_server [port]\n"
 
-#define NEW_LOGIN_FIELD_ID "new_login"
-#define NEW_PASSWORD_FIELD_ID "new_password"
-#define NEW_PASSWORD_AGAIN_FIELD_ID "new_password_again"
-#define ERROR_MESSAGE_REGISTRATION_LABEL_ID "error_message_registration"
-#define LOGIN_FIELD_ID "login_field"
-#define PASSWORD_FIELD_ID "password_field"
+#define NEW_LOGIN_ENTRY_ID "new_login_entry"
+#define NEW_PASSWORD_ENTRY_ID "new_password_entry"
+#define NEW_PASSWORD_AGAIN_ENTRY_ID "new_password_again_entry"
+#define LOGIN_ENTRY_ID "login_entry"
+#define PASSWORD_ENTRY_ID "password_entry"
+#define NEW_CHAT_NAME_ENTRY_ID "new_chat_name_entry"
+
+#define ERROR_MESSAGE_REGISTRATION_LABEL_ID "error_message_registration_label"
 #define ERROR_MESSAGE_LOGIN_LABEL_ID "error_message_login_label"
-#define NEW_CHAT_NAME_FIELD_ID "new_chat_name_field"
+
 #define CHATS_LIST_CONTAINER_ID "chats_list_container"
 
 #define AUTHENTICATION_WINDOW_ID "authentication_window"

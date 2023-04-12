@@ -38,7 +38,7 @@ void gui_render_chats_list(GtkBuilder *gtk_builder, t_address *server_address, i
 }
 
 void gui_create_chat(GtkBuilder *builder, t_address *server_address, id_t user_id) {
-    char *chat_name = get_entry_text(builder, NEW_CHAT_NAME_FIELD_ID);
+    char *chat_name = get_entry_text(builder, NEW_CHAT_NAME_ENTRY_ID);
     id_t created_chat_id = rq_create_chat(*server_address, chat_name, user_id);
     printf("Chat \"%s\" with id %u created successfully.\n", chat_name, created_chat_id);
     close_window(builder, CREATE_CHAT_WINDOW_ID);
