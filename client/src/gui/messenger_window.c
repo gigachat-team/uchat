@@ -35,26 +35,6 @@ void gui_create_chat(GtkBuilder *builder, t_address *server_address, id_t user_i
     init_chats_list(builder, server_address, user_id);
 }
 
-// Buttons-events-----------------------------------
-void on_open_chat_creator_button_clicked(GtkButton *b, gpointer user_data) {
-    t_gui_data *gui_data = (t_gui_data *)user_data;
-    open_window(gui_data->builder, CREATE_CHAT_WINDOW_ID);
-    (void)b;
-}
-
-void on_close_chat_creator_button_clicked(GtkButton *b, gpointer user_data) {
-    t_gui_data *gui_data = (t_gui_data *)user_data;
-    close_window(gui_data->builder, CREATE_CHAT_WINDOW_ID);
-    (void)b;
-}
-
-void on_create_chat_button_clicked(GtkButton *b, gpointer user_data) {
-    t_gui_data *gui_data = (t_gui_data *)user_data;
-    gui_create_chat(gui_data->builder, &gui_data->server_address, gui_data->user_id);
-    (void)b;
-}
-//-------------------------------------------------
-
 void open_messenger_window(GtkBuilder *gtk_builder, t_address *server_address, id_t user_id) {
     close_window(gtk_builder, AUTHENTICATION_WINDOW_ID);
     open_window(gtk_builder, MESSENGER_WINDOW_ID);
