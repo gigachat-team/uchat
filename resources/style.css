@@ -1,5 +1,17 @@
+* {
+    border: 0px;
+}
+
+.white {
+    color:white;
+}
+
+.new_login_entry {
+    border: 2px solid;
+}
+
 window {
-    background: url("img/notebook_paper.jpg");
+    background: url("img/hlib_fomenko_background.jpg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -9,10 +21,9 @@ window {
 button {
     border: 5px solid;
     border-radius: 50px;
-    color: rgb(9, 20, 34);
+    color: rgb(101, 100, 100);
     margin: 5px;
-    background-image: url("img/notebook_paper_button.jpg");
-    background-repeat: repeat;
+    background-color: rgb(0, 0, 0);
 }
 
 button:active {
