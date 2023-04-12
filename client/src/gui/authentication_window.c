@@ -1,5 +1,11 @@
 #include "../../client.h"
 
+static void open_messenger_window(GtkBuilder *gtk_builder, t_address *server_address, id_t user_id) {
+    close_window(gtk_builder, AUTHENTICATION_WINDOW_ID);
+    open_window(gtk_builder, MESSENGER_WINDOW_ID);
+    gui_render_chats_list(gtk_builder, server_address, user_id);
+}
+
 void gui_login(GtkBuilder *gtk_builder, t_address *server_address, id_t *user_id) {
     GtkWidget *error_message = get_widget(gtk_builder, ERROR_MESSAGE_LOGIN_LABEL_ID);
 

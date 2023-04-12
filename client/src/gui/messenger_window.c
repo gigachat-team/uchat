@@ -9,7 +9,7 @@ static void create_button_in_chat_list(GtkBuilder *gtk_builder, t_address *serve
 }
 
 
-static void init_chats_list(GtkBuilder *gtk_builder, t_address *server_address, id_t user_id) {
+void gui_render_chats_list(GtkBuilder *gtk_builder, t_address *server_address, id_t user_id) {
     size_t chats_count = 0;
     t_chat *chats = rq_get_chats_i_am_in(*server_address, user_id, &chats_count);
 
@@ -32,12 +32,5 @@ void gui_create_chat(GtkBuilder *builder, t_address *server_address, id_t user_i
     id_t created_chat_id = rq_create_chat(*server_address, chat_name, user_id);
     printf("Chat \"%s\" with id %u created successfully.\n", chat_name, created_chat_id);
     close_window(builder, CREATE_CHAT_WINDOW_ID);
-    init_chats_list(builder, server_address, user_id);
-}
-
-void open_messenger_window(GtkBuilder *gtk_builder, t_address *server_address, id_t user_id) {
-    close_window(gtk_builder, AUTHENTICATION_WINDOW_ID);
-    open_window(gtk_builder, MESSENGER_WINDOW_ID);
-
-    init_chats_list(gtk_builder, server_address, user_id);
+    gui_render_chats_list(builder, server_address, user_id);
 }

@@ -52,10 +52,10 @@ t_chat_data *create_chat_data_ptr(GtkBuilder *gtk_builder, t_address *server_add
 
 // GUI-----------------------------------------------------------------------------
 GtkWidget *get_widget(GtkBuilder *gtk_builder, char *name);
+void gui_render_chats_list(GtkBuilder *gtk_builder, t_address *server_address, id_t user_id);
 void set_label_text(GtkWidget *gtk_widget, char *text);
 char *get_entry_text(GtkBuilder *builder, char *entry_name);
 void gui_create_chat(GtkBuilder *builder, t_address *server_address, id_t user_id);
-void open_messenger_window(GtkBuilder *gtk_builder, t_address *server_address, id_t user_id);
 void open_chat(GtkButton *bconfirm, gpointer user_data);
 t_chat_data *create_chat_data(t_chat *chat, t_gui_data gui_data);
 
