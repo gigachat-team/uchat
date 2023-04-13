@@ -158,9 +158,10 @@ t_list_with_size db_select_message_updates(sqlite3 *db, id_t chat_id, t_uint32_a
     );
 
     sqlite3_stmt *statement = db_open_statement(db, sql);
+    sqlite3_free(sql);
 
     t_list_with_size list_with_size = {NULL, 0};
-    for (size_t i = 0;sqlite3_step(statement) == SQLITE_ROW; i++) {
+    for (size_t i = 0; sqlite3_step(statement) == SQLITE_ROW; i++) {
         int message_id = sqlite3_column_int(statement, 0);
         if (binary_search_uint32(message_IDs, message_id) != -1) {
             continue;
