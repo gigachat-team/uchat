@@ -17,14 +17,13 @@ static void create_chat_message(GtkBuilder *builder, char *message_text) {
 }
 
 static void load_messages(GtkBuilder *builder, t_address *server_address, id_t chat_id) {
-    size_t messages_count = 0;
-    t_user_message *messages = rq_get_messages_in_chat(*server_address, chat_id, &messages_count);
+    t_list_with_size messages_list = rq_get_messages_in_chat(*server_address, chat_id);
 
-    for (size_t i = 0; i < messages_count; i++) {
-        create_chat_message(builder, messages[i].data);
+    for (t_list *i = messages_list.list; i != NULL; i = i->next) {
+        create_chat_message(builder, ((t_user_message *)i->data)->data);
     }
 
-    free_user_messages(messages, messages_count);
+    free_user_messages_list(&messages_list);
 }
 
 void gui_send_message(GtkBuilder *builder, t_address *server_address, id_t user_id, id_t chat_id, char *message) {

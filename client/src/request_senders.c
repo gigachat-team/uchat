@@ -91,7 +91,7 @@ t_state_code rq_send_text_message(t_address server_address, id_t user_id, id_t c
     return response;
 }
 
-t_user_message *rq_get_messages_in_chat(t_address server_address, id_t chat_id, size_t *found_messages_count) {
+t_list_with_size rq_get_messages_in_chat(t_address server_address, id_t chat_id) {
     int client_socket = create_and_connect_socket(server_address);
 
     t_package package = create_package(2);
@@ -99,21 +99,22 @@ t_user_message *rq_get_messages_in_chat(t_address server_address, id_t chat_id, 
     pack_uint32(chat_id, &package);
     send_and_free_package(client_socket, package);
 
-    *found_messages_count = receive_uint32(client_socket);
-    t_user_message *found_messages = malloc(*found_messages_count * sizeof(t_user_message));
-    for (size_t i = 0; i < *found_messages_count; i++) {
-        found_messages[i].message_id = receive_uint32(client_socket);
-        found_messages[i].sender_id = receive_uint32(client_socket);
-        found_messages[i].sender_login = receive_bytes(client_socket);
-        found_messages[i].data = receive_bytes(client_socket);
+    t_list_with_size messages_list = {.list = NULL, .size = receive_uint32(client_socket)};
+    for (size_t i = 0; i < messages_list.size; i++) {
+        t_user_message *message = malloc(sizeof(t_user_message));
+        message->message_id = receive_uint32(client_socket);
+        message->sender_id = receive_uint32(client_socket);
+        message->sender_login = receive_bytes(client_socket);
+        message->data = receive_bytes(client_socket);
         char *received_creation_date = receive_bytes(client_socket);
-        found_messages[i].creation_date = utc_str_to_localtime_tm(received_creation_date, DEFAULT_TIME_FORMAT);
+        message->creation_date = utc_str_to_localtime_tm(received_creation_date, DEFAULT_TIME_FORMAT);
         free(received_creation_date);
+        mx_push_back(&messages_list.list, message);
     }
 
     close(client_socket);
 
-    return found_messages;
+    return messages_list;
 }
 
 t_user_messages_array rq_send_message_and_get_messages_updates(t_address server_address, id_t user_id, id_t chat_id, char *message, t_user_messages_array *messages_array) {

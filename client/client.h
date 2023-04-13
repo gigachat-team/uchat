@@ -57,6 +57,7 @@ typedef struct s_user_messages_array {
 t_user_messages_array allocate_user_messages_array(size_t size);
 void free_user_message(t_user_message message);
 void free_user_messages(t_user_message *messages, size_t length);
+void free_user_messages_list(t_list_with_size *messages_list);
 
 // GUI-----------------------------------------------------------------------------
 GtkWidget *get_widget(GtkBuilder *gtk_builder, char *name);
@@ -89,7 +90,7 @@ id_t rq_create_chat(t_address server_address, char *chat_name, id_t owner_id);
 t_chat *rq_get_chats_i_am_in(t_address server_address, id_t user_id, size_t *chats_count);
 t_state_code rq_add_new_member(t_address server_address, t_new_chat_member_data new_chat_member_data);
 t_state_code rq_send_text_message(t_address server_address, id_t user_id, id_t chat_id, char *data);
-t_user_message *rq_get_messages_in_chat(t_address server_address, id_t chat_id, size_t *found_messages_count);
+t_list_with_size rq_get_messages_in_chat(t_address server_address, id_t chat_id);
 t_user_messages_array rq_send_message_and_get_messages_updates(t_address server_address, id_t user_id, id_t chat_id, char *message, t_user_messages_array *messages_array);
 t_user *rq_get_chat_members(t_address server_address, id_t chat_id, uint32_t *members_count);
 t_state_code rq_remove_member_from_chat(t_address server_address, id_t user_id, id_t chat_id);
