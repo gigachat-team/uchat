@@ -7,6 +7,8 @@ static t_chat_data *create_chat_data_ptr(GtkBuilder *gtk_builder, t_address *ser
     chat_data->gui_data.user_id = user_id;
     chat_data->chat.name = strdup(chat_name);
     chat_data->chat.id = chat_id;
+    chat_data->messages.list = NULL;
+    chat_data->messages.size = 0;
     return chat_data;
 }
 
