@@ -8,7 +8,6 @@
 
 #define USAGE_MESSAGE "usage: ./uchat_server [port]\n"
 
-#define AUTHENTICATION_CONTENER "authentication_box"
 #define NEW_LOGIN_ENTRY_ID "new_login_entry"
 #define NEW_PASSWORD_ENTRY_ID "new_password_entry"
 #define NEW_PASSWORD_AGAIN_ENTRY_ID "new_password_again_entry"

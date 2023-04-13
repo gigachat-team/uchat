@@ -30,7 +30,6 @@ void gui_login(GtkBuilder *gtk_builder, t_address *server_address, id_t *user_id
 
 void gui_register(GtkBuilder *gtk_builder, t_address *server_address, id_t *user_id) {
     GtkWidget *error_message = get_widget(gtk_builder, ERROR_MESSAGE_REGISTRATION_LABEL_ID);
-
     apply_style_to_widget(error_message, "error-message");
 
     char *new_login = get_entry_text(gtk_builder, NEW_LOGIN_ENTRY_ID);
