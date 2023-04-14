@@ -50,7 +50,9 @@ typedef struct s_user_message {
     char *sender_login;
     char *data;
     struct tm creation_date;
+    GtkWidget *widget;
 } t_user_message;
+t_list_with_size receive_messages_list(int client_socket);
 
 typedef struct s_chat_data {
     t_gui_data gui_data;
