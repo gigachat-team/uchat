@@ -43,10 +43,10 @@ void gui_send_message(GtkBuilder *builder, t_address *server_address, id_t user_
 
 void gui_open_chat(t_chat_data *chat_data) {
     GtkWidget *message_field = get_widget(chat_data->gui_data.builder, "message_field");
-    GtkWidget *chat_settings_window = get_widget(chat_data->gui_data.builder, "open_chat_settings_window");
+    GtkWidget *chat_settings_window = get_widget(chat_data->gui_data.builder, CHAT_SETTINGS_BUTTON_ID);
 
-    clear_container(chat_data->gui_data.builder, "chat_field");
-    write_label_text(chat_data->gui_data.builder, "chat_name", chat_data->chat.name);
+    clear_container(chat_data->gui_data.builder, CHAT_FIELD_CONTENER_ID);
+    write_label_text(chat_data->gui_data.builder, CHAT_NAME_LABEL_ID, chat_data->chat.name);
     load_messages(chat_data->gui_data.builder, &chat_data->gui_data.server_address, chat_data->chat.id, &chat_data->messages);
 
     g_signal_handlers_destroy(message_field);

@@ -25,9 +25,9 @@ void gui_render_chats_list(GtkBuilder *gtk_builder, t_address *server_address, i
     size_t chats_count = 0;
     t_chat *chats = rq_get_chats_i_am_in(*server_address, user_id, &chats_count);
 
-    if (chats_count != 0) {
-        clear_container(gtk_builder, CHATS_LIST_CONTAINER_ID);
+    clear_container(gtk_builder, CHATS_LIST_CONTAINER_ID);
 
+    if (chats_count != 0) {
         for (size_t i = 0; i < chats_count; i++) {
             create_button_in_chat_list(gtk_builder, server_address, user_id, &chats[i]);
         }
