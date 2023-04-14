@@ -11,9 +11,11 @@ static GtkWidget *create_and_show_message_widget(GtkBuilder *builder, char *mess
 
     gtk_box_pack_start(GTK_BOX(message), GTK_WIDGET(user_icon), false, false, 0);
     gtk_box_pack_start(GTK_BOX(message), message_label, false, false, 5);
-    add_to_box_start(builder, message, "chat_field", 10);
+    add_to_box_start(builder, message, CHAT_FIELD_CONTENER_ID, 10);
 
     gtk_widget_show_all(message);
+
+    scroll_to_bottom(builder, "chat_scrolled_field");
 
     return message;
 }
