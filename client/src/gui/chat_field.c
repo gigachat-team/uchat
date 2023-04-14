@@ -43,11 +43,14 @@ void gui_send_message(GtkBuilder *builder, t_address *server_address, id_t user_
 
 void gui_open_chat(t_chat_data *chat_data) {
     GtkWidget *message_field = get_widget(chat_data->gui_data.builder, "message_field");
+    GtkWidget *chat_settings_window = get_widget(chat_data->gui_data.builder, "open_chat_settings_window");
 
     clear_container(chat_data->gui_data.builder, "chat_field");
     write_label_text(chat_data->gui_data.builder, "chat_name", chat_data->chat.name);
     load_messages(chat_data->gui_data.builder, &chat_data->gui_data.server_address, chat_data->chat.id, &chat_data->messages);
 
     g_signal_handlers_destroy(message_field);
+
     g_signal_connect(message_field, "activate", G_CALLBACK(on_send_message_clicked), chat_data);
+    g_signal_connect(chat_settings_window, "clicked", G_CALLBACK(on_open_chat_settings_clicked), chat_data);
 }

@@ -19,7 +19,8 @@
         "typeinfo": "c",
         "glib.h": "c",
         "gtk.h": "c",
-        "gsignal.h": "c"
+        "gsignal.h": "c",
+        "client.h": "c"
     },
     "C_Cpp.vcFormat.newLine.beforeElse": true,
     "C_Cpp.vcFormat.space.betweenEmptyBraces": false,
