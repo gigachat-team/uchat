@@ -1,6 +1,6 @@
 #include "../../client.h"
 
-static void create_chat_message(GtkBuilder *builder, char *message_text) {
+static GtkWidget *create_and_show_message_widget(GtkBuilder *builder, char *message_text) {
     GtkWidget *message = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
     GtkWidget *message_label = gtk_label_new((gchar *)message_text);
     GtkWidget *user_icon = get_image_from_path("client/message_icon.jpeg", 45, 45);
@@ -14,13 +14,16 @@ static void create_chat_message(GtkBuilder *builder, char *message_text) {
     add_to_box_start(builder, message, "chat_field", 10);
 
     gtk_widget_show_all(message);
+
+    return message;
 }
 
 static void load_messages(GtkBuilder *builder, t_address *server_address, id_t chat_id, t_list_with_size *messages_in_chat) {
     free_user_messages_list(messages_in_chat);
     *messages_in_chat = rq_get_messages_in_chat(*server_address, chat_id);
     for (t_list *i = messages_in_chat->list; i != NULL; i = i->next) {
-        create_chat_message(builder, ((t_user_message *)i->data)->data);
+        t_user_message *message = (t_user_message *)i->data;
+        message->widget = create_and_show_message_widget(builder, message->data);
     }
 }
 
@@ -29,11 +32,11 @@ void gui_send_message(GtkBuilder *builder, t_address *server_address, id_t user_
     for (t_list *i = updated_messages.list; i != NULL; i = i->next) {
         t_user_message *updated_message = (t_user_message *)i->data;
         if (i->next == NULL) {
-            create_chat_message(builder, message);
+            updated_message->widget = create_and_show_message_widget(builder, message);
             free(updated_message->data);
             updated_message->data = strdup(message);
         } else {
-            create_chat_message(builder, updated_message->data);
+            updated_message->widget = create_and_show_message_widget(builder, updated_message->data);
         }
         mx_push_back(&messages_in_chat->list, updated_message);
         messages_in_chat->size++;
