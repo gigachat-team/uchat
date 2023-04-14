@@ -45,6 +45,7 @@ typedef struct s_user_message {
     char *data;
     struct tm creation_date;
 } t_user_message;
+t_list_with_size receive_messages_list(int client_socket);
 
 typedef struct s_chat_data {
     t_gui_data gui_data;
