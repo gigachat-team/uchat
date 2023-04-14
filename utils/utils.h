@@ -69,13 +69,13 @@ typedef struct s_package {
     size_t filled_size;
 } t_package;
 t_package create_package(size_t size);
-void free_package(t_package package);
+void free_package(t_package *package);
 void pack_byte(uint8_t byte, t_package *package);
 void pack_uint16(uint16_t number, t_package *package);
 void pack_uint32(uint32_t number, t_package *package);
 void pack_bytes(char *bytes, t_package *package);
-void send_package(int socket, t_package package);
-void send_and_free_package(int socket, t_package package);
+void send_package(int socket, t_package *package);
+void send_and_free_package(int socket, t_package *package);
 
 typedef enum e_request {
     LOGIN, // -> login -> password

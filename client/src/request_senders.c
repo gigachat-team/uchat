@@ -10,7 +10,7 @@ t_state_code rq_authenticate_user(t_address server_address, char *login, char *p
     pack_byte(authentication_mode, &package);
     pack_bytes(login, &package);
     pack_bytes(password, &package);
-    send_and_free_package(client_socket, package);
+    send_and_free_package(client_socket, &package);
 
     t_state_code authentication_result = receive_byte(client_socket);
     if (authentication_result == SUCCESSFUL_LOGIN || authentication_result == SUCCESSFUL_REGISTRATION) {
@@ -29,7 +29,7 @@ id_t rq_create_chat(t_address server_address, char *chat_name, id_t owner_id) {
     pack_byte(CREATE_CHAT, &package);
     pack_bytes(chat_name, &package);
     pack_uint32(owner_id, &package);
-    send_and_free_package(client_socket, package);
+    send_and_free_package(client_socket, &package);
 
     id_t created_chat_id = receive_uint32(client_socket);
 
@@ -44,7 +44,7 @@ t_chat *rq_get_chats_i_am_in(t_address server_address, id_t user_id, size_t *cha
     t_package package = create_package(2);
     pack_byte(GET_CHATS_I_AM_IN, &package);
     pack_uint32(user_id, &package);
-    send_and_free_package(client_socket, package);
+    send_and_free_package(client_socket, &package);
 
     *chats_count = receive_uint32(client_socket);
     t_chat *chats_i_am_in = *chats_count == 0 ? NULL : malloc(*chats_count * sizeof(t_chat));
@@ -65,7 +65,7 @@ t_state_code rq_add_new_member(t_address server_address, t_new_chat_member_data 
     pack_byte(ADD_MEMBER_TO_CHAT, &package);
     pack_uint32(new_chat_member_data.chat_id, &package);
     pack_bytes(new_chat_member_data.member_login, &package);
-    send_and_free_package(client_socket, package);
+    send_and_free_package(client_socket, &package);
 
     t_state_code adding_new_member_to_chat_result = receive_byte(client_socket);
 
@@ -82,7 +82,7 @@ t_state_code rq_send_text_message(t_address server_address, id_t user_id, id_t c
     pack_uint32(user_id, &package);
     pack_uint32(chat_id, &package);
     pack_bytes(data, &package);
-    send_and_free_package(client_socket, package);
+    send_and_free_package(client_socket, &package);
 
     t_state_code response = receive_byte(client_socket);
 
@@ -97,7 +97,7 @@ t_list_with_size rq_get_messages_in_chat(t_address server_address, id_t chat_id)
     t_package package = create_package(2);
     pack_byte(GET_MESSAGES_IN_CHAT, &package);
     pack_uint32(chat_id, &package);
-    send_and_free_package(client_socket, package);
+    send_and_free_package(client_socket, &package);
 
     t_list_with_size messages_list = {.list = NULL, .size = receive_uint32(client_socket)};
     for (size_t i = 0; i < messages_list.size; i++) {
@@ -129,7 +129,7 @@ t_list_with_size rq_send_message_and_get_messages_updates(t_address server_addre
     for (t_list *i = messages_list->list; i != NULL; i = i->next) {
         pack_uint32(((t_user_message *)i->data)->message_id, &package);
     }
-    send_and_free_package(client_socket, package);
+    send_and_free_package(client_socket, &package);
 
     t_list_with_size updated_messages_list = {.list = NULL, .size = receive_uint32(client_socket)};
     for (size_t i = 0; i < updated_messages_list.size; i++) {
@@ -155,7 +155,7 @@ t_user *rq_get_chat_members(t_address server_address, id_t chat_id, uint32_t *me
     t_package package = create_package(2);
     pack_byte(GET_CHAT_MEMBERS, &package);
     pack_uint32(chat_id, &package);
-    send_and_free_package(client_socket, package);
+    send_and_free_package(client_socket, &package);
 
     *members_count = receive_uint32(client_socket);
     t_user *members = malloc(*members_count * sizeof(t_user));
@@ -176,7 +176,7 @@ t_state_code rq_remove_member_from_chat(t_address server_address, id_t user_id, 
     pack_byte(REMOVE_USER_FROM_CHAT, &package);
     pack_uint32(user_id, &package);
     pack_uint32(chat_id, &package);
-    send_and_free_package(client_socket, package);
+    send_and_free_package(client_socket, &package);
 
     t_state_code removing_member_from_chat_result = receive_byte(client_socket);
 

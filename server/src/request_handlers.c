@@ -12,7 +12,7 @@ void handle_registration(int client_socket) {
         t_package package = create_package(2);
         pack_byte(SUCCESSFUL_REGISTRATION, &package);
         pack_uint32(user_id, &package);
-        send_and_free_package(client_socket, package);
+        send_and_free_package(client_socket, &package);
     } else {
         send_byte(client_socket, SUCH_LOGIN_ALREADY_EXISTS);
     }
@@ -35,7 +35,7 @@ void handle_login(int client_socket) {
             t_package package = create_package(2);
             pack_byte(SUCCESSFUL_LOGIN, &package);
             pack_uint32(user_id, &package);
-            send_and_free_package(client_socket, package);
+            send_and_free_package(client_socket, &package);
         } else {
             send_byte(client_socket, WRONG_PASSWORD);
         }
@@ -77,7 +77,7 @@ void handle_getting_chats(int client_socket) {
         pack_uint32(chats[i].id, &package);
         pack_bytes(chats[i].name, &package);
     }
-    send_and_free_package(client_socket, package);
+    send_and_free_package(client_socket, &package);
 
     free_chats(chats, number_of_chats);
 }
@@ -123,7 +123,7 @@ static void send_messages_list(int client_socket, t_list *messages_list, size_t 
         pack_bytes(user_message->data, &package);
         pack_bytes(user_message->creation_date, &package);
     }
-    send_and_free_package(client_socket, package);
+    send_and_free_package(client_socket, &package);
 }
 
 void handle_messages_in_chat_getting(int client_socket) {
@@ -187,7 +187,7 @@ void handle_getting_chat_members(int client_socket) {
         pack_uint32(members[i].id, &package);
         pack_bytes(members[i].login, &package);
     }
-    send_and_free_package(client_socket, package);
+    send_and_free_package(client_socket, &package);
 
     free_users(members, members_count);
 }
