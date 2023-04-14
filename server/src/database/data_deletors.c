@@ -9,3 +9,12 @@ void db_remove_user_from_chat(sqlite3 *db, id_t user_id, id_t chat_id) {
     db_execute_sql(db, sql);
     sqlite3_free(sql);
 }
+
+void db_remove_message(sqlite3 *db, id_t message_id) {
+    char *sql = sqlite3_mprintf(" \
+        DELETE FROM "MESSAGES_TABLE" \
+        WHERE "MESSAGES_ID" = %u", message_id
+    );
+    db_execute_sql(db, sql);
+    sqlite3_free(sql);
+}
