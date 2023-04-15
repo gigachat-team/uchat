@@ -5,6 +5,7 @@ CFLAGS = -std=c11 -Wall -Wextra -Werror -Wpedantic -gdwarf-4 -pthread -MMD -MP
 
 OBJDIR = obj
 SRCDIR = src
+HEADER_DIRS = $(sort $(dir $(wildcard *.h) $(wildcard */*.h) $(wildcard */*/*.h) $(wildcard */*/*/*.h)))
 
 SOURCES = $(wildcard $(SRCDIR)/*.c) $(wildcard $(SRCDIR)/*/*.c) $(wildcard $(SRCDIR)/*/*/*.c)
 OBJECTS = $(subst $(SRCDIR)/,,$(addprefix $(OBJDIR)/, $(SOURCES:.c=.o)))
@@ -14,6 +15,7 @@ UTILS_LIB = ../utils/libutils.a
 GTK_LIBS = -rdynamic `pkg-config --cflags --libs gtk+-3.0`
 GTK_INC = `pkg-config --cflags gtk+-3.0`
 
+INCLUDE_HEADER_DIRS = $(addprefix -I, $(HEADER_DIRS))
 INCLUDE_UTILS = -L$(dir $(UTILS_LIB)) -l$(patsubst lib%.a,%,$(notdir $(UTILS_LIB)))
 
 PHONY := all
@@ -28,7 +30,7 @@ $(BINARYNAME): $(SOURCES) $(OBJDIR) $(OBJECTS) $(UTILS_LIB)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c Makefile
 	@mkdir -p $(@D)
-	@$(CC) $(GTK_INC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(INCLUDE_HEADER_DIRS) $(GTK_INC) $(CFLAGS) -c $< -o $@
 
 $(OBJDIR):
 	@mkdir -p $@
