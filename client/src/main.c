@@ -1,4 +1,4 @@
-#include "client.h"
+#include "main.h"
 
 // void handle_chatting(t_address server_address, id_t user_id, id_t chat_id)
 // {
@@ -70,26 +70,7 @@
 //     }
 // }
 
-static GtkBuilder *create_gtk_builder() {
-    GError *err = NULL;
-    GtkBuilder *builder = gtk_builder_new();
 
-    if (gtk_builder_add_from_file(builder, GLADE_FILE_PATH, &err) == 0) {
-        fprintf(stderr, "Error adding build from file. Error: %s\n", err->message);
-        exit(EXIT_FAILURE);
-    }
-
-    return builder;
-}
-
-static t_gui_data create_gui_data(char *ip, in_port_t port) {
-    t_gui_data gui_data = {
-        .builder = create_gtk_builder(),
-        .server_address = {ip, port},
-        .user_id = 0
-    };
-    return gui_data;
-}
 
 int main(int argc, char **argv) {
     if (argc != 3) {

@@ -1,4 +1,4 @@
-#include "client.h"
+#include "main.h"
 
 static void open_messenger_window(GtkBuilder *gtk_builder, t_address *server_address, id_t user_id) {
     close_window(gtk_builder, AUTHENTICATION_WINDOW_ID);

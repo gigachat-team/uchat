@@ -1,4 +1,4 @@
-#include "client.h"
+#include "styles.h"
 
 void load_css(char *css_file_path) {
     GtkCssProvider *provider = gtk_css_provider_new();

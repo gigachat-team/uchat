@@ -1,4 +1,4 @@
-#include "client.h"
+#include "main.h"
 
 t_state_code rq_authenticate_user(t_address server_address, char *login, char *password, t_authentication_mode authentication_mode, uint *user_id) {
     int client_socket = create_and_connect_socket(server_address);
