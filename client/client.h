@@ -91,6 +91,9 @@ void add_to_box_start(GtkBuilder *builder, GtkWidget *new_element, gchar *box_na
 // Destroy all widgets in container whith in builder
 void clear_container(GtkBuilder *builder, char *contener_name);
 
+// Scroll GrkSclolledWindow to botton position
+void scroll_to_bottom(GtkBuilder *builder, char *name_scrolled_field);
+
 void write_label_text(GtkBuilder *builder, char *label_name, char *text);
 void open_window(GtkBuilder *builder, char *window_name);
 void close_window(GtkBuilder *builder, char *window_name);

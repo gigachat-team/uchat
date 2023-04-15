@@ -19,6 +19,12 @@ GtkWidget *get_widget(GtkBuilder *gtk_builder, char *name) {
     return GTK_WIDGET(gtk_builder_get_object(gtk_builder, name));
 }
 
+void scroll_to_bottom(GtkBuilder *builder, char *name_scrolled_field) {
+    GtkWidget *scrolled_window = GTK_WIDGET(gtk_builder_get_object(builder, name_scrolled_field));
+    GtkAdjustment *adjustment = gtk_scrolled_window_get_vadjustment(GTK_SCROLLED_WINDOW(scrolled_window));
+    gtk_adjustment_set_value(adjustment, gtk_adjustment_get_upper(adjustment) - gtk_adjustment_get_page_size(adjustment));
+}
+
 void set_label_text(GtkWidget *gtk_widget, char *text) {
     gtk_label_set_text(GTK_LABEL(gtk_widget), text);
 }
