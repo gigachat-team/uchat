@@ -3,6 +3,12 @@
 #include "gui_data.h"
 
 #define DEFAULT_CSS_FILE_PATH "resources/style.css"
+#define DEFAULT_CURSOR_IMAGE_PATH "resources/img/write_icon.png"
+
+#define CSS_CLASS_WHITE "white"
+#define CSS_CLASS_ENTRY_DEFAULT "entry-default"
+#define CSS_CLASS_ERROR_MESSAGE "error-message"
+#define CSS_CLASS_NEW_CHAT_BUTTON "new-chat-button"
 
 /**
  * @brief loads css to gtk. Should be called after gtk_init function
@@ -27,4 +33,13 @@ void apply_style_to_widget(GtkWidget *widget, const char *class_name);
  * @param markup_id is an id from .glade file
  * @param class_name css class-name for a style
 */
-void get_widget_by_id_and_apply_style(t_gui_data gui_data, const char *markup_id, const char *class_name);
+void get_widget_by_id_and_apply_style(GtkBuilder *builder, const char *markup_id, const char *class_name);
+
+/**
+ * @brief sets a cursor image from CURSOR_PATH in a window from WIDGET
+ * If the WIDGET doesn't have a window, the function does nothing. The
+ * same thing if the pointers are NULL
+ * @param widget a pointer to a widget that contains a GtkWindow pointer
+ * @param cursor_path a file path to the cursor image.
+*/
+void set_cursor_image(GtkWidget *widget, const gchar *cursor_path);
