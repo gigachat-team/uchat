@@ -1,4 +1,4 @@
-#include "../../client.h"
+#include "client.h"
 
 
 void gui_init_chat_settings_window(t_chat_data *chat_data) {

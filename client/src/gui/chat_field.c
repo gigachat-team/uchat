@@ -1,4 +1,4 @@
-#include "../../client.h"
+#include "client.h"
 
 static GtkWidget *create_and_show_message_widget(GtkBuilder *builder, char *message_text) {
     GtkWidget *message = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);

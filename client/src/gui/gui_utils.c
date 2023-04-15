@@ -1,4 +1,4 @@
-#include "../../client.h"
+#include "client.h"
 
 GtkWidget *get_image_from_path(char *path, gint x, gint y) {
     GtkWidget *image = gtk_image_new();

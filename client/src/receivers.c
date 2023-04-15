@@ -1,4 +1,4 @@
-#include "../client.h"
+#include "client.h"
 
 t_list_with_size receive_messages_list(int client_socket) {
     t_list_with_size messages_list = {.list = NULL, .size = receive_uint32(client_socket)};

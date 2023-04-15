@@ -1,4 +1,4 @@
-#include "../client.h"
+#include "client.h"
 
 // void handle_chatting(t_address server_address, id_t user_id, id_t chat_id)
 // {

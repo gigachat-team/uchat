@@ -1,4 +1,4 @@
-#include "../../client.h"
+#include "client.h"
 
 static t_chat_data *create_chat_data_ptr(GtkBuilder *gtk_builder, t_address *server_address, id_t user_id, char *chat_name, id_t chat_id) {
     t_chat_data *chat_data = malloc(sizeof(t_chat_data));
