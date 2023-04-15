@@ -8,8 +8,8 @@ SRCDIR = src
 UTILS_DIR = ../utils
 SQLITE_DIR = ../resources/libraries/sqlite3
 
-HEADER_DIRS = $(sort $(dir $(wildcard $(UTILS_DIR)/*.h) $(wildcard $(UTILS_DIR)/*/*.h) $(wildcard $(UTILS_DIR)/*/*/*.h)))
-UTILS_HEADER_DIRS = $(sort $(dir $(wildcard *.h) $(wildcard */*.h) $(wildcard */*/*.h) $(wildcard */*/*/*.h)))
+HEADER_DIRS = $(sort $(dir $(wildcard *.h) $(wildcard */*.h) $(wildcard */*/*.h) $(wildcard */*/*/*.h)))
+UTILS_HEADER_DIRS = $(sort $(dir $(wildcard $(UTILS_DIR)/*.h) $(wildcard $(UTILS_DIR)/*/*.h)))
 SQLITE_HEADER_DIRS = $(sort $(dir $(wildcard $(SQLITE_DIR)/*.h) $(wildcard $(SQLITE_DIR)/*/*.h)))
 
 SOURCES = $(wildcard $(SRCDIR)/*.c) $(wildcard $(SRCDIR)/*/*.c) $(wildcard $(SRCDIR)/*/*/*.c)
