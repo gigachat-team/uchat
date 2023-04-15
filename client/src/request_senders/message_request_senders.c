@@ -53,6 +53,26 @@ t_list_with_size rq_send_message_and_get_messages_updates(t_address server_addre
     return message_updates_list;
 }
 
+t_list_with_size rq_delete_message_and_get_message_updates(t_address *server_address, id_t message_id, id_t chat_id, t_list_with_size *messages_list) {
+    int client_socket = create_and_connect_socket(*server_address);
+
+    t_package package = create_package(5 + messages_list->size);
+    pack_byte(DELETE_MESSAGE_AND_GET_MESSAGE_UPDATES, &package);
+    pack_uint32(message_id, &package);
+    pack_uint32(chat_id, &package);
+    pack_uint32(messages_list->size, &package);
+    for (t_list *i = messages_list->list; i != NULL; i = i->next) {
+        pack_uint32(((t_user_message *)i->data)->message_id, &package);
+    }
+    send_and_free_package(client_socket, &package);
+
+    t_list_with_size message_updates_list = receive_message_updates_list(client_socket);
+
+    close(client_socket);
+
+    return message_updates_list;
+}
+
 t_list_with_size rq_get_message_updates(t_address server_address, id_t chat_id, t_list_with_size *messages_list) {
     int client_socket = create_and_connect_socket(server_address);
 
