@@ -1,4 +1,4 @@
-#include "../utils.h"
+#include "utils.h"
 
 void send_byte(int socket, uint8_t byte) {
     send(socket, &byte, sizeof(byte), 0);

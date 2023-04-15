@@ -1,4 +1,4 @@
-#include "../utils.h"
+#include "utils.h"
 
 int create_socket() {
     int created_socket = socket(AF_INET, SOCK_STREAM, 0);

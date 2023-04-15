@@ -1,4 +1,4 @@
-#include "../utils.h"
+#include "utils.h"
 
 int receive(int socket, char *buffer, size_t length) {
     int number_of_left_bytes = length;

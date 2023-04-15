@@ -1,4 +1,4 @@
-#include "../utils.h"
+#include "utils.h"
 
 void free_chat(t_chat chat) {
     free(chat.name);

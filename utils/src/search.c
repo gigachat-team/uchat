@@ -1,4 +1,4 @@
-#include "../utils.h"
+#include "utils.h"
 
 int64_t binary_search_uint32(t_uint32_array *sorted_array, uint32_t to_find) {
     int64_t left = 0;

@@ -8,10 +8,13 @@ LIBCREATOR_FLAGS = rsc
 
 OBJDIR = obj
 SRCDIR = src
+HEADER_DIRS = $(sort $(dir $(wildcard *.h) $(wildcard */*.h) $(wildcard */*/*.h) $(wildcard */*/*/*.h)))
 
 SOURCES = $(wildcard $(SRCDIR)/*.c) $(wildcard $(SRCDIR)/*/*.c) $(wildcard $(SRCDIR)/*/*/*.c)
 OBJECTS = $(subst $(SRCDIR)/,,$(addprefix $(OBJDIR)/, $(SOURCES:.c=.o)))
 DEPENDS = $(subst $(SRCDIR)/,,$(addprefix $(OBJDIR)/, $(SOURCES:.c=.d)))
+
+INCLUDE_HEADER_DIRS = $(addprefix -I, $(HEADER_DIRS))
 
 PHONY := all
 all: $(LIBNAME)
@@ -25,7 +28,7 @@ $(LIBNAME): $(SOURCES) $(OBJDIR) $(OBJECTS)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c Makefile
 	@mkdir -p $(@D)
-	@$(CC) $(CFLAGS) $(LIBGTK) -c $< -o $@
+	@$(CC) $(INCLUDE_HEADER_DIRS) $(CFLAGS) $(LIBGTK) -c $< -o $@
 
 $(OBJDIR):
 	@mkdir -p $@
