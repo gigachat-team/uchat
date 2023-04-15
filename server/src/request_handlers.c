@@ -178,6 +178,25 @@ void handle_message_updates_getting(int client_socket) {
     free_message_updates_list(&message_updates_list.list);
 }
 
+void handle_message_deleting_and_messages_updates_getting(int client_socket) {
+    uint32_t message_id = receive_uint32(client_socket);
+    uint32_t chat_id = receive_uint32(client_socket);
+    t_uint32_array present_message_IDs_array = allocate_uint32_array(receive_uint32(client_socket));
+    for (size_t i = 0; i < present_message_IDs_array.size; i++) {
+        present_message_IDs_array.arr[i] = receive_uint32(client_socket);
+    }
+
+    sqlite3 *db = db_open();
+    db_remove_message(db, message_id);
+    t_list_with_size message_updates_list = db_select_message_updates(db, chat_id, &present_message_IDs_array, false);
+    db_close(db);
+
+    send_message_updates_list(client_socket, &message_updates_list);
+
+    free(present_message_IDs_array.arr);
+    free_message_updates_list(&message_updates_list.list);
+}
+
 void handle_removing_user_from_chat(int client_socket) {
     uint32_t user_id = receive_uint32(client_socket);
     uint32_t chat_id = receive_uint32(client_socket);
