@@ -9,7 +9,8 @@ t_list_with_size receive_messages_list(int client_socket) {
         message->sender_login = receive_bytes(client_socket);
         message->data = receive_bytes(client_socket);
         char *received_creation_date = receive_bytes(client_socket);
-        message->creation_date = utc_str_to_localtime_tm(received_creation_date, DEFAULT_TIME_FORMAT);
+        if (received_creation_date && strlen(received_creation_date))
+            message->creation_date = utc_str_to_localtime_tm(received_creation_date, DEFAULT_TIME_FORMAT);
         free(received_creation_date);
         message->widget = NULL;
         mx_push_back(&messages_list.list, message);
