@@ -6,12 +6,31 @@
     color:white;
 }
 
-.new_login_entry {
-    border: 2px solid;
+/* FIXME: doesn't work on entries. Probably need another property */
+.entry_default {
+    border: 60px solid;
+    border-color: black;
+}
+
+.new-chat-button {
+    background-repeat: no-repeat;
+    background-image: url("img/new_chat_button.png");
+    background-position: center;
+    border: 0px;
+    border-radius: 0px;
+}
+
+.new_chat_button:hover{
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url("img/new_chat_button.png");
+    animation: none;
+    border: 0px;
+    border-radius: 0px;
 }
 
 window {
-    background: url("img/hlib_fomenko_background.jpg");
+    background: url("img/chat_background.png");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -19,31 +38,35 @@ window {
 }
 
 button {
+    background-image: url("img/notebook_paper_button.jpg");
     border: 5px solid;
     border-radius: 50px;
-    color: rgb(101, 100, 100);
+    color: rgb(112, 122, 155);
     margin: 5px;
-    background-color: rgb(0, 0, 0);
 }
 
 button:active {
     border: 5px dashed;
     border-radius: 70px;
-    color: rgb(155, 167, 186);
 }
 
 button:hover {
-    opacity: 1;
-    border-radius: 60px;
-    animation: animate 3s linear infinite;
+    background-image: url("img/chosen_button.png");
+    border: 5px dotted;
+    animation: animate 3s cubic-bezier(0.1, 0.7, 1, 0.1) infinite;
 }
 
 @keyframes animate {
     0% {
         background-position: 0%;
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
     }
     100% {
-        background-position: 160%;
+        background-position: 100%;
+        opacity: 1;
     }
 
 }
