@@ -26,9 +26,12 @@ void on_close_chat_creator_button_clicked(GtkButton *b, gpointer user_data) {
     (void)b;
 }
 
+//FIXME: try to set cursor to the window
 void on_create_chat_button_clicked(GtkButton *b, gpointer user_data) {
     t_gui_data *gui_data = (t_gui_data *)user_data;
     gui_create_chat(gui_data->builder, &gui_data->server_address, gui_data->user_id);
+    // GtkWidget *create_chat_button_window = GTK_WIDGET(gtk_builder_get_object(gui_data->builder, CREATE_CHAT_WINDOW_ID));
+    // set_cursor_image(create_chat_button_window, DEFAULT_CURSOR_IMAGE_PATH);
     (void)b;
 }
 
