@@ -1,4 +1,4 @@
-#include "../../server.h"
+#include "database.h"
 
 void db_remove_user_from_chat(sqlite3 *db, id_t user_id, id_t chat_id) {
     char *sql = sqlite3_mprintf(" \

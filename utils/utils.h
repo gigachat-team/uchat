@@ -19,10 +19,6 @@
 #include <pthread.h>
 #include <errno.h>
 
-/** For daemon**/
-#include <syslog.h>
-#include <signal.h>
-
 #define MIN_LOGIN_LENGTH 4
 #define MIN_PASSWORD_LENGTH 5
 

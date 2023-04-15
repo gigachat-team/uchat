@@ -1,4 +1,4 @@
-#include "../server.h"
+#include "threads.h"
 
 void *handle_request_thread(void *client_socket_void) {
     int client_socket = *(int *)client_socket_void;

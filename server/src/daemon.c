@@ -1,4 +1,4 @@
-#include "../server.h"
+#include "daemon.h"
 
 void daemon_server() {
     pid_t process_id = fork();

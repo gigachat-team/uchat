@@ -1,4 +1,4 @@
-#include "../../server.h"
+#include "database.h"
 
 void db_create_users_table(sqlite3 *db) {
     char *sql = "CREATE TABLE IF NOT EXISTS "USERS_TABLE" ( \

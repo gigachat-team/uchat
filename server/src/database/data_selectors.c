@@ -1,4 +1,4 @@
-#include "../../server.h"
+#include "database.h"
 
 char *db_get_password_by_id(sqlite3 *db, id_t id) {
     char *sql = sqlite3_mprintf(" \

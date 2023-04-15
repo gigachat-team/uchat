@@ -1,9 +1,9 @@
 #pragma once
 
-#include "../utils/utils.h"
-#include "../resources/libraries/sqlite3/sqlite3.h"
-
-#define USAGE_MESSAGE "usage: ./uchat [ip] [port]\n"
+#include "../../utils/utils.h"
+#include "../../resources/libraries/sqlite3/sqlite3.h"
+#include "user_message.h"
+#include "message_updates.h"
 
 #define DATABASE_NAME "uchat.db"
 
@@ -32,41 +32,6 @@
 #define MESSAGE_STATUSES_MESSAGE_ID "MessageId"
 #define MESSAGE_STATUSES_USER_ID "UserId"
 #define MESSAGE_STATUSES_IS_READ "IsRead"
-
-typedef struct s_user_message {
-    id_t message_id;
-    id_t sender_id;
-    char *sender_login;
-    char *data;
-    char *creation_date;
-} t_user_message;
-
-typedef struct s_message_update {
-    t_user_message message;
-    bool remove;
-} t_message_update;
-t_message_update create_empty_message_update();
-t_message_update *create_empty_message_update_ptr();
-void free_message_updates_list(t_list **message_updates_list);
-
-void *handle_request_thread(void *client_socket_void);
-
-void send_chat(int socket, t_chat chat);
-
-void handle_registration(int client_socket);
-void handle_login(int client_socket);
-void handle_chat_creation(int client_socket);
-void handle_getting_chats(int client_socket);
-void handle_adding_new_member_to_chat(int client_socket);
-/**
- * @brief Receives text message data from CLIENT_SOCKET, creates entry in database
- * and send response to CLIENT_SOCKET: TEXT_MESSAGE_SEND_SUCCESSFULLY for success.
-*/
-void handle_text_message_sending(int client_socket);
-void handle_messages_in_chat_getting(int client_socket);
-void handle_message_sending_and_messages_updates_getting(int client_socket);
-void handle_removing_user_from_chat(int client_socket);
-void handle_getting_chat_members(int client_socket);
 
 /**
  * @brief Opens new database connection. Prints error and close application on error.
@@ -140,15 +105,3 @@ t_user *db_get_chat_members(sqlite3 *db, id_t chat_id, size_t *members_count);
 */
 bool db_users_table_has_login(sqlite3 *db, char *login);
 bool db_user_is_in_chat(sqlite3 *db, id_t user_id, id_t chat_id);
-
-/**
- * @return nothing but turns server into the daemon state
-*/
-void daemon_server();
-
-void send_message_updates_list(int client_socket, t_list_with_size *message_updates_list);
-
-void free_user_message(t_user_message *message);
-void free_user_messages(t_user_message *messages, size_t length);
-void free_user_messages_list(t_list **messages_list);
-void free_message_updates_list(t_list **message_updates_list);

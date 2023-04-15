@@ -1,4 +1,4 @@
-#include "../server.h"
+#include "request_handlers.h"
 
 void handle_registration(int client_socket) {
     char *login = receive_bytes(client_socket);

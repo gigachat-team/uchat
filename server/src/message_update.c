@@ -1,4 +1,4 @@
-#include "../server.h"
+#include "message_updates.h"
 
 t_message_update create_empty_message_update() {
     t_message_update message_update = {

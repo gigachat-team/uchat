@@ -1,4 +1,4 @@
-#include "../server.h"
+#include "senders.h"
 
 void send_message_updates_list(int client_socket, t_list_with_size *message_updates_list) {
     t_package package = create_package(1 + message_updates_list->size * 6);
