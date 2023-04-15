@@ -49,13 +49,14 @@ void pack_uint32(uint32_t number, t_package *package) {
 
 void pack_bytes(char *bytes, t_package *package) {
     handle_packer_error(package, "Failed to pack bytes");
-    uint32_t number_of_bytes = strlen(bytes);
+    uint32_t number_of_bytes = bytes ? strlen(bytes) : 0;
     uint32_t converted_number_of_bytes = htonl(number_of_bytes);
 
     const size_t number_of_sending_bytes = sizeof(uint32_t) + (number_of_bytes * sizeof(char));
     char *sending_bytes = malloc(number_of_sending_bytes);
     memcpy(sending_bytes, &converted_number_of_bytes, sizeof(uint32_t));
-    strncpy(sending_bytes + sizeof(uint32_t), bytes, number_of_bytes);
+    if (bytes)
+        strncpy(sending_bytes + sizeof(uint32_t), bytes, number_of_bytes);
 
     package->buffer[package->filled_size].iov_base = sending_bytes;
     package->buffer[package->filled_size++].iov_len = number_of_sending_bytes;
