@@ -65,7 +65,6 @@ void exit_app();
 
 // Data Input
 t_new_chat_member_data get_new_chat_member_data(id_t chat_id);
-int console_input_int(char *message);
 
 void on_chat_clicked(GtkButton *b, gpointer user_data);
 void on_send_message_clicked(GtkEntry *entry, gpointer *user_data);
