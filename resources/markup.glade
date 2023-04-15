@@ -777,7 +777,7 @@
             </child>
             <child>
               <object class="GtkButton" id="create_room">
-                <property name="label" translatable="yes">Create room</property>
+                <property name="label" translatable="yes"></property>
                 <property name="height_request">80</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
