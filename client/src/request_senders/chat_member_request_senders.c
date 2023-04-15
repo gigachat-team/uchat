@@ -1,4 +1,4 @@
-#include "client_main.h"
+#include "request_senders.h"
 
 t_state_code rq_add_new_member(t_address server_address, t_new_chat_member_data new_chat_member_data) {
     int client_socket = create_and_connect_socket(server_address);

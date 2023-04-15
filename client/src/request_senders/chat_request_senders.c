@@ -1,4 +1,4 @@
-#include "client_main.h"
+#include "request_senders.h"
 
 id_t rq_create_chat(t_address server_address, char *chat_name, id_t owner_id) {
     int client_socket = create_and_connect_socket(server_address);
