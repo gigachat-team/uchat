@@ -57,7 +57,7 @@ t_list_with_size rq_get_message_updates(t_address server_address, id_t chat_id, 
     int client_socket = create_and_connect_socket(server_address);
 
     t_package package = create_package(5 + messages_list->size);
-    pack_byte(GET_MESSAGES_IN_CHAT, &package);
+    pack_byte(GET_MESSAGE_UPDATES, &package);
     pack_uint32(chat_id, &package);
     pack_uint32(messages_list->size, &package);
     for (t_list *i = messages_list->list; i != NULL; i = i->next) {
