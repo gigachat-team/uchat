@@ -20,7 +20,7 @@ UTILS_LIB = $(UTILS_DIR)/libutils.a
 SQLITE_LIB = $(SQLITE_DIR)/libsqlite3.a
 
 INCLUDE_HEADER_DIRS = $(addprefix -I, $(HEADER_DIRS))
-INCLUDE_UTILS_HEADER_DIRS = $(addprefix -I, gst$(UTILS_HEADER_DIRS))
+INCLUDE_UTILS_HEADER_DIRS = $(addprefix -I, $(UTILS_HEADER_DIRS))
 INCLUDE_SQLITE_HEADER_DIRS = $(addprefix -I, $(SQLITE_HEADER_DIRS))
 
 INCLUDE_UTILS = -L$(dir $(UTILS_LIB)) -l$(patsubst lib%.a,%,$(notdir $(UTILS_LIB)))
