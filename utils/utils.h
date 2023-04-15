@@ -82,6 +82,7 @@ typedef enum e_request {
     SEND_TEXT_MESSAGE, // -> user_id -> chat_id -> text_message
     GET_MESSAGES_IN_CHAT,
     SEND_MESSAGE_AND_GET_MESSAGE_UPDATES,
+    GET_MESSAGE_UPDATES,
     REMOVE_USER_FROM_CHAT,
     GET_CHAT_MEMBERS
 } t_request;
