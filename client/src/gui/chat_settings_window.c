@@ -1,5 +1,16 @@
 #include "client_main.h"
 
+void gui_fill_members_list(GtkBuilder *builder, t_address *server_address, id_t chat_id) {
+    GtkWidget *members_list = get_widget(builder, "members_in_chat_list");
+
+    uint32_t members_count = 0;
+    t_user *members = rq_get_chat_members(*server_address, chat_id, &members_count);
+    for (size_t i = 0; i < members_count; i++) {
+        gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(members_list), members[i].login);
+    }
+    free_users(members, members_count);
+}
+
 void gui_init_chat_settings_window(t_chat_data *chat_data) {
     GtkWidget *leave_chat_button = get_widget(chat_data->gui_data.builder, "leave_chat_button");
     GtkWidget *add_member_button = get_widget(chat_data->gui_data.builder, "add_chat_member_button");
@@ -9,6 +20,8 @@ void gui_init_chat_settings_window(t_chat_data *chat_data) {
 
     g_signal_handlers_destroy(add_member_button);
     g_signal_connect(add_member_button, "clicked", G_CALLBACK(on_add_chat_member_clicked), chat_data);
+
+    gui_fill_members_list(chat_data->gui_data.builder, &chat_data->gui_data.server_address, chat_data->chat.id);
 }
 
 void gui_add_chat_member(GtkBuilder *builder, t_address *server_address, id_t chat_id) {
