@@ -62,7 +62,7 @@ void db_create_members_table(sqlite3 *db);
 void db_create_messages_table(sqlite3 *db);
 void db_create_message_statuses_table(sqlite3 *db);
 
-void db_remove_user_from_chat(sqlite3 *db, id_t user_id, id_t chat_id);
+void db_delete_member(sqlite3 *db, id_t user_id, id_t chat_id);
 void db_remove_message(sqlite3 *db, id_t message_id);
 
 /**
