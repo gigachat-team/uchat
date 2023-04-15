@@ -13,6 +13,7 @@
 #define PASSWORD_ENTRY_ID "password_entry"
 #define NEW_CHAT_NAME_ENTRY_ID "new_chat_name_entry"
 #define CHAT_NAME_LABEL_ID "chat_name"
+#define CREATE_ROOM_ID "create_room"
 
 #define ERROR_MESSAGE_REGISTRATION_LABEL_ID "error_message_registration_label"
 #define ERROR_MESSAGE_LOGIN_LABEL_ID "error_message_login_label"
