@@ -4,6 +4,7 @@
 #include "database.h"
 #include "user_message.h"
 #include "senders.h"
+#include "packager.h"
 
 void handle_registration(int client_socket);
 void handle_login(int client_socket);

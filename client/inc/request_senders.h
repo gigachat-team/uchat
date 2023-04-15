@@ -1,6 +1,7 @@
 #pragma once
 
 #include "client_receivers.h"
+#include "packager.h"
 
 typedef enum e_authentication_mode {
     REGISTER_MODE = REGISTER,
