@@ -29,35 +29,37 @@ static void load_messages(GtkBuilder *builder, t_address *server_address, id_t c
     }
 }
 
-void gui_send_message(GtkBuilder *builder, t_address *server_address, id_t user_id, id_t chat_id, char *message, t_list_with_size *messages_in_chat) {
-    t_list_with_size message_updates_list = rq_send_message_and_get_messages_updates(*server_address, user_id, chat_id, message, messages_in_chat);
-    for (t_list *i = message_updates_list.list; i != NULL; i = i->next) {
+static void gui_update_messages_list(GtkBuilder *builder, t_list_with_size *messages_list, t_list_with_size *message_updates_list, char *sended_message) {
+    for (t_list *i = message_updates_list->list; i != NULL; i = i->next) {
         t_message_update *message_update = (t_message_update *)i->data;
         if (message_update->remove) {
-            for (t_list *j = messages_in_chat->list; j != NULL; j = j->next) {
+            for (t_list *j = messages_list->list; j != NULL; j = j->next) {
                 t_user_message *message_in_chat = (t_user_message *)j->data;
                 if (message_update->message.message_id == message_in_chat->message_id) {
                     gtk_widget_hide(message_in_chat->widget);
                     gtk_widget_destroy(message_in_chat->widget);
-                    mx_pop_node(&messages_in_chat->list, j);
-                    messages_in_chat->size--;
+                    mx_pop_node(&messages_list->list, j);
+                    messages_list->size--;
                     break;
                 }
             }
-            continue;
         } else {
-            if (i->next == NULL) {
-                message_update->message.widget = create_and_show_message_widget(builder, message);
+            if (i->next == NULL && sended_message != NULL) {
+                message_update->message.widget = create_and_show_message_widget(builder, sended_message);
                 free(message_update->message.data);
-                message_update->message.data = strdup(message);
+                message_update->message.data = strdup(sended_message);
             } else {
                 message_update->message.widget = create_and_show_message_widget(builder, message_update->message.data);
             }
-            mx_push_back(&messages_in_chat->list, message_update);
-            messages_in_chat->size++;
+            mx_push_back(&messages_list->list, message_update);
+            messages_list->size++;
         }
-
     }
+}
+
+void gui_send_message_and_update_messages_list(GtkBuilder *builder, t_address *server_address, id_t user_id, id_t chat_id, char *message, t_list_with_size *messages_in_chat) {
+    t_list_with_size message_updates_list = rq_send_message_and_get_messages_updates(*server_address, user_id, chat_id, message, messages_in_chat);
+    gui_update_messages_list(builder, messages_in_chat, &message_updates_list, message);
     mx_clear_list(&message_updates_list.list);
 }
 
