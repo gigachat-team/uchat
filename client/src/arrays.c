@@ -1,4 +1,4 @@
-#include "main.h"
+#include "client_main.h"
 
 t_user_messages_array allocate_user_messages_array(size_t size) {
     t_user_messages_array user_messages_array = {

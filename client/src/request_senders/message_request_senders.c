@@ -1,4 +1,4 @@
-#include "main.h"
+#include "client_main.h"
 
 t_state_code rq_send_text_message(t_address server_address, id_t user_id, id_t chat_id, char *data) {
     int client_socket = create_and_connect_socket(server_address);

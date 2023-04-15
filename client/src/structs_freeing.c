@@ -1,4 +1,4 @@
-#include "main.h"
+#include "client_main.h"
 
 void free_user_message(t_user_message message) {
     free(message.sender_login);

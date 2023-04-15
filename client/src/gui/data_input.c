@@ -1,4 +1,4 @@
-#include "main.h"
+#include "client_main.h"
 
 t_new_chat_member_data get_new_chat_member_data(id_t chat_id) {
     printf("Enter new member login: ");
