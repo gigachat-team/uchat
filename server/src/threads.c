@@ -1,8 +1,8 @@
 #include "threads.h"
 
-void *handle_request_thread(void *client_socket_void) {
-    int client_socket = *(int *)client_socket_void;
-    free(client_socket_void);
+void *handle_request_thread(void *allocated_client_socket) {
+    int client_socket = *(int *)allocated_client_socket;
+    free(allocated_client_socket);
 
     t_request client_request = receive_byte(client_socket);
 
