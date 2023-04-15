@@ -6,7 +6,7 @@ void gui_fill_members_list(GtkBuilder *builder, t_address *server_address, id_t 
     uint32_t members_count = 0;
     t_user *members = rq_get_chat_members(*server_address, chat_id, &members_count);
     for (size_t i = 0; i < members_count; i++) {
-        gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(members_list), members[i].login);
+        gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(members_list), strdup(members[i].login));
     }
     free_users(members, members_count);
 }
