@@ -17,17 +17,17 @@ void load_css(char *css_file_path) {
     gtk_css_provider_load_from_path(provider, css_file_path, NULL);
 }
 
-void apply_style_to_widget(GtkWidget *widget, const char *class) {
-    if (!class || !widget) return;
+void apply_style_to_widget(GtkWidget *widget, const char *class_name) {
+    if (!class_name || !widget) return;
 
     GtkStyleContext *context = gtk_widget_get_style_context(widget);
 
-    gtk_style_context_add_class(context, class);
+    gtk_style_context_add_class(context, class_name);
 }
 
-void get_widget_by_id_and_apply_style(t_gui_data gui_data, const char *markup_id, const char *class) {
-    if (!markup_id || !class || !gui_data.builder) return;
+void get_widget_by_id_and_apply_style(t_gui_data gui_data, const char *markup_id, const char *class_name) {
+    if (!markup_id || !class_name || !gui_data.builder) return;
 
     GtkWidget *newlogin = GTK_WIDGET(gtk_builder_get_object(gui_data.builder, markup_id));
-    apply_style_to_widget(newlogin, class);
+    apply_style_to_widget(newlogin, class_name);
 }

@@ -15,9 +15,9 @@ void load_css(char *css_file_path);
  * @brief applies a style from a loaded css file to a widget.
  * If one of the pointers in NULL, then the function does nothing
  * @param widget in which a new style will be loaded
- * @param class css class-name for a style
+ * @param class_name css class-name for a style
 */
-void apply_style_to_widget(GtkWidget *widget, const char *class);
+void apply_style_to_widget(GtkWidget *widget, const char *class_name);
 
 /**
  * @brief applies style to a gtk widget by id in a .glade file.
@@ -25,6 +25,6 @@ void apply_style_to_widget(GtkWidget *widget, const char *class);
  * @param gui_data contains the builder pointer from which the function
  * gets a widget.
  * @param markup_id is an id from .glade file
- * @param class css class-name for a style
+ * @param class_name css class-name for a style
 */
-void get_widget_by_id_and_apply_style(t_gui_data gui_data, const char *markup_id, const char *class);
+void get_widget_by_id_and_apply_style(t_gui_data gui_data, const char *markup_id, const char *class_name);
