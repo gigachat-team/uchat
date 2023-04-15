@@ -160,28 +160,43 @@ t_list_with_size db_select_message_updates(sqlite3 *db, id_t chat_id, t_uint32_a
     sqlite3_stmt *statement = db_open_statement(db, sql);
     sqlite3_free(sql);
 
-    t_list_with_size list_with_size = {.list = NULL, .size = 0};
-    for (size_t i = 0; sqlite3_step(statement) == SQLITE_ROW; i++) {
-        int message_id = sqlite3_column_int(statement, 0);
-        if (binary_search_uint32(message_IDs, message_id) != -1) {
+    t_list_with_size message_updates_list = {.list = NULL, .size = 0};
+    int step_result = sqlite3_step(statement);
+    for (int i = message_IDs->size - 1; step_result == SQLITE_ROW || i >= 0;) {
+        int message_id_in_db = sqlite3_column_int(statement, 0);
+        if (message_id_in_db == (int)message_IDs->arr[i]) {
+            if (step_result != SQLITE_DONE)
+                step_result = sqlite3_step(statement);
+            i--;
             continue;
         }
 
-        t_user_message *user_message = malloc(sizeof(t_user_message));
-        user_message->message_id = message_id;
-        user_message->sender_id = sqlite3_column_int(statement, 1);
-        user_message->sender_login = strdup((char *)sqlite3_column_text(statement, 2));
-        if (ignore_last_selected_message_data && i == 0)
-            user_message->data = strdup("");
-        else
-            user_message->data = strdup(sqlite3_column_blob(statement, 3));
-        user_message->creation_date = strdup(sqlite3_column_blob(statement, 4));
-        mx_push_front(&list_with_size.list, user_message);
-        list_with_size.size++;
+        t_message_update *message_update = create_empty_message_update_ptr();
+        if (message_id_in_db < (int)message_IDs->arr[i]) {
+            message_update->message.message_id = message_IDs->arr[i];
+            message_update->remove = true;
+            i--;
+        } else {
+            message_update->message.message_id = message_id_in_db;
+            message_update->message.sender_id = sqlite3_column_int(statement, 1);
+            message_update->message.sender_login = strdup((char *)sqlite3_column_text(statement, 2));
+            if (ignore_last_selected_message_data) {
+                message_update->message.data = NULL;
+                ignore_last_selected_message_data = false;
+            }
+            else
+                message_update->message.data = strdup(sqlite3_column_blob(statement, 3));
+            message_update->message.creation_date = strdup(sqlite3_column_blob(statement, 4));
+            message_update->remove = false;
+            if (step_result != SQLITE_DONE)
+                step_result = sqlite3_step(statement);
+        }
+        mx_push_front(&message_updates_list.list, message_update);
+        message_updates_list.size++;
     }
     db_close_statement(statement, db);
 
-    return list_with_size;
+    return message_updates_list;
 }
 
 t_user *db_get_chat_members(sqlite3 *db, id_t chat_id, size_t *members_count) {

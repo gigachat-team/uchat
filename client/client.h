@@ -69,6 +69,12 @@ void free_user_message(t_user_message message);
 void free_user_messages(t_user_message *messages, size_t length);
 void free_user_messages_list(t_list_with_size *messages_list);
 
+typedef struct s_message_update {
+    t_user_message message;
+    bool remove;
+} t_message_update;
+t_list_with_size receive_message_updates_list(int client_socket);
+
 // GUI-----------------------------------------------------------------------------
 GtkWidget *get_widget(GtkBuilder *gtk_builder, char *name);
 void set_label_text(GtkWidget *gtk_widget, char *text);

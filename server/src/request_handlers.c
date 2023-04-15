@@ -151,14 +151,14 @@ void handle_message_sending_and_messages_updates_getting(int client_socket) {
 
     sqlite3 *db = db_open();
     db_add_text_message(db, chat_id, user_id, data);
-    t_list_with_size list_with_size = db_select_message_updates(db, chat_id, &all_message_IDs_array, true);
+    t_list_with_size message_updates_list = db_select_message_updates(db, chat_id, &all_message_IDs_array, true);
     db_close(db);
 
-    send_messages_list(client_socket, list_with_size.list, list_with_size.size);
+    send_message_updates_list(client_socket, &message_updates_list);
 
     free(data);
-    free_user_messages_list(&list_with_size.list);
     free(all_message_IDs_array.arr);
+    free_message_updates_list(&message_updates_list.list);
 }
 
 void handle_removing_user_from_chat(int client_socket) {

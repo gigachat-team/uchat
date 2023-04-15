@@ -46,9 +46,9 @@ t_list_with_size rq_send_message_and_get_messages_updates(t_address server_addre
     }
     send_and_free_package(client_socket, &package);
 
-    t_list_with_size updated_messages_list = receive_messages_list(client_socket);
+    t_list_with_size message_updates_list = receive_message_updates_list(client_socket);
 
     close(client_socket);
 
-    return updated_messages_list;
+    return message_updates_list;
 }

@@ -41,6 +41,14 @@ typedef struct s_user_message {
     char *creation_date;
 } t_user_message;
 
+typedef struct s_message_update {
+    t_user_message message;
+    bool remove;
+} t_message_update;
+t_message_update create_empty_message_update();
+t_message_update *create_empty_message_update_ptr();
+void free_message_updates_list(t_list **message_updates_list);
+
 void *handle_request_thread(void *client_socket_void);
 
 void send_chat(int socket, t_chat chat);
@@ -138,6 +146,9 @@ bool db_user_is_in_chat(sqlite3 *db, id_t user_id, id_t chat_id);
 */
 void daemon_server();
 
+void send_message_updates_list(int client_socket, t_list_with_size *message_updates_list);
+
 void free_user_message(t_user_message *message);
 void free_user_messages(t_user_message *messages, size_t length);
 void free_user_messages_list(t_list **messages_list);
+void free_message_updates_list(t_list **message_updates_list);
