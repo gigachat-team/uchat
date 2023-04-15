@@ -191,7 +191,7 @@ void handle_message_deleting_and_messages_updates_getting(int client_socket) {
     }
 
     sqlite3 *db = db_open();
-    db_remove_message(db, message_id);
+    db_delete_message(db, message_id);
     t_list_with_size message_updates_list = db_select_message_updates(db, chat_id, &present_message_IDs_array, false);
     db_close(db);
 
@@ -206,7 +206,7 @@ void handle_removing_user_from_chat(int client_socket) {
     uint32_t chat_id = receive_uint32(client_socket);
 
     sqlite3 *db = db_open();
-    db_remove_user_from_chat(db, user_id, chat_id);
+    db_delete_member(db, user_id, chat_id);
     db_close(db);
 
     send_byte(client_socket, USER_REMOVED_FROM_CHAT_SUCCESSFULLY);
