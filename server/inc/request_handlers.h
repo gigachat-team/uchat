@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../utils/utils.h"
+#include "utils.h"
 #include "database.h"
 #include "user_message.h"
 #include "senders.h"

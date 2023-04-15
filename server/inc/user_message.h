@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../utils/utils.h"
+#include "utils.h"
 
 typedef struct s_user_message {
     id_t message_id;

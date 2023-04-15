@@ -1,7 +1,7 @@
 #pragma once
 
 #include "user_message.h"
-#include "../../utils/utils.h"
+#include "utils.h"
 
 typedef struct s_message_update {
     t_user_message message;

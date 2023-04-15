@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../../utils/utils.h"
-#include "../../resources/libraries/sqlite3/sqlite3.h"
+#include "utils.h"
+#include "sqlite3.h"
 #include "user_message.h"
 #include "message_updates.h"
 

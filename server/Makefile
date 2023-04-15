@@ -5,16 +5,24 @@ CFLAGS = -std=c11 -Wall -Wextra -Werror -Wpedantic -gdwarf-4 -pthread -MMD -MP
 
 OBJDIR = obj
 SRCDIR = src
-HEADER_DIRS = $(sort $(dir $(wildcard *.h) $(wildcard */*.h) $(wildcard */*/*.h) $(wildcard */*/*/*.h)))
+UTILS_DIR = ../utils
+SQLITE_DIR = ../resources/libraries/sqlite3
+
+HEADER_DIRS = $(sort $(dir $(wildcard $(UTILS_DIR)/*.h) $(wildcard $(UTILS_DIR)/*/*.h) $(wildcard $(UTILS_DIR)/*/*/*.h)))
+UTILS_HEADER_DIRS = $(sort $(dir $(wildcard *.h) $(wildcard */*.h) $(wildcard */*/*.h) $(wildcard */*/*/*.h)))
+SQLITE_HEADER_DIRS = $(sort $(dir $(wildcard $(SQLITE_DIR)/*.h) $(wildcard $(SQLITE_DIR)/*/*.h)))
 
 SOURCES = $(wildcard $(SRCDIR)/*.c) $(wildcard $(SRCDIR)/*/*.c) $(wildcard $(SRCDIR)/*/*/*.c)
 OBJECTS = $(subst $(SRCDIR)/,,$(addprefix $(OBJDIR)/, $(SOURCES:.c=.o)))
 DEPENDS = $(subst $(SRCDIR)/,,$(addprefix $(OBJDIR)/, $(SOURCES:.c=.d)))
 
-UTILS_LIB = ../utils/libutils.a
-SQLITE_LIB = ../resources/libraries/sqlite3/libsqlite3.a
+UTILS_LIB = $(UTILS_DIR)/libutils.a
+SQLITE_LIB = $(SQLITE_DIR)/libsqlite3.a
 
 INCLUDE_HEADER_DIRS = $(addprefix -I, $(HEADER_DIRS))
+INCLUDE_UTILS_HEADER_DIRS = $(addprefix -I, gst$(UTILS_HEADER_DIRS))
+INCLUDE_SQLITE_HEADER_DIRS = $(addprefix -I, $(SQLITE_HEADER_DIRS))
+
 INCLUDE_UTILS = -L$(dir $(UTILS_LIB)) -l$(patsubst lib%.a,%,$(notdir $(UTILS_LIB)))
 INCLUDE_SQLITE = -L$(dir $(SQLITE_LIB)) -l$(patsubst lib%.a,%,$(notdir $(SQLITE_LIB))) -ldl
 
@@ -30,7 +38,7 @@ $(BINARYNAME): $(SOURCES) $(OBJDIR) $(OBJECTS) $(UTILS_LIB)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c Makefile
 	@mkdir -p $(@D)
-	@$(CC) $(INCLUDE_HEADER_DIRS) $(CFLAGS) -c $< -o $@
+	@$(CC) $(INCLUDE_HEADER_DIRS) $(INCLUDE_UTILS_HEADER_DIRS) $(INCLUDE_SQLITE_HEADER_DIRS) $(CFLAGS) -c $< -o $@
 
 $(OBJDIR):
 	@mkdir -p $@
