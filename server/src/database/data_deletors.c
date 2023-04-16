@@ -1,5 +1,14 @@
 #include "database.h"
 
+void db_delete_chat(sqlite3 *db, id_t chat_id) {
+    char *sql = sqlite3_mprintf(" \
+        "ENABLE_FOREIGN_KEYS_SUPPORT" \
+        DELETE FROM "CHATS_TABLE" \
+        WHERE "CHATS_ID" = &u", chat_id
+    );
+    db_execute_sql(db, sql);
+}
+
 void db_delete_member(sqlite3 *db, id_t user_id, id_t chat_id) {
     char *sql = sqlite3_mprintf(" \
         DELETE FROM "MEMBERS_TABLE" \
