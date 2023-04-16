@@ -33,6 +33,8 @@
 #define MESSAGE_STATUSES_USER_ID "UserId"
 #define MESSAGE_STATUSES_IS_READ "IsRead"
 
+#define ENABLE_FOREIGN_KEYS_SUPPORT "PRAGMA foreign_keys = ON;"
+
 /**
  * @brief Opens new database connection. Prints error and close application on error.
  * @return New sqlite3 database connection.
