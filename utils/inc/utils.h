@@ -145,7 +145,3 @@ void free_new_chat_member_data(t_new_chat_member_data new_chat_member_data);
 void free_user(t_user user);
 void free_users(t_user *users, size_t users_count);
 void free_users_list(list_t *users_list);
-
-struct tm str_to_tm(char *datetime_str, char *datetime_format);
-struct tm utc_to_localtime(struct tm utc);
-struct tm utc_str_to_localtime_tm(char *utc_str, char *datetime_format);
