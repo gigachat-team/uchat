@@ -38,7 +38,7 @@ PHONY := all
 all: $(BINARYNAME)
 	@:
 
-$(BINARYNAME): $(SOURCES) $(OBJDIR) $(OBJECTS) $(UTILS_LIB)
+$(BINARYNAME): $(SOURCES) $(OBJDIR) $(OBJECTS) $(UTILS_LIB) $(SQLITE_LIB) $(LIST_LIB)
 	@$(CC) $(CFLAGS) $(OBJECTS) $(INCLUDE_UTILS) $(INCLUDE_SQLITE) $(INCLUDE_LIST) -o $@
 	@printf "$(notdir $@)\tcreated\n"
 

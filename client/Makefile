@@ -33,7 +33,7 @@ PHONY := all
 all: $(BINARYNAME)
 	@:
 
-$(BINARYNAME): $(SOURCES) $(OBJDIR) $(OBJECTS) $(UTILS_LIB)
+$(BINARYNAME): $(SOURCES) $(OBJDIR) $(OBJECTS) $(UTILS_LIB) $(LIST_LIB)
 	@$(CC) $(CFLAGS) $(OBJECTS) $(INCLUDE_UTILS) $(INCLUDE_LIST) -o $@ $(GTK_LIBS)
 	@printf "$(notdir $@)\t\tcreated\n"
 
