@@ -216,7 +216,7 @@ void handle_getting_chat_members(int client_socket) {
     size_t members_count = 0;
 
     sqlite3 *db = db_open();
-    t_user *members = db_get_chat_members(db, chat_id, &members_count);
+    t_user *members = db_select_members(db, chat_id, &members_count);
     db_close(db);
 
     t_package package = create_package(1 + members_count * 2);

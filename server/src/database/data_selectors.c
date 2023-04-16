@@ -188,7 +188,7 @@ list_t *db_select_message_updates(sqlite3 *db, id_t chat_id, t_uint32_array *mes
     return message_updates_list;
 }
 
-t_user *db_get_chat_members(sqlite3 *db, id_t chat_id, size_t *members_count) {
+t_user *db_select_members(sqlite3 *db, id_t chat_id, size_t *members_count) {
     char *sql = sqlite3_mprintf(" \
         SELECT COUNT(*) FROM "MEMBERS_TABLE" \
         WHERE "MEMBERS_CHAT_ID" = %u", chat_id

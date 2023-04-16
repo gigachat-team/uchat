@@ -101,7 +101,7 @@ list_t *db_select_message_updates(sqlite3 *db, id_t chat_id, t_uint32_array *mes
  * MEMBERS_COUNT variable.
  * @return Allocated array of members.
 */
-t_user *db_get_chat_members(sqlite3 *db, id_t chat_id, size_t *members_count);
+t_user *db_select_members(sqlite3 *db, id_t chat_id, size_t *members_count);
 
 /**
  * @return false if such login does not exist or true if exists
