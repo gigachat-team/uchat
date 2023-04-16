@@ -20,13 +20,15 @@ t_message_update *create_empty_message_update_ptr() {
     return message_update;
 }
 
-void free_message_updates_list(t_list **message_updates_list) {
-    for (t_list *i = *message_updates_list; i != NULL; i = i->next) {
-        t_message_update *message_update = (t_message_update *)i->data;
+void free_message_updates_list(list_t *message_updates_list) {
+    if (message_updates_list == NULL) return;
+    for (list_node_t *i = message_updates_list->head; i != NULL; i = i->next) {
+        t_message_update *message_update = (t_message_update *)i->val;
         free(message_update->message.sender_login);
         free(message_update->message.data);
         free(message_update->message.creation_date);
         free(message_update);
+        free(i);
     }
-    mx_clear_list(message_updates_list);
+    free(message_updates_list);
 }

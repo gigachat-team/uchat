@@ -1,8 +1,9 @@
 #include "client_receivers.h"
 
-t_list_with_size receive_messages_list(int client_socket) {
-    t_list_with_size messages_list = {.list = NULL, .size = receive_uint32(client_socket)};
-    for (size_t i = 0; i < messages_list.size; i++) {
+list_t *receive_messages_list(int client_socket) {
+    uint32_t messages_count = receive_uint32(client_socket);
+    list_t *messages_list = list_new();
+    for (size_t i = 0; i < messages_count; i++) {
         t_user_message *message = malloc(sizeof(t_user_message));
         message->message_id = receive_uint32(client_socket);
         message->sender_id = receive_uint32(client_socket);
@@ -13,15 +14,16 @@ t_list_with_size receive_messages_list(int client_socket) {
             message->creation_date = utc_str_to_localtime_tm(received_creation_date, DEFAULT_TIME_FORMAT);
         free(received_creation_date);
         message->widget = NULL;
-        mx_push_back(&messages_list.list, message);
+        list_rpush(messages_list, list_node_new(message));
     }
 
     return messages_list;
 }
 
-t_list_with_size receive_message_updates_list(int client_socket) {
-    t_list_with_size message_updates_list = {.list = NULL, .size = receive_uint32(client_socket)};
-    for (size_t i = 0; i < message_updates_list.size; i++) {
+list_t *receive_message_updates_list(int client_socket) {
+    uint32_t message_updates_count = receive_uint32(client_socket);
+    list_t *message_updates_list = list_new();
+    for (size_t i = 0; i < message_updates_count; i++) {
         t_message_update *message_update = malloc(sizeof(t_message_update));
         message_update->message.message_id = receive_uint32(client_socket);
         message_update->message.sender_id = receive_uint32(client_socket);
@@ -33,8 +35,7 @@ t_list_with_size receive_message_updates_list(int client_socket) {
         free(received_creation_date);
         message_update->message.widget = NULL;
         message_update->remove = receive_byte(client_socket);
-
-        mx_push_back(&message_updates_list.list, message_update);
+        list_rpush(message_updates_list, list_node_new(message_update));
     }
     return message_updates_list;
 }

@@ -13,10 +13,11 @@ void free_user_messages(t_user_message *messages, size_t length) {
     free(messages);
 }
 
-void free_user_messages_list(t_list **messages_list) {
-    for (t_list *i = *messages_list; i != NULL; i = i->next) {
-        free_user_message(i->data);
-        free(i->data);
+void free_user_messages_list(list_t *messages_list) {
+    if (messages_list == NULL) return;
+    for (list_node_t *i = messages_list->head; i != NULL; i = i->next) {
+        free_user_message(i->val);
+        free(i->val);
     }
-    mx_clear_list(messages_list);
+    free(messages_list);
 }

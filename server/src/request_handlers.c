@@ -116,11 +116,11 @@ void handle_text_message_sending(int client_socket) {
     free(text_message);
 }
 
-static void send_messages_list(int client_socket, t_list *messages_list, size_t messages_count) {
-    t_package package = create_package(1 + messages_count * 5);
-    pack_uint32(messages_count, &package);
-    for (t_list *i = messages_list; i != NULL; i = i->next) {
-        t_user_message *user_message = (t_user_message *)i->data;
+static void send_messages_list(int client_socket, list_t *messages_list) {
+    t_package package = create_package(1 + messages_list->len * 5);
+    pack_uint32(messages_list->len, &package);
+    for (list_node_t *i = messages_list->head; i != NULL; i = i->next) {
+        t_user_message *user_message = (t_user_message *)i->val;
         pack_uint32(user_message->message_id, &package);
         pack_uint32(user_message->sender_id, &package);
         pack_bytes(user_message->sender_login, &package);
@@ -133,15 +133,13 @@ static void send_messages_list(int client_socket, t_list *messages_list, size_t 
 void handle_messages_in_chat_getting(int client_socket) {
     uint32_t chat_id = receive_uint32(client_socket);
 
-    size_t found_messages_count = 0;
-
     sqlite3 *db = db_open();
-    t_list *messages_list = db_get_messages_in_chat(db, chat_id, &found_messages_count);
+    list_t *messages_list = db_select_messages(db, chat_id);
     db_close(db);
 
-    send_messages_list(client_socket, messages_list, found_messages_count);
+    send_messages_list(client_socket, messages_list);
 
-    free_user_messages_list(&messages_list);
+    free_user_messages_list(messages_list);
 }
 
 void handle_message_sending_and_messages_updates_getting(int client_socket) {
@@ -155,14 +153,14 @@ void handle_message_sending_and_messages_updates_getting(int client_socket) {
 
     sqlite3 *db = db_open();
     db_add_text_message(db, chat_id, user_id, data);
-    t_list_with_size message_updates_list = db_select_message_updates(db, chat_id, &all_message_IDs_array, true);
+    list_t *message_updates_list = db_select_message_updates(db, chat_id, &all_message_IDs_array, true);
     db_close(db);
 
-    send_message_updates_list(client_socket, &message_updates_list);
+    send_message_updates_list(client_socket, message_updates_list);
 
     free(data);
     free(all_message_IDs_array.arr);
-    free_message_updates_list(&message_updates_list.list);
+    free_message_updates_list(message_updates_list);
 }
 
 void handle_message_updates_getting(int client_socket) {
@@ -173,13 +171,13 @@ void handle_message_updates_getting(int client_socket) {
     }
 
     sqlite3 *db = db_open();
-    t_list_with_size message_updates_list = db_select_message_updates(db, chat_id, &all_message_IDs_array, false);
+    list_t *message_updates_list = db_select_message_updates(db, chat_id, &all_message_IDs_array, false);
     db_close(db);
 
-    send_message_updates_list(client_socket, &message_updates_list);
+    send_message_updates_list(client_socket, message_updates_list);
 
     free(all_message_IDs_array.arr);
-    free_message_updates_list(&message_updates_list.list);
+    free_message_updates_list(message_updates_list);
 }
 
 void handle_message_deleting_and_messages_updates_getting(int client_socket) {
@@ -192,13 +190,13 @@ void handle_message_deleting_and_messages_updates_getting(int client_socket) {
 
     sqlite3 *db = db_open();
     db_delete_message(db, message_id);
-    t_list_with_size message_updates_list = db_select_message_updates(db, chat_id, &present_message_IDs_array, false);
+    list_t *message_updates_list = db_select_message_updates(db, chat_id, &present_message_IDs_array, false);
     db_close(db);
 
-    send_message_updates_list(client_socket, &message_updates_list);
+    send_message_updates_list(client_socket, message_updates_list);
 
     free(present_message_IDs_array.arr);
-    free_message_updates_list(&message_updates_list.list);
+    free_message_updates_list(message_updates_list);
 }
 
 void handle_removing_user_from_chat(int client_socket) {

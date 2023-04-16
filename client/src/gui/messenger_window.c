@@ -7,8 +7,7 @@ static t_chat_data *create_chat_data_ptr(GtkBuilder *gtk_builder, t_address *ser
     chat_data->gui_data.user_id = user_id;
     chat_data->chat.name = strdup(chat_name);
     chat_data->chat.id = chat_id;
-    chat_data->messages.list = NULL;
-    chat_data->messages.size = 0;
+    chat_data->messages = list_new();
     return chat_data;
 }
 
@@ -19,7 +18,6 @@ static void create_button_in_chat_list(GtkBuilder *gtk_builder, t_address *serve
     g_signal_connect(new_button, "clicked", G_CALLBACK(on_chat_clicked), chat_data);
     add_to_box_start(gtk_builder, new_button, CHATS_LIST_CONTAINER_ID, 0);
 }
-
 
 void gui_render_chats_list(GtkBuilder *gtk_builder, t_address *server_address, id_t user_id) {
     size_t chats_count = 0;

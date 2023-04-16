@@ -21,4 +21,4 @@ typedef struct s_user_messages_array {
 t_user_messages_array allocate_user_messages_array(size_t size);
 void free_user_message(t_user_message message);
 void free_user_messages(t_user_message *messages, size_t length);
-void free_user_messages_list(t_list_with_size *messages_list);
+void free_user_messages_list(list_t *messages_list);
