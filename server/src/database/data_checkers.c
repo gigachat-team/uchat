@@ -32,3 +32,16 @@ bool db_user_is_in_chat(sqlite3 *db, id_t user_id, id_t chat_id) {
 
     return user_is_in_chat;
 }
+
+bool db_chat_has_members(sqlite3 *db, id_t chat_id) {
+    char *sql = sqlite3_mprintf(" \
+        SELECT COUNT(*) FROM "MEMBERS_TABLE" \
+        WHERE "MEMBERS_CHAT_ID" = %u", chat_id
+    );
+    sqlite3_stmt *statement = db_open_statement(db, sql);
+    sqlite3_free(sql);
+    bool chat_has_members = sqlite3_step(statement) == SQLITE_ROW;
+    db_close_statement(statement, db);
+
+    return chat_has_members;
+}
