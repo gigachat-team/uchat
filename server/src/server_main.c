@@ -24,6 +24,6 @@ int main(int argc, char **argv) {
         int client_socket = accept_socket(listening_socket);
         int *allocated_client_socket = malloc(sizeof(int));
         *allocated_client_socket = client_socket;
-        create_detached_thread(handle_request_thread, allocated_client_socket);
+        create_detached_thread(handle_client_request_thread, allocated_client_socket);
     }
 }
