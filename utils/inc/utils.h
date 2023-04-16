@@ -21,9 +21,6 @@
 #define MAX_PASSWORD_LENGTH 50
 #define MAX_CHAT_NAME_LENGTH 30
 
-#define DEFAULT_TIME_FORMAT "%4Y-%2m-%2d %2H:%2M:%2S"
-#define DEFAULT_TIME_FORMAT_LEN 20
-
 typedef struct s_new_chat_member_data {
     id_t chat_id;
     char *member_login;
