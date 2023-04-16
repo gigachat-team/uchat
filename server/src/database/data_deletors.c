@@ -17,6 +17,10 @@ void db_delete_member(sqlite3 *db, id_t user_id, id_t chat_id) {
     );
     db_execute_sql(db, sql);
     sqlite3_free(sql);
+
+    if(!db_chat_has_members(db, chat_id)) {
+        db_delete_chat(db, chat_id);
+    }
 }
 
 void db_delete_message(sqlite3 *db, id_t message_id) {
