@@ -188,37 +188,24 @@ list_t *db_select_message_updates(sqlite3 *db, id_t chat_id, t_uint32_array *mes
     return message_updates_list;
 }
 
-t_user *db_select_members(sqlite3 *db, id_t chat_id, size_t *members_count) {
+list_t *db_select_members(sqlite3 *db, id_t chat_id) {
     char *sql = sqlite3_mprintf(" \
-        SELECT COUNT(*) FROM "MEMBERS_TABLE" \
-        WHERE "MEMBERS_CHAT_ID" = %u", chat_id
-    );
-    sqlite3_stmt *statement = db_open_statement(db, sql);
-    sqlite3_free(sql);
-    sqlite3_step(statement);
-    *members_count = sqlite3_column_int(statement, 0);
-    db_close_statement(statement, db);
-
-    if (*members_count == 0) {
-        return NULL;
-    }
-
-    sql = sqlite3_mprintf(" \
         SELECT "MEMBERS_USER_ID", \
             (SELECT "USERS_LOGIN" FROM "USERS_TABLE" \
             WHERE "USERS_TABLE"."USERS_ID" = "MEMBERS_TABLE"."MEMBERS_USER_ID") \
         FROM "MEMBERS_TABLE" WHERE "MEMBERS_CHAT_ID" = %u", chat_id
     );
-    statement = db_open_statement(db, sql);
+    sqlite3_stmt *statement = db_open_statement(db, sql);
     sqlite3_free(sql);
-    sqlite3_step(statement);
-    t_user *members = malloc(*members_count * sizeof(t_user));
-    for (size_t i = 0; i < *members_count; i++) {
-        members[i].id = sqlite3_column_int(statement, 0);
-        members[i].login = strdup((char *)sqlite3_column_text(statement, 1));
-        sqlite3_step(statement);
+
+    list_t *members_list = list_new();
+    while (sqlite3_step(statement) == SQLITE_ROW) {
+        t_user *member = malloc(sizeof(t_user));
+        member->id = sqlite3_column_int(statement, 0);
+        member->login = strdup((char *)sqlite3_column_text(statement, 1));
+        list_rpush(members_list, list_node_new(member));
     }
     db_close_statement(statement, db);
 
-    return members;
+    return members_list;
 }

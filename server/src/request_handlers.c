@@ -213,19 +213,18 @@ void handle_removing_user_from_chat(int client_socket) {
 void handle_getting_chat_members(int client_socket) {
     uint32_t chat_id = receive_uint32(client_socket);
 
-    size_t members_count = 0;
-
     sqlite3 *db = db_open();
-    t_user *members = db_select_members(db, chat_id, &members_count);
+    list_t *members_list = db_select_members(db, chat_id);
     db_close(db);
 
-    t_package package = create_package(1 + members_count * 2);
-    pack_uint32(members_count, &package);
-    for (size_t i = 0; i < members_count; i++) {
-        pack_uint32(members[i].id, &package);
-        pack_bytes(members[i].login, &package);
+    t_package package = create_package(1 + members_list->len * 2);
+    pack_uint32(members_list->len, &package);
+    for (list_node_t *i = members_list->head; i != NULL; i = i->next) {
+        t_user *member = (t_user *)i->val;
+        pack_uint32(member->id, &package);
+        pack_bytes(member->login, &package);
     }
     send_and_free_package(client_socket, &package);
 
-    free_users(members, members_count);
+    free_users_list(members_list);
 }
