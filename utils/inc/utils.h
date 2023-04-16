@@ -11,7 +11,6 @@
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <sys/types.h>
-#include <arpa/inet.h>
 #include <errno.h>
 #include "list.h"
 
@@ -24,11 +23,6 @@
 
 #define DEFAULT_TIME_FORMAT "%4Y-%2m-%2d %2H:%2M:%2S"
 #define DEFAULT_TIME_FORMAT_LEN 20
-
-typedef struct s_address {
-    char *ip;
-    in_port_t port;
-} t_address;
 
 typedef struct s_new_chat_member_data {
     id_t chat_id;
@@ -89,13 +83,6 @@ int64_t binary_search_uint32(t_uint32_array *sorted_array, uint32_t to_find);
 void send_byte(int socket, uint8_t byte);
 void send_uint16(int socket, uint16_t number);
 void send_uint32(int socket, uint32_t number);
-
-int create_socket();
-void bind_socket(int socket, uint16_t port);
-void listen_socket(int socket, int queue_len);
-int accept_socket(int this_socket);
-void connect_socket(int socket, t_address address);
-int create_and_connect_socket(t_address address);
 
 void free_chat(t_chat chat);
 void free_chats(t_chat *chats, size_t length);

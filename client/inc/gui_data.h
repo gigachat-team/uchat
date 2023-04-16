@@ -2,6 +2,7 @@
 
 #include "utils.h"
 #include "gtk_builder.h"
+#include "socket.h"
 
 typedef struct s_gui_data {
     GtkBuilder *builder;
