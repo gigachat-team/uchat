@@ -1,4 +1,4 @@
-#include "main.h"
+#include "server_main.h"
 
 int main(int argc, char **argv) {
     if (argc != 2) {
@@ -20,8 +20,7 @@ int main(int argc, char **argv) {
     bind_socket(listening_socket, atoi(argv[1]));
     listen_socket(listening_socket, 5);
 
-    while (true)
-    {
+    while (true) {
         int client_socket = accept_socket(listening_socket);
         int *allocated_client_socket = malloc(sizeof(int));
         *allocated_client_socket = client_socket;
