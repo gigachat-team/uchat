@@ -63,7 +63,13 @@ void on_leave_from_chat_clicked(GtkButton *b, gpointer user_data) {
 
 void on_add_chat_member_clicked(GtkButton *b, gpointer user_data) {
     t_chat_data *chat_data = (t_chat_data *)user_data;
-    gui_add_chat_member(chat_data->gui_data.builder, &chat_data->gui_data.server_address, chat_data->chat.id);
+    gui_add_chat_member(chat_data->gui_data.builder, &chat_data->gui_data.server_address, chat_data->gui_data.user_id, chat_data->chat.id);
+    (void)b;
+}
+
+void on_remove_chat_member_clicked(GtkButton *b, gpointer user_data) {
+    t_chat_data *chat_data = (t_chat_data *)user_data;
+    gui_remove_chat_member(chat_data->gui_data.builder, &chat_data->gui_data.server_address, chat_data->gui_data.user_id, chat_data->chat.id);
     (void)b;
 }
 

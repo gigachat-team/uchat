@@ -43,12 +43,14 @@ static void gui_update_messages_list(GtkBuilder *builder, list_t *messages_list,
                     break;
                 }
             }
-        } else {
+        }
+        else {
             if (i->next == NULL && sended_message != NULL) {
                 message_update->message.widget = create_and_show_message_widget(builder, sended_message);
                 free(message_update->message.data);
                 message_update->message.data = strdup(sended_message);
-            } else {
+            }
+            else {
                 message_update->message.widget = create_and_show_message_widget(builder, message_update->message.data);
             }
             list_rpush(messages_list, list_node_new(message_update));

@@ -72,6 +72,7 @@ void on_send_message_clicked(GtkEntry *entry, gpointer *user_data);
 void on_open_chat_settings_clicked(GtkButton *b, gpointer user_data);
 void on_leave_from_chat_clicked(GtkButton *b, gpointer user_data);
 void on_add_chat_member_clicked(GtkButton *b, gpointer user_data);
+void on_remove_chat_member_clicked(GtkButton *b, gpointer user_data);
 
 void gui_login(GtkBuilder *gtk_builder, t_address *server_address, id_t *user_id);
 void gui_register(GtkBuilder *gtk_builder, t_address *server_address, id_t *user_id);
@@ -86,4 +87,5 @@ void gui_render_chats_list(GtkBuilder *gtk_builder, t_address *server_address, i
 // Chat settings window
 void gui_init_chat_settings_window(t_chat_data *chat_data);
 void gui_leave_from_chat(GtkBuilder *builder, t_address *server_address, id_t user_id, id_t chat_id);
-void gui_add_chat_member(GtkBuilder *builder, t_address *server_address, id_t chat_id);
+void gui_add_chat_member(GtkBuilder *builder, t_address *server_address, id_t user_id, id_t chat_id);
+void gui_remove_chat_member(GtkBuilder *builder, t_address *server_address, id_t user_id, id_t chat_id);

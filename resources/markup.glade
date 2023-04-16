@@ -485,7 +485,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkButton" id="on_remove_chat_member">
+                      <object class="GtkButton" id="remove_chat_member_button">
                         <property name="label" translatable="yes">Remove</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
@@ -777,7 +777,6 @@
             </child>
             <child>
               <object class="GtkButton" id="create_room">
-                <property name="label" translatable="yes"></property>
                 <property name="height_request">80</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
