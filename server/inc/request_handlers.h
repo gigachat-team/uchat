@@ -7,6 +7,8 @@
 #include "packager.h"
 #include "receivers.h"
 
+void *handle_client_request_thread(void *allocated_client_socket);
+
 void handle_registration(int client_socket);
 void handle_login(int client_socket);
 void handle_chat_creation(int client_socket);

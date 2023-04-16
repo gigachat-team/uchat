@@ -91,11 +91,6 @@ void send_byte(int socket, uint8_t byte);
 void send_uint16(int socket, uint16_t number);
 void send_uint32(int socket, uint32_t number);
 
-pthread_t create_default_thread(void *(*func)(void *), void *arg);
-void create_detached_thread(void *(*func)(void *), void *arg);
-void join_thread(pthread_t thread, void **thread_return);
-void cancel_thread(pthread_t thread);
-
 int create_socket();
 void bind_socket(int socket, uint16_t port);
 void listen_socket(int socket, int queue_len);

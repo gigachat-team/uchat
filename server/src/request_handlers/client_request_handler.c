@@ -1,4 +1,4 @@
-#include "threads.h"
+#include "request_handlers.h"
 
 void *handle_client_request_thread(void *allocated_client_socket) {
     int client_socket = *(int *)allocated_client_socket;
