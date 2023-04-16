@@ -1,4 +1,4 @@
-#include "utils.h"
+#include "threads.h"
 
 pthread_t create_default_thread(void *(*func)(void *), void *arg) {
     pthread_t thread;

@@ -12,7 +12,6 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <arpa/inet.h>
-#include <pthread.h>
 #include <errno.h>
 #include "list.h"
 
