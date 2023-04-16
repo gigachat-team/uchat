@@ -13,19 +13,19 @@
 */
 int receive(int socket, char *buffer, size_t length);
 /**
- * @brief Reads 1 byte from SOCKET. On errors, sets the erno variable to
+ * @brief Reads 1 byte from SOCKET. On errors, sets the errno variable to
  * ECONNABORTED.
  * @return Read unsigned char.
 */
 uint8_t receive_byte(int socket);
 /**
- * @brief Reads 2 bytes from SOCKET. On errors, sets the erno variable to
+ * @brief Reads 2 bytes from SOCKET. On errors, sets the errno variable to
  * ECONNABORTED.
  * @return Read unsigned short.
 */
 uint16_t receive_uint16(int socket);
 /**
- * @brief Reads 4 bytes from SOCKET. On errors, sets the erno variable to
+ * @brief Reads 4 bytes from SOCKET. On errors, sets the errno variable to
  * ECONNABORTED.
  * @return Read unsigned int.
 */
