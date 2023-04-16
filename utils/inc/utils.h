@@ -17,6 +17,7 @@
 #include <netinet/in.h>
 #include <pthread.h>
 #include <errno.h>
+#include "list.h"
 
 #define MIN_LOGIN_LENGTH 4
 #define MIN_PASSWORD_LENGTH 5
@@ -143,6 +144,7 @@ void free_chats(t_chat *chats, size_t length);
 void free_new_chat_member_data(t_new_chat_member_data new_chat_member_data);
 void free_user(t_user user);
 void free_users(t_user *users, size_t users_count);
+void free_users_list(list_t *users_list);
 
 struct tm str_to_tm(char *datetime_str, char *datetime_format);
 struct tm utc_to_localtime(struct tm utc);
