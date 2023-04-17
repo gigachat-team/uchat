@@ -40,11 +40,11 @@ void set_cursor_image(GtkWidget *widget, const gchar *cursor_path) {
 
     if (!pixbuf) return;
 
-    cursor = gdk_cursor_new_from_pixbuf(gdk_display_get_default(), pixbuf, 0, 0);
+    cursor = gdk_cursor_new_from_pixbuf(gdk_display_get_default(), pixbuf, 10, 30);
     g_object_unref(pixbuf);
-    
+
     if (!cursor) return;
-    
+
     GdkWindow *window = gtk_widget_get_window(widget);
 
     if (window != NULL) {
