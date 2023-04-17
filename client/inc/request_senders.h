@@ -2,6 +2,7 @@
 
 #include "client_receivers.h"
 #include "packager.h"
+#include "user.h"
 
 typedef enum e_authentication_mode {
     REGISTER_MODE = REGISTER,
