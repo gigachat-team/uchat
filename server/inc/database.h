@@ -1,6 +1,7 @@
 #pragma once
 
 #include "user.h"
+#include "chat.h"
 #include "utils.h"
 #include "sqlite3.h"
 #include "user_message.h"

@@ -26,11 +26,6 @@ typedef struct s_new_chat_member_data {
     char *member_login;
 } t_new_chat_member_data;
 
-typedef struct s_chat_description {
-    id_t id;
-    char *name;
-} t_chat;
-
 typedef enum e_request {
     LOGIN, // -> login -> password
     REGISTER, // -> login -> password
@@ -68,6 +63,4 @@ void send_byte(int socket, uint8_t byte);
 void send_uint16(int socket, uint16_t number);
 void send_uint32(int socket, uint32_t number);
 
-void free_chat(t_chat chat);
-void free_chats(t_chat *chats, size_t length);
 void free_new_chat_member_data(t_new_chat_member_data new_chat_member_data);
