@@ -38,32 +38,6 @@ typedef struct s_chat_data {
     list_t *messages;
 } t_chat_data;
 
-// GUI-----------------------------------------------------------------------------
-GtkWidget *get_widget(GtkBuilder *gtk_builder, char *name);
-void set_label_text(GtkWidget *gtk_widget, char *text);
-char *get_entry_text(GtkBuilder *builder, char *entry_name);
-
-#pragma region GUIUtils
-
-// x, y is new size image
-GtkWidget *get_image_from_path(char *path, gint x, gint y);
-
-// Add widget in box contener whith in builder
-void add_to_box_start(GtkBuilder *builder, GtkWidget *new_element, gchar *box_name, gint padding);
-
-// Destroy all widgets in container whith in builder
-void clear_container(GtkBuilder *builder, char *contener_name);
-
-// Scroll GrkSclolledWindow to botton position
-void scroll_to_bottom(GtkBuilder *builder, char *name_scrolled_field);
-
-void write_label_text(GtkBuilder *builder, char *label_name, char *text);
-void open_window(GtkBuilder *builder, char *window_name);
-void close_window(GtkBuilder *builder, char *window_name);
-void exit_app();
-
-#pragma endregion GUIUtils
-
 // Data Input
 t_new_chat_member_data get_new_chat_member_data(id_t chat_id);
 

@@ -1,4 +1,4 @@
-#include "gtk_builder.h"
+#include "gui_utils.h"
 
 GtkBuilder *create_gtk_builder() {
     GError *err = NULL;

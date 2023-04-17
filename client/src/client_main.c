@@ -58,3 +58,7 @@ int main(int argc, char **argv) {
 
     return EXIT_SUCCESS;
 }
+
+void exit_app() {
+    gtk_main_quit();
+}
