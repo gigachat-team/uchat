@@ -1,15 +1,4 @@
-#include "client_main.h"
-
-static t_chat_data *create_chat_data_ptr(GtkBuilder *gtk_builder, t_address *server_address, id_t user_id, char *chat_name, id_t chat_id) {
-    t_chat_data *chat_data = malloc(sizeof(t_chat_data));
-    chat_data->gui_data.builder = gtk_builder;
-    chat_data->gui_data.server_address = *server_address;
-    chat_data->gui_data.user_id = user_id;
-    chat_data->chat.name = strdup(chat_name);
-    chat_data->chat.id = chat_id;
-    chat_data->messages = list_new();
-    return chat_data;
-}
+#include "gui.h"
 
 // Create new button in chats list
 static void create_button_in_chat_list(GtkBuilder *gtk_builder, t_address *server_address, id_t user_id, t_chat *chat) {
@@ -37,10 +26,31 @@ void gui_render_chats_list(GtkBuilder *gtk_builder, t_address *server_address, i
     free_chats(chats, chats_count);
 }
 
-void gui_create_chat(GtkBuilder *builder, t_address *server_address, id_t user_id) {
+static void gui_create_chat(GtkBuilder *builder, t_address *server_address, id_t user_id) {
     char *chat_name = get_entry_text(builder, NEW_CHAT_NAME_ENTRY_ID);
     id_t created_chat_id = rq_create_chat(*server_address, chat_name, user_id);
     printf("Chat \"%s\" with id %u created successfully.\n", chat_name, created_chat_id);
     close_window(builder, CREATE_CHAT_WINDOW_ID);
     gui_render_chats_list(builder, server_address, user_id);
+}
+
+void on_open_chat_creator_button_clicked(GtkButton *b, gpointer user_data) {
+    t_gui_data *gui_data = (t_gui_data *)user_data;
+    open_window(gui_data->builder, CREATE_CHAT_WINDOW_ID);
+    (void)b;
+}
+
+void on_close_chat_creator_button_clicked(GtkButton *b, gpointer user_data) {
+    t_gui_data *gui_data = (t_gui_data *)user_data;
+    close_window(gui_data->builder, CREATE_CHAT_WINDOW_ID);
+    (void)b;
+}
+
+//FIXME: try to set cursor to the window
+void on_create_chat_button_clicked(GtkButton *b, gpointer user_data) {
+    t_gui_data *gui_data = (t_gui_data *)user_data;
+    gui_create_chat(gui_data->builder, &gui_data->server_address, gui_data->user_id);
+    // GtkWidget *create_chat_button_window = GTK_WIDGET(gtk_builder_get_object(gui_data->builder, CREATE_CHAT_WINDOW_ID));
+    // set_cursor_image(create_chat_button_window, DEFAULT_CURSOR_IMAGE_PATH);
+    (void)b;
 }

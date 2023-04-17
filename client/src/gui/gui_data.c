@@ -1,4 +1,4 @@
-#include "gui_data.h"
+#include "gui.h"
 
 t_gui_data create_gui_data(char *ip, in_port_t port) {
     t_gui_data gui_data = {

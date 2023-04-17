@@ -1,4 +1,4 @@
-#include "client_main.h"
+#include "gui.h"
 
 static GtkWidget *create_and_show_message_widget(GtkBuilder *builder, char *message_text) {
     GtkWidget *message = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
@@ -58,13 +58,13 @@ static void gui_update_messages_list(GtkBuilder *builder, list_t *messages_list,
     }
 }
 
-void gui_send_message_and_update_messages_list(GtkBuilder *builder, t_address *server_address, id_t user_id, id_t chat_id, char *message, list_t *messages_in_chat) {
+static void gui_send_message_and_update_messages_list(GtkBuilder *builder, t_address *server_address, id_t user_id, id_t chat_id, char *message, list_t *messages_in_chat) {
     list_t *message_updates_list = rq_send_message_and_get_messages_updates(*server_address, user_id, chat_id, message, messages_in_chat);
     gui_update_messages_list(builder, messages_in_chat, message_updates_list, message);
     list_destroy(message_updates_list);
 }
 
-void gui_open_chat(t_chat_data *chat_data) {
+static void gui_open_chat(t_chat_data *chat_data) {
     GtkWidget *message_field = get_widget(chat_data->gui_data.builder, "message_field");
     GtkWidget *chat_settings_window = get_widget(chat_data->gui_data.builder, CHAT_SETTINGS_BUTTON_ID);
 
@@ -76,4 +76,16 @@ void gui_open_chat(t_chat_data *chat_data) {
 
     g_signal_connect(message_field, "activate", G_CALLBACK(on_send_message_clicked), chat_data);
     g_signal_connect(chat_settings_window, "clicked", G_CALLBACK(on_open_chat_settings_clicked), chat_data);
+}
+
+void on_chat_clicked(GtkButton *b, gpointer user_data) {
+    t_chat_data *chat_data = (t_chat_data *)user_data;
+    gui_open_chat(chat_data);
+    (void)b;
+}
+
+void on_send_message_clicked(GtkEntry *entry, gpointer *user_data) {
+    t_chat_data *chat_data = (t_chat_data *)user_data;
+    char *message_text = (char *)gtk_entry_get_text(entry);
+    gui_send_message_and_update_messages_list(chat_data->gui_data.builder, &chat_data->gui_data.server_address, chat_data->gui_data.user_id, chat_data->chat.id, message_text, chat_data->messages);
 }

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "gui_data.h"
+#include "gui_utils.h"
 
 #define DEFAULT_CSS_FILE_PATH "resources/style.css"
 #define DEFAULT_CURSOR_IMAGE_PATH "resources/img/write_icon.png"
