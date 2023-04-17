@@ -1,11 +1,9 @@
 #pragma once
 
-#include "senders.h"
+#include "server_senders.h"
 #include "threads.h"
 #include "database.h"
-#include "packager.h"
 #include "receivers.h"
-#include "user_message.h"
 
 void *handle_client_request_thread(void *allocated_client_socket);
 
