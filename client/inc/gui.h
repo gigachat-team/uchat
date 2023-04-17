@@ -6,6 +6,8 @@
 #include "gui_utils.h"
 #include "request_senders.h"
 
+#define UPDATE_INTERVAL 5000
+
 #define NEW_LOGIN_ENTRY_ID "new_login_entry"
 #define NEW_PASSWORD_ENTRY_ID "new_password_entry"
 #define NEW_PASSWORD_AGAIN_ENTRY_ID "new_password_again_entry"
@@ -56,6 +58,6 @@ void on_leave_from_chat_clicked(GtkButton *b, gpointer user_data);
 void on_add_chat_member_clicked(GtkButton *b, gpointer user_data);
 void on_remove_chat_member_clicked(GtkButton *b, gpointer user_data);
 
-void open_messenger_window(GtkBuilder *gtk_builder, t_address *server_address, id_t user_id);
+void open_messenger_window(GtkBuilder *gtk_builder, t_gui_data *data);
 
 void gui_render_chats_list(GtkBuilder *gtk_builder, t_address *server_address, id_t user_id);
