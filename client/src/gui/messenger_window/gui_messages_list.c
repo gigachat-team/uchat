@@ -70,7 +70,7 @@ static void update_messages_list(GtkBuilder *builder, t_address *server_address,
     list_destroy(message_updates_list);
 }
 
-gboolean on_update_tick(gpointer user_data) {
+static gboolean on_update_tick(gpointer user_data) {
     t_chat_data *chat_data = (t_chat_data *)user_data;
     update_messages_list(chat_data->gui_data.builder, &chat_data->gui_data.server_address, chat_data->chat.id, chat_data->messages);
     return TRUE;
