@@ -9,7 +9,7 @@ static void open_messenger_window(GtkBuilder *gtk_builder, t_address *server_add
     gui_render_chats_list(gtk_builder, server_address, user_id);
 }
 
-void gui_login(GtkBuilder *gtk_builder, t_address *server_address, id_t *user_id) {
+static void gui_login(GtkBuilder *gtk_builder, t_address *server_address, id_t *user_id) {
     GtkWidget *error_message = get_widget(gtk_builder, ERROR_MESSAGE_LOGIN_LABEL_ID);
 
     apply_style_to_widget(error_message, CSS_CLASS_ERROR_MESSAGE);
@@ -31,7 +31,7 @@ void gui_login(GtkBuilder *gtk_builder, t_address *server_address, id_t *user_id
     }
 }
 
-void gui_register(GtkBuilder *gtk_builder, t_address *server_address, id_t *user_id) {
+static void gui_register(GtkBuilder *gtk_builder, t_address *server_address, id_t *user_id) {
     GtkWidget *error_message = get_widget(gtk_builder, ERROR_MESSAGE_REGISTRATION_LABEL_ID);
     apply_style_to_widget(error_message, CSS_CLASS_ERROR_MESSAGE);
 
@@ -62,4 +62,16 @@ void gui_register(GtkBuilder *gtk_builder, t_address *server_address, id_t *user
     break; default:
         break;
     }
+}
+
+void on_register_button_clicked(GtkButton *b, gpointer user_data) {
+    t_gui_data *gui_data = (t_gui_data *)user_data;
+    gui_register(gui_data->builder, &gui_data->server_address, &gui_data->user_id);
+    (void)b;
+}
+
+void on_login_button_clicked(GtkButton *b, gpointer user_data) {
+    t_gui_data *gui_data = (t_gui_data *)user_data;
+    gui_login(gui_data->builder, &gui_data->server_address, &gui_data->user_id);
+    (void)b;
 }

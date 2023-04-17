@@ -48,8 +48,6 @@ void on_leave_from_chat_clicked(GtkButton *b, gpointer user_data);
 void on_add_chat_member_clicked(GtkButton *b, gpointer user_data);
 void on_remove_chat_member_clicked(GtkButton *b, gpointer user_data);
 
-void gui_login(GtkBuilder *gtk_builder, t_address *server_address, id_t *user_id);
-void gui_register(GtkBuilder *gtk_builder, t_address *server_address, id_t *user_id);
 void gui_send_message_and_update_messages_list(GtkBuilder *builder, t_address *server_address, id_t user_id, id_t chat_id, char *message, list_t *messages_in_chat);
 void gui_open_chat(t_chat_data *chat_data);
 void gui_render_chats_list(GtkBuilder *gtk_builder, t_address *server_address, id_t user_id);
