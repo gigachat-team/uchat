@@ -64,6 +64,19 @@ static void gui_send_message_and_update_messages_list(GtkBuilder *builder, t_add
     list_destroy(message_updates_list);
 }
 
+static void update_messages_list(GtkBuilder *builder, t_address *server_address, id_t chat_id, list_t *messages_list) {
+    list_t *message_updates_list = rq_get_message_updates(*server_address, chat_id, messages_list);
+    gui_update_messages_list(builder, messages_list, message_updates_list, NULL);
+    list_destroy(message_updates_list);
+}
+
+gboolean on_update_tick(gpointer user_data) {
+    t_chat_data *chat_data = (t_chat_data *)user_data;
+    update_messages_list(chat_data->gui_data.builder, &chat_data->gui_data.server_address, chat_data->chat.id, chat_data->messages);
+    return TRUE;
+}
+
+guint UpdateTickThread = 0;
 static void gui_open_chat(t_chat_data *chat_data) {
     GtkWidget *message_field = get_widget(chat_data->gui_data.builder, "message_field");
     GtkWidget *chat_settings_window = get_widget(chat_data->gui_data.builder, CHAT_SETTINGS_BUTTON_ID);
@@ -76,6 +89,12 @@ static void gui_open_chat(t_chat_data *chat_data) {
 
     g_signal_connect(message_field, "activate", G_CALLBACK(on_send_message_clicked), chat_data);
     g_signal_connect(chat_settings_window, "clicked", G_CALLBACK(on_open_chat_settings_clicked), chat_data);
+
+    if (UpdateTickThread != 0) {
+        g_source_remove(UpdateTickThread);
+        UpdateTickThread = 0;
+    }
+    UpdateTickThread = g_timeout_add(MESSAGES_LIST_UPDATE_INTERVAL, on_update_tick, chat_data);
 }
 
 void on_chat_clicked(GtkButton *b, gpointer user_data) {

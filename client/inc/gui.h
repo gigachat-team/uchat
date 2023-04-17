@@ -7,6 +7,7 @@
 #include "request_senders.h"
 
 #define UPDATE_INTERVAL 5000
+#define MESSAGES_LIST_UPDATE_INTERVAL 2000
 
 #define NEW_LOGIN_ENTRY_ID "new_login_entry"
 #define NEW_PASSWORD_ENTRY_ID "new_password_entry"
