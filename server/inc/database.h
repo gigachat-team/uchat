@@ -3,6 +3,7 @@
 #include "utils.h"
 #include "sqlite3.h"
 #include "user_message.h"
+#include "uint32_array.h"
 #include "message_updates.h"
 
 #define DATABASE_NAME "uchat.db"
