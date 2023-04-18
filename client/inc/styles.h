@@ -3,12 +3,13 @@
 #include "gui_utils.h"
 
 #define DEFAULT_CSS_FILE_PATH "resources/style.css"
-#define DEFAULT_CURSOR_IMAGE_PATH "resources/img/write_icon.png"
+#define DEFAULT_CURSOR_IMAGE_PATH "resources/img/cursor.png"
 
 #define CSS_CLASS_WHITE "white"
 #define CSS_CLASS_ENTRY_DEFAULT "entry-default"
 #define CSS_CLASS_ERROR_MESSAGE "error-message"
 #define CSS_CLASS_NEW_CHAT_BUTTON "new-chat-button"
+#define CSS_CLASS_AUTHENTICATION_WINDOW "authentication-window"
 
 /**
  * @brief loads css to gtk. Should be called after gtk_init function
