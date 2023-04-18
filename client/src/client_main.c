@@ -52,6 +52,8 @@ int main(int argc, char **argv) {
     open_window(gui_data.builder, AUTHENTICATION_WINDOW_ID);
     set_cursor_image(auth_window, DEFAULT_CURSOR_IMAGE_PATH);
 
+    apply_style_to_widget(auth_window, CSS_CLASS_AUTHENTICATION_WINDOW);
+
     gtk_main();
 
     g_object_unref(gui_data.builder);
