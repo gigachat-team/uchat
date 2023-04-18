@@ -35,7 +35,7 @@ bool db_user_is_in_chat(sqlite3 *db, id_t user_id, id_t chat_id) {
 
 bool db_chat_has_members(sqlite3 *db, id_t chat_id) {
     char *sql = sqlite3_mprintf(" \
-        SELECT COUNT(*) FROM "MEMBERS_TABLE" \
+        SELECT "MEMBERS_CHAT_ID" FROM "MEMBERS_TABLE" \
         WHERE "MEMBERS_CHAT_ID" = %u", chat_id
     );
     sqlite3_stmt *statement = db_open_statement(db, sql);
