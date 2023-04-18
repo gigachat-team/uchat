@@ -4,7 +4,7 @@ void db_delete_chat(sqlite3 *db, id_t chat_id) {
     char *sql = sqlite3_mprintf(" \
         "ENABLE_FOREIGN_KEYS_SUPPORT" \
         DELETE FROM "CHATS_TABLE" \
-        WHERE "CHATS_ID" = &u", chat_id
+        WHERE "CHATS_ID" = %u", chat_id
     );
     db_execute_sql(db, sql);
 }
