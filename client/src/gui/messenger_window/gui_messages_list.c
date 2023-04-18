@@ -40,7 +40,7 @@ static void gui_update_messages_list(GtkBuilder *builder, list_t *messages_list,
             gtk_widget_hide(client_message->widget);
             gtk_widget_destroy(client_message->widget);
             list_remove(messages_list, client_message_node);
-            break;
+            continue;
         }
 
         if (client_message && client_message->changes_count != message_update->message.changes_count) {
@@ -48,7 +48,7 @@ static void gui_update_messages_list(GtkBuilder *builder, list_t *messages_list,
             client_message->data = message_update->message.data;
             set_label_text(client_message->label_widget, client_message->data);
             client_message->changes_count = message_update->message.changes_count;
-            break;
+            continue;
         }
 
         if (i->next == NULL && sended_message != NULL) {
