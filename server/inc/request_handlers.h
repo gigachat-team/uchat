@@ -5,6 +5,7 @@
 #include "database.h"
 #include "receivers.h"
 #include "senders.h"
+#include "state_code.h"
 #include "server_receivers.h"
 
 void *handle_client_request_thread(void *allocated_client_socket);
