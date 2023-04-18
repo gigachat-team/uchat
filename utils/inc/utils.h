@@ -14,11 +14,6 @@
 #include <errno.h>
 #include "list.h"
 
-#define MIN_LOGIN_LENGTH 4
-#define MIN_PASSWORD_LENGTH 5
-
 #define MAX_LOGIN_LENGTH 40
 #define MAX_PASSWORD_LENGTH 50
 #define MAX_CHAT_NAME_LENGTH 30
-
-

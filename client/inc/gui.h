@@ -9,6 +9,9 @@
 #define UPDATE_INTERVAL 5000
 #define MESSAGES_LIST_UPDATE_INTERVAL 2000
 
+#define MIN_LOGIN_LENGTH 4
+#define MIN_PASSWORD_LENGTH 5
+
 #define NEW_LOGIN_ENTRY_ID "new_login_entry"
 #define NEW_PASSWORD_ENTRY_ID "new_password_entry"
 #define NEW_PASSWORD_AGAIN_ENTRY_ID "new_password_again_entry"
