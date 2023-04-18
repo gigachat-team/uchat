@@ -76,3 +76,13 @@ void db_add_text_message(sqlite3 *db, id_t chat_id, id_t user_id, char *text_mes
     db_execute_sql(db, sql);
     sqlite3_free(sql);
 }
+
+void db_change_message(sqlite3 *db, id_t message_id, char *new_message) {
+    char *sql = sqlite3_mprintf(" \
+        UPDATE "MESSAGES_TABLE" \
+        SET "MESSAGES_CONTENT" = %Q \
+        WHERE "MESSAGES_ID" = %u", new_message, message_id
+    );
+    db_execute_sql(db, sql);
+    sqlite3_free(sql);
+}
