@@ -159,7 +159,7 @@ list_t *db_select_message_updates(sqlite3 *db, id_t chat_id, t_id_and_changes_co
     int step_result = sqlite3_step(statement);
     for (int i = client_messages->len - 1; step_result == SQLITE_ROW || i >= 0;) {
         int message_id_in_db = sqlite3_column_int(statement, 0);
-        if (message_id_in_db == (int)client_messages->arr[i].id) {
+        if (client_messages->len > 0 && message_id_in_db == (int)client_messages->arr[i].id) {
             int message_changes_count = sqlite3_column_int(statement, 5);
             if (message_changes_count != client_messages->arr[i].changes_count) {
                 t_message_update *message_update = create_empty_message_update_ptr();
@@ -176,7 +176,7 @@ list_t *db_select_message_updates(sqlite3 *db, id_t chat_id, t_id_and_changes_co
         }
 
         t_message_update *message_update = create_empty_message_update_ptr();
-        if (message_id_in_db < (int)client_messages->arr[i].id) {
+        if (client_messages->len > 0 && message_id_in_db < (int)client_messages->arr[i].id) {
             message_update->message.message_id = client_messages->arr[i].id;
             message_update->remove = true;
             i--;
