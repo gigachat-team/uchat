@@ -1,12 +1,12 @@
 #include "request_senders.h"
 
-t_state_code rq_add_new_member(t_address server_address, t_new_chat_member_data new_chat_member_data) {
+t_state_code rq_add_new_member(t_address server_address, id_t chat_id, char *new_member_login) {
     int client_socket = create_and_connect_socket(server_address);
 
     t_package package = create_package(3);
     pack_byte(ADD_MEMBER_TO_CHAT, &package);
-    pack_uint32(new_chat_member_data.chat_id, &package);
-    pack_bytes(new_chat_member_data.member_login, &package);
+    pack_uint32(chat_id, &package);
+    pack_bytes(new_member_login, &package);
     send_and_free_package(client_socket, &package);
 
     t_state_code adding_new_member_to_chat_result = receive_byte(client_socket);

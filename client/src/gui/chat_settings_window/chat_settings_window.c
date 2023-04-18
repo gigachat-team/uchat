@@ -53,15 +53,13 @@ static void gui_remove_chat_member(GtkBuilder *builder, t_address *server_addres
 static void gui_add_chat_member(GtkBuilder *builder, t_address *server_address, id_t user_id, id_t chat_id) {
     char *name_user = get_entry_text(builder, "entry_add_member");
 
-    t_new_chat_member_data new_chat_member_data = { chat_id, strdup(name_user) };
-    t_state_code adding_new_member_result = rq_add_new_member(*server_address, new_chat_member_data);
+    t_state_code adding_new_member_result = rq_add_new_member(*server_address, chat_id, name_user);
     if (adding_new_member_result == USER_SUCCESSFULLY_ADDED_TO_CHAT) {
-        printf("The user %s successfully added to the chat.\n", new_chat_member_data.member_login);
+        printf("The user %s successfully added to the chat.\n", name_user);
     }
     else if (adding_new_member_result == SUCH_USER_IS_ALREADY_IN_CHAT) {
-        printf("The user %s is already in the chat.\n", new_chat_member_data.member_login);
+        printf("The user %s is already in the chat.\n", name_user);
     }
-    free_new_chat_member_data(new_chat_member_data);
     gui_fill_members_list(builder, server_address, user_id, chat_id);
 }
 

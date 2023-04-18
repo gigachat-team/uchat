@@ -16,7 +16,7 @@ t_state_code rq_authenticate_user(t_address server_address, char *login, char *p
 */
 id_t rq_create_chat(t_address server_address, char *chat_name, id_t owner_id);
 t_chat *rq_get_chats_i_am_in(t_address server_address, id_t user_id, size_t *chats_count);
-t_state_code rq_add_new_member(t_address server_address, t_new_chat_member_data new_chat_member_data);
+t_state_code rq_add_new_member(t_address server_address, id_t chat_id, char *new_member_login);
 t_state_code rq_send_text_message(t_address server_address, id_t user_id, id_t chat_id, char *data);
 list_t *rq_get_messages_in_chat(t_address server_address, id_t chat_id);
 list_t *rq_send_message_and_get_messages_updates(t_address server_address, id_t user_id, id_t chat_id, char *message, list_t *messages_list);

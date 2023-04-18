@@ -21,11 +21,6 @@
 #define MAX_PASSWORD_LENGTH 50
 #define MAX_CHAT_NAME_LENGTH 30
 
-typedef struct s_new_chat_member_data {
-    id_t chat_id;
-    char *member_login;
-} t_new_chat_member_data;
-
 typedef enum e_request {
     LOGIN, // -> login -> password
     REGISTER, // -> login -> password
@@ -58,5 +53,3 @@ typedef enum e_state_code {
     WRONG_PASSWORD,
     SUCH_USER_IS_ALREADY_IN_CHAT
 } t_state_code;
-
-void free_new_chat_member_data(t_new_chat_member_data new_chat_member_data);
