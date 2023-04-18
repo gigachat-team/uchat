@@ -13,6 +13,7 @@ list_t *receive_messages_list(int client_socket) {
         if (received_creation_date && strlen(received_creation_date))
             message->creation_date = utc_str_to_localtime_tm(received_creation_date, DEFAULT_TIME_FORMAT);
         free(received_creation_date);
+        message->changes_count = receive_byte(client_socket);
         message->widget = NULL;
         list_rpush(messages_list, list_node_new(message));
     }
@@ -33,6 +34,7 @@ list_t *receive_message_updates_list(int client_socket) {
         if (received_creation_date && strlen(received_creation_date))
             message_update->message.creation_date = utc_str_to_localtime_tm(received_creation_date, DEFAULT_TIME_FORMAT);
         free(received_creation_date);
+        message_update->message.changes_count = receive_byte(client_socket);
         message_update->message.widget = NULL;
         message_update->remove = receive_byte(client_socket);
         list_rpush(message_updates_list, list_node_new(message_update));

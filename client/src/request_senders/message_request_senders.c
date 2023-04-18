@@ -35,14 +35,16 @@ list_t *rq_get_messages_in_chat(t_address server_address, id_t chat_id) {
 list_t *rq_send_message_and_get_messages_updates(t_address server_address, id_t user_id, id_t chat_id, char *message, list_t *messages_list) {
     int client_socket = create_and_connect_socket(server_address);
 
-    t_package package = create_package(5 + messages_list->len);
+    t_package package = create_package(5 + messages_list->len * 2);
     pack_byte(SEND_MESSAGE_AND_GET_MESSAGE_UPDATES, &package);
     pack_uint32(user_id, &package);
     pack_uint32(chat_id, &package);
     pack_bytes(message, &package);
     pack_uint32(messages_list->len, &package);
     for (list_node_t *i = messages_list->head; i != NULL; i = i->next) {
-        pack_uint32(((t_user_message *)i->val)->message_id, &package);
+        t_user_message *message = (t_user_message *)i->val;
+        pack_uint32(message->message_id, &package);
+        pack_byte(message->changes_count, &package);
     }
     send_and_free_package(client_socket, &package);
 
@@ -56,13 +58,15 @@ list_t *rq_send_message_and_get_messages_updates(t_address server_address, id_t 
 list_t *rq_delete_message_and_get_message_updates(t_address *server_address, id_t message_id, id_t chat_id, list_t *messages_list) {
     int client_socket = create_and_connect_socket(*server_address);
 
-    t_package package = create_package(5 + messages_list->len);
+    t_package package = create_package(4 + messages_list->len * 2);
     pack_byte(DELETE_MESSAGE_AND_GET_MESSAGE_UPDATES, &package);
     pack_uint32(message_id, &package);
     pack_uint32(chat_id, &package);
     pack_uint32(messages_list->len, &package);
     for (list_node_t *i = messages_list->head; i != NULL; i = i->next) {
-        pack_uint32(((t_user_message *)i->val)->message_id, &package);
+        t_user_message *message = (t_user_message *)i->val;
+        pack_uint32(message->message_id, &package);
+        pack_byte(message->changes_count, &package);
     }
     send_and_free_package(client_socket, &package);
 
@@ -76,12 +80,14 @@ list_t *rq_delete_message_and_get_message_updates(t_address *server_address, id_
 list_t *rq_get_message_updates(t_address server_address, id_t chat_id, list_t *messages_list) {
     int client_socket = create_and_connect_socket(server_address);
 
-    t_package package = create_package(5 + messages_list->len);
+    t_package package = create_package(3 + messages_list->len * 2);
     pack_byte(GET_MESSAGE_UPDATES, &package);
     pack_uint32(chat_id, &package);
     pack_uint32(messages_list->len, &package);
     for (list_node_t *i = messages_list->head; i != NULL; i = i->next) {
-        pack_uint32(((t_user_message *)i->val)->message_id, &package);
+        t_user_message *message = (t_user_message *)i->val;
+        pack_uint32(message->message_id, &package);
+        pack_byte(message->changes_count, &package);
     }
     send_and_free_package(client_socket, &package);
 

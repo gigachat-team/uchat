@@ -117,7 +117,9 @@ t_chat *db_get_chats_user_is_in(sqlite3 *db, id_t user_id, size_t *number_of_cha
 
 list_t *db_select_messages(sqlite3 *db, id_t chat_id) {
     char *sql = sqlite3_mprintf(" \
-        SELECT "MESSAGES_ID", "MESSAGES_USER_ID", (SELECT "USERS_LOGIN" FROM "USERS_TABLE" WHERE "USERS_TABLE"."USERS_ID" = "MESSAGES_TABLE"."MESSAGES_USER_ID"), "MESSAGES_CONTENT", "MESSAGES_CREATION_DATE" \
+        SELECT "MESSAGES_ID", "MESSAGES_USER_ID", \
+        (SELECT "USERS_LOGIN" FROM "USERS_TABLE" WHERE "USERS_TABLE"."USERS_ID" = "MESSAGES_TABLE"."MESSAGES_USER_ID"), \
+        "MESSAGES_CONTENT", "MESSAGES_CREATION_DATE", "MESSAGES_CHANGES_COUNT" \
         FROM "MESSAGES_TABLE" \
         WHERE "MESSAGES_CHAT_ID" = %u", chat_id
     );
@@ -132,6 +134,7 @@ list_t *db_select_messages(sqlite3 *db, id_t chat_id) {
         user_message->sender_login = strdup((char *)sqlite3_column_text(statement, 2));
         user_message->data = strdup(sqlite3_column_blob(statement, 3));
         user_message->creation_date = strdup(sqlite3_column_blob(statement, 4));
+        user_message->changes_count = sqlite3_column_int(statement, 5);
         list_rpush(messages_list, list_node_new(user_message));
     }
     db_close_statement(statement, db);
@@ -139,9 +142,11 @@ list_t *db_select_messages(sqlite3 *db, id_t chat_id) {
     return messages_list;
 }
 
-list_t *db_select_message_updates(sqlite3 *db, id_t chat_id, t_uint32_array *message_IDs, bool ignore_last_selected_message_data) {
+list_t *db_select_message_updates(sqlite3 *db, id_t chat_id, t_id_and_changes_count_array *client_messages, bool ignore_last_selected_message_data) {
     char *sql = sqlite3_mprintf(" \
-        SELECT "MESSAGES_ID", "MESSAGES_USER_ID", (SELECT "USERS_LOGIN" FROM "USERS_TABLE" WHERE "USERS_TABLE"."USERS_ID" = "MESSAGES_TABLE"."MESSAGES_USER_ID"), "MESSAGES_CONTENT", "MESSAGES_CREATION_DATE" \
+        SELECT "MESSAGES_ID", "MESSAGES_USER_ID", \
+        (SELECT "USERS_LOGIN" FROM "USERS_TABLE" WHERE "USERS_TABLE"."USERS_ID" = "MESSAGES_TABLE"."MESSAGES_USER_ID"), \
+        "MESSAGES_CONTENT", "MESSAGES_CREATION_DATE", "MESSAGES_CHANGES_COUNT" \
         FROM "MESSAGES_TABLE" \
         WHERE "MESSAGES_CHAT_ID" = %u \
         ORDER BY "MESSAGES_ID" DESC", chat_id
@@ -152,9 +157,18 @@ list_t *db_select_message_updates(sqlite3 *db, id_t chat_id, t_uint32_array *mes
 
     list_t *message_updates_list = list_new();
     int step_result = sqlite3_step(statement);
-    for (int i = message_IDs->size - 1; step_result == SQLITE_ROW || i >= 0;) {
+    for (int i = client_messages->len - 1; step_result == SQLITE_ROW || i >= 0;) {
         int message_id_in_db = sqlite3_column_int(statement, 0);
-        if (message_id_in_db == (int)message_IDs->arr[i]) {
+        if (message_id_in_db == (int)client_messages->arr[i].id) {
+            int message_changes_count = sqlite3_column_int(statement, 5);
+            if (message_changes_count != client_messages->arr[i].changes_count) {
+                t_message_update *message_update = create_empty_message_update_ptr();
+                message_update->message.message_id = message_id_in_db;
+                message_update->message.data = strdup(sqlite3_column_blob(statement, 3));
+                message_update->message.changes_count = message_changes_count;
+                message_update->remove = false;
+                list_lpush(message_updates_list, list_node_new(message_update));
+            }
             if (step_result != SQLITE_DONE)
                 step_result = sqlite3_step(statement);
             i--;
@@ -162,8 +176,8 @@ list_t *db_select_message_updates(sqlite3 *db, id_t chat_id, t_uint32_array *mes
         }
 
         t_message_update *message_update = create_empty_message_update_ptr();
-        if (message_id_in_db < (int)message_IDs->arr[i]) {
-            message_update->message.message_id = message_IDs->arr[i];
+        if (message_id_in_db < (int)client_messages->arr[i].id) {
+            message_update->message.message_id = client_messages->arr[i].id;
             message_update->remove = true;
             i--;
         } else {
@@ -177,6 +191,7 @@ list_t *db_select_message_updates(sqlite3 *db, id_t chat_id, t_uint32_array *mes
             else
                 message_update->message.data = strdup(sqlite3_column_blob(statement, 3));
             message_update->message.creation_date = strdup(sqlite3_column_blob(statement, 4));
+            message_update->message.changes_count = sqlite3_column_int(statement, 5);
             message_update->remove = false;
             if (step_result != SQLITE_DONE)
                 step_result = sqlite3_step(statement);

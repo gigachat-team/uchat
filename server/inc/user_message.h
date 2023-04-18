@@ -9,6 +9,7 @@ typedef struct s_user_message {
     char *sender_login;
     char *data;
     char *creation_date;
+    uint8_t changes_count;
 } t_user_message;
 
 void free_user_message(t_user_message *message);

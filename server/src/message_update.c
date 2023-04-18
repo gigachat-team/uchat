@@ -7,7 +7,8 @@ t_message_update create_empty_message_update() {
             .sender_id = 0,
             .sender_login = NULL,
             .data = NULL,
-            .creation_date = NULL
+            .creation_date = NULL,
+            .changes_count = 0
         },
         .remove = false
     };

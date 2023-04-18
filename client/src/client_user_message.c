@@ -31,3 +31,7 @@ void free_user_messages_list(list_t *messages_list) {
     }
     free(messages_list);
 }
+
+int compare_user_messages_IDs(void *a, void *b) {
+    return ((t_user_message *)a)->message_id == ((t_user_message *)b)->message_id;
+}

@@ -7,6 +7,7 @@
 #include "user_message.h"
 #include "uint32_array.h"
 #include "message_updates.h"
+#include "id_and_changes_count.h"
 
 #define DATABASE_NAME "uchat.db"
 
@@ -30,6 +31,7 @@
 #define MESSAGES_USER_ID "UserId"
 #define MESSAGES_CONTENT "Content"
 #define MESSAGES_CREATION_DATE "CreationDate"
+#define MESSAGES_CHANGES_COUNT "ChangesCount"
 
 #define MESSAGE_STATUSES_TABLE "MessageStatuses"
 #define MESSAGE_STATUSES_MESSAGE_ID "MessageId"
@@ -98,7 +100,7 @@ char *db_get_chat_name_by_id(sqlite3 *db, id_t chat_id);
 id_t *db_get_IDs_of_chats_user_is_in(sqlite3 *db, id_t user_id, size_t *IDs_of_chats_len);
 t_chat *db_get_chats_user_is_in(sqlite3 *db, id_t user_id, size_t *number_of_chats);
 list_t *db_select_messages(sqlite3 *db, id_t chat_id);
-list_t *db_select_message_updates(sqlite3 *db, id_t chat_id, t_uint32_array *message_IDs, bool ignore_last_selected_message_data);
+list_t *db_select_message_updates(sqlite3 *db, id_t chat_id, t_id_and_changes_count_array *client_messages, bool ignore_last_selected_message_data);
 /**
  * @brief Searches for members in chat by CHAT_ID. Number of found members writes to
  * MEMBERS_COUNT variable.
