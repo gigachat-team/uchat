@@ -711,6 +711,7 @@
   </object>
   <object class="GtkWindow" id="messenger_window">
     <property name="can_focus">False</property>
+    <property name="resizable">False</property>
     <property name="title" translatable="yes">Messenger</property>
     <property name="window_position">center</property>
     <property name="default_width">1280</property>
@@ -777,7 +778,7 @@
             </child>
             <child>
               <object class="GtkButton" id="create_room">
-                <property name="height_request">80</property>
+                <property name="height_request">120</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
