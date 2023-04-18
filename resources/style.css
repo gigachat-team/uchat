@@ -5,32 +5,30 @@
 .white {
     color:white;
 }
-
-/* FIXME: doesn't work on entries. Probably need another property */
-.entry_default {
-    border: 60px solid;
-    border-color: black;
-}
-
 .new-chat-button {
     background-repeat: no-repeat;
-    background-image: url("img/new_chat_button.png");
+    background-image: url("img/button_new_chat.png");
     background-position: center;
-    border: 0px;
-    border-radius: 0px;
+    border: 2px solid;
+    border-radius: 80px;
 }
 
 .new_chat_button:hover{
     background-repeat: no-repeat;
     background-position: center;
-    background-image: url("img/new_chat_button.png");
+    background-image: url("img/button_new_chat.png");
     animation: none;
     border: 0px;
     border-radius: 0px;
+    box-shadow: 0 0 0 0px;
+}
+
+.authentication-window {
+    background: url("img/background_auth.png");
 }
 
 window {
-    background: url("img/chat_background.png");
+    background: url("img/background_messenger.png");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -38,34 +36,36 @@ window {
 }
 
 button {
-    background-image: url("img/notebook_paper_button.jpg");
+    background-image: url("img/button.png");
     border: 5px solid;
-    border-radius: 50px;
+    border-radius: 10px;
     color: rgb(112, 122, 155);
     margin: 5px;
 }
 
 button:active {
-    border: 5px dashed;
-    border-radius: 70px;
+    color: rgb(29, 19, 19);
+    border-radius: 50px;
+    box-shadow: 0 0 0 9px rgb(0, 0, 0);
 }
 
 button:hover {
-    background-image: url("img/chosen_button.png");
-    border: 5px dotted;
-    animation: animate 3s cubic-bezier(0.1, 0.7, 1, 0.1) infinite;
+    box-shadow: 0 0 0 3px rgb(56, 77, 90);
+    border-radius: 30px;
+    animation: animate 1s cubic-bezier(0.1, 0.7, 1, 0.1) infinite;
 }
 
 @keyframes animate {
     0% {
-        background-position: 0%;
+        box-shadow: 0 0 0 3px rgb(112, 122, 155);;
         opacity: 1;
     }
     50% {
+        box-shadow: 0 0 0 5px rgb(76, 131, 168);
         opacity: 0.5;
     }
     100% {
-        background-position: 100%;
+        box-shadow: 0 0 0 3px rgb(112, 122, 155);;
         opacity: 1;
     }
 
