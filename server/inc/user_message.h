@@ -12,6 +12,6 @@ typedef struct s_user_message {
     uint8_t changes_count;
 } t_user_message;
 
-void free_user_message(t_user_message *message);
+void free_user_message_ptr(void *message_ptr);
 void free_user_messages(t_user_message *messages, size_t length);
 void free_user_messages_list(list_t *messages_list);
