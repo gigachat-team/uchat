@@ -4,6 +4,7 @@
 #include "packager.h"
 #include "chat.h"
 #include "user.h"
+#include "request.h"
 #include "state_code.h"
 
 typedef enum e_authentication_mode {

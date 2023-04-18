@@ -1,6 +1,7 @@
 #pragma once
 
 #include "server_senders.h"
+#include "request.h"
 #include "threads.h"
 #include "database.h"
 #include "receivers.h"
