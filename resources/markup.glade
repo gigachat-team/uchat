@@ -767,9 +767,9 @@
             </child>
             <child>
               <object class="GtkScrolledWindow">
-                <property name="height_request">610</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
+                <property name="vexpand">True</property>
                 <property name="hscrollbar_policy">never</property>
                 <property name="shadow_type">in</property>
                 <child>
@@ -797,10 +797,14 @@
             </child>
             <child>
               <object class="GtkButton" id="create_room">
-                <property name="height_request">120</property>
+                <property name="height_request">70</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
+                <property name="margin_left">5</property>
+                <property name="margin_right">5</property>
+                <property name="margin_top">5</property>
+                <property name="margin_bottom">5</property>
                 <signal name="clicked" handler="on_open_chat_creator_button_clicked" swapped="no"/>
               </object>
               <packing>
@@ -820,6 +824,7 @@
           <object class="GtkBox">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
+            <property name="hexpand">True</property>
             <property name="orientation">vertical</property>
             <child>
               <object class="GtkBox">
@@ -867,9 +872,10 @@
             </child>
             <child>
               <object class="GtkScrolledWindow" id="chat_scrolled_field">
-                <property name="height_request">656</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
+                <property name="hexpand">True</property>
+                <property name="vexpand">True</property>
                 <property name="hscrollbar_policy">never</property>
                 <property name="shadow_type">in</property>
                 <child>
@@ -900,9 +906,9 @@
             </child>
             <child>
               <object class="GtkEntry" id="message_field">
-                <property name="width_request">1000</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
+                <property name="valign">end</property>
                 <property name="show_emoji_icon">True</property>
                 <property name="enable_emoji_completion">True</property>
               </object>
