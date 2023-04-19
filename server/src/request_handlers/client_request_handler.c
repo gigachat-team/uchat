@@ -25,6 +25,8 @@ void *handle_client_request_thread(void *allocated_client_socket) {
         handle_message_sending_and_messages_updates_getting(client_socket); break;
     case DELETE_MESSAGE_AND_GET_MESSAGE_UPDATES:
         handle_message_deleting_and_messages_updates_getting(client_request); break;
+    case CHANGE_MESSAGE_AND_GET_MESSAGE_UPDATES:
+        handle_message_changing_and_message_updates_getting(client_socket); break;
     case GET_MESSAGE_UPDATES:
         handle_message_updates_getting(client_socket); break;
     case REMOVE_USER_FROM_CHAT:

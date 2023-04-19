@@ -58,6 +58,23 @@ void handle_message_deleting_and_messages_updates_getting(int client_socket) {
     free_message_updates_list(message_updates_list);
 }
 
+void handle_message_changing_and_message_updates_getting(int client_socket) {
+    uint32_t message_id = receive_uint32(client_socket);
+    char *new_message_content = receive_bytes(client_socket);
+    uint32_t chat_id = receive_uint32(client_socket);
+    t_id_and_changes_count_array client_messages = receive_id_and_changes_count_array(client_socket);
+
+    sqlite3 *db = db_open();
+    db_change_message(db, message_id, new_message_content);
+    list_t *message_updates_list = db_select_message_updates(db, chat_id, &client_messages, false);
+    db_close(db);
+
+    send_message_updates_list(client_socket, message_updates_list);
+
+    free(client_messages.arr);
+    free_user_messages_list(message_updates_list);
+}
+
 void handle_message_updates_getting(int client_socket) {
     id_t chat_id = receive_uint32(client_socket);
     t_id_and_changes_count_array client_messages = receive_id_and_changes_count_array(client_socket);
