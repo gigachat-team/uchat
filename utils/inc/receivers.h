@@ -1,9 +1,9 @@
 #pragma once
 
 #include <errno.h>
+#include <malloc.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
-#include <malloc.h>
 
 /**
  * @brief Reads LENGTH bytes into BUFFER from SOCKET. This function is best used
