@@ -1,10 +1,35 @@
 * {
     border: 0px;
+    font-size: large;
 }
 
 .white {
     color:white;
 }
+
+.chats-list-containter {
+    background-color: rgb(196, 196, 196);
+}
+
+.create-room {
+    background-color: rgb(220, 236, 240);
+}
+
+.chat-name {
+    background-color: rgb(209, 209, 209);
+}
+
+.canvas {
+    background-color: rgb(222, 223, 224);
+}
+
+.message-field {
+    border: 5px solid;
+    border-color: rgb(147, 144, 151);
+    font-weight: unset;
+    font-size: large;
+}
+
 .new-chat-button {
     background-repeat: no-repeat;
     background-image: url("img/button_new_chat.png");
@@ -27,14 +52,6 @@
     background: url("img/background_auth.png");
 }
 
-window {
-    background: url("img/background_messenger.png");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    background-color: lightgrey;
-}
-
 button {
     background-image: url("img/button.png");
     border: 5px solid;
@@ -55,6 +72,15 @@ button:hover {
     animation: animate 1s cubic-bezier(0.1, 0.7, 1, 0.1) infinite;
 }
 
+.error-message {
+    background-color: white;
+    border: 5px outset;
+    border-color: red;
+    font-family: Arial, sans-serif;
+    border-radius: 50px;
+    margin: 5px;
+}
+
 @keyframes animate {
     0% {
         box-shadow: 0 0 0 3px rgb(112, 122, 155);;
@@ -69,13 +95,4 @@ button:hover {
         opacity: 1;
     }
 
-}
-
-.error-message {
-    background-color: white;
-    border: 5px outset;
-    border-color: red;
-    font-family: Arial, sans-serif;
-    border-radius: 50px;
-    margin: 5px;
 }
