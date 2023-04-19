@@ -9,7 +9,7 @@ typedef struct s_user_message {
     id_t sender_id;
     char *sender_login;
     char *data;
-    struct tm creation_date;
+    time_t creation_date;
     uint8_t changes_count;
     GtkWidget *widget;
     GtkWidget *label_widget;

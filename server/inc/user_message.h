@@ -8,7 +8,7 @@ typedef struct s_user_message {
     id_t sender_id;
     char *sender_login;
     char *data;
-    char *creation_date;
+    uint32_t creation_date;
     uint8_t changes_count;
 } t_user_message;
 

@@ -133,7 +133,7 @@ list_t *db_select_messages(sqlite3 *db, id_t chat_id) {
         user_message->sender_id = sqlite3_column_int(statement, 1);
         user_message->sender_login = strdup((char *)sqlite3_column_text(statement, 2));
         user_message->data = strdup(sqlite3_column_blob(statement, 3));
-        user_message->creation_date = strdup(sqlite3_column_blob(statement, 4));
+        user_message->creation_date = sqlite3_column_int(statement, 4);
         user_message->changes_count = sqlite3_column_int(statement, 5);
         list_rpush(messages_list, list_node_new(user_message));
     }
@@ -190,7 +190,7 @@ list_t *db_select_message_updates(sqlite3 *db, id_t chat_id, t_id_and_changes_co
             }
             else
                 message_update->message.data = strdup(sqlite3_column_blob(statement, 3));
-            message_update->message.creation_date = strdup(sqlite3_column_blob(statement, 4));
+            message_update->message.creation_date = sqlite3_column_int(statement, 4);
             message_update->message.changes_count = sqlite3_column_int(statement, 5);
             message_update->remove = false;
             if (step_result != SQLITE_DONE)

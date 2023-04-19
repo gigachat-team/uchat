@@ -9,7 +9,7 @@ void send_messages_list(int client_socket, list_t *messages_list) {
         pack_uint32(user_message->sender_id, &package);
         pack_bytes(user_message->sender_login, &package);
         pack_bytes(user_message->data, &package);
-        pack_bytes(user_message->creation_date, &package);
+        pack_uint32(user_message->creation_date, &package);
         pack_byte(user_message->changes_count, &package);
     }
     send_and_free_package(client_socket, &package);
@@ -24,7 +24,7 @@ void send_message_updates_list(int client_socket, list_t *message_updates_list) 
         pack_uint32(message_update->message.sender_id, &package);
         pack_bytes(message_update->message.sender_login, &package);
         pack_bytes(message_update->message.data, &package);
-        pack_bytes(message_update->message.creation_date, &package);
+        pack_uint32(message_update->message.creation_date, &package);
         pack_byte(message_update->message.changes_count, &package);
         pack_byte(message_update->remove, &package);
     }

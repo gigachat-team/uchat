@@ -4,7 +4,6 @@ void free_user_message_ptr(void *message_ptr) {
     t_user_message *message = message_ptr;
     free(message->sender_login);
     free(message->data);
-    free(message->creation_date);
     free(message);
 
 }

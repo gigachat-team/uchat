@@ -9,12 +9,10 @@ list_t *receive_messages_list(int client_socket) {
         message->sender_id = receive_uint32(client_socket);
         message->sender_login = receive_bytes(client_socket);
         message->data = receive_bytes(client_socket);
-        char *received_creation_date = receive_bytes(client_socket);
-        // if (received_creation_date && strlen(received_creation_date))
-        //     message->creation_date = utc_str_to_localtime_tm(received_creation_date, DEFAULT_TIME_FORMAT);
-        free(received_creation_date);
+        message->creation_date = receive_uint32(client_socket);
         message->changes_count = receive_byte(client_socket);
         message->widget = NULL;
+        message->label_widget = NULL;
         list_rpush(messages_list, list_node_new(message));
     }
 
@@ -30,12 +28,10 @@ list_t *receive_message_updates_list(int client_socket) {
         message_update->message.sender_id = receive_uint32(client_socket);
         message_update->message.sender_login = receive_bytes(client_socket);
         message_update->message.data = receive_bytes(client_socket);
-        char *received_creation_date = receive_bytes(client_socket);
-        // if (received_creation_date && strlen(received_creation_date))
-        //     message_update->message.creation_date = utc_str_to_localtime_tm(received_creation_date, DEFAULT_TIME_FORMAT);
-        free(received_creation_date);
+        message_update->message.creation_date = receive_uint32(client_socket);
         message_update->message.changes_count = receive_byte(client_socket);
         message_update->message.widget = NULL;
+        message_update->message.label_widget = NULL;
         message_update->remove = receive_byte(client_socket);
         list_rpush(message_updates_list, list_node_new(message_update));
     }

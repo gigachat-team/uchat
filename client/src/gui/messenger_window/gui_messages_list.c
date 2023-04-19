@@ -1,6 +1,6 @@
 #include "gui.h"
 
-static GtkWidget *create_and_show_message_widget(GtkBuilder *builder, char *message_text, GtkWidget **message_label) {
+static GtkWidget *create_and_show_message_widget(GtkBuilder *builder, char *message_text, time_t datetime, GtkWidget **message_label) {
     GtkWidget *message = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
     *message_label = gtk_label_new((gchar *)message_text);
     GtkWidget *user_icon = get_image_from_path("client/message_icon.jpeg", 45, 45);
@@ -12,6 +12,10 @@ static GtkWidget *create_and_show_message_widget(GtkBuilder *builder, char *mess
     gtk_box_pack_start(GTK_BOX(message), GTK_WIDGET(user_icon), false, false, 0);
     gtk_box_pack_start(GTK_BOX(message), *message_label, false, false, 5);
     add_to_box_start(builder, message, CHAT_FIELD_CONTENER_ID, 10);
+
+    char time_str[DEFAULT_TIME_FORMAT_LEN];
+    strftime(time_str, DEFAULT_TIME_FORMAT_LEN, DEFAULT_TIME_FORMAT, localtime(&datetime));
+    printf("%s\n", time_str);
 
     gtk_widget_show_all(message);
 
@@ -25,7 +29,7 @@ static void load_messages(GtkBuilder *builder, t_address *server_address, id_t c
     *messages_in_chat = rq_get_messages_in_chat(*server_address, chat_id);
     for (list_node_t *i = (*messages_in_chat)->head; i != NULL; i = i->next) {
         t_user_message *message = (t_user_message *)i->val;
-        message->widget = create_and_show_message_widget(builder, message->data, &message->label_widget);
+        message->widget = create_and_show_message_widget(builder, message->data, message->creation_date, &message->label_widget);
     }
 }
 
@@ -52,11 +56,11 @@ static void gui_update_messages_list(GtkBuilder *builder, list_t *messages_list,
         }
 
         if (i->next == NULL && sended_message != NULL) {
-            message_update->message.widget = create_and_show_message_widget(builder, sended_message, &message_update->message.label_widget);
+            message_update->message.widget = create_and_show_message_widget(builder, sended_message, message_update->message.creation_date, &message_update->message.label_widget);
             free(message_update->message.data);
             message_update->message.data = strdup(sended_message);
         } else {
-            message_update->message.widget = create_and_show_message_widget(builder, message_update->message.data, &message_update->message.label_widget);
+            message_update->message.widget = create_and_show_message_widget(builder, message_update->message.data, message_update->message.creation_date, &message_update->message.label_widget);
         }
 
         list_rpush(messages_list, list_node_new(message_update));

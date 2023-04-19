@@ -7,7 +7,7 @@ t_message_update create_empty_message_update() {
             .sender_id = 0,
             .sender_login = NULL,
             .data = NULL,
-            .creation_date = NULL,
+            .creation_date = 0,
             .changes_count = 0
         },
         .remove = false
@@ -27,7 +27,6 @@ void free_message_updates_list(list_t *message_updates_list) {
         t_message_update *message_update = (t_message_update *)i->val;
         free(message_update->message.sender_login);
         free(message_update->message.data);
-        free(message_update->message.creation_date);
         free(message_update);
         free(i);
     }
