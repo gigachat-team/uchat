@@ -10,8 +10,8 @@ list_t *receive_messages_list(int client_socket) {
         message->sender_login = receive_bytes(client_socket);
         message->data = receive_bytes(client_socket);
         char *received_creation_date = receive_bytes(client_socket);
-        if (received_creation_date && strlen(received_creation_date))
-            message->creation_date = utc_str_to_localtime_tm(received_creation_date, DEFAULT_TIME_FORMAT);
+        // if (received_creation_date && strlen(received_creation_date))
+        //     message->creation_date = utc_str_to_localtime_tm(received_creation_date, DEFAULT_TIME_FORMAT);
         free(received_creation_date);
         message->changes_count = receive_byte(client_socket);
         message->widget = NULL;
@@ -31,8 +31,8 @@ list_t *receive_message_updates_list(int client_socket) {
         message_update->message.sender_login = receive_bytes(client_socket);
         message_update->message.data = receive_bytes(client_socket);
         char *received_creation_date = receive_bytes(client_socket);
-        if (received_creation_date && strlen(received_creation_date))
-            message_update->message.creation_date = utc_str_to_localtime_tm(received_creation_date, DEFAULT_TIME_FORMAT);
+        // if (received_creation_date && strlen(received_creation_date))
+        //     message_update->message.creation_date = utc_str_to_localtime_tm(received_creation_date, DEFAULT_TIME_FORMAT);
         free(received_creation_date);
         message_update->message.changes_count = receive_byte(client_socket);
         message_update->message.widget = NULL;

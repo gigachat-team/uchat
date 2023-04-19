@@ -1,7 +1,7 @@
 #pragma once
 
-#include "utils.h"
 #include "list.h"
+#include "types.h"
 #include <gtk/gtk.h>
 
 typedef struct s_user_message {

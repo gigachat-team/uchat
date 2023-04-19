@@ -1,5 +1,6 @@
 #pragma once
 
+#include <stdbool.h>
 #include "client_user_message.h"
 
 typedef struct s_message_update {

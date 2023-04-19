@@ -1,9 +1,8 @@
 #pragma once
 
-#define _GNU_SOURCE
+#include "types.h"
 #include <malloc.h>
 #include <stdint.h>
-#include <sys/types.h>
 
 typedef struct {
     id_t id;

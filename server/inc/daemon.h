@@ -1,8 +1,10 @@
 #pragma once
 
-#include "utils.h"
-#include <syslog.h>
-#include <signal.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 
 /**
  * @return nothing but turns server into the daemon state

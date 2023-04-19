@@ -1,6 +1,6 @@
 #pragma once
 
-#define _GNU_SOURCE
+#include "types.h"
 #include <malloc.h>
 #include <sys/types.h>
 

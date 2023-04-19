@@ -12,7 +12,7 @@ typedef enum e_authentication_mode {
     LOGIN_MODE = LOGIN
 } t_authentication_mode;
 
-t_state_code rq_authenticate_user(t_address server_address, char *login, char *password, t_authentication_mode authentication_mode, uint *user_id);
+t_state_code rq_authenticate_user(t_address server_address, char *login, char *password, t_authentication_mode authentication_mode, id_t *user_id);
 /**
  * @return The id of created chat
 */

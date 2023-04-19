@@ -1,7 +1,7 @@
 #pragma once
 
+#include <stdbool.h>
 #include "user_message.h"
-#include "utils.h"
 
 typedef struct s_message_update {
     t_user_message message;

@@ -1,7 +1,7 @@
 #pragma once
 
-#define _GNU_SOURCE
 #include "list.h"
+#include "types.h"
 
 typedef struct s_user {
     id_t id;

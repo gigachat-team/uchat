@@ -1,8 +1,9 @@
 #pragma once
 
+#define _GNU_SOURCE
 #include "user.h"
 #include "chat.h"
-#include "utils.h"
+#include <string.h>
 #include "sqlite3.h"
 #include "user_message.h"
 #include "uint32_array.h"

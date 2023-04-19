@@ -1,7 +1,7 @@
 #pragma once
 
 #include <gtk/gtk.h>
-#include "stdbool.h"
+#include <stdbool.h>
 
 #define GLADE_FILE_PATH "resources/markup.glade"
 
