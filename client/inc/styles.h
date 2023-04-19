@@ -6,9 +6,14 @@
 #define DEFAULT_CURSOR_IMAGE_PATH "resources/img/cursor.png"
 
 #define CSS_CLASS_WHITE "white"
+#define CSS_CLASS_CANVAS "canvas"
+#define CSS_CLASS_CHAT_NAME "chat-name"
+#define CSS_CLASS_CREATE_ROOM "create-room"
 #define CSS_CLASS_ENTRY_DEFAULT "entry-default"
+#define CSS_CLASS_MESSAGE_FIELD "message-field"
 #define CSS_CLASS_ERROR_MESSAGE "error-message"
 #define CSS_CLASS_NEW_CHAT_BUTTON "new-chat-button"
+#define CSS_CLASS_CHATS_LIST_CONTAINER "chats-list-containter"
 #define CSS_CLASS_AUTHENTICATION_WINDOW "authentication-window"
 
 /**
