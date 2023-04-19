@@ -12,27 +12,31 @@
 #define MIN_LOGIN_LENGTH 4
 #define MIN_PASSWORD_LENGTH 5
 
+#define CANVAS_ID "canvas"
+#define CREATE_ROOM_ID "create_room"
 #define NEW_LOGIN_ENTRY_ID "new_login_entry"
-#define NEW_PASSWORD_ENTRY_ID "new_password_entry"
-#define NEW_PASSWORD_AGAIN_ENTRY_ID "new_password_again_entry"
+#define CHAT_NAME_LABEL_ID "chat_name"
 #define LOGIN_ENTRY_ID "login_entry"
 #define PASSWORD_ENTRY_ID "password_entry"
+#define NEW_PASSWORD_ENTRY_ID "new_password_entry"
 #define NEW_CHAT_NAME_ENTRY_ID "new_chat_name_entry"
-#define CHAT_NAME_LABEL_ID "chat_name"
-#define CREATE_ROOM_ID "create_room"
+#define NEW_PASSWORD_AGAIN_ENTRY_ID "new_password_again_entry"
 
-#define ERROR_MESSAGE_REGISTRATION_LABEL_ID "error_message_registration_label"
 #define ERROR_MESSAGE_LOGIN_LABEL_ID "error_message_login_label"
+#define ERROR_MESSAGE_REGISTRATION_LABEL_ID "error_message_registration_label"
 
 #define CHAT_SETTINGS_BUTTON_ID "open_chat_settings_window"
 
 //Windows
-#define AUTHENTICATION_WINDOW_ID "authentication_window"
+#define CHAT_CREATE_ROOM_ID "create_room"
 #define MESSENGER_WINDOW_ID "messenger_window"
+#define CHAT_LISTS_WINDOW_ID "chats_list_container"
 #define CREATE_CHAT_WINDOW_ID "create_chat_window"
 #define CHAT_SETTINGS_WINDOW_ID "chat_settings_window"
+#define AUTHENTICATION_WINDOW_ID "authentication_window"
 
 //Conteners
+#define MESSAGE_FIELD_ID "message_field"
 #define CHATS_LIST_CONTAINER_ID "chats_list_container"
 #define CHAT_FIELD_CONTENER_ID "chat_field"
 
