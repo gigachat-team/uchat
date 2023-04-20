@@ -1,3 +1,3 @@
 [submodule "resources/libraries/list"]
 	path = resources/libraries/list
-	url = https://github.com/clibs/list.git
+	url = https://github.com/fomgleb/list.git
