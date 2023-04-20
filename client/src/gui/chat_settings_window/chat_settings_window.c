@@ -25,9 +25,16 @@ static void gui_init_chat_settings_window(t_chat_data *chat_data) {
     GtkWidget *leave_chat_button = get_widget(chat_data->gui_data.builder, "leave_chat_button");
     GtkWidget *add_member_button = get_widget(chat_data->gui_data.builder, "add_chat_member_button");
     GtkWidget *remove_member_button = get_widget(chat_data->gui_data.builder, "remove_chat_member_button");
+    GtkWidget *group_settings_box = get_widget(chat_data->gui_data.builder, GROUP_SETTINGS_BOX);
 
     g_signal_handlers_destroy(leave_chat_button);
     g_signal_connect(leave_chat_button, "clicked", G_CALLBACK(on_leave_from_chat_clicked), chat_data);
+
+    if (chat_data->chat.owner_id == chat_data->gui_data.user_id) {
+        gtk_widget_show(group_settings_box);
+    } else {
+        gtk_widget_hide(group_settings_box);
+    }
 
     g_signal_handlers_destroy(add_member_button);
     g_signal_connect(add_member_button, "clicked", G_CALLBACK(on_add_chat_member_clicked), chat_data);

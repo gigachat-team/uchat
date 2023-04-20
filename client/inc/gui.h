@@ -40,6 +40,8 @@
 #define CHATS_LIST_CONTAINER_ID "chats_list_container"
 #define CHAT_FIELD_CONTENER_ID "chat_field"
 
+#define GROUP_SETTINGS_BOX "group_settings_box"
+
 #define LAST_LOADING_MESSAGES_COUNT 30
 
 typedef struct s_gui_data {
