@@ -2,7 +2,7 @@
 
 #include "list.h"
 #include "types.h"
-#include <malloc.h>
+#include <stdlib.h>
 #include <sys/types.h>
 
 typedef struct s_chat {

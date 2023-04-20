@@ -3,6 +3,7 @@
 #define _GNU_SOURCE
 #include "user.h"
 #include "chat.h"
+#include <stdio.h>
 #include <string.h>
 #include "sqlite3.h"
 #include "user_message.h"

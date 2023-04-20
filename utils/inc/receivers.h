@@ -1,7 +1,7 @@
 #pragma once
 
 #include <errno.h>
-#include <malloc.h>
+#include <stdlib.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 
