@@ -54,7 +54,7 @@ typedef struct s_chat_data {
     t_chat chat;
     list_t *messages;
 } t_chat_data;
-t_chat_data *create_chat_data_ptr(GtkBuilder *gtk_builder, t_address *server_address, id_t user_id, char *chat_name, id_t chat_id);
+t_chat_data *create_chat_data_ptr(GtkBuilder *gtk_builder, t_address *server_address, id_t user_id, char *chat_name, id_t chat_id, id_t chat_owner_id);
 
 void on_chat_clicked(GtkButton *b, gpointer user_data);
 void on_send_message_clicked(GtkEntry *entry, gpointer *user_data);

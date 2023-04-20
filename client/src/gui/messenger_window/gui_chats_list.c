@@ -3,7 +3,7 @@
 // Create new button in chats list
 static void create_button_in_chat_list(GtkBuilder *gtk_builder, t_address *server_address, id_t user_id, t_chat *chat) {
     GtkWidget *new_button = gtk_button_new_with_label(chat->name);
-    t_chat_data *chat_data = create_chat_data_ptr(gtk_builder, server_address, user_id, chat->name, chat->id);
+    t_chat_data *chat_data = create_chat_data_ptr(gtk_builder, server_address, user_id, chat->name, chat->id, chat->owner_id);
     g_signal_connect(new_button, "clicked", G_CALLBACK(on_chat_clicked), chat_data);
     add_to_box_start(gtk_builder, new_button, CHATS_LIST_CONTAINER_ID, 0);
 }
