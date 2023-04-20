@@ -29,6 +29,7 @@ t_chat *rq_get_chats_i_am_in(t_address server_address, id_t user_id, size_t *cha
     for (size_t i = 0; i < *chats_count; i++) {
         chats_i_am_in[i].id = receive_uint32(client_socket);
         chats_i_am_in[i].name = receive_bytes(client_socket);
+        chats_i_am_in[i].owner_id = receive_uint32(client_socket);
     }
 
     close(client_socket);

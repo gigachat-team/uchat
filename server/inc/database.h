@@ -20,7 +20,7 @@
 #define CHATS_TABLE "Chats"
 #define CHATS_ID "Id"
 #define CHATS_NAME "Name"
-#define CHATS_USER_ID "UserId"
+#define CHATS_OWNER_ID "OwnerId"
 
 #define MEMBERS_TABLE "Members"
 #define MEMBERS_CHAT_ID "ChatId"
@@ -100,7 +100,7 @@ id_t db_get_user_id_by_login(sqlite3 *db, char *login);
 char *db_get_user_login_by_id(sqlite3 *db, id_t user_id);
 char *db_get_chat_name_by_id(sqlite3 *db, id_t chat_id);
 id_t *db_get_IDs_of_chats_user_is_in(sqlite3 *db, id_t user_id, size_t *IDs_of_chats_len);
-t_chat *db_get_chats_user_is_in(sqlite3 *db, id_t user_id, size_t *number_of_chats);
+list_t *db_select_chats_by_member_id(sqlite3 *db, id_t member_id);
 list_t *db_select_messages(sqlite3 *db, id_t chat_id);
 list_t *db_select_message_updates(sqlite3 *db, id_t chat_id, t_id_and_changes_count_array *client_messages, bool ignore_last_selected_message_data);
 /**

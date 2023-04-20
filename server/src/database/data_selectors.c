@@ -100,19 +100,27 @@ id_t *db_get_IDs_of_chats_user_is_in(sqlite3 *db, id_t user_id, size_t *IDs_of_c
     return IDs_of_chats;
 }
 
-t_chat *db_get_chats_user_is_in(sqlite3 *db, id_t user_id, size_t *number_of_chats) {
-    id_t *IDs_of_chats_user_is_in = db_get_IDs_of_chats_user_is_in(db, user_id,  number_of_chats);
+list_t *db_select_chats_by_member_id(sqlite3 *db, id_t member_id) {
+    char *sql = sqlite3_mprintf(" \
+        SELECT "CHATS_ID", "CHATS_NAME", "CHATS_OWNER_ID" \
+        FROM "CHATS_TABLE" \
+        INNER JOIN "MEMBERS_TABLE" ON "CHATS_TABLE"."CHATS_ID" = "MEMBERS_TABLE"."MEMBERS_CHAT_ID" \
+        WHERE "MEMBERS_USER_ID" = %u", member_id
+    );
+    sqlite3_stmt *statement = db_open_statement(db, sql);
+    sqlite3_free(sql);
 
-    t_chat *descriptions_of_chats = malloc(*number_of_chats * sizeof(t_chat));
-
-    for (size_t i = 0; i < *number_of_chats; i++) {
-        descriptions_of_chats[i].id = IDs_of_chats_user_is_in[i];
-        descriptions_of_chats[i].name = db_get_chat_name_by_id(db, IDs_of_chats_user_is_in[i]);
+    list_t *chats_list = list_new();
+    while (sqlite3_step(statement) == SQLITE_ROW) {
+        t_chat *chat = malloc(sizeof(t_chat));
+        chat->id = sqlite3_column_int(statement, 0);
+        chat->name = strdup((char *)sqlite3_column_text(statement, 1));
+        chat->owner_id = sqlite3_column_int(statement, 2);
+        list_rpush(chats_list, list_node_new(chat));
     }
+    db_close_statement(statement, db);
 
-    free(IDs_of_chats_user_is_in);
-
-    return descriptions_of_chats;
+    return chats_list;
 }
 
 list_t *db_select_messages(sqlite3 *db, id_t chat_id) {

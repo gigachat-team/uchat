@@ -12,7 +12,7 @@ void db_create_chats_table(sqlite3 *db) {
     char *sql = "CREATE TABLE IF NOT EXISTS "CHATS_TABLE" ( \
         "CHATS_ID"      INTEGER PRIMARY KEY AUTOINCREMENT, \
         "CHATS_NAME"    TEXT, \
-        "CHATS_USER_ID" INTEGER);";
+        "CHATS_OWNER_ID" INTEGER);";
     db_execute_sql(db, sql);
 }
 

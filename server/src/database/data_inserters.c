@@ -29,7 +29,7 @@ id_t db_create_user(sqlite3 *db, char *login, char *password) {
 
 id_t db_create_chat(sqlite3 *db, char *chat_name, id_t owner_id) {
     char *sql = sqlite3_mprintf(" \
-        INSERT INTO "CHATS_TABLE" ("CHATS_NAME", "CHATS_USER_ID") \
+        INSERT INTO "CHATS_TABLE" ("CHATS_NAME", "CHATS_OWNER_ID") \
         VALUES (%Q, %u);", chat_name, owner_id
     );
     db_execute_sql(db, sql);

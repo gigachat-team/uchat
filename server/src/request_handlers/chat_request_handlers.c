@@ -17,19 +17,19 @@ void handle_chat_creation(int client_socket) {
 void handle_getting_chats(int client_socket) {
     id_t user_id = receive_uint32(client_socket);
 
-    size_t number_of_chats = 0;
-
     sqlite3 *db = db_open();
-    t_chat *chats = db_get_chats_user_is_in(db, user_id, &number_of_chats);
+    list_t *chats_list = db_select_chats_by_member_id(db, user_id);
     db_close(db);
 
-    t_package package = create_package(1 + number_of_chats * 2);
-    pack_uint32(number_of_chats, &package);
-    for (size_t i = 0; i < number_of_chats; i++) {
-        pack_uint32(chats[i].id, &package);
-        pack_bytes(chats[i].name, &package);
+    t_package package = create_package(1 + chats_list->len * 3);
+    pack_uint32(chats_list->len, &package);
+    for (list_node_t *i = chats_list->head; i != NULL; i = i->next) {
+        t_chat *chat = i->val;
+        pack_uint32(chat->id, &package);
+        pack_bytes(chat->name, &package);
+        pack_uint32(chat->owner_id, &package);
     }
     send_and_free_package(client_socket, &package);
 
-    free_chats(chats, number_of_chats);
+    free_chats_list(chats_list);
 }
