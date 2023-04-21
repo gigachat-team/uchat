@@ -70,5 +70,3 @@ void on_remove_chat_member_clicked(GtkButton *b, gpointer user_data);
 void open_messenger_window(GtkBuilder *gtk_builder, t_gui_data *data);
 
 void gui_render_chats_list(GtkBuilder *gtk_builder, t_address *server_address, id_t user_id);
-
-bool show_error_if_no_connection(GtkBuilder *builder);
