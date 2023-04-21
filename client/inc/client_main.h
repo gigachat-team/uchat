@@ -2,4 +2,4 @@
 
 #include "gui.h"
 
-#define USAGE_MESSAGE "usage: ./uchat_server [port]\n"
+#define USAGE_MESSAGE "usage: ./uchat [ip] [port]\n"

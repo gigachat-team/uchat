@@ -6,4 +6,4 @@
 #include "database.h"
 #include "request_handlers.h"
 
-#define USAGE_MESSAGE "usage: ./uchat [ip] [port]\n"
+#define USAGE_MESSAGE "usage: ./uchat_server [port]\n"
