@@ -14,6 +14,9 @@ void open_messenger_window(GtkBuilder *gtk_builder, t_gui_data *data) {
 
     set_cursor_image(messenger_window, DEFAULT_CURSOR_IMAGE_PATH);
 
+    get_widget_by_id_and_apply_style(gtk_builder, CONNECTION_BOX_ID, CSS_CLASS_CONNECTION_BOX);
+    get_widget_by_id_and_apply_style(gtk_builder, CONNECTION_LABEL_ID, CSS_CLASS_CONNECTION_LABEL);
+    
     get_widget_by_id_and_apply_style(gtk_builder, CREATE_ROOM_ID, CSS_CLASS_NEW_CHAT_BUTTON);
     get_widget_by_id_and_apply_style(gtk_builder, CHAT_LISTS_WINDOW_ID, CSS_CLASS_CHATS_LIST_CONTAINER);
     get_widget_by_id_and_apply_style(gtk_builder, CREATE_ROOM_ID, CSS_CLASS_CREATE_ROOM);
