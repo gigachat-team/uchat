@@ -24,6 +24,8 @@ void scroll_to_bottom(GtkBuilder *builder, char *name_scrolled_field);
 GtkWidget *get_widget(GtkBuilder *gtk_builder, char *name);
 // Add widget in box contener whith in builder
 void add_to_box_start(GtkBuilder *builder, GtkWidget *new_element, gchar *box_name, gint padding);
+void show_widget(GtkBuilder *builder, char *widget_name);
+void hide_widget(GtkBuilder *builder, char *widget_name);
 
 void open_window(GtkBuilder *builder, char *window_name);
 void close_window(GtkBuilder *builder, char *window_name);
