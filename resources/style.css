@@ -5,7 +5,6 @@
 
 .connection-box {
     background-color: yellow;
-    animation: connection-animate 3s cubic-bezier(0.1, 0.7, 1, 0.1) infinite;
 }
 
 .connection-label {
@@ -78,7 +77,7 @@ button:active {
 button:hover {
     box-shadow: 0 0 0 3px rgb(56, 77, 90);
     border-radius: 30px;
-    animation: animate 1s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
+    animation: animate 1s linear infinite;
 }
 
 .error-message {
@@ -88,18 +87,6 @@ button:hover {
     font-family: Arial, sans-serif;
     border-radius: 50px;
     margin: 5px;
-}
-
-@keyframes connection-animate {
-    0% {
-        background-color: yellow;
-    }
-    50% {
-        background-color: rgb(214, 214, 134);
-    }
-    100% {
-        background-color: yellow;
-    }
 }
 
 @keyframes animate {
@@ -115,5 +102,4 @@ button:hover {
         box-shadow: 0 0 0 3px rgb(112, 122, 155);;
         opacity: 1;
     }
-
 }
