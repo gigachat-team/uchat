@@ -12,7 +12,9 @@
 #define CSS_CLASS_ENTRY_DEFAULT "entry-default"
 #define CSS_CLASS_MESSAGE_FIELD "message-field"
 #define CSS_CLASS_ERROR_MESSAGE "error-message"
+#define CSS_CLASS_CONNECTION_BOX "connection-box"
 #define CSS_CLASS_NEW_CHAT_BUTTON "new-chat-button"
+#define CSS_CLASS_CONNECTION_LABEL "connection-label"
 #define CSS_CLASS_CHATS_LIST_CONTAINER "chats-list-containter"
 #define CSS_CLASS_AUTHENTICATION_WINDOW "authentication-window"
 
