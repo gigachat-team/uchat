@@ -25,9 +25,14 @@ static GtkWidget *create_and_show_message_widget(GtkBuilder *builder, char *mess
 }
 
 static void load_messages(GtkBuilder *builder, t_address *server_address, id_t chat_id, list_t **messages_in_chat) {
+    list_t *new_messages_in_chat = rq_get_messages_in_chat(*server_address, chat_id);
+    if (toggle_widget_visibility(!new_messages_in_chat, builder, CONNECTION_BOX_ID)) {
+        free_user_messages_list(new_messages_in_chat);
+        return;
+    }
     free_user_messages_list(*messages_in_chat);
-    *messages_in_chat = rq_get_messages_in_chat(*server_address, chat_id);
-    if (!show_error_if_no_connection(builder)) return;
+    *messages_in_chat = new_messages_in_chat;
+
     for (list_node_t *i = (*messages_in_chat)->head; i != NULL; i = i->next) {
         t_user_message *message = (t_user_message *)i->val;
         message->widget = create_and_show_message_widget(builder, message->data, message->creation_date, &message->label_widget);
@@ -70,14 +75,14 @@ static void gui_update_messages_list(GtkBuilder *builder, list_t *messages_list,
 
 static void gui_send_message_and_update_messages_list(GtkBuilder *builder, t_address *server_address, id_t user_id, id_t chat_id, char *message, list_t *messages_in_chat) {
     list_t *message_updates_list = rq_send_message_and_get_messages_updates(*server_address, user_id, chat_id, message, messages_in_chat);
-    if (!show_error_if_no_connection(builder)) return;
+    if (toggle_widget_visibility(!message_updates_list, builder, CONNECTION_BOX_ID)) return;
     gui_update_messages_list(builder, messages_in_chat, message_updates_list, message);
     list_destroy(message_updates_list);
 }
 
 static void update_messages_list(GtkBuilder *builder, t_address *server_address, id_t chat_id, list_t *messages_list) {
     list_t *message_updates_list = rq_get_message_updates(*server_address, chat_id, messages_list);
-    if (!show_error_if_no_connection(builder)) return;
+    if (toggle_widget_visibility(!message_updates_list, builder, CONNECTION_BOX_ID)) return;
     gui_update_messages_list(builder, messages_list, message_updates_list, NULL);
     list_destroy(message_updates_list);
 }

@@ -2,7 +2,7 @@
 
 t_state_code rq_add_new_member(t_address server_address, id_t chat_id, char *new_member_login) {
     int client_socket = create_and_connect_socket(server_address);
-    if (errno == ECONNREFUSED) return CONNECTION_REFUSED;
+    if (client_socket == -1) return 0;
 
     t_package package = create_package(3);
     pack_byte(ADD_MEMBER_TO_CHAT, &package);
@@ -19,7 +19,7 @@ t_state_code rq_add_new_member(t_address server_address, id_t chat_id, char *new
 
 t_user *rq_get_chat_members(t_address server_address, id_t chat_id, uint32_t *members_count) {
     int client_socket = create_and_connect_socket(server_address);
-    if (errno == ECONNREFUSED) return NULL;
+    if (client_socket == -1) return NULL;
 
     t_package package = create_package(2);
     pack_byte(GET_CHAT_MEMBERS, &package);
@@ -40,7 +40,7 @@ t_user *rq_get_chat_members(t_address server_address, id_t chat_id, uint32_t *me
 
 t_state_code rq_remove_member_from_chat(t_address server_address, id_t user_id, id_t chat_id) {
     int client_socket = create_and_connect_socket(server_address);
-    if (errno == ECONNREFUSED) return CONNECTION_REFUSED;
+    if (client_socket == -1) return 0;
 
     t_package package = create_package(3);
     pack_byte(REMOVE_USER_FROM_CHAT, &package);

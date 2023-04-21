@@ -1,5 +1,10 @@
 #pragma once
 
+#define _GNU_SOURCE
+#include <poll.h>
+#include <time.h>
+#include <fcntl.h>
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
