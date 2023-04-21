@@ -20,3 +20,8 @@ void hide_widget(GtkBuilder *builder, char *widget_name) {
     GtkWidget *widget = get_widget(builder, widget_name);
     gtk_widget_hide(widget);
 }
+
+bool toggle_widget_visibility(bool visible, GtkBuilder *builder, char *widget_name) {
+    visible ? show_widget(builder, widget_name) : hide_widget(builder, widget_name);
+    return visible;
+}
