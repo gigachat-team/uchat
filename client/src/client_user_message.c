@@ -20,16 +20,17 @@ void free_user_messages(t_user_message *messages, size_t length) {
     free(messages);
 }
 
+void free_user_message_ptr(void *user_message_void) {
+    t_user_message *user_message = user_message_void;
+    free(user_message->sender_login);
+    free(user_message->data);
+    free(user_message);
+}
+
 void free_user_messages_list(list_t *messages_list) {
     if (messages_list == NULL) return;
-    for (list_node_t *i = messages_list->head; i != NULL; i = i->next) {
-        t_user_message *message = (t_user_message *)i->val;
-        free(message->sender_login);
-        free(message->data);
-        free(message);
-        free(i);
-    }
-    free(messages_list);
+    messages_list->free = free_user_message_ptr;
+    list_destroy(messages_list);
 }
 
 int compare_user_messages_IDs(void *a, void *b) {
