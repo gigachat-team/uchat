@@ -2,6 +2,7 @@
 
 t_state_code rq_send_text_message(t_address server_address, id_t user_id, id_t chat_id, char *data) {
     int client_socket = create_and_connect_socket(server_address);
+    if (errno == ECONNREFUSED) return CONNECTION_REFUSED;
 
     t_package package = create_package(4);
     pack_byte(SEND_TEXT_MESSAGE, &package);
@@ -19,6 +20,7 @@ t_state_code rq_send_text_message(t_address server_address, id_t user_id, id_t c
 
 list_t *rq_get_messages_in_chat(t_address server_address, id_t chat_id) {
     int client_socket = create_and_connect_socket(server_address);
+    if (errno == ECONNREFUSED) return NULL;
 
     t_package package = create_package(2);
     pack_byte(GET_MESSAGES_IN_CHAT, &package);
@@ -34,6 +36,7 @@ list_t *rq_get_messages_in_chat(t_address server_address, id_t chat_id) {
 
 list_t *rq_send_message_and_get_messages_updates(t_address server_address, id_t user_id, id_t chat_id, char *message, list_t *messages_list) {
     int client_socket = create_and_connect_socket(server_address);
+    if (errno == ECONNREFUSED) return NULL;
 
     t_package package = create_package(5 + messages_list->len * 2);
     pack_byte(SEND_MESSAGE_AND_GET_MESSAGE_UPDATES, &package);
@@ -57,6 +60,7 @@ list_t *rq_send_message_and_get_messages_updates(t_address server_address, id_t 
 
 list_t *rq_delete_message_and_get_message_updates(t_address *server_address, id_t message_id, id_t chat_id, list_t *messages_list) {
     int client_socket = create_and_connect_socket(*server_address);
+    if (errno == ECONNREFUSED) return NULL;
 
     t_package package = create_package(4 + messages_list->len * 2);
     pack_byte(DELETE_MESSAGE_AND_GET_MESSAGE_UPDATES, &package);
@@ -79,6 +83,8 @@ list_t *rq_delete_message_and_get_message_updates(t_address *server_address, id_
 
 list_t *rq_change_message_and_get_message_updates(t_address *server_address, id_t message_id, char *new_message_content, id_t chat_id, list_t *messages_list) {
     int client_socket = create_and_connect_socket(*server_address);
+    if (errno == ECONNREFUSED) return NULL;
+
     t_package package = create_package(4 + messages_list->len * 2);
     pack_byte(CHANGE_MESSAGE_AND_GET_MESSAGE_UPDATES, &package);
     pack_uint32(message_id, &package);
@@ -100,6 +106,7 @@ list_t *rq_change_message_and_get_message_updates(t_address *server_address, id_
 
 list_t *rq_get_message_updates(t_address server_address, id_t chat_id, list_t *messages_list) {
     int client_socket = create_and_connect_socket(server_address);
+    if (errno == ECONNREFUSED) return NULL;
 
     t_package package = create_package(3 + messages_list->len * 2);
     pack_byte(GET_MESSAGE_UPDATES, &package);
