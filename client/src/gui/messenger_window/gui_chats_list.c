@@ -9,22 +9,20 @@ static void create_button_in_chat_list(GtkBuilder *gtk_builder, t_address *serve
 }
 
 void gui_render_chats_list(GtkBuilder *gtk_builder, t_address *server_address, id_t user_id) {
-    size_t chats_count = 0;
-    t_chat *chats = rq_get_chats_i_am_in(*server_address, user_id, &chats_count);
-    if (toggle_widget_visibility(!chats, gtk_builder, CONNECTION_BOX_ID)) return;
+    list_t *chats_list = rq_get_chats_i_am_in(*server_address, user_id);
+    if (toggle_widget_visibility(!chats_list, gtk_builder, CONNECTION_BOX_ID)) return;
 
     clear_container(gtk_builder, CHATS_LIST_CONTAINER_ID);
 
-    if (chats_count != 0) {
-        for (size_t i = 0; i < chats_count; i++) {
-            create_button_in_chat_list(gtk_builder, server_address, user_id, &chats[i]);
+    if (chats_list->len != 0) {
+        for (list_node_t *i = chats_list->head; i != NULL; i = i->next) {
+            create_button_in_chat_list(gtk_builder, server_address, user_id, i->val);
         }
-    }
-    else {
+    } else {
         printf("You aren't in any chats.\n");
     }
 
-    free_chats(chats, chats_count);
+    free_chats_list(chats_list);
 }
 
 static void gui_create_chat(GtkBuilder *builder, t_address *server_address, id_t user_id) {

@@ -17,7 +17,7 @@ id_t rq_create_chat(t_address server_address, char *chat_name, id_t owner_id) {
     return created_chat_id;
 }
 
-t_chat *rq_get_chats_i_am_in(t_address server_address, id_t user_id, size_t *chats_count) {
+list_t *rq_get_chats_i_am_in(t_address server_address, id_t user_id) {
     int client_socket = create_and_connect_socket(server_address);
     if (client_socket == -1) return NULL;
 
@@ -26,15 +26,17 @@ t_chat *rq_get_chats_i_am_in(t_address server_address, id_t user_id, size_t *cha
     pack_uint32(user_id, &package);
     send_and_free_package(client_socket, &package);
 
-    *chats_count = receive_uint32(client_socket);
-    t_chat *chats_i_am_in = *chats_count == 0 ? NULL : malloc(*chats_count * sizeof(t_chat));
-    for (size_t i = 0; i < *chats_count; i++) {
-        chats_i_am_in[i].id = receive_uint32(client_socket);
-        chats_i_am_in[i].name = receive_bytes(client_socket);
-        chats_i_am_in[i].owner_id = receive_uint32(client_socket);
+    size_t chats_count = receive_uint32(client_socket);
+    list_t *chats_list = list_new();
+    for (size_t i = 0; i < chats_count; i++) {
+        t_chat *chat = malloc(sizeof(t_chat));
+        chat->id = receive_uint32(client_socket);
+        chat->name = receive_bytes(client_socket);
+        chat->owner_id = receive_uint32(client_socket);
+        list_rpush(chats_list, list_node_new(chat));
     }
 
     close(client_socket);
 
-    return chats_i_am_in;
+    return chats_list;
 }
