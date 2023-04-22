@@ -5,8 +5,6 @@ void free_chat(t_chat *chat) {
 }
 
 void free_chat_ptr(void *chat) {
-    t_chat *chat1 = chat;
-    (void)chat1;
     free_chat(chat);
     free(chat);
 }
