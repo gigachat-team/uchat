@@ -9,7 +9,7 @@ static gboolean scroll_to_bottom_message_list(gpointer user_data) {
 static GtkWidget *create_and_show_message_widget(GtkBuilder *builder, char *message_text, time_t datetime, GtkWidget **message_label) {
     GtkWidget *message = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
     *message_label = gtk_label_new((gchar *)message_text);
-    GtkWidget *user_icon = get_image_from_path("client/message_icon.jpeg", 45, 45);
+    GtkWidget *user_icon = get_image_from_path("resources/img/message_icon.jpeg", 45, 45);
 
     gtk_label_set_line_wrap(GTK_LABEL(*message_label), TRUE);
     gtk_label_set_line_wrap_mode(GTK_LABEL(*message_label), PANGO_WRAP_CHAR);
