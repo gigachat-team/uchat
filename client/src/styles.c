@@ -17,6 +17,14 @@ void load_css(char *css_file_path) {
     gtk_css_provider_load_from_path(provider, css_file_path, NULL);
 }
 
+void load_light_theme() {
+    load_css(DEFAULT_CSS_FILE_PATH);
+}
+
+void load_dark_theme() {
+    load_css(CSS_DARK_FILE_PATH);
+}
+
 void apply_style_to_widget(GtkWidget *widget, const char *class_name) {
     if (!class_name || !widget) return;
 
@@ -79,6 +87,7 @@ void apply_styles_to_create_chat_window(GtkBuilder *gtk_builder) {
 
     GtkWidget *crate_chat_window = get_widget(gtk_builder, CREATE_CHAT_WINDOW_ID);
     set_cursor_image(crate_chat_window, DEFAULT_CURSOR_IMAGE_PATH);
+    get_widget_by_id_and_apply_style(gtk_builder, CREATE_CHAT_WINDOW_ID, CSS_CLASS_CREATE_CHAT_WINDOW);
 }
 
 void apply_styles_to_chat_settings_window(GtkBuilder *gtk_builder) {
@@ -86,4 +95,5 @@ void apply_styles_to_chat_settings_window(GtkBuilder *gtk_builder) {
 
     GtkWidget *chat_settings_window = GTK_WIDGET(gtk_builder_get_object(gtk_builder, CHAT_SETTINGS_WINDOW_ID));
     set_cursor_image(chat_settings_window, DEFAULT_CURSOR_IMAGE_PATH);
+    get_widget_by_id_and_apply_style(gtk_builder, CHAT_SETTINGS_WINDOW_ID, CSS_CLASS_CHAT_SETTINGS_WINDOW);
 }
