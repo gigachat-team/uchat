@@ -1,11 +1,11 @@
 #pragma once
 
+#include "gui.h"
 #include "gui_utils.h"
 
 #define DEFAULT_CSS_FILE_PATH "resources/style.css"
 #define DEFAULT_CURSOR_IMAGE_PATH "resources/img/cursor.png"
 
-#define CSS_CLASS_WHITE "white"
 #define CSS_CLASS_CANVAS "canvas"
 #define CSS_CLASS_CHAT_NAME "chat-name"
 #define CSS_CLASS_CREATE_ROOM "create-room"
@@ -19,6 +19,7 @@
 #define CSS_CLASS_UPPER_CANVAS_WINDOW "upper-canvas-window"
 #define CSS_CLASS_CHATS_LIST_CONTAINER "chats-list-containter"
 #define CSS_CLASS_AUTHENTICATION_WINDOW "authentication-window"
+#define CSS_CLASS_NEW_MESSAGE_ENTRY_PARENT "new-message-entry-parent"
 
 /**
  * @brief loads css to gtk. Should be called after gtk_init function
@@ -53,3 +54,24 @@ void get_widget_by_id_and_apply_style(GtkBuilder *builder, const char *markup_id
  * @param cursor_path a file path to the cursor image.
 */
 void set_cursor_image(GtkWidget *widget, const gchar *cursor_path);
+
+/**
+ * @brief sets all the styles for the messenger window and the cursor
+ * image. If no builder is provied, the function does nothing
+ * @param gtk_builder builder to apply styles
+*/
+void apply_styles_for_messenger_window(GtkBuilder *gtk_builder);
+
+/**
+ * @brief sets all the styles for the create chat window and the cursor
+ * image. If no builder is provied, the function does nothing
+ * @param gtk_builder builder to apply styles
+*/
+void apply_styles_to_create_chat_window(GtkBuilder *gtk_builder);
+
+/**
+ * @brief sets all the styles for the chat settings window and the cursor
+ * image. If no builder is provied, the function does nothing
+ * @param gtk_builder builder to apply styles
+*/
+void apply_styles_to_chat_settings_window(GtkBuilder *gtk_builder);
