@@ -15,6 +15,8 @@
 #define CSS_CLASS_CONNECTION_BOX "connection-box"
 #define CSS_CLASS_NEW_CHAT_BUTTON "new-chat-button"
 #define CSS_CLASS_CONNECTION_LABEL "connection-label"
+#define CSS_CLASS_CREATE_ROOM_PARENT "create-room-parent"
+#define CSS_CLASS_UPPER_CANVAS_WINDOW "upper-canvas-window"
 #define CSS_CLASS_CHATS_LIST_CONTAINER "chats-list-containter"
 #define CSS_CLASS_AUTHENTICATION_WINDOW "authentication-window"
 
