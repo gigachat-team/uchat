@@ -793,14 +793,14 @@
               </packing>
             </child>
             <child>
-              <object class="GtkBox" id="connection_box">
+              <object class="GtkBox" id="connecting_box">
                 <property name="can-focus">False</property>
                 <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkLabel" id="connection_label">
+                  <object class="GtkLabel" id="connecting_label">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="label" translatable="yes">Connection...</property>
+                    <property name="label" translatable="yes">Connecting...</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>

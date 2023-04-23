@@ -24,7 +24,7 @@
 
 #define ERROR_MESSAGE_LOGIN_LABEL_ID "error_message_login_label"
 #define ERROR_MESSAGE_REGISTRATION_LABEL_ID "error_message_registration_label"
-#define CONNECTION_LABEL_ID "connection_label"
+#define CONNECTING_LABEL_ID "connecting_label"
 
 #define CHAT_SETTINGS_BUTTON_ID "open_chat_settings_window"
 
@@ -42,7 +42,7 @@
 #define CHAT_FIELD_CONTENER_ID "chat_field"
 
 #define GROUP_SETTINGS_BOX "group_settings_box"
-#define CONNECTION_BOX_ID "connection_box"
+#define CONNECTING_BOX_ID "connecting_box"
 
 #define LAST_LOADING_MESSAGES_COUNT 30
 
