@@ -20,7 +20,7 @@ void open_messenger_window(GtkBuilder *gtk_builder, t_gui_data *data) {
     get_widget_by_id_and_apply_style(gtk_builder, CREATE_ROOM_ID, CSS_CLASS_NEW_CHAT_BUTTON);
     get_widget_by_id_and_apply_style(gtk_builder, CHAT_LISTS_WINDOW_ID, CSS_CLASS_CHATS_LIST_CONTAINER);
     get_widget_by_id_and_apply_style(gtk_builder, CREATE_ROOM_ID, CSS_CLASS_CREATE_ROOM);
-    get_widget_by_id_and_apply_style(gtk_builder, MESSAGE_FIELD_ID, CSS_CLASS_MESSAGE_FIELD);
+    get_widget_by_id_and_apply_style(gtk_builder, NEW_MESSAGE_ENTRY_ID, CSS_CLASS_MESSAGE_FIELD);
     get_widget_by_id_and_apply_style(gtk_builder, CHAT_NAME_LABEL_ID, CSS_CLASS_CHAT_NAME);
     get_widget_by_id_and_apply_style(gtk_builder, CANVAS_ID, CSS_CLASS_CANVAS);
 

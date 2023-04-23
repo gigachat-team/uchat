@@ -927,7 +927,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkEntry" id="message_field">
+              <object class="GtkEntry" id="new_message_entry">
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="valign">end</property>

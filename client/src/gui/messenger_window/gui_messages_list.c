@@ -95,7 +95,7 @@ static gboolean on_update_tick(gpointer user_data) {
 
 static guint UpdateTickThread = 0;
 static void gui_open_chat(t_chat_data *chat_data) {
-    GtkWidget *message_field = get_widget(chat_data->gui_data.builder, "message_field");
+    GtkWidget *message_field = get_widget(chat_data->gui_data.builder, NEW_MESSAGE_ENTRY_ID);
     GtkWidget *chat_settings_window = get_widget(chat_data->gui_data.builder, CHAT_SETTINGS_BUTTON_ID);
 
     clear_container(chat_data->gui_data.builder, CHAT_FIELD_CONTENER_ID);

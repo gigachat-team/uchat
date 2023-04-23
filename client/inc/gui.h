@@ -37,7 +37,7 @@
 #define AUTHENTICATION_WINDOW_ID "authentication_window"
 
 //Conteners
-#define MESSAGE_FIELD_ID "message_field"
+#define NEW_MESSAGE_ENTRY_ID "new_message_entry"
 #define CHATS_LIST_CONTAINER_ID "chats_list_container"
 #define CHAT_FIELD_CONTENER_ID "chat_field"
 
