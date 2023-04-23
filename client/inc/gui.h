@@ -31,8 +31,10 @@
 //Windows
 #define CHAT_CREATE_ROOM_ID "create_room"
 #define MESSENGER_WINDOW_ID "messenger_window"
+#define CREATE_ROOM_PARENT_ID "create_room_parent"
 #define CHAT_LISTS_WINDOW_ID "chats_list_container"
 #define CREATE_CHAT_WINDOW_ID "create_chat_window"
+#define UPPER_CANVAS_WINDOW_ID "upper_canvas_window"
 #define CHAT_SETTINGS_WINDOW_ID "chat_settings_window"
 #define AUTHENTICATION_WINDOW_ID "authentication_window"
 
