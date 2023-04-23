@@ -20,7 +20,11 @@
 }
 
 .create-room {
-    background-color: rgb(220, 236, 240);
+    background-color: rgb(221, 220, 220);
+}
+
+.create-room-parent {
+    background-color: rgb(196,196,196);
 }
 
 .chat-name {
@@ -58,6 +62,10 @@
 
 .authentication-window {
     background: url("img/background_auth.png");
+}
+
+.upper-canvas-window {
+    background-color: rgb(209,209,209);
 }
 
 button {
