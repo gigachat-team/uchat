@@ -1,5 +1,11 @@
 #include "gui.h"
 
+static gboolean scroll_to_bottom_message_list(gpointer user_data) {
+    GtkBuilder *builder = user_data;
+    scroll_to_bottom(builder, "chat_scrolled_field");
+    return FALSE;
+}
+
 static GtkWidget *create_and_show_message_widget(GtkBuilder *builder, char *message_text, time_t datetime, GtkWidget **message_label) {
     GtkWidget *message = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
     *message_label = gtk_label_new((gchar *)message_text);
@@ -19,7 +25,7 @@ static GtkWidget *create_and_show_message_widget(GtkBuilder *builder, char *mess
 
     gtk_widget_show_all(message);
 
-    scroll_to_bottom(builder, "chat_scrolled_field");
+    g_timeout_add(50, scroll_to_bottom_message_list, builder);
 
     return message;
 }
