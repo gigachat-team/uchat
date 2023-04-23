@@ -46,16 +46,6 @@
     border-radius: 80px;
 }
 
-.new_chat_button:hover{
-    background-repeat: no-repeat;
-    background-position: center;
-    background-image: url("img/button_new_chat.png");
-    animation: none;
-    border: 0px;
-    border-radius: 0px;
-    box-shadow: 0 0 0 0px;
-}
-
 .authentication-window {
     background: url("img/background_auth.png");
 }
@@ -110,4 +100,12 @@ button:hover {
         box-shadow: 0 0 0 3px rgb(112, 122, 155);;
         opacity: 1;
     }
+}
+
+.chat-settings-window {
+    background: url("img/background_auth.png");
+}
+
+.create-chat-window {
+    background: url("img/background_auth.png");
 }
