@@ -24,6 +24,9 @@ void open_messenger_window(GtkBuilder *gtk_builder, t_gui_data *data) {
     get_widget_by_id_and_apply_style(gtk_builder, CHAT_NAME_LABEL_ID, CSS_CLASS_CHAT_NAME);
     get_widget_by_id_and_apply_style(gtk_builder, CANVAS_ID, CSS_CLASS_CANVAS);
 
+    get_widget_by_id_and_apply_style(gtk_builder, UPPER_CANVAS_WINDOW_ID, CSS_CLASS_UPPER_CANVAS_WINDOW);
+    get_widget_by_id_and_apply_style(gtk_builder, CREATE_ROOM_PARENT_ID, CSS_CLASS_CREATE_ROOM_PARENT);
+    
     gui_render_chats_list(data->builder, &data->server_address, data->user_id);
 
     g_timeout_add(UPDATE_INTERVAL, chat_list_updater, data);
