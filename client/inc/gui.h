@@ -37,6 +37,7 @@
 #define UPPER_CANVAS_WINDOW_ID "upper_canvas_window"
 #define CHAT_SETTINGS_WINDOW_ID "chat_settings_window"
 #define AUTHENTICATION_WINDOW_ID "authentication_window"
+#define NEW_MESSAGE_ENTRY_PARENT_ID "new_message_entry_parent"
 
 //Conteners
 #define NEW_MESSAGE_ENTRY_ID "new_message_entry"
