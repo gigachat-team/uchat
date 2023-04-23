@@ -78,6 +78,7 @@ static void gui_send_message_and_update_messages_list(GtkBuilder *builder, t_add
     if (toggle_widget_visibility(!message_updates_list, builder, CONNECTING_BOX_ID)) return;
     gui_update_messages_list(builder, messages_in_chat, message_updates_list, message);
     list_destroy(message_updates_list);
+    set_entry_text(builder, NEW_MESSAGE_ENTRY_ID, "");
 }
 
 static void update_messages_list(GtkBuilder *builder, t_address *server_address, id_t chat_id, list_t *messages_list) {
