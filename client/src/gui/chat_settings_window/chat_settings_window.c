@@ -91,8 +91,7 @@ static void gui_leave_from_chat(GtkBuilder *builder, t_address *server_address, 
 void on_open_chat_settings_clicked(GtkButton *b, gpointer user_data) {
     t_chat_data *chat_data = (t_chat_data *)user_data;
     open_window(chat_data->gui_data.builder, CHAT_SETTINGS_WINDOW_ID);
-    GtkWidget *chat_settings_window = GTK_WIDGET(gtk_builder_get_object(chat_data->gui_data.builder, CHAT_SETTINGS_WINDOW_ID));
-    set_cursor_image(chat_settings_window, DEFAULT_CURSOR_IMAGE_PATH);
+    apply_styles_to_chat_settings_window(chat_data->gui_data.builder);
     gui_init_chat_settings_window(chat_data);
     (void)b;
 }
