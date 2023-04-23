@@ -39,8 +39,7 @@ void on_open_chat_creator_button_clicked(GtkButton *b, gpointer user_data) {
     t_gui_data *gui_data = (t_gui_data *)user_data;
     open_window(gui_data->builder, CREATE_CHAT_WINDOW_ID);
 
-    GtkWidget *crate_chat_window = get_widget(gui_data->builder, CREATE_CHAT_WINDOW_ID);
-    set_cursor_image(crate_chat_window, DEFAULT_CURSOR_IMAGE_PATH);
+    apply_styles_to_create_chat_window(gui_data->builder);
     
     (void)b;
 }
