@@ -53,3 +53,37 @@ void set_cursor_image(GtkWidget *widget, const gchar *cursor_path) {
 
     g_object_unref(cursor);
 }
+
+void apply_styles_for_messenger_window(GtkBuilder *gtk_builder) {
+    if (!gtk_builder) return;
+
+    GtkWidget *messenger_window = GTK_WIDGET(gtk_builder_get_object(gtk_builder, MESSENGER_WINDOW_ID));
+
+    set_cursor_image(messenger_window, DEFAULT_CURSOR_IMAGE_PATH);
+
+    get_widget_by_id_and_apply_style(gtk_builder, CANVAS_ID, CSS_CLASS_CANVAS);
+    get_widget_by_id_and_apply_style(gtk_builder, CREATE_ROOM_ID, CSS_CLASS_CREATE_ROOM);
+    get_widget_by_id_and_apply_style(gtk_builder, CHAT_NAME_LABEL_ID, CSS_CLASS_CHAT_NAME);
+    get_widget_by_id_and_apply_style(gtk_builder, CREATE_ROOM_ID, CSS_CLASS_NEW_CHAT_BUTTON);
+    get_widget_by_id_and_apply_style(gtk_builder, CONNECTING_BOX_ID, CSS_CLASS_CONNECTION_BOX);
+    get_widget_by_id_and_apply_style(gtk_builder, NEW_MESSAGE_ENTRY_ID, CSS_CLASS_MESSAGE_FIELD);
+    get_widget_by_id_and_apply_style(gtk_builder, CONNECTING_LABEL_ID, CSS_CLASS_CONNECTION_LABEL);
+    get_widget_by_id_and_apply_style(gtk_builder, CREATE_ROOM_PARENT_ID, CSS_CLASS_CREATE_ROOM_PARENT);
+    get_widget_by_id_and_apply_style(gtk_builder, CHAT_LISTS_WINDOW_ID, CSS_CLASS_CHATS_LIST_CONTAINER);
+    get_widget_by_id_and_apply_style(gtk_builder, UPPER_CANVAS_WINDOW_ID, CSS_CLASS_UPPER_CANVAS_WINDOW);
+    get_widget_by_id_and_apply_style(gtk_builder, NEW_MESSAGE_ENTRY_PARENT_ID, CSS_CLASS_NEW_MESSAGE_ENTRY_PARENT);
+}
+
+void apply_styles_to_create_chat_window(GtkBuilder *gtk_builder) {
+    if (!gtk_builder) return;
+
+    GtkWidget *crate_chat_window = get_widget(gtk_builder, CREATE_CHAT_WINDOW_ID);
+    set_cursor_image(crate_chat_window, DEFAULT_CURSOR_IMAGE_PATH);
+}
+
+void apply_styles_to_chat_settings_window(GtkBuilder *gtk_builder) {
+    if (!gtk_builder) return;
+
+    GtkWidget *chat_settings_window = GTK_WIDGET(gtk_builder_get_object(gtk_builder, CHAT_SETTINGS_WINDOW_ID));
+    set_cursor_image(chat_settings_window, DEFAULT_CURSOR_IMAGE_PATH);
+}
