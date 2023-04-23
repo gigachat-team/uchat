@@ -9,6 +9,7 @@
 void clear_container(GtkBuilder *builder, char *contener_name);
 
 char *get_entry_text(GtkBuilder *builder, char *entry_name);
+void set_entry_text(GtkBuilder *builder, char *entry_name, char *text);
 
 GtkBuilder *create_gtk_builder();
 
