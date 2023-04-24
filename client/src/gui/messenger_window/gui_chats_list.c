@@ -18,7 +18,10 @@ void gui_render_chats_list(GtkBuilder *gtk_builder, t_address *server_address, i
         for (list_node_t *i = chats_list->head; i != NULL; i = i->next) {
             create_button_in_chat_list(gtk_builder, server_address, user_id, i->val);
         }
-    } else {
+    }
+    else {
+        hide_widget(gtk_builder, "chat_area");
+        show_widget(gtk_builder, "warning_text");
         printf("You aren't in any chats.\n");
     }
 
@@ -40,7 +43,7 @@ void on_open_chat_creator_button_clicked(GtkButton *b, gpointer user_data) {
     open_window(gui_data->builder, CREATE_CHAT_WINDOW_ID);
 
     apply_styles_to_create_chat_window(gui_data->builder);
-    
+
     (void)b;
 }
 

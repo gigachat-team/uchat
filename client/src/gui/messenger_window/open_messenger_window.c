@@ -13,4 +13,6 @@ void open_messenger_window(GtkBuilder *gtk_builder, t_gui_data *data) {
     apply_styles_for_messenger_window(gtk_builder);
     gui_render_chats_list(gtk_builder, &data->server_address, data->user_id);
     g_timeout_add(UPDATE_INTERVAL, chat_list_updater, data);
+
+    hide_widget(gtk_builder, "chat_area");
 }
