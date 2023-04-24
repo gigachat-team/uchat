@@ -50,6 +50,10 @@
     background: url("img/background_auth.png");
 }
 
+.authentication-top-label {
+    background-color: rgb(184, 156, 156);
+}
+
 .upper-canvas-window {
     background-color: rgb(209,209,209);
 }

@@ -26,6 +26,7 @@
 #define CSS_CLASS_CHATS_LIST_CONTAINER "chats-list-containter"
 #define CSS_CLASS_AUTHENTICATION_WINDOW "authentication-window"
 #define CSS_CLASS_NEW_MESSAGE_ENTRY_PARENT "new-message-entry-parent"
+#define CSS_CLASS_AUTHENTICATION_LABEL "authentication-top-label"
 
 typedef enum {
     DARK_STYLE_THEME,
