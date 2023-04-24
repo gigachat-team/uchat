@@ -86,4 +86,3 @@ gboolean on_open_message_settings_clicked(GtkWidget *widget, GdkEventButton *eve
     (void)widget;
     return TRUE;
 }
-
