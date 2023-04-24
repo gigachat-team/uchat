@@ -129,3 +129,20 @@ void on_set_light_theme_clicked(GtkButton *b) {
     load_light_theme();
     (void)b;
 }
+
+void on_toggle_theme_button_clicked(GtkButton *b) {
+    char style_type_str[2];
+    read_from_file(STYLE_TYPE_SETTING_PATH, 2, style_type_str);
+    t_style_type style_type = atoi(style_type_str);
+
+    switch (style_type) {
+    case DARK_STYLE_THEME:
+        load_light_theme();
+        save_theme(LIGHT_STYLE_THEME); break;
+    case LIGHT_STYLE_THEME:
+        load_dark_theme();
+        save_theme(DARK_STYLE_THEME); break;
+    }
+
+    (void)b;
+}
