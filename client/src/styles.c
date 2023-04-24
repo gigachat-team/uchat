@@ -118,6 +118,16 @@ void apply_styles_to_chat_settings_window(GtkBuilder *gtk_builder) {
     get_widget_by_id_and_apply_style(gtk_builder, CHAT_SETTINGS_WINDOW_ID, CSS_CLASS_CHAT_SETTINGS_WINDOW);
 }
 
+void apply_styles_to_authentication_window(GtkBuilder *gtk_builder) {
+    if (!gtk_builder) return;
+    
+    GtkWidget *authentication_window = GTK_WIDGET(gtk_builder_get_object(gtk_builder, AUTHENTICATION_WINDOW_ID));
+    open_window(gtk_builder, AUTHENTICATION_WINDOW_ID);
+    set_cursor_image(authentication_window, DEFAULT_CURSOR_IMAGE_PATH);
+
+    apply_style_to_widget(authentication_window, CSS_CLASS_AUTHENTICATION_WINDOW);
+}
+
 void on_toggle_theme_button_clicked(GtkButton *b) {
     char style_type_str[2];
     read_from_file(STYLE_TYPE_SETTING_PATH, 2, style_type_str);
