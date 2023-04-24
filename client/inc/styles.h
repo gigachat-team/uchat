@@ -99,3 +99,10 @@ void apply_styles_to_create_chat_window(GtkBuilder *gtk_builder);
  * @param gtk_builder builder to apply styles
 */
 void apply_styles_to_chat_settings_window(GtkBuilder *gtk_builder);
+
+/**
+ * @brief sets all the styles for the authentication window and the cursor
+ * image. If no builder is provied, the function does nothing
+ * @param gtk_builder builder to apply styles
+*/
+void apply_styles_to_authentication_window(GtkBuilder *gtk_builder);
