@@ -17,6 +17,26 @@ void load_css(char *css_file_path) {
     gtk_css_provider_load_from_path(provider, css_file_path, NULL);
 }
 
+void load_theme() {
+    char style_type_str[2];
+    read_from_file(STYLE_TYPE_SETTING_PATH, 2, style_type_str);
+    t_style_type style_type = atoi(style_type_str);
+
+    switch (style_type) {
+    case DARK_STYLE_THEME:
+        load_dark_theme(); break;
+    case LIGHT_STYLE_THEME:
+        load_light_theme(); break;
+    }
+}
+
+void save_theme(t_style_type style_type) {
+    char *style_type_str;
+    asprintf(&style_type_str, "%u", style_type);
+    write_to_file(STYLE_TYPE_SETTING_PATH, style_type_str);
+    free(style_type_str);
+}
+
 void load_light_theme() {
     load_css(DEFAULT_CSS_FILE_PATH);
 }
@@ -100,14 +120,16 @@ void apply_styles_to_chat_settings_window(GtkBuilder *gtk_builder) {
 
 void on_set_dark_theme_clicked(GtkButton *b, gpointer user_data) {
     t_gui_data *gui_data = (t_gui_data *)user_data;
-   load_dark_theme();
+    save_theme(DARK_STYLE_THEME);
+    load_dark_theme();
     // close_window(gui_data->builder, CREATE_CHAT_WINDOW_ID);
     (void)gui_data;
     (void)b;
 }
 
 void on_set_light_theme_clicked(GtkButton *b, gpointer user_data) {
-    t_gui_data *gui_data = (t_gui_data *)user_data; 
+    t_gui_data *gui_data = (t_gui_data *)user_data;
+    save_theme(LIGHT_STYLE_THEME);
     load_light_theme();
     close_window(gui_data->builder, CREATE_CHAT_WINDOW_ID);
     (void)gui_data;

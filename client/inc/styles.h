@@ -1,11 +1,14 @@
 #pragma once
 
 #include "gui.h"
+#include "file.h"
 #include "gui_utils.h"
 
 #define DEFAULT_CSS_FILE_PATH "resources/style.css"
 #define CSS_DARK_FILE_PATH "resources/style_dark.css"
 #define DEFAULT_CURSOR_IMAGE_PATH "resources/img/cursor.png"
+
+#define STYLE_TYPE_SETTING_PATH "resources/settings/style_type.txt"
 
 #define CSS_CLASS_CANVAS "canvas"
 #define CSS_CLASS_CHAT_NAME "chat-name"
@@ -24,12 +27,20 @@
 #define CSS_CLASS_AUTHENTICATION_WINDOW "authentication-window"
 #define CSS_CLASS_NEW_MESSAGE_ENTRY_PARENT "new-message-entry-parent"
 
+typedef enum {
+    DARK_STYLE_THEME,
+    LIGHT_STYLE_THEME
+} t_style_type;
+
 /**
  * @brief loads css to gtk. Should be called after gtk_init function
  * @param css_file_path path to a css file that will be included.
  * If variable is NULL, it'll use DEFAULT_CSS_FILE_PATH
 */
 void load_css(char *css_file_path);
+
+void load_theme();
+void save_theme(t_style_type style_type);
 
 /**
  * @brief loads default light theme
