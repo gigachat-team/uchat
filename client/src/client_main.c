@@ -11,11 +11,7 @@ int main(int argc, char **argv) {
     t_gui_data gui_data = create_gui_data(argv[1], atoi(argv[2]));
     gtk_builder_connect_signals(gui_data.builder, &gui_data);
 
-    GtkWidget *auth_window = GTK_WIDGET(gtk_builder_get_object(gui_data.builder, AUTHENTICATION_WINDOW_ID));
-    open_window(gui_data.builder, AUTHENTICATION_WINDOW_ID);
-    set_cursor_image(auth_window, DEFAULT_CURSOR_IMAGE_PATH);
-
-    apply_style_to_widget(auth_window, CSS_CLASS_AUTHENTICATION_WINDOW);
+    apply_styles_to_authentication_window(gui_data.builder);
 
     gtk_main();
 
