@@ -3,11 +3,40 @@
 void on_message_delete_clicked(GtkButton *b, gpointer user_data) {
     t_message_data *data = (t_message_data *)user_data;
 
-    printf("%u\n", data->message_id);
+    // printf("%u\n", data->message_id);
     list_t *message_updates_list = rq_delete_message_and_get_message_updates(&data->chat_data->gui_data.server_address, data->message_id, data->chat_data->chat.id, data->chat_data->messages);
 
     gui_update_messages_list(data->chat_data->gui_data.builder, data->chat_data->messages, message_updates_list, NULL, data->chat_data);
     gtk_widget_destroy(data->message_contener);
+    close_window(data->chat_data->gui_data.builder, "message_settings");
+
+    (void)b;
+}
+
+void on_change_message(GtkEntry *entry, gpointer *user_data) {
+    t_message_data *data = (t_message_data *)user_data;
+
+    // list_t *message_updates_list = rq_change_message_and_get_message_updates(&data->chat_data->gui_data.server_address, data->message_id, strdup("Pizda"), data->chat_data->chat.id, data->chat_data->messages);
+    // gui_update_messages_list(data->chat_data->gui_data.builder, data->chat_data->messages, message_updates_list, NULL, data->chat_data);
+
+    // GtkWidget *message_field = get_widget(data->chat_data->gui_data.builder, NEW_MESSAGE_ENTRY_ID);
+
+    char *message_text = (char *)gtk_entry_get_text(entry);
+    printf("%s\n", message_text);
+
+    (void)data;
+    // g_signal_handlers_destroy(message_field);
+    // g_signal_connect(message_field, "activate", G_CALLBACK(on_send_message_clicked), data->chat_data);
+}
+
+void on_message_edit_clicked(GtkButton *b, gpointer user_data) {
+    t_message_data *data = (t_message_data *)user_data;
+
+    GtkWidget *message_field = get_widget(data->chat_data->gui_data.builder, NEW_MESSAGE_ENTRY_ID);
+
+    g_signal_handlers_destroy(message_field);
+    g_signal_connect(message_field, "activate", G_CALLBACK(on_change_message), user_data);
+
     close_window(data->chat_data->gui_data.builder, "message_settings");
 
     (void)b;
@@ -32,11 +61,14 @@ gboolean on_open_message_settings_clicked(GtkWidget *widget, GdkEventButton *eve
 
     GtkWidget *message_settings = get_widget(data->chat_data->gui_data.builder, "message_settings");
     GtkWidget *delete_message_button = get_widget(data->chat_data->gui_data.builder, "delete_message_button");
+    GtkWidget *edit_message_button = get_widget(data->chat_data->gui_data.builder, "edit_message_button");
 
     g_signal_handlers_destroy(message_settings);
     g_signal_handlers_destroy(delete_message_button);
+    g_signal_handlers_destroy(edit_message_button);
     g_signal_connect(message_settings, "focus-out-event", G_CALLBACK(on_close_message_settings), user_data);
     g_signal_connect(delete_message_button, "clicked", G_CALLBACK(on_message_delete_clicked), user_data);
+    g_signal_connect(edit_message_button, "clicked", G_CALLBACK(on_message_edit_clicked), user_data);
 
     (void)widget;
     return TRUE;
