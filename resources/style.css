@@ -1,6 +1,7 @@
 * {
     border: 0px;
     font-size: large;
+    color: rgb(42, 42, 43)
 }
 
 .connection-box {
@@ -48,6 +49,10 @@
 
 .authentication-window {
     background: url("img/background_auth.png");
+}
+
+.authentication-top-label {
+    background-color: rgb(184, 156, 156);
 }
 
 .upper-canvas-window {

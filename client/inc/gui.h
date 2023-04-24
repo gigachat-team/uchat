@@ -28,6 +28,8 @@
 
 #define CHAT_SETTINGS_BUTTON_ID "open_chat_settings_window"
 
+#define  AUTHENTICATION_LABEL_ID "authentication_label"
+
 //Windows
 #define CHAT_CREATE_ROOM_ID "create_room"
 #define MESSENGER_WINDOW_ID "messenger_window"

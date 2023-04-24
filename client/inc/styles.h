@@ -26,6 +26,7 @@
 #define CSS_CLASS_CHATS_LIST_CONTAINER "chats-list-containter"
 #define CSS_CLASS_AUTHENTICATION_WINDOW "authentication-window"
 #define CSS_CLASS_NEW_MESSAGE_ENTRY_PARENT "new-message-entry-parent"
+#define CSS_CLASS_AUTHENTICATION_LABEL "authentication-top-label"
 
 typedef enum {
     DARK_STYLE_THEME,
@@ -99,3 +100,10 @@ void apply_styles_to_create_chat_window(GtkBuilder *gtk_builder);
  * @param gtk_builder builder to apply styles
 */
 void apply_styles_to_chat_settings_window(GtkBuilder *gtk_builder);
+
+/**
+ * @brief sets all the styles for the authentication window and the cursor
+ * image. If no builder is provied, the function does nothing
+ * @param gtk_builder builder to apply styles
+*/
+void apply_styles_to_authentication_window(GtkBuilder *gtk_builder);

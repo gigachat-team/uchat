@@ -6,3 +6,4 @@ uchat_server
 *.a
 *.db
 *.o
+resources/settings/*.txt
