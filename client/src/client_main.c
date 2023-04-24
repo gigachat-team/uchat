@@ -10,15 +10,17 @@ int main(int argc, char **argv) {
 
     gtk_init(&argc, &argv);
     load_theme();
-    t_gui_data gui_data = create_gui_data(argv[1], atoi(argv[2]));
-    Builder = gui_data.builder;
-    gtk_builder_connect_signals(gui_data.builder, &gui_data);
 
-    apply_styles_to_authentication_window(gui_data.builder);
+    Builder = create_gtk_builder();
+
+    t_gui_data gui_data = create_gui_data(argv[1], atoi(argv[2]));
+    gtk_builder_connect_signals(Builder, &gui_data);
+
+    apply_styles_to_authentication_window(Builder);
 
     gtk_main();
 
-    g_object_unref(gui_data.builder);
+    g_object_unref(Builder);
 
     return EXIT_SUCCESS;
 }
