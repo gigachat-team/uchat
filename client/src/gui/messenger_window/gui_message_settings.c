@@ -7,8 +7,9 @@ void on_message_delete_clicked(GtkButton *b, gpointer user_data) {
     list_t *message_updates_list = rq_delete_message_and_get_message_updates(&data->chat_data->gui_data.server_address, data->message_id, data->chat_data->chat.id, data->chat_data->messages);
 
     gui_update_messages_list(data->chat_data->gui_data.builder, data->chat_data->messages, message_updates_list, NULL, data->chat_data);
-    gtk_widget_destroy(data->message_contener);
     close_window(data->chat_data->gui_data.builder, "message_settings");
+
+    list_destroy(message_updates_list);
 
     (void)b;
 }
