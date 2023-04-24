@@ -129,6 +129,8 @@ static void gui_open_chat(t_chat_data *chat_data) {
 void on_chat_clicked(GtkButton *b, gpointer user_data) {
     t_chat_data *chat_data = (t_chat_data *)user_data;
     gui_open_chat(chat_data);
+    show_widget(chat_data->gui_data.builder, "chat_area");
+    hide_widget(chat_data->gui_data.builder, "warning_text");
     (void)b;
 }
 
