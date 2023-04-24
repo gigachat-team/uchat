@@ -11,3 +11,11 @@ t_chat_data *create_chat_data_ptr(GtkBuilder *gtk_builder, t_address *server_add
     chat_data->messages = list_new();
     return chat_data;
 }
+
+t_message_data *create_message_data(t_chat_data *chat_data, GtkWidget *message_contener, id_t message_id) {
+    t_message_data *data = malloc(sizeof(t_message_data));
+    data->chat_data = chat_data;
+    data->message_contener = message_contener;
+    data->message_id = message_id;
+    return data;
+}

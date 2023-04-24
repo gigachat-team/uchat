@@ -61,7 +61,17 @@ typedef struct s_chat_data {
     t_chat chat;
     list_t *messages;
 } t_chat_data;
+
+typedef struct s_message_data {
+    t_chat_data *chat_data;
+    GtkWidget *message_contener;
+    id_t message_id;
+} t_message_data;
+
 t_chat_data *create_chat_data_ptr(GtkBuilder *gtk_builder, t_address *server_address, id_t user_id, char *chat_name, id_t chat_id, id_t chat_owner_id);
+t_message_data *create_message_data(t_chat_data *chat_data, GtkWidget *message_contener, id_t message_id);
+
+void gui_update_messages_list(GtkBuilder *builder, list_t *messages_list, list_t *message_updates_list, char *sended_message, t_chat_data *chat_data);
 
 void on_chat_clicked(GtkButton *b, gpointer user_data);
 void on_send_message_clicked(GtkEntry *entry, gpointer *user_data);

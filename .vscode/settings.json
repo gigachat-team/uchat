@@ -30,7 +30,8 @@
         "gsignal.h": "c",
         "client.h": "c",
         "stdlib.h": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "system_error": "c"
     },
     "C_Cpp.vcFormat.newLine.beforeElse": true,
     "C_Cpp.vcFormat.space.betweenEmptyBraces": false,
