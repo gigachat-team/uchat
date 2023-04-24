@@ -85,11 +85,12 @@ list_t *rq_change_message_and_get_message_updates(t_address *server_address, id_
     int client_socket = create_and_connect_socket(*server_address);
     if (client_socket == -1) return NULL;
 
-    t_package package = create_package(4 + messages_list->len * 2);
+    t_package package = create_package(5 + messages_list->len * 2);
     pack_byte(CHANGE_MESSAGE_AND_GET_MESSAGE_UPDATES, &package);
     pack_uint32(message_id, &package);
     pack_bytes(new_message_content, &package);
     pack_uint32(chat_id, &package);
+    pack_uint32(messages_list->len, &package);
     for (list_node_t *i = messages_list->head; i != NULL; i = i->next) {
         t_user_message *message = i->val;
         pack_uint32(message->message_id, &package);
