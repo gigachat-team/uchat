@@ -29,10 +29,12 @@ void on_change_message(GtkEntry *entry, gpointer *user_data) {
 
     char *message_text = (char *)gtk_entry_get_text(entry);
 
-    list_t *message_updates_list = rq_change_message_and_get_message_updates(&data->chat_data->gui_data.server_address, data->message_id, strdup(message_text), data->chat_data->chat.id, data->chat_data->messages);
+    list_t *message_updates_list = rq_change_message_and_get_message_updates(&data->chat_data->gui_data.server_address, data->message_id, message_text, data->chat_data->chat.id, data->chat_data->messages);
     gui_update_messages_list(data->chat_data->gui_data.builder, data->chat_data->messages, message_updates_list, NULL, data->chat_data);
 
     g_timeout_add(100, on_update_message_entry, data);
+
+    list_destroy(message_updates_list);
 }
 
 void on_message_edit_clicked(GtkButton *b, gpointer user_data) {
