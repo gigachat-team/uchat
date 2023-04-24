@@ -69,6 +69,7 @@ void on_open_chat_settings_clicked(GtkButton *b, gpointer user_data);
 void on_leave_from_chat_clicked(GtkButton *b, gpointer user_data);
 void on_add_chat_member_clicked(GtkButton *b, gpointer user_data);
 void on_remove_chat_member_clicked(GtkButton *b, gpointer user_data);
+gboolean on_open_message_settings_clicked(GtkWidget *widget, GdkEventButton *event, gpointer user_data);
 
 void open_messenger_window(GtkBuilder *gtk_builder, t_gui_data *data);
 

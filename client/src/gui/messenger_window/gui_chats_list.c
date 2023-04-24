@@ -53,6 +53,5 @@ void on_close_chat_creator_button_clicked(GtkButton *b, gpointer user_data) {
 void on_create_chat_button_clicked(GtkButton *b, gpointer user_data) {
     t_gui_data *gui_data = (t_gui_data *)user_data;
     gui_create_chat(gui_data->builder, &gui_data->server_address, gui_data->user_id);
-
     (void)b;
 }
