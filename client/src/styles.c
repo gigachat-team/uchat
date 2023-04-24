@@ -98,18 +98,12 @@ void apply_styles_to_chat_settings_window(GtkBuilder *gtk_builder) {
     get_widget_by_id_and_apply_style(gtk_builder, CHAT_SETTINGS_WINDOW_ID, CSS_CLASS_CHAT_SETTINGS_WINDOW);
 }
 
-void on_set_dark_theme_clicked(GtkButton *b, gpointer user_data) {
-    t_gui_data *gui_data = (t_gui_data *)user_data;
+void on_set_dark_theme_clicked(GtkButton *b) {
    load_dark_theme();
-    // close_window(gui_data->builder, CREATE_CHAT_WINDOW_ID);
-    (void)gui_data;
     (void)b;
 }
 
-void on_set_light_theme_clicked(GtkButton *b, gpointer user_data) {
-    t_gui_data *gui_data = (t_gui_data *)user_data; 
+void on_set_light_theme_clicked(GtkButton *b) {
     load_light_theme();
-    close_window(gui_data->builder, CREATE_CHAT_WINDOW_ID);
-    (void)gui_data;
     (void)b;
 }

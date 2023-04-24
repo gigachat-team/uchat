@@ -15,8 +15,12 @@ static GtkWidget *create_and_show_message_widget(GtkBuilder *builder, char *mess
     gtk_label_set_line_wrap_mode(GTK_LABEL(*message_label), PANGO_WRAP_CHAR);
     gtk_widget_set_valign(user_icon, GTK_ALIGN_END); // Align to the bottom vertically within the box
 
+    GtkWidget *event_box = gtk_event_box_new();  
+    gtk_container_add(GTK_CONTAINER(event_box), *message_label);
+    g_signal_connect(event_box, "button-press-event", G_CALLBACK(on_open_message_settings_clicked), builder);
+    
     gtk_box_pack_start(GTK_BOX(message), GTK_WIDGET(user_icon), false, false, 0);
-    gtk_box_pack_start(GTK_BOX(message), *message_label, false, false, 5);
+    gtk_box_pack_start(GTK_BOX(message), event_box, false, false, 5);
     add_to_box_start(builder, message, CHAT_FIELD_CONTENER_ID, 10);
 
     char time_str[DEFAULT_TIME_FORMAT_LEN];
@@ -71,7 +75,8 @@ static void gui_update_messages_list(GtkBuilder *builder, list_t *messages_list,
             message_update->message.widget = create_and_show_message_widget(builder, sended_message, message_update->message.creation_date, &message_update->message.label_widget);
             free(message_update->message.data);
             message_update->message.data = strdup(sended_message);
-        } else {
+        }
+        else {
             message_update->message.widget = create_and_show_message_widget(builder, message_update->message.data, message_update->message.creation_date, &message_update->message.label_widget);
         }
 
