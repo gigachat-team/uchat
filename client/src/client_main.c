@@ -7,7 +7,7 @@ int main(int argc, char **argv) {
     }
 
     gtk_init(&argc, &argv);
-    load_css(CSS_DARK_FILE_PATH);
+    load_theme();
     t_gui_data gui_data = create_gui_data(argv[1], atoi(argv[2]));
     gtk_builder_connect_signals(gui_data.builder, &gui_data);
 
