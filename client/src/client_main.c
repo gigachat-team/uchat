@@ -1,5 +1,7 @@
 #include "client_main.h"
 
+GtkBuilder *Builder = NULL;
+
 int main(int argc, char **argv) {
     if (argc != 3) {
         printf(USAGE_MESSAGE);
@@ -9,6 +11,7 @@ int main(int argc, char **argv) {
     gtk_init(&argc, &argv);
     load_theme();
     t_gui_data gui_data = create_gui_data(argv[1], atoi(argv[2]));
+    Builder = gui_data.builder;
     gtk_builder_connect_signals(gui_data.builder, &gui_data);
 
     apply_styles_to_authentication_window(gui_data.builder);

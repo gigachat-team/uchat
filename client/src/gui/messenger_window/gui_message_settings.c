@@ -37,6 +37,8 @@ void on_change_message(GtkEntry *entry, gpointer *user_data) {
 
     g_timeout_add(100, on_update_message_entry, data);
 
+    set_entry_text(Builder, NEW_MESSAGE_ENTRY_ID, "");
+
     list_destroy(message_updates_list);
 }
 

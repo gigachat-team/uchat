@@ -51,6 +51,8 @@
 
 #define LAST_LOADING_MESSAGES_COUNT 30
 
+extern GtkBuilder *Builder;
+
 typedef struct s_gui_data {
     GtkBuilder *builder;
     t_address server_address;
