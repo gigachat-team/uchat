@@ -69,6 +69,9 @@ gboolean on_close_message_settings(GtkWidget *widget, GdkEventFocus *event) {
 gboolean on_open_message_settings_clicked(GtkWidget *widget, GdkEventButton *event, gpointer user_data) {
     if (event->button != GDK_BUTTON_SECONDARY) return TRUE;
 
+    t_user_message *message = user_data;
+    if (message->sender_id != ThisUserId) return TRUE;
+
     open_window(Builder, "message_settings");
 
     GtkWidget *message_settings = get_widget(Builder, "message_settings");
