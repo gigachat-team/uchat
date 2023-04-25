@@ -76,7 +76,7 @@ void db_create_message_statuses_table(sqlite3 *db);
 void db_delete_chat(sqlite3 *db, id_t chat_id);
 void db_delete_member(sqlite3 *db, id_t user_id, id_t chat_id);
 void db_delete_message(sqlite3 *db, id_t message_id);
-void db_mark_account_as_deleted(sqlite3 *db, id_t user_id);
+void db_delete_account(sqlite3 *db, id_t user_id);
 
 /**
  * @brief Creates new user in the users table with new LOGIN and PASSWORD.

@@ -32,7 +32,7 @@ void db_delete_message(sqlite3 *db, id_t message_id) {
     sqlite3_free(sql);
 }
 
-void db_mark_account_as_deleted(sqlite3 *db, id_t user_id) {
+void db_delete_account(sqlite3 *db, id_t user_id) {
     char *sql = sqlite3_mprintf(" \
         UPDATE "USERS_TABLE" \
         SET "USERS_LOGIN" = \"%Q\" \
