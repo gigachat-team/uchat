@@ -16,7 +16,7 @@ static void gui_fill_members_list(id_t chat_id) {
     gtk_combo_box_text_remove_all(GTK_COMBO_BOX_TEXT(members_list));
 
     for (size_t i = 0; i < members_count; i++) {
-        if (members[i].id == ThisUserId) continue;
+        if (members[i].id == ThisUser->id) continue;
         gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(members_list), user_id_to_str(members[i].id), strdup(members[i].login));
     }
     free_users(members, members_count);
@@ -31,7 +31,7 @@ static void gui_init_chat_settings_window(t_chat *chat) {
     g_signal_handlers_destroy(leave_chat_button);
     g_signal_connect(leave_chat_button, "clicked", G_CALLBACK(on_leave_from_chat_clicked), chat);
 
-    if (chat->owner_id == ThisUserId) {
+    if (chat->owner_id == ThisUser->id) {
         gtk_widget_show(group_settings_box);
     } else {
         gtk_widget_hide(group_settings_box);
@@ -76,7 +76,7 @@ static void gui_add_chat_member(id_t chat_id) {
 }
 
 static void gui_leave_from_chat(id_t chat_id) {
-    t_state_code response = rq_remove_member_from_chat(ServerAddress, ThisUserId, chat_id);
+    t_state_code response = rq_remove_member_from_chat(ServerAddress, ThisUser->id, chat_id);
     if (toggle_widget_visibility(!response, Builder, CONNECTING_BOX_ID)) return;
 
     if (response == USER_REMOVED_FROM_CHAT_SUCCESSFULLY) {

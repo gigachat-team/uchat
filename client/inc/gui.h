@@ -53,7 +53,7 @@
 
 extern GtkBuilder *Builder;
 extern t_address *ServerAddress;
-extern id_t ThisUserId;
+extern t_user *ThisUser;
 extern list_t *LoadedMessagesList;
 extern t_chat *SelectedChat;
 

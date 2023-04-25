@@ -70,7 +70,7 @@ gboolean on_open_message_settings_clicked(GtkWidget *widget, GdkEventButton *eve
     if (event->button != GDK_BUTTON_SECONDARY) return TRUE;
 
     t_user_message *message = user_data;
-    if (message->sender_id != ThisUserId) return TRUE;
+    if (message->sender_id != ThisUser->id) return TRUE;
 
     open_window(Builder, "message_settings");
 

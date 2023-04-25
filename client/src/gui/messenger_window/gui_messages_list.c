@@ -87,7 +87,7 @@ void gui_update_messages_list(list_t *message_updates_list, char *sended_message
 }
 
 static void gui_send_message_and_update_messages_list(id_t chat_id, char *message) {
-    list_t *message_updates_list = rq_send_message_and_get_messages_updates(ServerAddress, ThisUserId, chat_id, message, LoadedMessagesList);
+    list_t *message_updates_list = rq_send_message_and_get_messages_updates(ServerAddress, ThisUser->id, chat_id, message, LoadedMessagesList);
     if (toggle_widget_visibility(!message_updates_list, Builder, CONNECTING_BOX_ID)) return;
     gui_update_messages_list(message_updates_list, message);
     list_destroy(message_updates_list);

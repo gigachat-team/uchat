@@ -8,8 +8,9 @@ static void gui_login() {
     char *login = get_entry_text(Builder, LOGIN_ENTRY_ID);
     char *password = get_entry_text(Builder, PASSWORD_ENTRY_ID);
 
-    switch (rq_authenticate_user(ServerAddress, login, password, LOGIN_MODE, &ThisUserId)) {
+    switch (rq_authenticate_user(ServerAddress, login, password, LOGIN_MODE, &ThisUser->id)) {
     case SUCCESSFUL_LOGIN:
+        ThisUser->login = login;
         open_messenger_window();
     break; case SUCH_LOGIN_DOES_NOT_EXIST:
         set_label_text(error_message, "Such login does not exist.");
@@ -43,8 +44,9 @@ static void gui_register() {
         return;
     }
 
-    switch (rq_authenticate_user(ServerAddress, new_login, new_password, REGISTER_MODE, &ThisUserId)) {
+    switch (rq_authenticate_user(ServerAddress, new_login, new_password, REGISTER_MODE, &ThisUser->id)) {
     case SUCCESSFUL_REGISTRATION:
+        ThisUser->login = new_login;
         open_messenger_window();
     break; case SUCH_LOGIN_ALREADY_EXISTS:
         set_label_text(error_message, "Such login already exists.");

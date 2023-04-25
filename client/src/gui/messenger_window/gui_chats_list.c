@@ -8,7 +8,7 @@ static void create_button_in_chat_list(t_chat *chat) {
 }
 
 void gui_render_chats_list() {
-    list_t *chats_list = rq_get_chats_i_am_in(ServerAddress, ThisUserId);
+    list_t *chats_list = rq_get_chats_i_am_in(ServerAddress, ThisUser->id);
     if (toggle_widget_visibility(!chats_list, Builder, CONNECTING_BOX_ID)) return;
 
     clear_container(Builder, CHATS_LIST_CONTAINER_ID);
@@ -27,7 +27,7 @@ void gui_render_chats_list() {
 
 static void gui_create_chat() {
     char *chat_name = get_entry_text(Builder, NEW_CHAT_NAME_ENTRY_ID);
-    id_t created_chat_id = rq_create_chat(ServerAddress, chat_name, ThisUserId);
+    id_t created_chat_id = rq_create_chat(ServerAddress, chat_name, ThisUser->id);
     if (toggle_widget_visibility(!created_chat_id, Builder, CONNECTING_BOX_ID)) return;
 
     printf("Chat \"%s\" with id %u created successfully.\n", chat_name, created_chat_id);
