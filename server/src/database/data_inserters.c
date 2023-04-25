@@ -102,20 +102,3 @@ void db_change_message(sqlite3 *db, id_t message_id, char *new_content) {
     db_execute_sql(db, sql);
     sqlite3_free(sql);
 }
-
-void db_mark_account_as_deleted(sqlite3 *db, id_t user_id) {
-    char *sql = sqlite3_mprintf(" \
-        UPDATE "USERS_TABLE" \
-        SET "USERS_LOGIN" = \"%Q\" \
-        WHERE "USERS_ID" = %u", DELETED_ACCOUNT_NAME, user_id
-    );
-    db_execute_sql(db, sql);
-    sqlite3_free(sql);
-
-    sql = sqlite3_mprintf(" \
-        DELETE FROM "MEMBERS_TABLE" \
-        WHERE "MEMBERS_USER_ID" = %u", user_id
-    );
-    db_execute_sql(db, sql);
-    sqlite3_free(sql);
-}
