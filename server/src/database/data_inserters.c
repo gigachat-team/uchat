@@ -1,7 +1,7 @@
 #include "database.h"
 
 id_t db_create_user(sqlite3 *db, char *login, char *password) {
-    if (db_users_table_has_login(db, login)) {
+    if (db_login_exists(db, login)) {
         return 0;
     }
 

@@ -114,6 +114,6 @@ list_t *db_select_members(sqlite3 *db, id_t chat_id);
 /**
  * @return false if such login does not exist or true if exists
 */
-bool db_users_table_has_login(sqlite3 *db, char *login);
+bool db_login_exists(sqlite3 *db, char *login);
 bool db_user_is_in_chat(sqlite3 *db, id_t user_id, id_t chat_id);
 bool db_chat_has_members(sqlite3 *db, id_t chat_id);

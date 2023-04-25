@@ -1,6 +1,6 @@
 #include "database.h"
 
-bool db_users_table_has_login(sqlite3 *db, char *login) {
+bool db_login_exists(sqlite3 *db, char *login) {
     char *sql = sqlite3_mprintf(" \
         SELECT * FROM "USERS_TABLE" \
         WHERE "USERS_LOGIN" = %Q", login
