@@ -27,3 +27,7 @@ list_t *rq_change_message_and_get_message_updates(t_address *server_address, id_
 list_t *rq_get_message_updates(t_address *server_address, id_t chat_id, list_t *messages_list);
 t_user *rq_get_chat_members(t_address *server_address, id_t chat_id, uint32_t *members_count);
 t_state_code rq_remove_member_from_chat(t_address *server_address, id_t user_id, id_t chat_id);
+/**
+ * @return LOGIN_SUCCESSFULLY_CHANGED on success; SUCH_LOGIN_ALREADY_EXISTS on failure
+*/
+t_state_code rq_change_login(t_address *server_address, id_t user_id, char *new_login);
