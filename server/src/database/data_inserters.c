@@ -106,8 +106,8 @@ void db_change_message(sqlite3 *db, id_t message_id, char *new_content) {
 void db_mark_account_as_deleted(sqlite3 *db, id_t user_id) {
     char *sql = sqlite3_mprintf(" \
         UPDATE "USERS_TABLE" \
-        SET "USERS_LOGIN" = \"Deleted Account\" \
-        WHERE "USERS_ID" = %u", user_id
+        SET "USERS_LOGIN" = \"%Q\" \
+        WHERE "USERS_ID" = %u", DELETED_ACCOUNT_NAME, user_id
     );
     db_execute_sql(db, sql);
     sqlite3_free(sql);

@@ -42,6 +42,8 @@
 
 #define ENABLE_FOREIGN_KEYS_SUPPORT "PRAGMA foreign_keys = ON;"
 
+#define DELETED_ACCOUNT_NAME "Deleted Account"
+
 /**
  * @brief Opens new database connection. Prints error and close application on error.
  * @return New sqlite3 database connection.
