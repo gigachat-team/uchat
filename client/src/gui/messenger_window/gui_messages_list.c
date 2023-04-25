@@ -102,43 +102,43 @@ static void update_messages_list(id_t chat_id) {
 }
 
 static gboolean on_update_tick(gpointer user_data) {
-    t_chat_data *chat_data = (t_chat_data *)user_data;
-    update_messages_list(chat_data->chat.id);
+    t_chat *chat = user_data;
+    update_messages_list(chat->id);
     return TRUE;
 }
 
 static guint UpdateTickThread = 0;
-static void gui_open_chat(t_chat_data *chat_data) {
+static void gui_open_chat(t_chat *chat) {
     GtkWidget *message_field = get_widget(Builder, NEW_MESSAGE_ENTRY_ID);
     GtkWidget *chat_settings_window = get_widget(Builder, CHAT_SETTINGS_BUTTON_ID);
 
     clear_container(Builder, CHAT_FIELD_CONTENER_ID);
-    write_label_text(Builder, CHAT_NAME_LABEL_ID, chat_data->chat.name);
-    load_messages(chat_data->chat.id);
+    write_label_text(Builder, CHAT_NAME_LABEL_ID, chat->name);
+    load_messages(chat->id);
 
     g_signal_handlers_destroy(message_field);
 
-    g_signal_connect(message_field, "activate", G_CALLBACK(on_send_message_clicked), chat_data);
-    g_signal_connect(chat_settings_window, "clicked", G_CALLBACK(on_open_chat_settings_clicked), chat_data);
+    g_signal_connect(message_field, "activate", G_CALLBACK(on_send_message_clicked), chat);
+    g_signal_connect(chat_settings_window, "clicked", G_CALLBACK(on_open_chat_settings_clicked), chat);
 
     if (UpdateTickThread != 0) {
         g_source_remove(UpdateTickThread);
         UpdateTickThread = 0;
     }
-    UpdateTickThread = g_timeout_add(MESSAGES_LIST_UPDATE_INTERVAL, on_update_tick, chat_data);
+    UpdateTickThread = g_timeout_add(MESSAGES_LIST_UPDATE_INTERVAL, on_update_tick, chat);
 }
 
 void on_chat_clicked(GtkButton *b, gpointer user_data) {
-    t_chat_data *chat_data = (t_chat_data *)user_data;
-    SelectedChat = &chat_data->chat;
-    gui_open_chat(chat_data);
+    t_chat *chat = user_data;
+    SelectedChat = chat;
+    gui_open_chat(chat);
     show_widget(Builder, "chat_area");
     hide_widget(Builder, "warning_text");
     (void)b;
 }
 
-void on_send_message_clicked(GtkEntry *entry, gpointer *user_data) {
-    t_chat_data *chat_data = (t_chat_data *)user_data;
+void on_send_message_clicked(GtkEntry *entry, gpointer user_data) {
+    t_chat *chat = user_data;
     char *message_text = (char *)gtk_entry_get_text(entry);
-    gui_send_message_and_update_messages_list(chat_data->chat.id, message_text);
+    gui_send_message_and_update_messages_list(chat->id, message_text);
 }

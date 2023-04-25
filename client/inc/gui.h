@@ -57,16 +57,10 @@ extern id_t ThisUserId;
 extern list_t *LoadedMessagesList;
 extern t_chat *SelectedChat;
 
-typedef struct s_chat_data {
-    t_chat chat;
-} t_chat_data;
-
-t_chat_data *create_chat_data_ptr(char *chat_name, id_t chat_id, id_t chat_owner_id);
-
 void gui_update_messages_list(list_t *message_updates_list, char *sended_message);
 
 void on_chat_clicked(GtkButton *b, gpointer user_data);
-void on_send_message_clicked(GtkEntry *entry, gpointer *user_data);
+void on_send_message_clicked(GtkEntry *entry, gpointer user_data);
 void on_open_chat_settings_clicked(GtkButton *b, gpointer user_data);
 void on_leave_from_chat_clicked(GtkButton *b, gpointer user_data);
 void on_add_chat_member_clicked(GtkButton *b, gpointer user_data);

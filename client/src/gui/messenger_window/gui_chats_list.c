@@ -3,8 +3,7 @@
 // Create new button in chats list
 static void create_button_in_chat_list(t_chat *chat) {
     GtkWidget *new_button = gtk_button_new_with_label(chat->name);
-    t_chat_data *chat_data = create_chat_data_ptr(chat->name, chat->id, chat->owner_id);
-    g_signal_connect(new_button, "clicked", G_CALLBACK(on_chat_clicked), chat_data);
+    g_signal_connect(new_button, "clicked", G_CALLBACK(on_chat_clicked), chat);
     add_to_box_start(Builder, new_button, CHATS_LIST_CONTAINER_ID, 0);
 }
 
@@ -24,8 +23,6 @@ void gui_render_chats_list() {
         show_widget(Builder, "warning_text");
         printf("You aren't in any chats.\n");
     }
-
-    free_chats_list(chats_list);
 }
 
 static void gui_create_chat() {

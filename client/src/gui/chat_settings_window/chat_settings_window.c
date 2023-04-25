@@ -22,28 +22,28 @@ static void gui_fill_members_list(id_t chat_id) {
     free_users(members, members_count);
 }
 
-static void gui_init_chat_settings_window(t_chat_data *chat_data) {
+static void gui_init_chat_settings_window(t_chat *chat) {
     GtkWidget *leave_chat_button = get_widget(Builder, "leave_chat_button");
     GtkWidget *add_member_button = get_widget(Builder, "add_chat_member_button");
     GtkWidget *remove_member_button = get_widget(Builder, "remove_chat_member_button");
     GtkWidget *group_settings_box = get_widget(Builder, GROUP_SETTINGS_BOX);
 
     g_signal_handlers_destroy(leave_chat_button);
-    g_signal_connect(leave_chat_button, "clicked", G_CALLBACK(on_leave_from_chat_clicked), chat_data);
+    g_signal_connect(leave_chat_button, "clicked", G_CALLBACK(on_leave_from_chat_clicked), chat);
 
-    if (chat_data->chat.owner_id == ThisUserId) {
+    if (chat->owner_id == ThisUserId) {
         gtk_widget_show(group_settings_box);
     } else {
         gtk_widget_hide(group_settings_box);
     }
 
     g_signal_handlers_destroy(add_member_button);
-    g_signal_connect(add_member_button, "clicked", G_CALLBACK(on_add_chat_member_clicked), chat_data);
+    g_signal_connect(add_member_button, "clicked", G_CALLBACK(on_add_chat_member_clicked), chat);
 
     g_signal_handlers_destroy(remove_member_button);
-    g_signal_connect(remove_member_button, "clicked", G_CALLBACK(on_remove_chat_member_clicked), chat_data);
+    g_signal_connect(remove_member_button, "clicked", G_CALLBACK(on_remove_chat_member_clicked), chat);
 
-    gui_fill_members_list(chat_data->chat.id);
+    gui_fill_members_list(chat->id);
 }
 
 static void gui_remove_chat_member(id_t chat_id) {
@@ -89,10 +89,10 @@ static void gui_leave_from_chat(id_t chat_id) {
 }
 
 void on_open_chat_settings_clicked(GtkButton *b, gpointer user_data) {
-    t_chat_data *chat_data = (t_chat_data *)user_data;
+    t_chat *chat = user_data;
     open_window(Builder, CHAT_SETTINGS_WINDOW_ID);
     apply_styles_to_chat_settings_window(Builder);
-    gui_init_chat_settings_window(chat_data);
+    gui_init_chat_settings_window(chat);
     (void)b;
 }
 
@@ -103,20 +103,20 @@ void on_close_chat_settings_clicked(GtkButton *b, gpointer user_data) {
 }
 
 void on_leave_from_chat_clicked(GtkButton *b, gpointer user_data) {
-    t_chat_data *chat_data = (t_chat_data *)user_data;
+    t_chat *chat = user_data;
     close_window(Builder, CHAT_SETTINGS_WINDOW_ID);
-    gui_leave_from_chat(chat_data->chat.id);
+    gui_leave_from_chat(chat->id);
     (void)b;
 }
 
 void on_add_chat_member_clicked(GtkButton *b, gpointer user_data) {
-    t_chat_data *chat_data = (t_chat_data *)user_data;
-    gui_add_chat_member(chat_data->chat.id);
+    t_chat *chat = user_data;
+    gui_add_chat_member(chat->id);
     (void)b;
 }
 
 void on_remove_chat_member_clicked(GtkButton *b, gpointer user_data) {
-    t_chat_data *chat_data = (t_chat_data *)user_data;
-    gui_remove_chat_member(chat_data->chat.id);
+    t_chat *chat = user_data;
+    gui_remove_chat_member(chat->id);
     (void)b;
 }
