@@ -3,6 +3,7 @@
 GtkBuilder *Builder = NULL;
 t_address *ServerAddress = NULL;
 id_t ThisUserId = 0;
+list_t *LoadedMessagesList = NULL;
 
 int main(int argc, char **argv) {
     if (argc != 3) {
@@ -17,6 +18,7 @@ int main(int argc, char **argv) {
 
     Builder = create_gtk_builder();
     ServerAddress = &server_address;
+    LoadedMessagesList = list_new();
 
     gtk_builder_connect_signals(Builder, NULL);
 
@@ -25,6 +27,7 @@ int main(int argc, char **argv) {
     gtk_main();
 
     g_object_unref(Builder);
+    free_user_messages_list(LoadedMessagesList);
 
     return EXIT_SUCCESS;
 }

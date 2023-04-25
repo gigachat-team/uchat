@@ -3,10 +3,10 @@
 void on_message_delete_clicked(GtkButton *b, gpointer user_data) {
     t_message_data *data = (t_message_data *)user_data;
 
-    list_t *message_updates_list = rq_delete_message_and_get_message_updates(ServerAddress, data->message_id, data->chat_data->chat.id, data->chat_data->messages);
+    list_t *message_updates_list = rq_delete_message_and_get_message_updates(ServerAddress, data->message_id, data->chat_data->chat.id, LoadedMessagesList);
     if (!message_updates_list) return;
 
-    gui_update_messages_list(data->chat_data->messages, message_updates_list, NULL, data->chat_data);
+    gui_update_messages_list(message_updates_list, NULL, data->chat_data);
     close_window(Builder, "message_settings");
 
     list_destroy(message_updates_list);
@@ -30,10 +30,10 @@ void on_change_message(GtkEntry *entry, gpointer *user_data) {
 
     char *message_text = (char *)gtk_entry_get_text(entry);
 
-    list_t *message_updates_list = rq_change_message_and_get_message_updates(ServerAddress, data->message_id, message_text, data->chat_data->chat.id, data->chat_data->messages);
+    list_t *message_updates_list = rq_change_message_and_get_message_updates(ServerAddress, data->message_id, message_text, data->chat_data->chat.id, LoadedMessagesList);
     if (!message_updates_list) return;
 
-    gui_update_messages_list(data->chat_data->messages, message_updates_list, NULL, data->chat_data);
+    gui_update_messages_list(message_updates_list, NULL, data->chat_data);
 
     g_timeout_add(100, on_update_message_entry, data);
 
