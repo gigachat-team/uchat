@@ -12,8 +12,6 @@
 
 void *handle_client_request_thread(void *allocated_client_socket);
 
-void handle_registration(int client_socket);
-void handle_login(int client_socket);
 void handle_chat_creation(int client_socket);
 void handle_getting_chats(int client_socket);
 void handle_adding_new_member_to_chat(int client_socket);
@@ -29,4 +27,6 @@ void handle_message_changing_and_message_updates_getting(int client_socket);
 void handle_message_updates_getting(int client_socket);
 void handle_removing_user_from_chat(int client_socket);
 void handle_getting_chat_members(int client_socket);
+void handle_registration(int client_socket);
+void handle_login(int client_socket);
 void handle_login_changing(int client_socket);
