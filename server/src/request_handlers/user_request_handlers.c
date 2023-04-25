@@ -76,3 +76,11 @@ void handle_login_changing(int client_socket) {
 
     free(new_login);
 }
+
+void handle_account_deleting(int client_socket) {
+    uint32_t user_id = receive_uint32(client_socket);
+
+    sqlite3 *db = db_open();
+    db_delete_account(db, user_id);
+    db_close(db);
+}

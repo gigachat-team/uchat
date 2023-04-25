@@ -14,5 +14,6 @@ typedef enum e_request {
     GET_MESSAGE_UPDATES,
     REMOVE_USER_FROM_CHAT,
     GET_CHAT_MEMBERS,
-    CHANGE_LOGIN
+    CHANGE_LOGIN,
+    DELETE_ACCOUNT
 } t_request;

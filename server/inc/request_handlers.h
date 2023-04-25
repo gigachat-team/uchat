@@ -30,3 +30,4 @@ void handle_getting_chat_members(int client_socket);
 void handle_registration(int client_socket);
 void handle_login(int client_socket);
 void handle_login_changing(int client_socket);
+void handle_account_deleting(int client_socket);

@@ -35,6 +35,8 @@ void *handle_client_request_thread(void *allocated_client_socket) {
         handle_getting_chat_members(client_socket); break;
     case CHANGE_LOGIN:
         handle_login_changing(client_socket); break;
+    case DELETE_ACCOUNT:
+        handle_account_deleting(client_socket); break;
     }
 
     close(client_socket);
