@@ -1,7 +1,7 @@
 * {
     border: 0px;
     font-size: large;
-    color: rgb(42, 42, 43)
+    color: rgb(42, 42, 43);
 }
 
 .connection-box {
@@ -33,6 +33,7 @@
 }
 
 .message-field {
+    background-color: white;
     border: 5px solid;
     border-color: rgb(147, 144, 151);
     font-weight: unset;
