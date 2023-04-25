@@ -74,7 +74,7 @@ void gui_update_messages_list(list_t *message_updates_list, char *sended_message
 
         if (i->next == NULL && sended_message != NULL) {
             free(message_update->message.data);
-            message_update->message.data = strdup(sended_message);
+            message->data = strdup(sended_message);
             create_and_show_message_widget(message);
         }
         else {
