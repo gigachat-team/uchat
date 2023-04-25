@@ -3,7 +3,7 @@
 void db_create_users_table(sqlite3 *db) {
     char *sql = "CREATE TABLE IF NOT EXISTS "USERS_TABLE" ( \
         "USERS_ID"          INTEGER PRIMARY KEY AUTOINCREMENT, \
-        "USERS_LOGIN"       TEXT UNIQUE NOT NULL CHECK("USERS_LOGIN" != ''), \
+        "USERS_LOGIN"       TEXT NOT NULL CHECK("USERS_LOGIN" != ''), \
         "USERS_PASSWORD"    TEXT NOT NULL);";
     db_execute_sql(db, sql);
 }
