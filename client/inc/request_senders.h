@@ -31,3 +31,7 @@ t_state_code rq_authenticate_user(t_address *server_address, char *login, char *
  * @return LOGIN_SUCCESSFULLY_CHANGED on success; SUCH_LOGIN_ALREADY_EXISTS on failure
 */
 t_state_code rq_change_login(t_address *server_address, id_t user_id, char *new_login);
+/**
+ * @return true on success; false on connection failure.
+*/
+bool rq_delete_account(t_address *server_address, id_t user_id);

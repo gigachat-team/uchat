@@ -36,3 +36,17 @@ t_state_code rq_change_login(t_address *server_address, id_t user_id, char *new_
 
     return responce;
 }
+
+bool rq_delete_account(t_address *server_address, id_t user_id) {
+    int client_socket = create_and_connect_socket(server_address);
+    if (client_socket == -1) return false;
+
+    t_package package = create_package(2);
+    pack_byte(DELETE_ACCOUNT, &package);
+    pack_uint32(user_id, &package);
+    send_and_free_package(client_socket, &package);
+
+    close(client_socket);
+
+    return true;
+}
