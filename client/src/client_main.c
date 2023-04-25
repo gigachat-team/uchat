@@ -4,6 +4,7 @@ GtkBuilder *Builder = NULL;
 t_address *ServerAddress = NULL;
 id_t ThisUserId = 0;
 list_t *LoadedMessagesList = NULL;
+t_chat *SelectedChat = NULL;
 
 int main(int argc, char **argv) {
     if (argc != 3) {
@@ -11,14 +12,17 @@ int main(int argc, char **argv) {
         return EXIT_FAILURE;
     }
 
-    t_address server_address = {argv[1], atoi(argv[2])};
 
     gtk_init(&argc, &argv);
     load_theme();
 
+    t_address server_address = {argv[1], atoi(argv[2])};
+    t_chat selected_chat = {.id = 0, .name = NULL, .owner_id = 0};
+
     Builder = create_gtk_builder();
     ServerAddress = &server_address;
     LoadedMessagesList = list_new();
+    SelectedChat = &selected_chat;
 
     gtk_builder_connect_signals(Builder, NULL);
 

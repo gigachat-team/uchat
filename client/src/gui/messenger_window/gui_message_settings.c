@@ -1,12 +1,12 @@
 #include "gui.h"
 
 void on_message_delete_clicked(GtkButton *b, gpointer user_data) {
-    t_message_data *data = (t_message_data *)user_data;
+    t_user_message *message = user_data;
 
-    list_t *message_updates_list = rq_delete_message_and_get_message_updates(ServerAddress, data->message_id, data->chat_data->chat.id, LoadedMessagesList);
+    list_t *message_updates_list = rq_delete_message_and_get_message_updates(ServerAddress, message->message_id, SelectedChat->id, LoadedMessagesList);
     if (!message_updates_list) return;
 
-    gui_update_messages_list(message_updates_list, NULL, data->chat_data);
+    gui_update_messages_list(message_updates_list, NULL);
     close_window(Builder, "message_settings");
 
     list_destroy(message_updates_list);
@@ -15,27 +15,27 @@ void on_message_delete_clicked(GtkButton *b, gpointer user_data) {
 }
 
 gboolean on_update_message_entry(gpointer user_data) {
-    t_message_data *data = (t_message_data *)user_data;
+    t_user_message *message = user_data;
 
     GtkWidget *message_field = get_widget(Builder, NEW_MESSAGE_ENTRY_ID);
 
     g_signal_handlers_destroy(message_field);
-    g_signal_connect(message_field, "activate", G_CALLBACK(on_send_message_clicked), data->chat_data);
+    g_signal_connect(message_field, "activate", G_CALLBACK(on_send_message_clicked), message);
 
     return FALSE;
 }
 
-void on_change_message(GtkEntry *entry, gpointer *user_data) {
-    t_message_data *data = (t_message_data *)user_data;
+void on_change_message(GtkEntry *entry, gpointer user_data) {
+    t_user_message *message = user_data;
 
     char *message_text = (char *)gtk_entry_get_text(entry);
 
-    list_t *message_updates_list = rq_change_message_and_get_message_updates(ServerAddress, data->message_id, message_text, data->chat_data->chat.id, LoadedMessagesList);
+    list_t *message_updates_list = rq_change_message_and_get_message_updates(ServerAddress, message->message_id, message_text, SelectedChat->id, LoadedMessagesList);
     if (!message_updates_list) return;
 
-    gui_update_messages_list(message_updates_list, NULL, data->chat_data);
+    gui_update_messages_list(message_updates_list, NULL);
 
-    g_timeout_add(100, on_update_message_entry, data);
+    g_timeout_add(100, on_update_message_entry, message);
 
     set_entry_text(Builder, NEW_MESSAGE_ENTRY_ID, "");
 
