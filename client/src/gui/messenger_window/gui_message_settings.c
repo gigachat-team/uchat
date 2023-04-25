@@ -43,12 +43,16 @@ void on_change_message(GtkEntry *entry, gpointer user_data) {
 }
 
 void on_message_edit_clicked(GtkButton *b, gpointer user_data) {
+    t_user_message *message = user_data;
+
     GtkWidget *message_field = get_widget(Builder, NEW_MESSAGE_ENTRY_ID);
 
     g_signal_handlers_destroy(message_field);
     g_signal_connect(message_field, "activate", G_CALLBACK(on_change_message), user_data);
 
     close_window(Builder, "message_settings");
+
+    set_entry_text(Builder, NEW_MESSAGE_ENTRY_ID, message->data);
 
     (void)b;
 }
