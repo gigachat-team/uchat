@@ -27,6 +27,22 @@ id_t db_create_user(sqlite3 *db, char *login, char *password) {
     return created_user_id;
 }
 
+bool db_change_login(sqlite3 *db, id_t user_id, char *new_login) {
+    if (db_login_exists(db, new_login)) {
+        return false;
+    }
+
+    char *sql = sqlite3_mprintf(" \
+        UPDATE "USERS_TABLE" \
+        SET "USERS_LOGIN" = %Q \
+        WHERE "USERS_ID" = %u", new_login, user_id
+    );
+    db_execute_sql(db, sql);
+    sqlite3_free(sql);
+
+    return true;
+}
+
 id_t db_create_chat(sqlite3 *db, char *chat_name, id_t owner_id) {
     char *sql = sqlite3_mprintf(" \
         INSERT INTO "CHATS_TABLE" ("CHATS_NAME", "CHATS_OWNER_ID") \

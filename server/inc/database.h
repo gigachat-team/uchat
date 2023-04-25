@@ -81,6 +81,7 @@ void db_delete_message(sqlite3 *db, id_t message_id);
  * this LOGIN.
 */
 id_t db_create_user(sqlite3 *db, char *login, char *password);
+bool db_change_login(sqlite3 *db, id_t user_id, char *new_login);
 id_t db_create_chat(sqlite3 *db, char *chat_name, id_t owner_id);
 bool db_add_new_member_to_chat(sqlite3 *db, id_t user_id, id_t chat_id);
 /**
