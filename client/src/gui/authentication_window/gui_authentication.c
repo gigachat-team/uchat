@@ -1,7 +1,5 @@
 #include "gui.h"
 
-id_t ThisUserId = 0;
-
 static void gui_login() {
     GtkWidget *error_message = get_widget(Builder, ERROR_MESSAGE_LOGIN_LABEL_ID);
 

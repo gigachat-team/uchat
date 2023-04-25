@@ -2,6 +2,7 @@
 
 GtkBuilder *Builder = NULL;
 t_address *ServerAddress = NULL;
+id_t ThisUserId = 0;
 
 int main(int argc, char **argv) {
     if (argc != 3) {
