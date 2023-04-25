@@ -28,7 +28,8 @@ t_user *rq_get_chat_members(t_address *server_address, id_t chat_id, uint32_t *m
 t_state_code rq_remove_member_from_chat(t_address *server_address, id_t user_id, id_t chat_id);
 t_state_code rq_authenticate_user(t_address *server_address, char *login, char *password, t_authentication_mode authentication_mode, id_t *user_id);
 /**
- * @return LOGIN_SUCCESSFULLY_CHANGED on success; SUCH_LOGIN_ALREADY_EXISTS on failure
+ * @return LOGIN_SUCCESSFULLY_CHANGED on success; SUCH_LOGIN_ALREADY_EXISTS on failure;
+ * CONNECTION_REFUSED on connection failure.
 */
 t_state_code rq_change_login(t_address *server_address, id_t user_id, char *new_login);
 /**
