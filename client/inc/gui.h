@@ -60,7 +60,7 @@ extern t_chat *SelectedChat;
 void gui_update_messages_list(list_t *message_updates_list, char *sended_message);
 
 void on_chat_clicked(GtkButton *b, gpointer user_data);
-void on_send_message_clicked(GtkEntry *entry, gpointer user_data);
+void on_send_message_clicked(GtkEntry *entry);
 void on_open_chat_settings_clicked(GtkButton *b, gpointer user_data);
 void on_leave_from_chat_clicked(GtkButton *b, gpointer user_data);
 void on_add_chat_member_clicked(GtkButton *b, gpointer user_data);

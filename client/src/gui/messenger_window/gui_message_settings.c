@@ -9,19 +9,18 @@ void on_message_delete_clicked(GtkButton *b, gpointer user_data) {
     gui_update_messages_list(message_updates_list, NULL);
     close_window(Builder, "message_settings");
 
-    list_destroy(message_updates_list);
+    free_message_updates_list(message_updates_list);
 
     (void)b;
 }
 
 gboolean on_update_message_entry(gpointer user_data) {
-    t_user_message *message = user_data;
-
     GtkWidget *message_field = get_widget(Builder, NEW_MESSAGE_ENTRY_ID);
 
     g_signal_handlers_destroy(message_field);
-    g_signal_connect(message_field, "activate", G_CALLBACK(on_send_message_clicked), message);
+    g_signal_connect(message_field, "activate", G_CALLBACK(on_send_message_clicked), NULL);
 
+    (void)user_data;
     return FALSE;
 }
 
@@ -39,7 +38,7 @@ void on_change_message(GtkEntry *entry, gpointer user_data) {
 
     set_entry_text(Builder, NEW_MESSAGE_ENTRY_ID, "");
 
-    list_destroy(message_updates_list);
+    free_message_updates_list(message_updates_list);
 }
 
 void on_message_edit_clicked(GtkButton *b, gpointer user_data) {

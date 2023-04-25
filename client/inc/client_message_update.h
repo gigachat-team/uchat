@@ -7,3 +7,6 @@ typedef struct s_message_update {
     t_user_message message;
     bool remove;
 } t_message_update;
+
+void free_message_update_ptr(void *message_update_void);
+void free_message_updates_list(list_t *message_updates_list);
