@@ -33,6 +33,8 @@ void *handle_client_request_thread(void *allocated_client_socket) {
         handle_removing_user_from_chat(client_socket); break;
     case GET_CHAT_MEMBERS:
         handle_getting_chat_members(client_socket); break;
+    case CHANGE_LOGIN:
+        handle_login_changing(client_socket); break;
     }
 
     close(client_socket);

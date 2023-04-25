@@ -29,3 +29,4 @@ void handle_message_changing_and_message_updates_getting(int client_socket);
 void handle_message_updates_getting(int client_socket);
 void handle_removing_user_from_chat(int client_socket);
 void handle_getting_chat_members(int client_socket);
+void handle_login_changing(int client_socket);
