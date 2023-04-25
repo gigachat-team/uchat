@@ -53,14 +53,9 @@
 
 extern GtkBuilder *Builder;
 extern t_address *ServerAddress;
-
-typedef struct s_gui_data {
-    id_t user_id;
-} t_gui_data;
-t_gui_data create_gui_data();
+extern id_t ThisUserId;
 
 typedef struct s_chat_data {
-    t_gui_data gui_data;
     t_chat chat;
     list_t *messages;
 } t_chat_data;
@@ -71,7 +66,7 @@ typedef struct s_message_data {
     id_t message_id;
 } t_message_data;
 
-t_chat_data *create_chat_data_ptr(id_t user_id, char *chat_name, id_t chat_id, id_t chat_owner_id);
+t_chat_data *create_chat_data_ptr(char *chat_name, id_t chat_id, id_t chat_owner_id);
 t_message_data *create_message_data(t_chat_data *chat_data, GtkWidget *message_contener, id_t message_id);
 
 void gui_update_messages_list(list_t *messages_list, list_t *message_updates_list, char *sended_message, t_chat_data *chat_data);
@@ -84,6 +79,6 @@ void on_add_chat_member_clicked(GtkButton *b, gpointer user_data);
 void on_remove_chat_member_clicked(GtkButton *b, gpointer user_data);
 gboolean on_open_message_settings_clicked(GtkWidget *widget, GdkEventButton *event, gpointer user_data);
 
-void open_messenger_window(t_gui_data *data);
+void open_messenger_window();
 
-void gui_render_chats_list(id_t user_id);
+void gui_render_chats_list();

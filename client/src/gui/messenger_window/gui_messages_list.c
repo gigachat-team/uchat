@@ -84,8 +84,8 @@ void gui_update_messages_list(list_t *messages_list, list_t *message_updates_lis
     }
 }
 
-static void gui_send_message_and_update_messages_list(id_t user_id, id_t chat_id, char *message, list_t *messages_in_chat, t_chat_data *chat_data) {
-    list_t *message_updates_list = rq_send_message_and_get_messages_updates(ServerAddress, user_id, chat_id, message, messages_in_chat);
+static void gui_send_message_and_update_messages_list(id_t chat_id, char *message, list_t *messages_in_chat, t_chat_data *chat_data) {
+    list_t *message_updates_list = rq_send_message_and_get_messages_updates(ServerAddress, ThisUserId, chat_id, message, messages_in_chat);
     if (toggle_widget_visibility(!message_updates_list, Builder, CONNECTING_BOX_ID)) return;
     gui_update_messages_list(messages_in_chat, message_updates_list, message, chat_data);
     list_destroy(message_updates_list);
@@ -137,5 +137,5 @@ void on_chat_clicked(GtkButton *b, gpointer user_data) {
 void on_send_message_clicked(GtkEntry *entry, gpointer *user_data) {
     t_chat_data *chat_data = (t_chat_data *)user_data;
     char *message_text = (char *)gtk_entry_get_text(entry);
-    gui_send_message_and_update_messages_list(chat_data->gui_data.user_id, chat_data->chat.id, message_text, chat_data->messages, chat_data);
+    gui_send_message_and_update_messages_list(chat_data->chat.id, message_text, chat_data->messages, chat_data);
 }

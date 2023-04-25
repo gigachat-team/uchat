@@ -17,8 +17,7 @@ int main(int argc, char **argv) {
     Builder = create_gtk_builder();
     ServerAddress = &server_address;
 
-    t_gui_data gui_data = create_gui_data();
-    gtk_builder_connect_signals(Builder, &gui_data);
+    gtk_builder_connect_signals(Builder, NULL);
 
     apply_styles_to_authentication_window(Builder);
 
