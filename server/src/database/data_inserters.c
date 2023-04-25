@@ -111,4 +111,11 @@ void db_mark_account_as_deleted(sqlite3 *db, id_t user_id) {
     );
     db_execute_sql(db, sql);
     sqlite3_free(sql);
+
+    sql = sqlite3_mprintf(" \
+        DELETE FROM "MEMBERS_TABLE" \
+        WHERE "MEMBERS_USER_ID" = %u", user_id
+    );
+    db_execute_sql(db, sql);
+    sqlite3_free(sql);
 }
