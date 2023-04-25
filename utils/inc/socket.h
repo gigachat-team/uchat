@@ -21,4 +21,4 @@ void bind_socket(int socket, uint16_t port);
 void listen_socket(int socket, int queue_len);
 int accept_socket(int this_socket);
 void connect_socket(int socket, t_address address);
-int create_and_connect_socket(t_address address);
+int create_and_connect_socket(t_address *address);

@@ -34,8 +34,8 @@ static GtkWidget *create_and_show_message_widget(char *message_text, time_t date
     return message;
 }
 
-static void load_messages(t_address *server_address, id_t chat_id, list_t **messages_in_chat, t_chat_data *chat_data) {
-    list_t *new_messages_in_chat = rq_get_messages_in_chat(*server_address, chat_id);
+static void load_messages(id_t chat_id, list_t **messages_in_chat, t_chat_data *chat_data) {
+    list_t *new_messages_in_chat = rq_get_messages_in_chat(ServerAddress, chat_id);
     if (toggle_widget_visibility(!new_messages_in_chat, Builder, CONNECTING_BOX_ID)) {
         free_user_messages_list(new_messages_in_chat);
         return;
@@ -84,16 +84,16 @@ void gui_update_messages_list(list_t *messages_list, list_t *message_updates_lis
     }
 }
 
-static void gui_send_message_and_update_messages_list(t_address *server_address, id_t user_id, id_t chat_id, char *message, list_t *messages_in_chat, t_chat_data *chat_data) {
-    list_t *message_updates_list = rq_send_message_and_get_messages_updates(*server_address, user_id, chat_id, message, messages_in_chat);
+static void gui_send_message_and_update_messages_list(id_t user_id, id_t chat_id, char *message, list_t *messages_in_chat, t_chat_data *chat_data) {
+    list_t *message_updates_list = rq_send_message_and_get_messages_updates(ServerAddress, user_id, chat_id, message, messages_in_chat);
     if (toggle_widget_visibility(!message_updates_list, Builder, CONNECTING_BOX_ID)) return;
     gui_update_messages_list(messages_in_chat, message_updates_list, message, chat_data);
     list_destroy(message_updates_list);
     set_entry_text(Builder, NEW_MESSAGE_ENTRY_ID, "");
 }
 
-static void update_messages_list(t_address *server_address, id_t chat_id, list_t *messages_list, t_chat_data *chat_data) {
-    list_t *message_updates_list = rq_get_message_updates(*server_address, chat_id, messages_list);
+static void update_messages_list(id_t chat_id, list_t *messages_list, t_chat_data *chat_data) {
+    list_t *message_updates_list = rq_get_message_updates(ServerAddress, chat_id, messages_list);
     if (toggle_widget_visibility(!message_updates_list, Builder, CONNECTING_BOX_ID)) return;
     gui_update_messages_list(messages_list, message_updates_list, NULL, chat_data);
     list_destroy(message_updates_list);
@@ -101,7 +101,7 @@ static void update_messages_list(t_address *server_address, id_t chat_id, list_t
 
 static gboolean on_update_tick(gpointer user_data) {
     t_chat_data *chat_data = (t_chat_data *)user_data;
-    update_messages_list(&chat_data->gui_data.server_address, chat_data->chat.id, chat_data->messages, chat_data);
+    update_messages_list(chat_data->chat.id, chat_data->messages, chat_data);
     return TRUE;
 }
 
@@ -112,7 +112,7 @@ static void gui_open_chat(t_chat_data *chat_data) {
 
     clear_container(Builder, CHAT_FIELD_CONTENER_ID);
     write_label_text(Builder, CHAT_NAME_LABEL_ID, chat_data->chat.name);
-    load_messages(&chat_data->gui_data.server_address, chat_data->chat.id, &chat_data->messages, chat_data);
+    load_messages(chat_data->chat.id, &chat_data->messages, chat_data);
 
     g_signal_handlers_destroy(message_field);
 
@@ -137,5 +137,5 @@ void on_chat_clicked(GtkButton *b, gpointer user_data) {
 void on_send_message_clicked(GtkEntry *entry, gpointer *user_data) {
     t_chat_data *chat_data = (t_chat_data *)user_data;
     char *message_text = (char *)gtk_entry_get_text(entry);
-    gui_send_message_and_update_messages_list(&chat_data->gui_data.server_address, chat_data->gui_data.user_id, chat_data->chat.id, message_text, chat_data->messages, chat_data);
+    gui_send_message_and_update_messages_list(chat_data->gui_data.user_id, chat_data->chat.id, message_text, chat_data->messages, chat_data);
 }

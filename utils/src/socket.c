@@ -106,12 +106,12 @@ int connect_with_timeout(int sockfd, const struct sockaddr *addr, socklen_t addr
     return rc;
 }
 
-int create_and_connect_socket(t_address address) {
+int create_and_connect_socket(t_address *address) {
     int socket = create_socket();
     struct sockaddr_in socket_address = {0};
     socket_address.sin_family = AF_INET;
-    socket_address.sin_addr.s_addr = inet_addr(address.ip);
-    socket_address.sin_port = htons(address.port);
+    socket_address.sin_addr.s_addr = inet_addr(address->ip);
+    socket_address.sin_port = htons(address->port);
     if (connect_with_timeout(socket, (struct sockaddr *)&socket_address, sizeof(socket_address), 50) == 1) {
         return socket;
     }

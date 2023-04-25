@@ -1,6 +1,7 @@
 #include "client_main.h"
 
 GtkBuilder *Builder = NULL;
+t_address *ServerAddress = NULL;
 
 int main(int argc, char **argv) {
     if (argc != 3) {
@@ -8,12 +9,15 @@ int main(int argc, char **argv) {
         return EXIT_FAILURE;
     }
 
+    t_address server_address = {argv[1], atoi(argv[2])};
+
     gtk_init(&argc, &argv);
     load_theme();
 
     Builder = create_gtk_builder();
+    ServerAddress = &server_address;
 
-    t_gui_data gui_data = create_gui_data(argv[1], atoi(argv[2]));
+    t_gui_data gui_data = create_gui_data();
     gtk_builder_connect_signals(Builder, &gui_data);
 
     apply_styles_to_authentication_window(Builder);

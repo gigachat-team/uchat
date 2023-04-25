@@ -1,6 +1,6 @@
 #include "request_senders.h"
 
-t_state_code rq_add_new_member(t_address server_address, id_t chat_id, char *new_member_login) {
+t_state_code rq_add_new_member(t_address *server_address, id_t chat_id, char *new_member_login) {
     int client_socket = create_and_connect_socket(server_address);
     if (client_socket == -1) return 0;
 
@@ -17,7 +17,7 @@ t_state_code rq_add_new_member(t_address server_address, id_t chat_id, char *new
     return adding_new_member_to_chat_result;
 }
 
-t_user *rq_get_chat_members(t_address server_address, id_t chat_id, uint32_t *members_count) {
+t_user *rq_get_chat_members(t_address *server_address, id_t chat_id, uint32_t *members_count) {
     int client_socket = create_and_connect_socket(server_address);
     if (client_socket == -1) return NULL;
 
@@ -38,7 +38,7 @@ t_user *rq_get_chat_members(t_address server_address, id_t chat_id, uint32_t *me
     return members;
 }
 
-t_state_code rq_remove_member_from_chat(t_address server_address, id_t user_id, id_t chat_id) {
+t_state_code rq_remove_member_from_chat(t_address *server_address, id_t user_id, id_t chat_id) {
     int client_socket = create_and_connect_socket(server_address);
     if (client_socket == -1) return 0;
 

@@ -1,6 +1,6 @@
 #include "gui.h"
 
-static void gui_login(t_address *server_address, id_t *user_id, t_gui_data *data) {
+static void gui_login(id_t *user_id, t_gui_data *data) {
     GtkWidget *error_message = get_widget(Builder, ERROR_MESSAGE_LOGIN_LABEL_ID);
 
     apply_style_to_widget(error_message, CSS_CLASS_ERROR_MESSAGE);
@@ -8,7 +8,7 @@ static void gui_login(t_address *server_address, id_t *user_id, t_gui_data *data
     char *login = get_entry_text(Builder, LOGIN_ENTRY_ID);
     char *password = get_entry_text(Builder, PASSWORD_ENTRY_ID);
 
-    switch (rq_authenticate_user(*server_address, login, password, LOGIN_MODE, user_id)) {
+    switch (rq_authenticate_user(ServerAddress, login, password, LOGIN_MODE, user_id)) {
     case SUCCESSFUL_LOGIN:
         open_messenger_window(data);
     break; case SUCH_LOGIN_DOES_NOT_EXIST:
@@ -22,7 +22,7 @@ static void gui_login(t_address *server_address, id_t *user_id, t_gui_data *data
     }
 }
 
-static void gui_register(t_address *server_address, id_t *user_id, t_gui_data *data) {
+static void gui_register(id_t *user_id, t_gui_data *data) {
     GtkWidget *error_message = get_widget(Builder, ERROR_MESSAGE_REGISTRATION_LABEL_ID);
     apply_style_to_widget(error_message, CSS_CLASS_ERROR_MESSAGE);
 
@@ -43,7 +43,7 @@ static void gui_register(t_address *server_address, id_t *user_id, t_gui_data *d
         return;
     }
 
-    switch (rq_authenticate_user(*server_address, new_login, new_password, REGISTER_MODE, user_id)) {
+    switch (rq_authenticate_user(ServerAddress, new_login, new_password, REGISTER_MODE, user_id)) {
     case SUCCESSFUL_REGISTRATION:
         open_messenger_window(data);
     break; case SUCH_LOGIN_ALREADY_EXISTS:
@@ -57,12 +57,12 @@ static void gui_register(t_address *server_address, id_t *user_id, t_gui_data *d
 
 void on_register_button_clicked(GtkButton *b, gpointer user_data) {
     t_gui_data *gui_data = (t_gui_data *)user_data;
-    gui_register(&gui_data->server_address, &gui_data->user_id, gui_data);
+    gui_register(&gui_data->user_id, gui_data);
     (void)b;
 }
 
 void on_login_button_clicked(GtkButton *b, gpointer user_data) {
     t_gui_data *gui_data = (t_gui_data *)user_data;
-    gui_login(&gui_data->server_address, &gui_data->user_id, gui_data);
+    gui_login(&gui_data->user_id, gui_data);
     (void)b;
 }

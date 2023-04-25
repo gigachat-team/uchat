@@ -6,10 +6,10 @@ static char *user_id_to_str(int user_id) {
     return id;
 }
 
-static void gui_fill_members_list(t_address *server_address, id_t user_id, id_t chat_id) {
+static void gui_fill_members_list(id_t user_id, id_t chat_id) {
     uint32_t members_count = 0;
     GtkWidget *members_list = get_widget(Builder, "members_in_chat_list");
-    t_user *members = rq_get_chat_members(*server_address, chat_id, &members_count);
+    t_user *members = rq_get_chat_members(ServerAddress, chat_id, &members_count);
     if (toggle_widget_visibility(!members, Builder, CONNECTING_BOX_ID)) return;
 
     // Remove all items from the combo box
@@ -43,27 +43,27 @@ static void gui_init_chat_settings_window(t_chat_data *chat_data) {
     g_signal_handlers_destroy(remove_member_button);
     g_signal_connect(remove_member_button, "clicked", G_CALLBACK(on_remove_chat_member_clicked), chat_data);
 
-    gui_fill_members_list(&chat_data->gui_data.server_address, chat_data->gui_data.user_id, chat_data->chat.id);
+    gui_fill_members_list(chat_data->gui_data.user_id, chat_data->chat.id);
 }
 
-static void gui_remove_chat_member(t_address *server_address, id_t user_id, id_t chat_id) {
+static void gui_remove_chat_member(id_t user_id, id_t chat_id) {
     const gchar *current_user_in_list_id = gtk_combo_box_get_active_id(GTK_COMBO_BOX(get_widget(Builder, "members_in_chat_list")));
     if (current_user_in_list_id == NULL) return;
 
-    t_state_code remove_state = rq_remove_member_from_chat(*server_address, atoi(current_user_in_list_id), chat_id);
+    t_state_code remove_state = rq_remove_member_from_chat(ServerAddress, atoi(current_user_in_list_id), chat_id);
     if (toggle_widget_visibility(!remove_state, Builder, CONNECTING_BOX_ID)) return;
 
     if (remove_state == USER_REMOVED_FROM_CHAT_SUCCESSFULLY) {
         printf("The user successfully removed from chat.\n");
     }
 
-    gui_fill_members_list(server_address, user_id, chat_id);
+    gui_fill_members_list(user_id, chat_id);
 }
 
-static void gui_add_chat_member(t_address *server_address, id_t user_id, id_t chat_id) {
+static void gui_add_chat_member(id_t user_id, id_t chat_id) {
     char *name_user = get_entry_text(Builder, "entry_add_member");
 
-    t_state_code adding_new_member_result = rq_add_new_member(*server_address, chat_id, name_user);
+    t_state_code adding_new_member_result = rq_add_new_member(ServerAddress, chat_id, name_user);
     if (toggle_widget_visibility(!adding_new_member_result, Builder, CONNECTING_BOX_ID)) return;
 
     if (adding_new_member_result == USER_SUCCESSFULLY_ADDED_TO_CHAT) {
@@ -72,11 +72,11 @@ static void gui_add_chat_member(t_address *server_address, id_t user_id, id_t ch
     else if (adding_new_member_result == SUCH_USER_IS_ALREADY_IN_CHAT) {
         printf("The user %s is already in the chat.\n", name_user);
     }
-    gui_fill_members_list(server_address, user_id, chat_id);
+    gui_fill_members_list(user_id, chat_id);
 }
 
-static void gui_leave_from_chat(t_address *server_address, id_t user_id, id_t chat_id) {
-    t_state_code response = rq_remove_member_from_chat(*server_address, user_id, chat_id);
+static void gui_leave_from_chat(id_t user_id, id_t chat_id) {
+    t_state_code response = rq_remove_member_from_chat(ServerAddress, user_id, chat_id);
     if (toggle_widget_visibility(!response, Builder, CONNECTING_BOX_ID)) return;
 
     if (response == USER_REMOVED_FROM_CHAT_SUCCESSFULLY) {
@@ -84,7 +84,7 @@ static void gui_leave_from_chat(t_address *server_address, id_t user_id, id_t ch
     }
 
     write_label_text(Builder, CHAT_NAME_LABEL_ID, NULL);
-    gui_render_chats_list(server_address, user_id);
+    gui_render_chats_list(user_id);
     clear_container(Builder, CHAT_FIELD_CONTENER_ID);
 }
 
@@ -105,18 +105,18 @@ void on_close_chat_settings_clicked(GtkButton *b, gpointer user_data) {
 void on_leave_from_chat_clicked(GtkButton *b, gpointer user_data) {
     t_chat_data *chat_data = (t_chat_data *)user_data;
     close_window(Builder, CHAT_SETTINGS_WINDOW_ID);
-    gui_leave_from_chat(&chat_data->gui_data.server_address, chat_data->gui_data.user_id, chat_data->chat.id);
+    gui_leave_from_chat(chat_data->gui_data.user_id, chat_data->chat.id);
     (void)b;
 }
 
 void on_add_chat_member_clicked(GtkButton *b, gpointer user_data) {
     t_chat_data *chat_data = (t_chat_data *)user_data;
-    gui_add_chat_member(&chat_data->gui_data.server_address, chat_data->gui_data.user_id, chat_data->chat.id);
+    gui_add_chat_member(chat_data->gui_data.user_id, chat_data->chat.id);
     (void)b;
 }
 
 void on_remove_chat_member_clicked(GtkButton *b, gpointer user_data) {
     t_chat_data *chat_data = (t_chat_data *)user_data;
-    gui_remove_chat_member(&chat_data->gui_data.server_address, chat_data->gui_data.user_id, chat_data->chat.id);
+    gui_remove_chat_member(chat_data->gui_data.user_id, chat_data->chat.id);
     (void)b;
 }

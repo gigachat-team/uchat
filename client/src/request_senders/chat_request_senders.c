@@ -1,6 +1,6 @@
 #include "request_senders.h"
 
-id_t rq_create_chat(t_address server_address, char *chat_name, id_t owner_id) {
+id_t rq_create_chat(t_address *server_address, char *chat_name, id_t owner_id) {
     int client_socket = create_and_connect_socket(server_address);
     if (client_socket == -1) return 0;
 
@@ -17,7 +17,7 @@ id_t rq_create_chat(t_address server_address, char *chat_name, id_t owner_id) {
     return created_chat_id;
 }
 
-list_t *rq_get_chats_i_am_in(t_address server_address, id_t user_id) {
+list_t *rq_get_chats_i_am_in(t_address *server_address, id_t user_id) {
     int client_socket = create_and_connect_socket(server_address);
     if (client_socket == -1) return NULL;
 
