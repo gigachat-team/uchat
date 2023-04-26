@@ -10,25 +10,30 @@
 
 #define STYLE_TYPE_SETTING_PATH "resources/settings/style_type.txt"
 
+#define CSS_CLASS_ENTRY "entry"
 #define CSS_CLASS_CANVAS "canvas"
 #define CSS_CLASS_CHAT_NAME "chat-name"
+#define CSS_CLASS_MAIN_AREA "main-area"
 #define CSS_CLASS_CREATE_ROOM "create-room"
+#define CSS_CLASS_SEARCH_ENTRY "search-entry"
 #define CSS_CLASS_ENTRY_DEFAULT "entry-default"
 #define CSS_CLASS_MESSAGE_FIELD "message-field"
 #define CSS_CLASS_ERROR_MESSAGE "error-message"
+#define CSS_CLASS_DEFAULT_WINDOW "default-window"
 #define CSS_CLASS_CONNECTION_BOX "connection-box"
 #define CSS_CLASS_NEW_CHAT_BUTTON "new-chat-button"
+#define CSS_CLASS_WINDOW_TOP_LABEL "window-top-label"
 #define CSS_CLASS_CONNECTION_LABEL "connection-label"
+#define CSS_CLASS_TIME_TEXT_SETTINGS "time-text"
+#define CSS_CLASS_TIME_NAME_SETTINGS "name-text"
 #define CSS_CLASS_CREATE_CHAT_WINDOW "create-chat-window"
 #define CSS_CLASS_CREATE_ROOM_PARENT "create-room-parent"
+#define CSS_CLASS_SEARCH_ENTRY_PARENT "search-entry-parent"
 #define CSS_CLASS_UPPER_CANVAS_WINDOW "upper-canvas-window"
 #define CSS_CLASS_CHAT_SETTINGS_WINDOW "chat-settings-window"
 #define CSS_CLASS_CHATS_LIST_CONTAINER "chats-list-containter"
 #define CSS_CLASS_AUTHENTICATION_WINDOW "authentication-window"
-#define CSS_CLASS_TIME_TEXT_SETTINGS "time-text"
-#define CSS_CLASS_TIME_NAME_SETTINGS "name-text"
 #define CSS_CLASS_NEW_MESSAGE_ENTRY_PARENT "new-message-entry-parent"
-#define CSS_CLASS_AUTHENTICATION_LABEL "authentication-top-label"
 
 typedef enum {
     DARK_STYLE_THEME,
@@ -109,3 +114,10 @@ void apply_styles_to_chat_settings_window(GtkBuilder *gtk_builder);
  * @param gtk_builder builder to apply styles
 */
 void apply_styles_to_authentication_window(GtkBuilder *gtk_builder);
+
+/**
+ * @brief sets all the styles for the settings window and the cursor
+ * image. If no builder is provied, the function does nothing
+ * @param gtk_builder builder to apply styles
+*/
+void apply_styles_to_settings_window(GtkBuilder *gtk_builder);
