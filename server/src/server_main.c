@@ -6,7 +6,7 @@ int main(int argc, char **argv) {
         return 0;
     }
 
-    daemon_server();
+    // daemon_server();
 
     sqlite3 *db = db_open();
     db_create_users_table(db);
