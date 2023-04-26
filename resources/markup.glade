@@ -420,7 +420,7 @@
     <property name="type_hint">dialog</property>
     <property name="deletable">False</property>
     <child type="titlebar">
-      <object class="GtkLabel">
+      <object class="GtkLabel" id="chat_settings_top_label">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="label" translatable="yes">Chat Settings</property>
@@ -637,7 +637,7 @@
     <property name="skip_pager_hint">True</property>
     <property name="deletable">False</property>
     <child type="titlebar">
-      <object class="GtkLabel">
+      <object class="GtkLabel" id="create_chat_top_label">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
       </object>
@@ -807,17 +807,17 @@
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <child>
-          <object class="GtkBox">
+          <object class="GtkBox" id="chats_list_parent">
             <property name="width_request">280</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="orientation">vertical</property>
             <child>
-              <object class="GtkBox">
+              <object class="GtkBox" id="search_entry_parent">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <child>
-                  <object class="GtkButton">
+                  <object class="GtkButton" id="messenger_settings_button">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
@@ -838,7 +838,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkSearchEntry">
+                  <object class="GtkSearchEntry" id="search_entry">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="primary_icon_name">edit-find-symbolic</property>
@@ -957,7 +957,7 @@
           </packing>
         </child>
         <child>
-          <object class="GtkBox">
+          <object class="GtkBox" id="main_area">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="hexpand">True</property>
