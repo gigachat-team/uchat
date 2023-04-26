@@ -25,6 +25,8 @@
 #define CSS_CLASS_CHAT_SETTINGS_WINDOW "chat-settings-window"
 #define CSS_CLASS_CHATS_LIST_CONTAINER "chats-list-containter"
 #define CSS_CLASS_AUTHENTICATION_WINDOW "authentication-window"
+#define CSS_CLASS_TIME_TEXT_SETTINGS "time-text"
+#define CSS_CLASS_TIME_NAME_SETTINGS "name-text"
 #define CSS_CLASS_NEW_MESSAGE_ENTRY_PARENT "new-message-entry-parent"
 #define CSS_CLASS_AUTHENTICATION_LABEL "authentication-top-label"
 

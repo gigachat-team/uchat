@@ -52,6 +52,20 @@
     background: url("img/background_auth.png");
 }
 
+.time-text{
+    font-size: 12px;
+    font-family: system-ui;
+    font-style: italic;
+    color: rgb(139, 159, 172)
+
+}
+
+.name-text{
+    font-family: unset;
+    color: rgb(7, 17, 24);
+    font-optical-sizing: auto;
+}
+
 .authentication-top-label {
     background-color: rgb(184, 156, 156);
 }

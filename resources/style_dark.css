@@ -52,6 +52,19 @@
     background-color: rgb(33, 34, 61);
 }
 
+.time-text{
+    font-size: 12px;
+    font-family: system-ui;
+    font-style: italic;
+    color: rgb(139, 159, 172);
+}
+
+.name-text{
+    font-family: unset;
+    color: rgb(155, 199, 228);
+    font-optical-sizing: auto;
+}
+
 .authentication-top-label {
     background-color: rgb(78, 72, 138);
 }

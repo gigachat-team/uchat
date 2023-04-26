@@ -12,7 +12,6 @@ int main(int argc, char **argv) {
         return EXIT_FAILURE;
     }
 
-
     gtk_init(&argc, &argv);
     load_theme();
 
