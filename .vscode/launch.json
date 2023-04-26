@@ -6,7 +6,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/uchat_server",
-            "args": ["15719"],
+            "args": ["${input:randomPort}"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
@@ -25,7 +25,8 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/uchat",
-            "args": ["127.0.0.1", "15719"],
+            "args": ["127.0.0.1", "${input:rememberRandomPort}"],
+            // "args": ["192.168.0.108", "33783"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
@@ -38,6 +39,25 @@
                     "ignoreFailures": true
                 }
             ]
+        }
+    ],
+    "inputs": [
+        {
+          "id": "randomPort",
+          "type": "command",
+          "command": "extension.commandvariable.number",
+          "args": {
+            "name": "randomPort",
+            "range": [1500, 60000],
+            "random": true,
+            "uniqueCount": 10
+          }
+        },
+        {
+          "id": "rememberRandomPort",
+          "type": "command",
+          "command": "extension.commandvariable.remember",
+          "args": { "key": "number-randomPort" }
         }
     ]
 }
