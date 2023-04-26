@@ -21,6 +21,7 @@ void on_apply_settings() {
 
 void on_open_settings_window_clicked() {
     open_window(Builder, "settings_window");
+    apply_styles_to_settings_window(Builder);
     init_login_entry();
 }
 
