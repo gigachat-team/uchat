@@ -21,6 +21,11 @@
 #define NEW_PASSWORD_ENTRY_ID "new_password_entry"
 #define NEW_CHAT_NAME_ENTRY_ID "new_chat_name_entry"
 #define NEW_PASSWORD_AGAIN_ENTRY_ID "new_password_again_entry"
+#define ENTRY_ADD_MEMBER_ID "entry_add_member"
+#define SETTINGS_LOGIN_ENTRY_ID "settings_login_entry"
+#define MAIN_AREA_ID "main_area"
+#define SEARCH_ENTRY_ID "search_entry"
+#define SEARCH_ENTRY_PARENT_ID "search_entry_parent"
 
 #define ERROR_MESSAGE_LOGIN_LABEL_ID "error_message_login_label"
 #define ERROR_MESSAGE_REGISTRATION_LABEL_ID "error_message_registration_label"
@@ -28,10 +33,13 @@
 
 #define CHAT_SETTINGS_BUTTON_ID "open_chat_settings_window"
 
-#define  AUTHENTICATION_LABEL_ID "authentication_label"
+#define AUTHENTICATION_LABEL_ID "authentication_label"
+#define CREATE_CHAT_TOP_LABEL_ID "create_chat_top_label" 
+#define CHAT_SETTINGS_TOP_LABEL_ID "chat_settings_top_label"
 
 //Windows
 #define CHAT_CREATE_ROOM_ID "create_room"
+#define SETTINGS_WINDOW_ID "settings_window"
 #define MESSENGER_WINDOW_ID "messenger_window"
 #define CREATE_ROOM_PARENT_ID "create_room_parent"
 #define CHAT_LISTS_WINDOW_ID "chats_list_container"
