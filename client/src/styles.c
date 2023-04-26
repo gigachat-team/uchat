@@ -90,8 +90,11 @@ void apply_styles_for_messenger_window(GtkBuilder *gtk_builder) {
     set_cursor_image(messenger_window, DEFAULT_CURSOR_IMAGE_PATH);
 
     get_widget_by_id_and_apply_style(gtk_builder, CANVAS_ID, CSS_CLASS_CANVAS);
+    get_widget_by_id_and_apply_style(gtk_builder, MAIN_AREA_ID, CSS_CLASS_MAIN_AREA);
+    get_widget_by_id_and_apply_style(gtk_builder, NEW_MESSAGE_ENTRY_ID, CSS_CLASS_ENTRY);
     get_widget_by_id_and_apply_style(gtk_builder, CREATE_ROOM_ID, CSS_CLASS_CREATE_ROOM);
     get_widget_by_id_and_apply_style(gtk_builder, CHAT_NAME_LABEL_ID, CSS_CLASS_CHAT_NAME);
+    get_widget_by_id_and_apply_style(gtk_builder, SEARCH_ENTRY_ID, CSS_CLASS_SEARCH_ENTRY);
     get_widget_by_id_and_apply_style(gtk_builder, CREATE_ROOM_ID, CSS_CLASS_NEW_CHAT_BUTTON);
     get_widget_by_id_and_apply_style(gtk_builder, CONNECTING_BOX_ID, CSS_CLASS_CONNECTION_BOX);
     get_widget_by_id_and_apply_style(gtk_builder, NEW_MESSAGE_ENTRY_ID, CSS_CLASS_MESSAGE_FIELD);
@@ -99,6 +102,7 @@ void apply_styles_for_messenger_window(GtkBuilder *gtk_builder) {
     get_widget_by_id_and_apply_style(gtk_builder, CREATE_ROOM_PARENT_ID, CSS_CLASS_CREATE_ROOM_PARENT);
     get_widget_by_id_and_apply_style(gtk_builder, CHAT_LISTS_WINDOW_ID, CSS_CLASS_CHATS_LIST_CONTAINER);
     get_widget_by_id_and_apply_style(gtk_builder, UPPER_CANVAS_WINDOW_ID, CSS_CLASS_UPPER_CANVAS_WINDOW);
+    get_widget_by_id_and_apply_style(gtk_builder, SEARCH_ENTRY_PARENT_ID, CSS_CLASS_SEARCH_ENTRY_PARENT);
     get_widget_by_id_and_apply_style(gtk_builder, NEW_MESSAGE_ENTRY_PARENT_ID, CSS_CLASS_NEW_MESSAGE_ENTRY_PARENT);
 }
 
@@ -107,7 +111,10 @@ void apply_styles_to_create_chat_window(GtkBuilder *gtk_builder) {
 
     GtkWidget *crate_chat_window = get_widget(gtk_builder, CREATE_CHAT_WINDOW_ID);
     set_cursor_image(crate_chat_window, DEFAULT_CURSOR_IMAGE_PATH);
-    get_widget_by_id_and_apply_style(gtk_builder, CREATE_CHAT_WINDOW_ID, CSS_CLASS_CREATE_CHAT_WINDOW);
+    apply_style_to_widget(crate_chat_window, CSS_CLASS_DEFAULT_WINDOW);
+
+    get_widget_by_id_and_apply_style(gtk_builder, CREATE_CHAT_TOP_LABEL_ID, CSS_CLASS_WINDOW_TOP_LABEL);
+    get_widget_by_id_and_apply_style(gtk_builder, NEW_CHAT_NAME_ENTRY_ID, CSS_CLASS_ENTRY);
 }
 
 void apply_styles_to_chat_settings_window(GtkBuilder *gtk_builder) {
@@ -115,7 +122,10 @@ void apply_styles_to_chat_settings_window(GtkBuilder *gtk_builder) {
 
     GtkWidget *chat_settings_window = GTK_WIDGET(gtk_builder_get_object(gtk_builder, CHAT_SETTINGS_WINDOW_ID));
     set_cursor_image(chat_settings_window, DEFAULT_CURSOR_IMAGE_PATH);
-    get_widget_by_id_and_apply_style(gtk_builder, CHAT_SETTINGS_WINDOW_ID, CSS_CLASS_CHAT_SETTINGS_WINDOW);
+    apply_style_to_widget(chat_settings_window, CSS_CLASS_DEFAULT_WINDOW);
+
+    get_widget_by_id_and_apply_style(gtk_builder, CHAT_SETTINGS_TOP_LABEL_ID, CSS_CLASS_WINDOW_TOP_LABEL);
+    get_widget_by_id_and_apply_style(gtk_builder, ENTRY_ADD_MEMBER_ID, CSS_CLASS_ENTRY);
 }
 
 void apply_styles_to_authentication_window(GtkBuilder *gtk_builder) {
@@ -124,8 +134,25 @@ void apply_styles_to_authentication_window(GtkBuilder *gtk_builder) {
     GtkWidget *authentication_window = GTK_WIDGET(gtk_builder_get_object(gtk_builder, AUTHENTICATION_WINDOW_ID));
     open_window(gtk_builder, AUTHENTICATION_WINDOW_ID);
     set_cursor_image(authentication_window, DEFAULT_CURSOR_IMAGE_PATH);
-    get_widget_by_id_and_apply_style(gtk_builder, AUTHENTICATION_LABEL_ID, CSS_CLASS_AUTHENTICATION_LABEL);
+    get_widget_by_id_and_apply_style(gtk_builder, AUTHENTICATION_LABEL_ID, CSS_CLASS_WINDOW_TOP_LABEL);
+    
     apply_style_to_widget(authentication_window, CSS_CLASS_AUTHENTICATION_WINDOW);
+
+    get_widget_by_id_and_apply_style(gtk_builder, LOGIN_ENTRY_ID,              CSS_CLASS_ENTRY);
+    get_widget_by_id_and_apply_style(gtk_builder, PASSWORD_ENTRY_ID,           CSS_CLASS_ENTRY);
+    get_widget_by_id_and_apply_style(gtk_builder, NEW_LOGIN_ENTRY_ID,          CSS_CLASS_ENTRY);
+    get_widget_by_id_and_apply_style(gtk_builder, NEW_PASSWORD_ENTRY_ID,       CSS_CLASS_ENTRY);
+    get_widget_by_id_and_apply_style(gtk_builder, NEW_PASSWORD_AGAIN_ENTRY_ID, CSS_CLASS_ENTRY);
+}
+
+void apply_styles_to_settings_window(GtkBuilder *gtk_builder) {
+    if (!gtk_builder) return;
+    
+    GtkWidget *settings_window = GTK_WIDGET(gtk_builder_get_object(gtk_builder, SETTINGS_WINDOW_ID));
+    open_window(gtk_builder, SETTINGS_WINDOW_ID);
+    set_cursor_image(settings_window, DEFAULT_CURSOR_IMAGE_PATH);
+    apply_style_to_widget(settings_window, CSS_CLASS_DEFAULT_WINDOW);
+    get_widget_by_id_and_apply_style(gtk_builder, SETTINGS_LOGIN_ENTRY_ID, CSS_CLASS_ENTRY);
 }
 
 void on_toggle_theme_button_clicked(GtkButton *b) {
