@@ -9,6 +9,8 @@ static gboolean scroll_to_bottom_message_list(gpointer user_data) {
 static void create_and_show_message_widget(t_user_message *message) {
     message->widget = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
     message->label_widget = gtk_label_new((gchar *)message->data);
+    GtkWidget *label1 = gtk_label_new(ThisUser->login);
+    gtk_container_add(GTK_CONTAINER(message->widget), label1);
     GtkWidget *user_icon = get_image_from_path("resources/img/message_icon.jpeg", 45, 45);
 
     gtk_label_set_line_wrap(GTK_LABEL(message->label_widget), TRUE);
@@ -25,7 +27,8 @@ static void create_and_show_message_widget(t_user_message *message) {
 
     char time_str[DEFAULT_TIME_FORMAT_LEN];
     strftime(time_str, DEFAULT_TIME_FORMAT_LEN, DEFAULT_TIME_FORMAT, localtime(&message->creation_date));
-    printf("%s\n", time_str);
+    GtkWidget *time_sending_message = gtk_label_new(time_str);
+    gtk_container_add(GTK_CONTAINER(message->widget), time_sending_message);
 
     gtk_widget_show_all(message->widget);
 
