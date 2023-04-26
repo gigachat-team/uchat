@@ -64,7 +64,7 @@ void handle_login_changing(int client_socket) {
         send_byte(client_socket, SUCH_LOGIN_ALREADY_EXISTS);
     } else {
         sqlite3 *db = db_open();
-        bool login_already_exists = db_change_login(db, user_id, new_login);
+        bool login_already_exists = !db_change_login(db, user_id, new_login);
         db_close(db);
 
         if (login_already_exists) {
