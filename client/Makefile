@@ -5,30 +5,43 @@ CFLAGS = -std=c11 -Wall -Wextra -Werror -Wpedantic -gdwarf-4 -pthread -MMD -MP
 
 OBJDIR = obj
 SRCDIR = src
+UTILS_DIR = ../utils
+LIST_DIR = ../resources/libraries/list
 
-SOURCES = $(wildcard $(SRCDIR).c) $(wildcard $(SRCDIR)/*.c) $(wildcard $(SRCDIR)/*/*.c)
+HEADER_DIRS = $(sort $(dir $(wildcard *.h) $(wildcard */*.h) $(wildcard */*/*.h) $(wildcard */*/*/*.h)))
+UTILS_HEADER_DIRS = $(sort $(dir $(wildcard $(UTILS_DIR)/*.h) $(wildcard $(UTILS_DIR)/*/*.h)))
+LIST_HEADER_DIRS = $(sort $(dir $(wildcard $(LIST_DIR)/*.h) $(wildcard $(LIST_DIR)/*/*.h)))
+
+SOURCES = $(wildcard $(SRCDIR)/*.c) $(wildcard $(SRCDIR)/*/*.c) $(wildcard $(SRCDIR)/*/*/*.c)
 OBJECTS = $(subst $(SRCDIR)/,,$(addprefix $(OBJDIR)/, $(SOURCES:.c=.o)))
 DEPENDS = $(subst $(SRCDIR)/,,$(addprefix $(OBJDIR)/, $(SOURCES:.c=.d)))
 
-UTILS_LIB = ../utils/libutils.a
+UTILS_LIB = $(UTILS_DIR)/libutils.a
+LIST_LIB = $(LIST_DIR)/build/libclibs_list.a
 GTK_LIBS = -rdynamic `pkg-config --cflags --libs gtk+-3.0`
 GTK_INC = `pkg-config --cflags gtk+-3.0`
 
+INCLUDE_HEADER_DIRS = $(addprefix -I, $(HEADER_DIRS))
+INCLUDE_UTILS_HEADER_DIRS = $(addprefix -I, $(UTILS_HEADER_DIRS))
+INCLUDE_LIST_HEADER_DIRS = $(addprefix -I, $(LIST_HEADER_DIRS))
+INCLUDE_ALL_HEADER_DIRS = $(INCLUDE_HEADER_DIRS) $(INCLUDE_UTILS_HEADER_DIRS) $(INCLUDE_LIST_HEADER_DIRS)
+
 INCLUDE_UTILS = -L$(dir $(UTILS_LIB)) -l$(patsubst lib%.a,%,$(notdir $(UTILS_LIB)))
+INCLUDE_LIST = -L$(dir $(LIST_LIB)) -l$(patsubst lib%.a,%,$(notdir $(LIST_LIB)))
 
 PHONY := all
 all: $(BINARYNAME)
 	@:
 
-$(BINARYNAME): $(SOURCES) $(OBJDIR) $(OBJECTS) $(UTILS_LIB)
-	@$(CC) $(CFLAGS) $(OBJECTS) $(INCLUDE_UTILS) -o $@ $(GTK_LIBS)
+$(BINARYNAME): $(SOURCES) $(OBJDIR) $(OBJECTS) $(UTILS_LIB) $(LIST_LIB)
+	@$(CC) $(CFLAGS) $(OBJECTS) $(INCLUDE_UTILS) $(INCLUDE_LIST) -o $@ $(GTK_LIBS)
 	@printf "$(notdir $@)\t\tcreated\n"
 
 -include $(DEPENDS)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c Makefile
 	@mkdir -p $(@D)
-	@$(CC) $(GTK_INC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(INCLUDE_ALL_HEADER_DIRS) $(GTK_INC) $(CFLAGS) -c $< -o $@
 
 $(OBJDIR):
 	@mkdir -p $@

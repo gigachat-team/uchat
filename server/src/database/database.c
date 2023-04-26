@@ -1,4 +1,4 @@
-#include "../../server.h"
+#include "database.h"
 
 sqlite3 *db_open() {
     sqlite3 *db;
@@ -44,4 +44,3 @@ void db_execute_sql(sqlite3 *db, char* sql) {
         exit(EXIT_FAILURE);
     }
 }
-

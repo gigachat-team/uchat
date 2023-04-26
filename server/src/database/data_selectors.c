@@ -1,4 +1,4 @@
-#include "../../server.h"
+#include "database.h"
 
 char *db_get_password_by_id(sqlite3 *db, id_t id) {
     char *sql = sqlite3_mprintf(" \
@@ -100,77 +100,135 @@ id_t *db_get_IDs_of_chats_user_is_in(sqlite3 *db, id_t user_id, size_t *IDs_of_c
     return IDs_of_chats;
 }
 
-t_chat *db_get_chats_user_is_in(sqlite3 *db, id_t user_id, size_t *number_of_chats) {
-    id_t *IDs_of_chats_user_is_in = db_get_IDs_of_chats_user_is_in(db, user_id,  number_of_chats);
+list_t *db_select_chats_by_member_id(sqlite3 *db, id_t member_id) {
+    char *sql = sqlite3_mprintf(" \
+        SELECT "CHATS_ID", "CHATS_NAME", "CHATS_OWNER_ID" \
+        FROM "CHATS_TABLE" \
+        INNER JOIN "MEMBERS_TABLE" ON "CHATS_TABLE"."CHATS_ID" = "MEMBERS_TABLE"."MEMBERS_CHAT_ID" \
+        WHERE "MEMBERS_USER_ID" = %u", member_id
+    );
+    sqlite3_stmt *statement = db_open_statement(db, sql);
+    sqlite3_free(sql);
 
-    t_chat *descriptions_of_chats = malloc(*number_of_chats * sizeof(t_chat));
-
-    for (size_t i = 0; i < *number_of_chats; i++) {
-        descriptions_of_chats[i].id = IDs_of_chats_user_is_in[i];
-        descriptions_of_chats[i].name = db_get_chat_name_by_id(db, IDs_of_chats_user_is_in[i]);
+    list_t *chats_list = list_new();
+    while (sqlite3_step(statement) == SQLITE_ROW) {
+        t_chat *chat = malloc(sizeof(t_chat));
+        chat->id = sqlite3_column_int(statement, 0);
+        chat->name = strdup((char *)sqlite3_column_text(statement, 1));
+        chat->owner_id = sqlite3_column_int(statement, 2);
+        list_rpush(chats_list, list_node_new(chat));
     }
+    db_close_statement(statement, db);
 
-    free(IDs_of_chats_user_is_in);
-
-    return descriptions_of_chats;
+    return chats_list;
 }
 
-t_list *db_get_messages_in_chat(sqlite3 *db, id_t chat_id, size_t *found_messages_count) {
+list_t *db_select_messages(sqlite3 *db, id_t chat_id) {
     char *sql = sqlite3_mprintf(" \
-        SELECT "MESSAGES_USER_ID", (SELECT "USERS_LOGIN" FROM "USERS_TABLE" WHERE "USERS_TABLE"."USERS_ID" = "MESSAGES_TABLE"."MESSAGES_USER_ID"), "MESSAGES_CONTENT", "MESSAGES_CREATION_DATE" \
+        SELECT "MESSAGES_ID", "MESSAGES_USER_ID", \
+        (SELECT "USERS_LOGIN" FROM "USERS_TABLE" WHERE "USERS_TABLE"."USERS_ID" = "MESSAGES_TABLE"."MESSAGES_USER_ID"), \
+        "MESSAGES_CONTENT", "MESSAGES_CREATION_DATE", "MESSAGES_CHANGES_COUNT" \
         FROM "MESSAGES_TABLE" \
         WHERE "MESSAGES_CHAT_ID" = %u", chat_id
     );
     sqlite3_stmt *statement = db_open_statement(db, sql);
     sqlite3_free(sql);
 
-    t_list *messages_list = NULL;
-
-    *found_messages_count = 0;
-    for (; sqlite3_step(statement) == SQLITE_ROW; (*found_messages_count)++) {
+    list_t *messages_list = list_new();
+    for (; sqlite3_step(statement) == SQLITE_ROW; ) {
         t_user_message *user_message = malloc(sizeof(t_user_message));
-        user_message->sender_id = sqlite3_column_int(statement, 0);
-        user_message->sender_login = strdup((char *)sqlite3_column_text(statement, 1));
-        user_message->data = strdup(sqlite3_column_blob(statement, 2));
-        user_message->creation_date = strdup(sqlite3_column_blob(statement, 3));
-        mx_push_front(&messages_list, user_message);
+        user_message->message_id = sqlite3_column_int(statement, 0);
+        user_message->sender_id = sqlite3_column_int(statement, 1);
+        user_message->sender_login = strdup((char *)sqlite3_column_text(statement, 2));
+        user_message->data = strdup(sqlite3_column_blob(statement, 3));
+        user_message->creation_date = sqlite3_column_int(statement, 4);
+        user_message->changes_count = sqlite3_column_int(statement, 5);
+        list_rpush(messages_list, list_node_new(user_message));
     }
     db_close_statement(statement, db);
 
     return messages_list;
 }
 
-t_user *db_get_chat_members(sqlite3 *db, id_t chat_id, size_t *members_count) {
+list_t *db_select_message_updates(sqlite3 *db, id_t chat_id, t_id_and_changes_count_array *client_messages, bool ignore_last_selected_message_data) {
     char *sql = sqlite3_mprintf(" \
-        SELECT COUNT(*) FROM "MEMBERS_TABLE" \
-        WHERE "MEMBERS_CHAT_ID" = %u", chat_id
+        SELECT "MESSAGES_ID", "MESSAGES_USER_ID", \
+        (SELECT "USERS_LOGIN" FROM "USERS_TABLE" WHERE "USERS_TABLE"."USERS_ID" = "MESSAGES_TABLE"."MESSAGES_USER_ID"), \
+        "MESSAGES_CONTENT", "MESSAGES_CREATION_DATE", "MESSAGES_CHANGES_COUNT" \
+        FROM "MESSAGES_TABLE" \
+        WHERE "MESSAGES_CHAT_ID" = %u \
+        ORDER BY "MESSAGES_ID" DESC", chat_id
     );
+
     sqlite3_stmt *statement = db_open_statement(db, sql);
     sqlite3_free(sql);
-    sqlite3_step(statement);
-    *members_count = sqlite3_column_int(statement, 0);
+
+    list_t *message_updates_list = list_new();
+    int step_result = sqlite3_step(statement);
+    for (int i = client_messages->len - 1; step_result == SQLITE_ROW || i >= 0;) {
+        int message_id_in_db = sqlite3_column_int(statement, 0);
+        if (client_messages->len > 0 && message_id_in_db == (int)client_messages->arr[i].id) {
+            int message_changes_count = sqlite3_column_int(statement, 5);
+            if (message_changes_count != client_messages->arr[i].changes_count) {
+                t_message_update *message_update = create_empty_message_update_ptr();
+                message_update->message.message_id = message_id_in_db;
+                message_update->message.data = strdup(sqlite3_column_blob(statement, 3));
+                message_update->message.changes_count = message_changes_count;
+                message_update->remove = false;
+                list_lpush(message_updates_list, list_node_new(message_update));
+            }
+            if (step_result != SQLITE_DONE)
+                step_result = sqlite3_step(statement);
+            i--;
+            continue;
+        }
+
+        t_message_update *message_update = create_empty_message_update_ptr();
+        if (client_messages->len > 0 && message_id_in_db < (int)client_messages->arr[i].id) {
+            message_update->message.message_id = client_messages->arr[i].id;
+            message_update->remove = true;
+            i--;
+        } else {
+            message_update->message.message_id = message_id_in_db;
+            message_update->message.sender_id = sqlite3_column_int(statement, 1);
+            message_update->message.sender_login = strdup((char *)sqlite3_column_text(statement, 2));
+            if (ignore_last_selected_message_data) {
+                message_update->message.data = NULL;
+                ignore_last_selected_message_data = false;
+            }
+            else
+                message_update->message.data = strdup(sqlite3_column_blob(statement, 3));
+            message_update->message.creation_date = sqlite3_column_int(statement, 4);
+            message_update->message.changes_count = sqlite3_column_int(statement, 5);
+            message_update->remove = false;
+            if (step_result != SQLITE_DONE)
+                step_result = sqlite3_step(statement);
+        }
+        list_lpush(message_updates_list, list_node_new(message_update));
+    }
     db_close_statement(statement, db);
 
-    if (*members_count == 0) {
-        return NULL;
-    }
+    return message_updates_list;
+}
 
-    sql = sqlite3_mprintf(" \
+list_t *db_select_members(sqlite3 *db, id_t chat_id) {
+    char *sql = sqlite3_mprintf(" \
         SELECT "MEMBERS_USER_ID", \
             (SELECT "USERS_LOGIN" FROM "USERS_TABLE" \
             WHERE "USERS_TABLE"."USERS_ID" = "MEMBERS_TABLE"."MEMBERS_USER_ID") \
         FROM "MEMBERS_TABLE" WHERE "MEMBERS_CHAT_ID" = %u", chat_id
     );
-    statement = db_open_statement(db, sql);
+    sqlite3_stmt *statement = db_open_statement(db, sql);
     sqlite3_free(sql);
-    sqlite3_step(statement);
-    t_user *members = malloc(*members_count * sizeof(t_user));
-    for (size_t i = 0; i < *members_count; i++) {
-        members[i].id = sqlite3_column_int(statement, 0);
-        members[i].login = strdup((char *)sqlite3_column_text(statement, 1));
-        sqlite3_step(statement);
+
+    list_t *members_list = list_new();
+    while (sqlite3_step(statement) == SQLITE_ROW) {
+        t_user *member = malloc(sizeof(t_user));
+        member->id = sqlite3_column_int(statement, 0);
+        member->login = strdup((char *)sqlite3_column_text(statement, 1));
+        list_rpush(members_list, list_node_new(member));
     }
     db_close_statement(statement, db);
 
-    return members;
+    return members_list;
 }

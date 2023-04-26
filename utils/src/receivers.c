@@ -1,4 +1,4 @@
-#include "../utils.h"
+#include "receivers.h"
 
 int receive(int socket, char *buffer, size_t length) {
     int number_of_left_bytes = length;
@@ -55,6 +55,7 @@ char *receive_bytes(int socket) {
         return NULL;
     }
     char *string = malloc(string_len + 1);
+    string[string_len] = '\0';
 
     if (receive(socket, string, string_len) != 0) {
         free(string);

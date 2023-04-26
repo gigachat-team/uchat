@@ -1,7 +1,7 @@
-#include "../../server.h"
+#include "database.h"
 
 id_t db_create_user(sqlite3 *db, char *login, char *password) {
-    if (db_users_table_has_login(db, login)) {
+    if (db_login_exists(db, login)) {
         return 0;
     }
 
@@ -27,9 +27,25 @@ id_t db_create_user(sqlite3 *db, char *login, char *password) {
     return created_user_id;
 }
 
+bool db_change_login(sqlite3 *db, id_t user_id, char *new_login) {
+    if (db_login_exists(db, new_login)) {
+        return false;
+    }
+
+    char *sql = sqlite3_mprintf(" \
+        UPDATE "USERS_TABLE" \
+        SET "USERS_LOGIN" = %Q \
+        WHERE "USERS_ID" = %u", new_login, user_id
+    );
+    db_execute_sql(db, sql);
+    sqlite3_free(sql);
+
+    return true;
+}
+
 id_t db_create_chat(sqlite3 *db, char *chat_name, id_t owner_id) {
     char *sql = sqlite3_mprintf(" \
-        INSERT INTO "CHATS_TABLE" ("CHATS_NAME", "CHATS_USER_ID") \
+        INSERT INTO "CHATS_TABLE" ("CHATS_NAME", "CHATS_OWNER_ID") \
         VALUES (%Q, %u);", chat_name, owner_id
     );
     db_execute_sql(db, sql);
@@ -43,7 +59,7 @@ id_t db_create_chat(sqlite3 *db, char *chat_name, id_t owner_id) {
     sqlite3_stmt *statement = db_open_statement(db, sql);
     sqlite3_step(statement);
     id_t created_chat_id = sqlite3_column_int(statement, 0);
-    
+
     sqlite3_free(sql);
     db_close_statement(statement, db);
 
@@ -68,22 +84,21 @@ bool db_add_new_member_to_chat(sqlite3 *db, id_t user_id, id_t chat_id) {
 
 void db_add_text_message(sqlite3 *db, id_t chat_id, id_t user_id, char *text_message) {
     char *sql = sqlite3_mprintf(" \
-        SELECT "MESSAGES_ORDER" FROM "MESSAGES_TABLE" \
-        WHERE "MESSAGES_CHAT_ID" = %d ORDER BY "MESSAGES_ORDER" DESC", chat_id
-    );
-    sqlite3_stmt *statement = db_open_statement(db, sql);
-    sqlite3_free(sql);
-
-    uint32_t new_message_order = sqlite3_step(statement) == SQLITE_ROW ? sqlite3_column_int(statement, 0) + 1 : 1;
-    db_close_statement(statement, db);
-
-    sql = sqlite3_mprintf(" \
-        INSERT INTO "MESSAGES_TABLE" ("MESSAGES_CHAT_ID", "MESSAGES_USER_ID", "MESSAGES_CONTENT", \
-                                      "MESSAGES_CREATION_DATE", "MESSAGES_ORDER") \
-        VALUES (%u, %u, %Q, datetime('now'), %u)",
-        chat_id, user_id, text_message, new_message_order
+        INSERT INTO "MESSAGES_TABLE" \
+        ("MESSAGES_CHAT_ID", "MESSAGES_USER_ID", "MESSAGES_CONTENT", "MESSAGES_CREATION_DATE") \
+        VALUES (%u, %u, %Q, strftime('%%s', 'now'))",
+        chat_id, user_id, text_message
     );
     db_execute_sql(db, sql);
     sqlite3_free(sql);
 }
 
+void db_change_message(sqlite3 *db, id_t message_id, char *new_content) {
+    char *sql = sqlite3_mprintf(" \
+        UPDATE "MESSAGES_TABLE" \
+        SET "MESSAGES_CONTENT" = %Q, "MESSAGES_CHANGES_COUNT" = "MESSAGES_CHANGES_COUNT" + 1 \
+        WHERE "MESSAGES_ID" = %u", new_content, message_id
+    );
+    db_execute_sql(db, sql);
+    sqlite3_free(sql);
+}

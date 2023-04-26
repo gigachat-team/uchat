@@ -1,0 +1,17 @@
+#pragma once
+
+#include "list.h"
+#include "types.h"
+
+typedef struct s_user_message {
+    id_t message_id;
+    id_t sender_id;
+    char *sender_login;
+    char *data;
+    uint32_t creation_date;
+    uint8_t changes_count;
+} t_user_message;
+
+void free_user_message_ptr(void *message_ptr);
+void free_user_messages(t_user_message *messages, size_t length);
+void free_user_messages_list(list_t *messages_list);

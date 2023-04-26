@@ -1,5 +1,13 @@
 {
     "clangd.fallbackFlags": [
+        "-I${workspaceFolder}/server",
+        "-I${workspaceFolder}/server/inc",
+        "-I${workspaceFolder}/client",
+        "-I${workspaceFolder}/client/inc",
+        "-I${workspaceFolder}/utils",
+        "-I${workspaceFolder}/utils/inc",
+        "-I${workspaceFolder}/resources/libraries/sqlite3",
+        "-I${workspaceFolder}/resources/libraries/list/src",
         "-I/usr/include/gtk-3.0",
         "-I/usr/include/glib-2.0",
         "-I/usr/lib/x86_64-linux-gnu/glib-2.0/include",
@@ -16,7 +24,14 @@
         "memory": "c",
         "numeric": "c",
         "cmath": "c",
-        "typeinfo": "c"
+        "typeinfo": "c",
+        "glib.h": "c",
+        "gtk.h": "c",
+        "gsignal.h": "c",
+        "client.h": "c",
+        "stdlib.h": "c",
+        "stdio.h": "c",
+        "system_error": "c"
     },
     "C_Cpp.vcFormat.newLine.beforeElse": true,
     "C_Cpp.vcFormat.space.betweenEmptyBraces": false,

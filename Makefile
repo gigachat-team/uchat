@@ -9,6 +9,7 @@ endef
 
 PHONY := all
 all:
+	@git submodule update --init
 	$(make_command) $(LIBRARIES_DIR)
 	$(make_command) $(UTILS_DIR)
 	$(make_command) $(CLIENT_DIR)
