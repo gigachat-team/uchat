@@ -13,15 +13,17 @@ void gui_render_chats_list() {
 
     clear_container(Builder, CHATS_LIST_CONTAINER_ID);
 
-    if (chats_list->len != 0) {
-        for (list_node_t *i = chats_list->head; i != NULL; i = i->next) {
-            create_button_in_chat_list(i->val);
+    bool selected_chat_exists = false;
+    for (list_node_t *i = chats_list->head; i != NULL; i = i->next) {
+        t_chat *chat = i->val;
+        create_button_in_chat_list(chat);
+        if (SelectedChat->id == chat->id) {
+            selected_chat_exists = true;
         }
     }
-    else {
+    if (chats_list->len == 0 || !selected_chat_exists) {
         hide_widget(Builder, "chat_area");
         show_widget(Builder, "warning_text");
-        printf("You aren't in any chats.\n");
     }
 }
 
