@@ -822,7 +822,7 @@
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
                     <property name="always_show_image">True</property>
-                    <signal name="clicked" handler="on_open_settings_window" swapped="no"/>
+                    <signal name="clicked" handler="on_open_settings_window_clicked" swapped="no"/>
                     <child>
                       <object class="GtkImage">
                         <property name="visible">True</property>
@@ -998,27 +998,6 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkButton">
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="receives_default">True</property>
-                        <property name="always_show_image">True</property>
-                        <signal name="clicked" handler="on_toggle_theme_button_clicked" swapped="no"/>
-                        <child>
-                          <object class="GtkImage">
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="stock">gtk-select-color</property>
-                          </object>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">1</property>
-                      </packing>
-                    </child>
-                    <child>
                       <object class="GtkButton" id="open_chat_settings_window">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
@@ -1132,10 +1111,42 @@
     <property name="deletable">False</property>
     <property name="gravity">center</property>
     <child type="titlebar">
-      <object class="GtkLabel">
+      <object class="GtkBox">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
-        <property name="label" translatable="yes">Settings</property>
+        <child>
+          <object class="GtkLabel">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">Settings</property>
+          </object>
+          <packing>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="always_show_image">True</property>
+            <signal name="clicked" handler="on_toggle_theme_button_clicked" swapped="no"/>
+            <child>
+              <object class="GtkImage">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="stock">gtk-select-color</property>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
       </object>
     </child>
     <child>
@@ -1149,7 +1160,19 @@
         <property name="orientation">vertical</property>
         <property name="spacing">21</property>
         <child>
-          <placeholder/>
+          <object class="GtkLabel" id="login_alredy_exist">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">Login alredy exist</property>
+            <attributes>
+              <attribute name="foreground" value="#efef29292929"/>
+            </attributes>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">0</property>
+          </packing>
         </child>
         <child>
           <object class="GtkBox">
@@ -1168,7 +1191,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkEntry">
+              <object class="GtkEntry" id="settings_login_entry">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
               </object>
@@ -1195,7 +1218,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <signal name="clicked" handler="on_close_settings_window" swapped="no"/>
+                <signal name="clicked" handler="on_close_settings_window_clicked" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -1209,6 +1232,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
+                <signal name="clicked" handler="on_apply_settings" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">True</property>
