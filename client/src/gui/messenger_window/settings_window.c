@@ -6,7 +6,7 @@ void init_login_entry() {
 }
 
 void on_apply_settings() {
-    char *new_login = strdup(get_entry_text(Builder, "settings_login_entry"));
+    char *new_login = get_entry_text(Builder, "settings_login_entry");
     t_state_code state = rq_change_login(ServerAddress, ThisUser->id, new_login);
 
     if (state == SUCH_LOGIN_ALREADY_EXISTS) {

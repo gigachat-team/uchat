@@ -25,6 +25,8 @@ void gui_render_chats_list() {
         hide_widget(Builder, "chat_area");
         show_widget(Builder, "warning_text");
     }
+
+    list_destroy(chats_list);
 }
 
 static void gui_create_chat() {
