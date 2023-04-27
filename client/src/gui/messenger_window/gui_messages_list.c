@@ -58,7 +58,7 @@ void gui_update_messages_list(list_t *message_updates_list, char *sended_message
         list_node_t *client_message_node = list_find(LoadedMessagesList, message_update);
         t_message *client_message = client_message_node ? client_message_node->val : NULL;
 
-        if (!message_update->sender_id && strcmp(message_update->data, "") == 0) {
+        if (!message_update->sender_id && !message_update->data) {
             gtk_widget_hide(client_message->widget);
             gtk_widget_destroy(client_message->widget);
             free(client_message);

@@ -51,7 +51,7 @@ uint32_t receive_uint32(int socket) {
 
 char *receive_bytes(int socket) {
     int string_len = receive_uint32(socket);
-    if (errno == ECONNABORTED) {
+    if (errno == ECONNABORTED || string_len == 0) {
         return NULL;
     }
     char *string = malloc(string_len + 1);
