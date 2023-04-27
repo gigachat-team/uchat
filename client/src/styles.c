@@ -10,7 +10,7 @@ void load_css(char *css_file_path) {
     );
 
     if (!css_file_path) {
-        gtk_css_provider_load_from_path(provider, DEFAULT_CSS_FILE_PATH, NULL);
+        gtk_css_provider_load_from_path(provider, PATH_TO_LIGHT_STYLE, NULL);
         return;
     }
 
@@ -38,11 +38,11 @@ void save_theme(t_style_type style_type) {
 }
 
 void load_light_theme() {
-    load_css(DEFAULT_CSS_FILE_PATH);
+    load_css(PATH_TO_LIGHT_STYLE);
 }
 
 void load_dark_theme() {
-    load_css(CSS_DARK_FILE_PATH);
+    load_css(PATH_TO_DARK_STYLE);
 }
 
 void apply_style_to_widget(GtkWidget *widget, const char *class_name) {
@@ -130,12 +130,12 @@ void apply_styles_to_chat_settings_window(GtkBuilder *gtk_builder) {
 
 void apply_styles_to_authentication_window(GtkBuilder *gtk_builder) {
     if (!gtk_builder) return;
-    
+
     GtkWidget *authentication_window = GTK_WIDGET(gtk_builder_get_object(gtk_builder, AUTHENTICATION_WINDOW_ID));
     open_window(gtk_builder, AUTHENTICATION_WINDOW_ID);
     set_cursor_image(authentication_window, DEFAULT_CURSOR_IMAGE_PATH);
     get_widget_by_id_and_apply_style(gtk_builder, AUTHENTICATION_LABEL_ID, CSS_CLASS_WINDOW_TOP_LABEL);
-    
+
     apply_style_to_widget(authentication_window, CSS_CLASS_AUTHENTICATION_WINDOW);
 
     get_widget_by_id_and_apply_style(gtk_builder, LOGIN_ENTRY_ID,              CSS_CLASS_ENTRY);
@@ -147,7 +147,7 @@ void apply_styles_to_authentication_window(GtkBuilder *gtk_builder) {
 
 void apply_styles_to_settings_window(GtkBuilder *gtk_builder) {
     if (!gtk_builder) return;
-    
+
     GtkWidget *settings_window = GTK_WIDGET(gtk_builder_get_object(gtk_builder, SETTINGS_WINDOW_ID));
     open_window(gtk_builder, SETTINGS_WINDOW_ID);
     set_cursor_image(settings_window, DEFAULT_CURSOR_IMAGE_PATH);

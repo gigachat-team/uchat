@@ -4,8 +4,8 @@
 #include "file.h"
 #include "gui_utils.h"
 
-#define DEFAULT_CSS_FILE_PATH "resources/style.css"
-#define CSS_DARK_FILE_PATH "resources/style_dark.css"
+#define PATH_TO_LIGHT_STYLE "resources/styles/light.css"
+#define PATH_TO_DARK_STYLE "resources/styles/dark.css"
 #define DEFAULT_CURSOR_IMAGE_PATH "resources/img/cursor.png"
 
 #define STYLE_TYPE_SETTING_PATH "resources/settings/style_type.txt"
@@ -43,7 +43,7 @@ typedef enum {
 /**
  * @brief loads css to gtk. Should be called after gtk_init function
  * @param css_file_path path to a css file that will be included.
- * If variable is NULL, it'll use DEFAULT_CSS_FILE_PATH
+ * If variable is NULL, it'll use PATH_TO_LIGHT_STYLE
 */
 void load_css(char *css_file_path);
 
