@@ -79,6 +79,16 @@
     background-color: rgb(56, 62, 68);
 }
 
+.my-message-content-box {
+    background-color: rgb(125, 131, 136);
+    border-radius: 20px;
+}
+
+.message-content-box {
+    background-color: rgb(209,209,209);
+    border-radius: 20px;
+}
+
 button {
     background-image: url("img/button_dark.png");
     border: 2px solid;
