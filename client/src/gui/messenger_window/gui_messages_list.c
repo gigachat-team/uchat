@@ -6,9 +6,31 @@ static gboolean scroll_to_bottom_message_list(gpointer user_data) {
     return FALSE;
 }
 
+static char *get_printable_time(time_t _time) {
+    time_t now = time(NULL);
+    struct tm now_tm = *localtime(&now);
+    struct tm time_tm = *localtime(&_time);
+
+    char *printable_time = NULL;
+
+    if (time_tm.tm_year == now_tm.tm_year) {
+        if (time_tm.tm_yday == now_tm.tm_yday) {
+            printable_time = malloc(6);
+            strftime(printable_time, 6, "%2H:%2M", &time_tm);
+        } else {
+            printable_time = malloc(12);
+            strftime(printable_time, 12, "%2m.%2d %2H:%2M", &time_tm);
+        }
+    } else {
+        printable_time = malloc(14);
+        strftime(printable_time, 14, "%4y.%2m.%2d %2H:%2M", &time_tm);
+    }
+
+    return printable_time;
+}
+
 static void create_and_show_message_widget(t_message *message) {
-    char time_str[DEFAULT_TIME_FORMAT_LEN];
-    strftime(time_str, DEFAULT_TIME_FORMAT_LEN, DEFAULT_TIME_FORMAT, localtime(&message->creation_date));
+    char *printable_time = get_printable_time(message->creation_date);
 
     message->container = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
     GtkWidget *user_icon = get_image_from_path("resources/img/message_icon.jpeg", 45, 45);
@@ -17,7 +39,7 @@ static void create_and_show_message_widget(t_message *message) {
 
     GtkWidget *name = gtk_label_new(message->sender_login);
     message->label = gtk_label_new((gchar *)message->data);
-    GtkWidget *time_sending_message = gtk_label_new(time_str);
+    GtkWidget *time_sending_message = gtk_label_new(printable_time);
 
     gtk_container_add(GTK_CONTAINER(event_box), content_box);
 
@@ -59,6 +81,8 @@ static void create_and_show_message_widget(t_message *message) {
     gtk_widget_show_all(message->container);
 
     g_timeout_add(50, scroll_to_bottom_message_list, Builder);
+
+    free(printable_time);
 }
 
 static void load_messages(id_t chat_id) {
