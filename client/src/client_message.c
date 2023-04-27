@@ -20,14 +20,6 @@ t_message *create_message_ptr() {
     return message;
 }
 
-t_messages_array allocate_messages_array(size_t size) {
-    t_messages_array messages_array = {
-        .size = size,
-        .arr = malloc(size * sizeof(t_message))
-    };
-    return messages_array;
-}
-
 void free_message(t_message message) {
     free(message.sender_login);
     free(message.data);
