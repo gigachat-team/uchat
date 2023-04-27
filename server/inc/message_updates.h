@@ -1,10 +1,10 @@
 #pragma once
 
 #include <stdbool.h>
-#include "user_message.h"
+#include "server_message.h"
 
 typedef struct s_message_update {
-    t_user_message message;
+    t_message message;
     bool remove;
 } t_message_update;
 

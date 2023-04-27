@@ -136,14 +136,14 @@ list_t *db_select_messages(sqlite3 *db, id_t chat_id) {
 
     list_t *messages_list = list_new();
     for (; sqlite3_step(statement) == SQLITE_ROW; ) {
-        t_user_message *user_message = malloc(sizeof(t_user_message));
-        user_message->message_id = sqlite3_column_int(statement, 0);
-        user_message->sender_id = sqlite3_column_int(statement, 1);
-        user_message->sender_login = strdup((char *)sqlite3_column_text(statement, 2));
-        user_message->data = strdup(sqlite3_column_blob(statement, 3));
-        user_message->creation_date = sqlite3_column_int(statement, 4);
-        user_message->changes_count = sqlite3_column_int(statement, 5);
-        list_rpush(messages_list, list_node_new(user_message));
+        t_message *message = malloc(sizeof(t_message));
+        message->message_id = sqlite3_column_int(statement, 0);
+        message->sender_id = sqlite3_column_int(statement, 1);
+        message->sender_login = strdup((char *)sqlite3_column_text(statement, 2));
+        message->data = strdup(sqlite3_column_blob(statement, 3));
+        message->creation_date = sqlite3_column_int(statement, 4);
+        message->changes_count = sqlite3_column_int(statement, 5);
+        list_rpush(messages_list, list_node_new(message));
     }
     db_close_statement(statement, db);
 

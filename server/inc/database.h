@@ -6,8 +6,8 @@
 #include <stdio.h>
 #include <string.h>
 #include "sqlite3.h"
-#include "user_message.h"
 #include "uint32_array.h"
+#include "server_message.h"
 #include "message_updates.h"
 #include "id_and_changes_count.h"
 
