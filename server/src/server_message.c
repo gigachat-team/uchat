@@ -1,5 +1,23 @@
 #include "server_message.h"
 
+t_message create_message() {
+    t_message message = {
+        .message_id = 0,
+        .sender_id = 0,
+        .sender_login = NULL,
+        .data = NULL,
+        .creation_date = 0,
+        .changes_count = 0
+    };
+    return message;
+}
+
+t_message *create_message_ptr() {
+    t_message *message = malloc(sizeof(t_message));
+    *message = create_message();
+    return message;
+}
+
 void free_message(t_message *message) {
     free(message->sender_login);
     free(message->data);

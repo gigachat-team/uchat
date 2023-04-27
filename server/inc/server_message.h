@@ -12,6 +12,8 @@ typedef struct {
     uint8_t changes_count;
 } t_message;
 
+t_message create_message();
+t_message *create_message_ptr();
 void free_message(t_message *message);
 void free_message_ptr(void *message);
 void free_messages_array(t_message *messages, size_t length);
