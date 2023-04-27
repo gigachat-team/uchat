@@ -1029,8 +1029,6 @@
                   <object class="GtkScrolledWindow" id="chat_scrolled_field">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="margin_left">10</property>
-                    <property name="margin_right">10</property>
                     <property name="hexpand">True</property>
                     <property name="vexpand">True</property>
                     <property name="hscrollbar_policy">never</property>
@@ -1045,6 +1043,8 @@
                             <property name="can_focus">False</property>
                             <property name="halign">baseline</property>
                             <property name="valign">end</property>
+                            <property name="margin_left">10</property>
+                            <property name="margin_right">10</property>
                             <property name="orientation">vertical</property>
                             <property name="baseline_position">top</property>
                             <child>
