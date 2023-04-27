@@ -13,6 +13,6 @@ typedef struct {
 } t_message;
 
 void free_message(t_message *message);
-void free_message_ptr(void *message_ptr);
+void free_message_ptr(void *message);
 void free_messages_array(t_message *messages, size_t length);
 void free_messages_list(list_t *messages_list);

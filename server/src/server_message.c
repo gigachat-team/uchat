@@ -5,9 +5,9 @@ void free_message(t_message *message) {
     free(message->data);
 }
 
-void free_message_ptr(void *message_ptr) {
-    free_message(message_ptr);
-    free(message_ptr);
+void free_message_ptr(void *message) {
+    free_message(message);
+    free(message);
 }
 
 void free_messages_array(t_message *messages, size_t length) {
