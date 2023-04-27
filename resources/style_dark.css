@@ -45,7 +45,7 @@
     background-repeat: no-repeat;
     background-image: url("img/button_new_chat_dark.png");
     background-position: center;
-    border: 3px solid;
+    border: 2px solid;
     border-radius: 80px;
     border-color: rgb(255, 255, 255);
 }
@@ -62,7 +62,7 @@
 }
 
 .time-text{
-    font-size: 12px;
+    font-size: 13px;
     font-family: system-ui;
     font-style: italic;
     color: #6D7F8F;

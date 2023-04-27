@@ -1,7 +1,7 @@
 * {
-    color: black;
     border: 0px;
     font-size: large;
+    color: black;
 }
 
 .connection-box {
@@ -85,6 +85,7 @@
 }
 
 .new-message-entry-parent {
+    border: 0px;
     background-color: rgb(222,223,224);
 }
 
