@@ -11,21 +11,28 @@ static void create_and_show_message_widget(t_message *message) {
     strftime(time_str, DEFAULT_TIME_FORMAT_LEN, DEFAULT_TIME_FORMAT, localtime(&message->creation_date));
 
     message->container = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
-    message->label = gtk_label_new((gchar *)message->data);
-    GtkWidget *name = gtk_label_new(message->sender_login);
     GtkWidget *user_icon = get_image_from_path("resources/img/message_icon.jpeg", 45, 45);
-    GtkWidget *time_sending_message = gtk_label_new(time_str);
     GtkWidget *event_box = gtk_event_box_new();
+    GtkWidget *content_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 2);
 
-    gtk_container_add(GTK_CONTAINER(message->container), name);
+    GtkWidget *name = gtk_label_new(message->sender_login);
+    message->label = gtk_label_new((gchar *)message->data);
+    GtkWidget *time_sending_message = gtk_label_new(time_str);
+
+    gtk_container_add(GTK_CONTAINER(event_box), content_box);
+
     gtk_box_pack_start(GTK_BOX(message->container), user_icon, false, false, 0);
-    gtk_container_add(GTK_CONTAINER(event_box), message->label);
     gtk_box_pack_start(GTK_BOX(message->container), event_box, false, false, 5);
-    gtk_container_add(GTK_CONTAINER(message->container), time_sending_message);
 
+    gtk_container_add(GTK_CONTAINER(content_box), name);
+    gtk_container_add(GTK_CONTAINER(content_box), message->label);
+    gtk_container_add(GTK_CONTAINER(content_box), time_sending_message);
+
+    gtk_widget_set_halign(name, GTK_ALIGN_START);
     gtk_label_set_line_wrap(GTK_LABEL(message->label), TRUE);
     gtk_label_set_line_wrap_mode(GTK_LABEL(message->label), PANGO_WRAP_CHAR);
     gtk_widget_set_valign(user_icon, GTK_ALIGN_END); // Align to the bottom vertically within the box
+    gtk_widget_set_halign(time_sending_message, GTK_ALIGN_END);
 
     g_signal_connect(event_box, "button-press-event", G_CALLBACK(on_open_message_settings_clicked), message);
 
