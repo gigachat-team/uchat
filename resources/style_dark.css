@@ -1,7 +1,7 @@
 * {
     border: 0px;
     font-size: large;
-    color: rgb(255, 255, 255);
+    color: #F5F5F5;;
 }
 
 .connection-box {
@@ -13,7 +13,7 @@
 }
 
 .chats-list-containter {
-    background-color: rgb(79, 88, 97);
+    background-color: #17212B;
 }
 
 .create-room {
@@ -29,7 +29,7 @@
 }
 
 .canvas {
-    background-color: rgb(56, 62, 68);
+    background-color: #0E1621;
 }
 
 .message-field {
@@ -54,16 +54,28 @@
     background-color: rgb(51, 57, 62);
 }
 
+.my-time-text {
+    font-size: 13px;
+    font-family: system-ui;
+    font-style: italic;
+    color: #7BA6D0;
+}
+
 .time-text{
     font-size: 12px;
     font-family: system-ui;
     font-style: italic;
-    color: rgb(139, 159, 172);
+    color: #6D7F8F;
+}
+
+.my-name-text {
+    font-family: unset;
+    color: #85DE85;
 }
 
 .name-text{
     font-family: unset;
-    color: rgb(155, 199, 228);
+    color:#FF5676;
 }
 
 .window-top-label {
@@ -80,12 +92,14 @@
 }
 
 .my-message-content-box {
-    background-color: rgb(125, 131, 136);
+    color: #F5F5F5;
+    background-color: #2B5278;
     border-radius: 20px;
 }
 
 .message-content-box {
-    background-color: rgb(209,209,209);
+    color: #F5F5F5;
+    background-color: #182533;
     border-radius: 20px;
 }
 

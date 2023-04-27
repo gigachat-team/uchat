@@ -52,16 +52,28 @@
     background: url("img/background_auth.png");
 }
 
-.time-text{
-    font-size: 12px;
+.my-time-text {
+    font-size: 13px;
     font-family: system-ui;
     font-style: italic;
-    color: rgb(139, 159, 172)
+    color: #57B84C;
+}
+
+.time-text{
+    font-size: 13px;
+    font-family: system-ui;
+    font-style: italic;
+    color: #A0ACB6;
+}
+
+.my-name-text {
+    font-family: unset;
+    color: #4FAD2D;
 }
 
 .name-text{
     font-family: unset;
-    color: rgb(7, 17, 24);
+    color: #CD4073;
 }
 
 .window-top-label {
@@ -77,12 +89,12 @@
 }
 
 .my-message-content-box {
-    background-color: rgb(142, 198, 255);
+    background-color: #EFFDDE;
     border-radius: 20px;
 }
 
 .message-content-box {
-    background-color: rgb(209,209,209);
+    background-color: white;
     border-radius: 20px;
 }
 

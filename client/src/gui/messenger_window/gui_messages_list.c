@@ -72,12 +72,13 @@ static void create_and_show_message_widget(t_message *message) {
 
     if (message->sender_id == ThisUser->id) {
         apply_style_to_widget(content_box, "my-message-content-box");
+        apply_style_to_widget(name, "my-name-text");
         apply_style_to_widget(time_sending_message, "my-time-text");
     } else {
         apply_style_to_widget(content_box, "message-content-box");
+        apply_style_to_widget(name, CSS_CLASS_TIME_NAME_SETTINGS);
         apply_style_to_widget(time_sending_message, CSS_CLASS_TIME_TEXT_SETTINGS);
     }
-    apply_style_to_widget(name, CSS_CLASS_TIME_NAME_SETTINGS);
 
     gtk_widget_show_all(message->container);
 
