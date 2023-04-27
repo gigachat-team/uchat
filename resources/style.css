@@ -59,10 +59,16 @@
     color: rgb(114, 132, 143);
 }
 
+.my-time-text {
+    font-size: 12px;
+    font-family: system-ui;
+    font-style: italic;
+    color: #b6d1ed;
+}
 .name-text{
     font-size: 14px;
     font-family: unset;
-    color: rgb(0, 140, 30);
+    color: rgb(0, 236, 51);
 }
 
 .window-top-label {
@@ -78,7 +84,7 @@
 }
 
 .my-message-content-box {
-    background-color: rgb(142, 198, 255);
+    background-color: #4078b1;
     border-radius: 20px;
 }
 
