@@ -25,13 +25,6 @@ void free_message(t_message *message) {
     free(message->data);
 }
 
-void free_messages(t_message *messages, size_t length) {
-    for (size_t i = 0; i < length; i++) {
-        free_message(messages + i);
-    }
-    free(messages);
-}
-
 void free_message_ptr(void *message_void) {
     t_message *message = message_void;
     free(message->sender_login);
