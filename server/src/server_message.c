@@ -1,10 +1,13 @@
 #include "server_message.h"
 
-void free_message_ptr(void *message_ptr) {
-    t_message *message = message_ptr;
+void free_message(t_message *message) {
     free(message->sender_login);
     free(message->data);
-    free(message);
+}
+
+void free_message_ptr(void *message_ptr) {
+    free_message(message_ptr);
+    free(message_ptr);
 }
 
 void free_messages_array(t_message *messages, size_t length) {
