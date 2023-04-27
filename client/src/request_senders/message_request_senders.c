@@ -45,7 +45,7 @@ list_t *rq_send_message_and_get_messages_updates(t_address *server_address, id_t
     pack_bytes(message, &package);
     pack_uint32(messages_list->len, &package);
     for (list_node_t *i = messages_list->head; i != NULL; i = i->next) {
-        t_user_message *message = (t_user_message *)i->val;
+        t_message *message = (t_message *)i->val;
         pack_uint32(message->message_id, &package);
         pack_byte(message->changes_count, &package);
     }
@@ -68,7 +68,7 @@ list_t *rq_delete_message_and_get_message_updates(t_address *server_address, id_
     pack_uint32(chat_id, &package);
     pack_uint32(messages_list->len, &package);
     for (list_node_t *i = messages_list->head; i != NULL; i = i->next) {
-        t_user_message *message = (t_user_message *)i->val;
+        t_message *message = (t_message *)i->val;
         pack_uint32(message->message_id, &package);
         pack_byte(message->changes_count, &package);
     }
@@ -92,7 +92,7 @@ list_t *rq_change_message_and_get_message_updates(t_address *server_address, id_
     pack_uint32(chat_id, &package);
     pack_uint32(messages_list->len, &package);
     for (list_node_t *i = messages_list->head; i != NULL; i = i->next) {
-        t_user_message *message = i->val;
+        t_message *message = i->val;
         pack_uint32(message->message_id, &package);
         pack_byte(message->changes_count, &package);
     }
@@ -114,7 +114,7 @@ list_t *rq_get_message_updates(t_address *server_address, id_t chat_id, list_t *
     pack_uint32(chat_id, &package);
     pack_uint32(messages_list->len, &package);
     for (list_node_t *i = messages_list->head; i != NULL; i = i->next) {
-        t_user_message *message = (t_user_message *)i->val;
+        t_message *message = (t_message *)i->val;
         pack_uint32(message->message_id, &package);
         pack_byte(message->changes_count, &package);
     }

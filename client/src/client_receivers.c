@@ -4,7 +4,7 @@ list_t *receive_messages_list(int client_socket) {
     uint32_t messages_count = receive_uint32(client_socket);
     list_t *messages_list = list_new();
     for (size_t i = 0; i < messages_count; i++) {
-        t_user_message *message = malloc(sizeof(t_user_message));
+        t_message *message = malloc(sizeof(t_message));
         message->message_id = receive_uint32(client_socket);
         message->sender_id = receive_uint32(client_socket);
         message->sender_login = receive_bytes(client_socket);

@@ -1,7 +1,7 @@
 #include "gui.h"
 
 void on_message_delete_clicked(GtkButton *b, gpointer user_data) {
-    t_user_message *message = user_data;
+    t_message *message = user_data;
 
     list_t *message_updates_list = rq_delete_message_and_get_message_updates(ServerAddress, message->message_id, SelectedChat->id, LoadedMessagesList);
     if (!message_updates_list) return;
@@ -9,7 +9,7 @@ void on_message_delete_clicked(GtkButton *b, gpointer user_data) {
     gui_update_messages_list(message_updates_list, NULL);
     close_window(Builder, "message_settings");
 
-    free_user_messages_list(message_updates_list);
+    free_messages_list(message_updates_list);
 
     (void)b;
 }
@@ -25,7 +25,7 @@ gboolean on_update_message_entry(gpointer user_data) {
 }
 
 void on_change_message(GtkEntry *entry, gpointer user_data) {
-    t_user_message *message = user_data;
+    t_message *message = user_data;
 
     char *message_text = (char *)gtk_entry_get_text(entry);
 
@@ -38,11 +38,11 @@ void on_change_message(GtkEntry *entry, gpointer user_data) {
 
     set_entry_text(Builder, NEW_MESSAGE_ENTRY_ID, "");
 
-    free_user_messages_list(message_updates_list);
+    free_messages_list(message_updates_list);
 }
 
 void on_message_edit_clicked(GtkButton *b, gpointer user_data) {
-    t_user_message *message = user_data;
+    t_message *message = user_data;
 
     GtkWidget *message_field = get_widget(Builder, NEW_MESSAGE_ENTRY_ID);
 
@@ -68,7 +68,7 @@ gboolean on_close_message_settings(GtkWidget *widget, GdkEventFocus *event) {
 gboolean on_open_message_settings_clicked(GtkWidget *widget, GdkEventButton *event, gpointer user_data) {
     if (event->button != GDK_BUTTON_SECONDARY) return TRUE;
 
-    t_user_message *message = user_data;
+    t_message *message = user_data;
     if (message->sender_id != ThisUser->id) return TRUE;
 
     open_window(Builder, "message_settings");

@@ -32,7 +32,7 @@ int main(int argc, char **argv) {
     gtk_main();
 
     g_object_unref(Builder);
-    free_user_messages_list(LoadedMessagesList);
+    free_messages_list(LoadedMessagesList);
 
     return EXIT_SUCCESS;
 }
