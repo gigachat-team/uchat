@@ -56,13 +56,13 @@
     font-size: 12px;
     font-family: system-ui;
     font-style: italic;
-    color: rgb(139, 159, 172)
-
+    color: rgb(114, 132, 143);
 }
 
 .name-text{
+    font-size: 14px;
     font-family: unset;
-    color: rgb(7, 17, 24);
+    color: rgb(0, 140, 30);
 }
 
 .window-top-label {
@@ -75,6 +75,16 @@
 
 .new-message-entry-parent {
     background-color: rgb(222,223,224);
+}
+
+.my-message-content-box {
+    background-color: rgb(142, 198, 255);
+    border-radius: 20px;
+}
+
+.message-content-box {
+    background-color: rgb(209,209,209);
+    border-radius: 20px;
 }
 
 button {

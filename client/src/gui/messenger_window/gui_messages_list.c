@@ -22,22 +22,37 @@ static void create_and_show_message_widget(t_message *message) {
     gtk_container_add(GTK_CONTAINER(event_box), content_box);
 
     gtk_box_pack_start(GTK_BOX(message->container), user_icon, false, false, 0);
-    gtk_box_pack_start(GTK_BOX(message->container), event_box, false, false, 5);
+    gtk_box_pack_start(GTK_BOX(message->container), event_box, false, false, 10);
 
     gtk_container_add(GTK_CONTAINER(content_box), name);
     gtk_container_add(GTK_CONTAINER(content_box), message->label);
     gtk_container_add(GTK_CONTAINER(content_box), time_sending_message);
 
+    gtk_widget_set_margin_start(name, 10);
+    gtk_widget_set_margin_top(name, 10);
+    gtk_widget_set_margin_end(name, 10);
+    gtk_widget_set_margin_start(message->label, 15);
+    gtk_widget_set_margin_end(message->label, 15);
+    gtk_widget_set_margin_start(time_sending_message, 10);
+    gtk_widget_set_margin_bottom(time_sending_message, 10);
+    gtk_widget_set_margin_end(time_sending_message, 10);
+
     gtk_widget_set_halign(name, GTK_ALIGN_START);
     gtk_label_set_line_wrap(GTK_LABEL(message->label), TRUE);
     gtk_label_set_line_wrap_mode(GTK_LABEL(message->label), PANGO_WRAP_CHAR);
-    gtk_widget_set_valign(user_icon, GTK_ALIGN_END); // Align to the bottom vertically within the box
+    gtk_widget_set_halign(message->label, GTK_ALIGN_START);
+    gtk_widget_set_valign(user_icon, GTK_ALIGN_END);
     gtk_widget_set_halign(time_sending_message, GTK_ALIGN_END);
 
     g_signal_connect(event_box, "button-press-event", G_CALLBACK(on_open_message_settings_clicked), message);
 
     add_to_box_start(Builder, message->container, CHAT_FIELD_CONTENER_ID, 10);
 
+    if (message->sender_id == ThisUser->id) {
+        apply_style_to_widget(content_box, "my-message-content-box");
+    } else {
+        apply_style_to_widget(content_box, "message-content-box");
+    }
     apply_style_to_widget(name, CSS_CLASS_TIME_NAME_SETTINGS);
     apply_style_to_widget(time_sending_message, CSS_CLASS_TIME_TEXT_SETTINGS);
 
