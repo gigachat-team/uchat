@@ -52,14 +52,14 @@
     background: url("../img/background_auth.png");
 }
 
-.my-time-text {
+.my-additional-message-info {
     font-size: 13px;
     font-family: system-ui;
     font-style: italic;
     color: #57B84C;
 }
 
-.time-text{
+.additional-message-info{
     font-size: 13px;
     font-family: system-ui;
     font-style: italic;

@@ -30,61 +30,70 @@ static char *get_printable_time(time_t _time) {
 }
 
 static void create_and_show_message_widget(t_message *message) {
-    char *printable_time = get_printable_time(message->creation_date);
+    char *creation_date_str = get_printable_time(message->creation_date);
+    char *is_edited_str = message->changes_count ? "edited" : "";
 
-    message->container = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
+    message->container_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
     GtkWidget *user_icon = get_image_from_path("resources/img/message_icon.jpeg", 45, 45);
     GtkWidget *event_box = gtk_event_box_new();
     GtkWidget *content_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 2);
-
     GtkWidget *name = gtk_label_new(message->sender_login);
-    message->label = gtk_label_new((gchar *)message->data);
-    GtkWidget *time_sending_message = gtk_label_new(printable_time);
+    message->content_label = gtk_label_new((gchar *)message->data);
+    GtkWidget *additional_info_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 3);
+    message->is_edited_label = gtk_label_new(is_edited_str);
+    GtkWidget *creation_date_label = gtk_label_new(creation_date_str);
 
+    // Main box
+    gtk_box_pack_start(GTK_BOX(message->container_box), user_icon, false, false, 0);
+    gtk_box_pack_start(GTK_BOX(message->container_box), event_box, false, false, 10);
     gtk_container_add(GTK_CONTAINER(event_box), content_box);
 
-    gtk_box_pack_start(GTK_BOX(message->container), user_icon, false, false, 0);
-    gtk_box_pack_start(GTK_BOX(message->container), event_box, false, false, 10);
-
+    // Box without icon
     gtk_container_add(GTK_CONTAINER(content_box), name);
-    gtk_container_add(GTK_CONTAINER(content_box), message->label);
-    gtk_container_add(GTK_CONTAINER(content_box), time_sending_message);
+    gtk_container_add(GTK_CONTAINER(content_box), message->content_label);
+    gtk_container_add(GTK_CONTAINER(content_box), additional_info_box);
 
+    // Additional info box
+    gtk_container_add(GTK_CONTAINER(additional_info_box), message->is_edited_label);
+    gtk_container_add(GTK_CONTAINER(additional_info_box), creation_date_label);
+
+    gtk_widget_set_margin_start(additional_info_box, 10);
+    gtk_widget_set_margin_bottom(additional_info_box, 10);
+    gtk_widget_set_margin_end(additional_info_box, 10);
     gtk_widget_set_margin_start(name, 10);
     gtk_widget_set_margin_top(name, 10);
     gtk_widget_set_margin_end(name, 10);
-    gtk_widget_set_margin_start(message->label, 15);
-    gtk_widget_set_margin_end(message->label, 15);
-    gtk_widget_set_margin_start(time_sending_message, 10);
-    gtk_widget_set_margin_bottom(time_sending_message, 10);
-    gtk_widget_set_margin_end(time_sending_message, 10);
+    gtk_widget_set_margin_start(message->content_label, 15);
+    gtk_widget_set_margin_end(message->content_label, 15);
 
     gtk_widget_set_halign(name, GTK_ALIGN_START);
-    gtk_label_set_line_wrap(GTK_LABEL(message->label), TRUE);
-    gtk_label_set_line_wrap_mode(GTK_LABEL(message->label), PANGO_WRAP_CHAR);
-    gtk_widget_set_halign(message->label, GTK_ALIGN_START);
+    gtk_label_set_line_wrap(GTK_LABEL(message->content_label), TRUE);
+    gtk_label_set_line_wrap_mode(GTK_LABEL(message->content_label), PANGO_WRAP_CHAR);
+    gtk_widget_set_halign(message->content_label, GTK_ALIGN_START);
     gtk_widget_set_valign(user_icon, GTK_ALIGN_END);
-    gtk_widget_set_halign(time_sending_message, GTK_ALIGN_END);
+    gtk_widget_set_halign(additional_info_box, GTK_ALIGN_END);
 
     g_signal_connect(event_box, "button-press-event", G_CALLBACK(on_open_message_settings_clicked), message);
 
-    add_to_box_start(Builder, message->container, CHAT_FIELD_CONTENER_ID, 10);
+    add_to_box_start(Builder, message->container_box, CHAT_FIELD_CONTENER_ID, 10);
 
     if (message->sender_id == ThisUser->id) {
         apply_style_to_widget(content_box, "my-message-content-box");
         apply_style_to_widget(name, "my-name-text");
-        apply_style_to_widget(time_sending_message, "my-time-text");
+        apply_style_to_widget(message->is_edited_label, "my-additional-message-info");
+        apply_style_to_widget(creation_date_label, "my-additional-message-info");
     } else {
         apply_style_to_widget(content_box, "message-content-box");
         apply_style_to_widget(name, CSS_CLASS_TIME_NAME_SETTINGS);
-        apply_style_to_widget(time_sending_message, CSS_CLASS_TIME_TEXT_SETTINGS);
+        apply_style_to_widget(message->is_edited_label, "additional-message-info");
+        apply_style_to_widget(creation_date_label, "additional-message-info");
     }
 
-    gtk_widget_show_all(message->container);
+    gtk_widget_show_all(message->container_box);
 
     g_timeout_add(50, scroll_to_bottom_message_list, Builder);
 
-    free(printable_time);
+    free(creation_date_str);
 }
 
 static void load_messages(id_t chat_id) {
@@ -110,8 +119,8 @@ void gui_update_messages_list(list_t *message_updates_list, char *sended_message
         t_message *client_message = client_message_node ? client_message_node->val : NULL;
 
         if (!message_update->sender_id && !message_update->data) {
-            gtk_widget_hide(client_message->container);
-            gtk_widget_destroy(client_message->container);
+            gtk_widget_hide(client_message->container_box);
+            gtk_widget_destroy(client_message->container_box);
             free(client_message);
             list_remove(LoadedMessagesList, client_message_node);
             continue;
@@ -121,7 +130,8 @@ void gui_update_messages_list(list_t *message_updates_list, char *sended_message
             free(client_message->data);
             client_message->data = message_update->data;
             message_update->data = NULL;
-            set_label_text(client_message->label, client_message->data);
+            set_label_text(client_message->content_label, client_message->data);
+            set_label_text(client_message->is_edited_label, "edited");
             client_message->changes_count = message_update->changes_count;
             continue;
         }

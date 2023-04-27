@@ -54,14 +54,14 @@
     background-color: rgb(51, 57, 62);
 }
 
-.my-time-text {
+.my-additional-message-info {
     font-size: 13px;
     font-family: system-ui;
     font-style: italic;
     color: #7BA6D0;
 }
 
-.time-text{
+.additional-message-info {
     font-size: 13px;
     font-family: system-ui;
     font-style: italic;
