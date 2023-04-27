@@ -20,6 +20,8 @@ typedef struct s_messages_array {
     size_t size;
 } t_messages_array;
 
+t_message create_message();
+t_message *create_message_ptr();
 t_messages_array allocate_messages_array(size_t size);
 void free_message(t_message message);
 void free_messages(t_message *messages, size_t length);

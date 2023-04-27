@@ -1,5 +1,25 @@
 #include "client_message.h"
 
+t_message create_message() {
+    t_message message = {
+        .message_id = 0,
+        .sender_id = 0,
+        .sender_login = NULL,
+        .data = NULL,
+        .creation_date = 0,
+        .changes_count = 0,
+        .widget = NULL,
+        .label_widget = NULL
+    };
+    return message;
+}
+
+t_message *create_message_ptr() {
+    t_message *message = malloc(sizeof(t_message));
+    *message = create_message();
+    return message;
+}
+
 t_messages_array allocate_messages_array(size_t size) {
     t_messages_array messages_array = {
         .size = size,
