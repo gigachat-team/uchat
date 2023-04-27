@@ -7,31 +7,31 @@ static gboolean scroll_to_bottom_message_list(gpointer user_data) {
 }
 
 static void create_and_show_message_widget(t_message *message) {
-    message->widget = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
-    message->label_widget = gtk_label_new((gchar *)message->data);
+    message->container = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
+    message->label = gtk_label_new((gchar *)message->data);
     GtkWidget *name = gtk_label_new(message->sender_login);
     apply_style_to_widget(name, CSS_CLASS_TIME_NAME_SETTINGS);
-    gtk_container_add(GTK_CONTAINER(message->widget), name);
+    gtk_container_add(GTK_CONTAINER(message->container), name);
     GtkWidget *user_icon = get_image_from_path("resources/img/message_icon.jpeg", 45, 45);
-    gtk_label_set_line_wrap(GTK_LABEL(message->label_widget), TRUE);
-    gtk_label_set_line_wrap_mode(GTK_LABEL(message->label_widget), PANGO_WRAP_CHAR);
+    gtk_label_set_line_wrap(GTK_LABEL(message->label), TRUE);
+    gtk_label_set_line_wrap_mode(GTK_LABEL(message->label), PANGO_WRAP_CHAR);
     gtk_widget_set_valign(user_icon, GTK_ALIGN_END); // Align to the bottom vertically within the box
 
     GtkWidget *event_box = gtk_event_box_new();
-    gtk_container_add(GTK_CONTAINER(event_box), message->label_widget);
+    gtk_container_add(GTK_CONTAINER(event_box), message->label);
     g_signal_connect(event_box, "button-press-event", G_CALLBACK(on_open_message_settings_clicked), message);
 
-    gtk_box_pack_start(GTK_BOX(message->widget), GTK_WIDGET(user_icon), false, false, 0);
-    gtk_box_pack_start(GTK_BOX(message->widget), event_box, false, false, 5);
-    add_to_box_start(Builder, message->widget, CHAT_FIELD_CONTENER_ID, 10);
+    gtk_box_pack_start(GTK_BOX(message->container), GTK_WIDGET(user_icon), false, false, 0);
+    gtk_box_pack_start(GTK_BOX(message->container), event_box, false, false, 5);
+    add_to_box_start(Builder, message->container, CHAT_FIELD_CONTENER_ID, 10);
 
     char time_str[DEFAULT_TIME_FORMAT_LEN];
     strftime(time_str, DEFAULT_TIME_FORMAT_LEN, DEFAULT_TIME_FORMAT, localtime(&message->creation_date));
     GtkWidget *time_sending_message = gtk_label_new(time_str);
     apply_style_to_widget(time_sending_message, CSS_CLASS_TIME_TEXT_SETTINGS);
-    gtk_container_add(GTK_CONTAINER(message->widget), time_sending_message);
+    gtk_container_add(GTK_CONTAINER(message->container), time_sending_message);
 
-    gtk_widget_show_all(message->widget);
+    gtk_widget_show_all(message->container);
 
     g_timeout_add(50, scroll_to_bottom_message_list, Builder);
 }
@@ -59,8 +59,8 @@ void gui_update_messages_list(list_t *message_updates_list, char *sended_message
         t_message *client_message = client_message_node ? client_message_node->val : NULL;
 
         if (!message_update->sender_id && !message_update->data) {
-            gtk_widget_hide(client_message->widget);
-            gtk_widget_destroy(client_message->widget);
+            gtk_widget_hide(client_message->container);
+            gtk_widget_destroy(client_message->container);
             free(client_message);
             list_remove(LoadedMessagesList, client_message_node);
             continue;
@@ -70,7 +70,7 @@ void gui_update_messages_list(list_t *message_updates_list, char *sended_message
             free(client_message->data);
             client_message->data = message_update->data;
             message_update->data = NULL;
-            set_label_text(client_message->label_widget, client_message->data);
+            set_label_text(client_message->label, client_message->data);
             client_message->changes_count = message_update->changes_count;
             continue;
         }

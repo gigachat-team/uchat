@@ -11,8 +11,8 @@ typedef struct {
     char *data;
     time_t creation_date;
     uint8_t changes_count;
-    GtkWidget *widget;
-    GtkWidget *label_widget;
+    GtkWidget *container;
+    GtkWidget *label;
 } t_message;
 
 typedef struct s_messages_array {

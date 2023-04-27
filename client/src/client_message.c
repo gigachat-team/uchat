@@ -8,8 +8,8 @@ t_message create_message() {
         .data = NULL,
         .creation_date = 0,
         .changes_count = 0,
-        .widget = NULL,
-        .label_widget = NULL
+        .container = NULL,
+        .label = NULL
     };
     return message;
 }
