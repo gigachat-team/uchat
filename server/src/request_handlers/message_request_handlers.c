@@ -35,11 +35,11 @@ void handle_message_sending_and_messages_updates_getting(int client_socket) {
     list_t *message_updates_list = db_select_message_updates(db, chat_id, &client_messages, true);
     db_close(db);
 
-    send_message_updates_list(client_socket, message_updates_list);
+    send_messages_list(client_socket, message_updates_list);
 
     free(data);
     free(client_messages.arr);
-    free_message_updates_list(message_updates_list);
+    free_messages_list(message_updates_list);
 }
 
 void handle_message_deleting_and_messages_updates_getting(int client_socket) {
@@ -52,10 +52,10 @@ void handle_message_deleting_and_messages_updates_getting(int client_socket) {
     list_t *message_updates_list = db_select_message_updates(db, chat_id, &client_messages, false);
     db_close(db);
 
-    send_message_updates_list(client_socket, message_updates_list);
+    send_messages_list(client_socket, message_updates_list);
 
     free(client_messages.arr);
-    free_message_updates_list(message_updates_list);
+    free_messages_list(message_updates_list);
 }
 
 void handle_message_changing_and_message_updates_getting(int client_socket) {
@@ -69,7 +69,7 @@ void handle_message_changing_and_message_updates_getting(int client_socket) {
     list_t *message_updates_list = db_select_message_updates(db, chat_id, &client_messages, false);
     db_close(db);
 
-    send_message_updates_list(client_socket, message_updates_list);
+    send_messages_list(client_socket, message_updates_list);
 
     free(client_messages.arr);
     free_messages_list(message_updates_list);
@@ -83,8 +83,8 @@ void handle_message_updates_getting(int client_socket) {
     list_t *message_updates_list = db_select_message_updates(db, chat_id, &client_messages, false);
     db_close(db);
 
-    send_message_updates_list(client_socket, message_updates_list);
+    send_messages_list(client_socket, message_updates_list);
 
     free(client_messages.arr);
-    free_message_updates_list(message_updates_list);
+    free_messages_list(message_updates_list);
 }

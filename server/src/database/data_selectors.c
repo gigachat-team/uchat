@@ -169,12 +169,12 @@ list_t *db_select_message_updates(sqlite3 *db, id_t chat_id, t_id_and_changes_co
         int message_id_in_db = sqlite3_column_int(statement, 0);
         if (client_messages->len > 0 && message_id_in_db == (int)client_messages->arr[i].id) {
             int message_changes_count = sqlite3_column_int(statement, 5);
+
             if (message_changes_count != client_messages->arr[i].changes_count) {
-                t_message_update *message_update = create_empty_message_update_ptr();
-                message_update->message.message_id = message_id_in_db;
-                message_update->message.data = strdup(sqlite3_column_blob(statement, 3));
-                message_update->message.changes_count = message_changes_count;
-                message_update->remove = false;
+                t_message *message_update = create_message_ptr();
+                message_update->message_id = message_id_in_db;
+                message_update->data = strdup(sqlite3_column_blob(statement, 3));
+                message_update->changes_count = message_changes_count;
                 list_lpush(message_updates_list, list_node_new(message_update));
             }
             if (step_result != SQLITE_DONE)
@@ -183,24 +183,21 @@ list_t *db_select_message_updates(sqlite3 *db, id_t chat_id, t_id_and_changes_co
             continue;
         }
 
-        t_message_update *message_update = create_empty_message_update_ptr();
+        t_message *message_update = create_message_ptr();
         if (client_messages->len > 0 && message_id_in_db < (int)client_messages->arr[i].id) {
-            message_update->message.message_id = client_messages->arr[i].id;
-            message_update->remove = true;
+            message_update->message_id = client_messages->arr[i].id;
             i--;
         } else {
-            message_update->message.message_id = message_id_in_db;
-            message_update->message.sender_id = sqlite3_column_int(statement, 1);
-            message_update->message.sender_login = strdup((char *)sqlite3_column_text(statement, 2));
+            message_update->message_id = message_id_in_db;
+            message_update->sender_id = sqlite3_column_int(statement, 1);
+            message_update->sender_login = strdup((char *)sqlite3_column_text(statement, 2));
             if (ignore_last_selected_message_data) {
-                message_update->message.data = NULL;
-                ignore_last_selected_message_data = false;
+                message_update->data = NULL;
+            } else {
+                message_update->data = strdup(sqlite3_column_blob(statement, 3));
             }
-            else
-                message_update->message.data = strdup(sqlite3_column_blob(statement, 3));
-            message_update->message.creation_date = sqlite3_column_int(statement, 4);
-            message_update->message.changes_count = sqlite3_column_int(statement, 5);
-            message_update->remove = false;
+            message_update->creation_date = sqlite3_column_int(statement, 4);
+            message_update->changes_count = sqlite3_column_int(statement, 5);
             if (step_result != SQLITE_DONE)
                 step_result = sqlite3_step(statement);
         }

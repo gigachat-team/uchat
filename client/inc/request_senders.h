@@ -3,6 +3,7 @@
 #include "chat.h"
 #include "user.h"
 #include "request.h"
+#include <stdbool.h>
 #include "packager.h"
 #include "state_code.h"
 #include "client_receivers.h"

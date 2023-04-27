@@ -51,7 +51,7 @@ list_t *rq_send_message_and_get_messages_updates(t_address *server_address, id_t
     }
     send_and_free_package(client_socket, &package);
 
-    list_t *message_updates_list = receive_message_updates_list(client_socket);
+    list_t *message_updates_list = receive_messages_list(client_socket);
 
     close(client_socket);
 
@@ -74,7 +74,7 @@ list_t *rq_delete_message_and_get_message_updates(t_address *server_address, id_
     }
     send_and_free_package(client_socket, &package);
 
-    list_t *message_updates_list = receive_message_updates_list(client_socket);
+    list_t *message_updates_list = receive_messages_list(client_socket);
 
     close(client_socket);
 
@@ -98,7 +98,7 @@ list_t *rq_change_message_and_get_message_updates(t_address *server_address, id_
     }
     send_and_free_package(client_socket, &package);
 
-    list_t *message_updates_list = receive_message_updates_list(client_socket);
+    list_t *message_updates_list = receive_messages_list(client_socket);
 
     close(client_socket);
 
@@ -120,7 +120,7 @@ list_t *rq_get_message_updates(t_address *server_address, id_t chat_id, list_t *
     }
     send_and_free_package(client_socket, &package);
 
-    list_t *message_updates_list = receive_message_updates_list(client_socket);
+    list_t *message_updates_list = receive_messages_list(client_socket);
 
     close(client_socket);
 

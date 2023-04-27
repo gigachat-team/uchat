@@ -5,10 +5,10 @@
 #include "chat.h"
 #include <stdio.h>
 #include <string.h>
+#include <stdbool.h>
 #include "sqlite3.h"
 #include "uint32_array.h"
 #include "server_message.h"
-#include "message_updates.h"
 #include "id_and_changes_count.h"
 
 #define DATABASE_NAME "uchat.db"

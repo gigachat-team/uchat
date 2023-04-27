@@ -9,7 +9,7 @@ void on_message_delete_clicked(GtkButton *b, gpointer user_data) {
     gui_update_messages_list(message_updates_list, NULL);
     close_window(Builder, "message_settings");
 
-    free_message_updates_list(message_updates_list);
+    free_user_messages_list(message_updates_list);
 
     (void)b;
 }
@@ -38,7 +38,7 @@ void on_change_message(GtkEntry *entry, gpointer user_data) {
 
     set_entry_text(Builder, NEW_MESSAGE_ENTRY_ID, "");
 
-    free_message_updates_list(message_updates_list);
+    free_user_messages_list(message_updates_list);
 }
 
 void on_message_edit_clicked(GtkButton *b, gpointer user_data) {
