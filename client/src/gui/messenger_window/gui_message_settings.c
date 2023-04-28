@@ -71,8 +71,6 @@ gboolean on_open_message_settings_clicked(GtkWidget *widget, GdkEventButton *eve
     t_message *message = user_data;
     if (message->sender_id != ThisUser->id) return TRUE;
 
-    open_window(Builder, "message_settings");
-
     GtkWidget *message_settings = get_widget(Builder, "message_settings");
     GtkWidget *delete_message_button = get_widget(Builder, "delete_message_button");
     GtkWidget *edit_message_button = get_widget(Builder, "edit_message_button");
@@ -83,6 +81,8 @@ gboolean on_open_message_settings_clicked(GtkWidget *widget, GdkEventButton *eve
     g_signal_connect(message_settings, "focus-out-event", G_CALLBACK(on_close_message_settings), user_data);
     g_signal_connect(delete_message_button, "clicked", G_CALLBACK(on_message_delete_clicked), user_data);
     g_signal_connect(edit_message_button, "clicked", G_CALLBACK(on_message_edit_clicked), user_data);
+
+    gtk_widget_show_all(message_settings);
 
     (void)widget;
     return TRUE;
