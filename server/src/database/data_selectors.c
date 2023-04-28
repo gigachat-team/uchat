@@ -127,7 +127,7 @@ list_t *db_select_messages(sqlite3 *db, id_t chat_id) {
     char *sql = sqlite3_mprintf(" \
         SELECT "MESSAGES_ID", "MESSAGES_USER_ID", \
         (SELECT "USERS_LOGIN" FROM "USERS_TABLE" WHERE "USERS_TABLE"."USERS_ID" = "MESSAGES_TABLE"."MESSAGES_USER_ID"), \
-        "MESSAGES_CONTENT", "MESSAGES_CREATION_DATE", "MESSAGES_CHANGES_COUNT" \
+        "MESSAGES_CONTENT", "MESSAGES_CREATION_DATE", "MESSAGES_CHANGES_COUNT", "MESSAGES_REPLY_MESSAGE_ID" \
         FROM "MESSAGES_TABLE" \
         WHERE "MESSAGES_CHAT_ID" = %u", chat_id
     );
@@ -155,7 +155,7 @@ list_t *db_select_message_updates(sqlite3 *db, id_t chat_id, t_id_and_changes_co
     char *sql = sqlite3_mprintf(" \
         SELECT "MESSAGES_ID", "MESSAGES_USER_ID", \
         (SELECT "USERS_LOGIN" FROM "USERS_TABLE" WHERE "USERS_TABLE"."USERS_ID" = "MESSAGES_TABLE"."MESSAGES_USER_ID"), \
-        "MESSAGES_CONTENT", "MESSAGES_CREATION_DATE", "MESSAGES_CHANGES_COUNT" \
+        "MESSAGES_CONTENT", "MESSAGES_CREATION_DATE", "MESSAGES_CHANGES_COUNT", "MESSAGES_REPLY_MESSAGE_ID" \
         FROM "MESSAGES_TABLE" \
         WHERE "MESSAGES_CHAT_ID" = %u \
         ORDER BY "MESSAGES_ID" DESC", chat_id
