@@ -102,7 +102,6 @@ gboolean on_open_message_settings_clicked(GtkWidget *widget, GdkEventButton *eve
 
     t_message *message = user_data;
 
-
     GtkWidget *message_settings = get_widget(Builder, "message_settings");
     GtkWidget *delete_message_button = get_widget(Builder, "delete_message_button");
     GtkWidget *edit_message_button = get_widget(Builder, "edit_message_button");
@@ -127,7 +126,12 @@ gboolean on_open_message_settings_clicked(GtkWidget *widget, GdkEventButton *eve
     g_signal_connect(edit_message_button, "clicked", G_CALLBACK(on_message_edit_clicked), user_data);
     g_signal_connect(reply_to_message_button, "clicked", G_CALLBACK(on_reply_to_message_button_clicked), user_data);
 
-
     (void)widget;
     return TRUE;
+}
+
+void on_cancel_replying_button_clicked(GtkButton *b) {
+    hide_widget(Builder, "reply_message_box");
+    g_timeout_add(10, on_update_message_entry, NULL);
+    (void)b;
 }
