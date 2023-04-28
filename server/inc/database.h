@@ -34,6 +34,7 @@
 #define MESSAGES_CONTENT "Content"
 #define MESSAGES_CREATION_DATE "CreationDate"
 #define MESSAGES_CHANGES_COUNT "ChangesCount"
+#define MESSAGES_REPLY_MESSAGE_ID "ReplyMessageId"
 
 #define MESSAGE_STATUSES_TABLE "MessageStatuses"
 #define MESSAGE_STATUSES_MESSAGE_ID "MessageId"
