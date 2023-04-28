@@ -1085,7 +1085,7 @@
                             <property name="width_request">35</property>
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="stock">gtk-ok</property>
+                            <property name="icon_name">mail-reply-sender</property>
                           </object>
                           <packing>
                             <property name="expand">False</property>
