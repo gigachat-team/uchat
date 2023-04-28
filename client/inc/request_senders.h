@@ -24,6 +24,7 @@ list_t *rq_get_messages_in_chat(t_address *server_address, id_t chat_id);
 list_t *rq_send_message_and_get_messages_updates(t_address *server_address, id_t user_id, id_t chat_id, char *message, list_t *messages_list);
 list_t *rq_delete_message_and_get_message_updates(t_address *server_address, id_t message_id, id_t chat_id, list_t *messages_list);
 list_t *rq_change_message_and_get_message_updates(t_address *server_address, id_t message_id, char *new_message_content, id_t chat_id, list_t *messages_list);
+list_t *rq_reply_to_message_and_get_message_updates(t_address *server_address, id_t replier_id, id_t replying_message_id, char *reply_content, id_t chat_id, list_t *messages_list);
 list_t *rq_get_message_updates(t_address *server_address, id_t chat_id, list_t *messages_list);
 t_user *rq_get_chat_members(t_address *server_address, id_t chat_id, uint32_t *members_count);
 t_state_code rq_remove_member_from_chat(t_address *server_address, id_t user_id, id_t chat_id);
