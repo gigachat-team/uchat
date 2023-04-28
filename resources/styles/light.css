@@ -99,6 +99,17 @@
     border-radius: 20px;
 }
 
+.reply_box {
+    background-color: #DEDFE0;
+    border-radius: 5;
+    padding: 10;
+    margin: 0 10 0 10;
+}
+
+.reply_login {
+    color: #3b4dea;
+}
+
 button {
     background-image: url("../img/button.png");
     border: 2px solid;

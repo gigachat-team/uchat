@@ -33,11 +33,23 @@ static void create_and_show_message_widget(t_message *message) {
     char *creation_date_str = get_printable_time(message->creation_date);
     char *is_edited_str = message->changes_count ? "edited" : "";
 
+    GtkWidget *reply_box = NULL;
+    GtkWidget *reply_login = NULL;
+    GtkWidget *reply_content = NULL;
+
     message->container_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
     GtkWidget *user_icon = get_image_from_path("resources/img/message_icon.jpeg", 45, 45);
     GtkWidget *event_box = gtk_event_box_new();
     GtkWidget *content_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 2);
     GtkWidget *name = gtk_label_new(message->sender_login);
+    if (message->reply_message_id != 0) {
+        reply_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 1);
+        LoadedMessagesList->match = compare_messages_IDs;
+        t_message searching_reply_message_id = {.message_id = message->reply_message_id};
+        t_message *replied_message = list_find(LoadedMessagesList, &searching_reply_message_id)->val;
+        reply_login = gtk_label_new(replied_message->sender_login);
+        reply_content = gtk_label_new(replied_message->data);
+    }
     message->content_label = gtk_label_new((gchar *)message->data);
     GtkWidget *additional_info_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 3);
     message->is_edited_label = gtk_label_new(is_edited_str);
@@ -46,16 +58,36 @@ static void create_and_show_message_widget(t_message *message) {
     // Main box
     gtk_box_pack_start(GTK_BOX(message->container_box), user_icon, false, false, 0);
     gtk_box_pack_start(GTK_BOX(message->container_box), event_box, false, false, 10);
+
+    // Event box
     gtk_container_add(GTK_CONTAINER(event_box), content_box);
 
     // Box without icon
     gtk_container_add(GTK_CONTAINER(content_box), name);
+    if (reply_box)
+        gtk_container_add(GTK_CONTAINER(content_box), reply_box);
     gtk_container_add(GTK_CONTAINER(content_box), message->content_label);
     gtk_container_add(GTK_CONTAINER(content_box), additional_info_box);
+
+    // Reply box
+    if (reply_box) {
+        gtk_container_add(GTK_CONTAINER(reply_box), reply_login);
+        gtk_container_add(GTK_CONTAINER(reply_box), reply_content);
+    }
 
     // Additional info box
     gtk_container_add(GTK_CONTAINER(additional_info_box), message->is_edited_label);
     gtk_container_add(GTK_CONTAINER(additional_info_box), creation_date_label);
+
+    if (reply_box) {
+        gtk_widget_set_halign(reply_login, GTK_ALIGN_START);
+        gtk_widget_set_halign(reply_content, GTK_ALIGN_START);
+        gtk_label_set_xalign(GTK_LABEL(reply_content), 0);
+        apply_style_to_widget(reply_box, "reply_box");
+        apply_style_to_widget(reply_login, "reply_login");
+        gtk_label_set_line_wrap(GTK_LABEL(reply_content), TRUE);
+        gtk_label_set_line_wrap_mode(GTK_LABEL(reply_content), PANGO_WRAP_WORD_CHAR);
+    }
 
     gtk_widget_set_margin_start(additional_info_box, 10);
     gtk_widget_set_margin_bottom(additional_info_box, 10);
@@ -63,8 +95,8 @@ static void create_and_show_message_widget(t_message *message) {
     gtk_widget_set_margin_start(name, 10);
     gtk_widget_set_margin_top(name, 10);
     gtk_widget_set_margin_end(name, 10);
-    gtk_widget_set_margin_start(message->content_label, 15);
-    gtk_widget_set_margin_end(message->content_label, 15);
+    gtk_widget_set_margin_start(message->content_label, 10);
+    gtk_widget_set_margin_end(message->content_label, 10);
 
     gtk_widget_set_halign(name, GTK_ALIGN_START);
     gtk_label_set_line_wrap(GTK_LABEL(message->content_label), TRUE);
