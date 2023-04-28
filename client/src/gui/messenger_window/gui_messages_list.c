@@ -35,7 +35,6 @@ static void create_and_show_message_widget(t_message *message) {
 
     GtkWidget *reply_box = NULL;
     GtkWidget *reply_login = NULL;
-    GtkWidget *reply_content = NULL;
 
     message->container_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
     GtkWidget *user_icon = get_image_from_path("resources/img/message_icon.jpeg", 45, 45);
@@ -48,7 +47,7 @@ static void create_and_show_message_widget(t_message *message) {
         t_message searching_reply_message_id = {.message_id = message->reply_message_id};
         t_message *replied_message = list_find(LoadedMessagesList, &searching_reply_message_id)->val;
         reply_login = gtk_label_new(replied_message->sender_login);
-        reply_content = gtk_label_new(replied_message->data);
+        message->replied_message_content_label = gtk_label_new(replied_message->data);
     }
     message->content_label = gtk_label_new((gchar *)message->data);
     GtkWidget *additional_info_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 3);
@@ -72,7 +71,7 @@ static void create_and_show_message_widget(t_message *message) {
     // Reply box
     if (reply_box) {
         gtk_container_add(GTK_CONTAINER(reply_box), reply_login);
-        gtk_container_add(GTK_CONTAINER(reply_box), reply_content);
+        gtk_container_add(GTK_CONTAINER(reply_box), message->replied_message_content_label);
     }
 
     // Additional info box
@@ -81,12 +80,12 @@ static void create_and_show_message_widget(t_message *message) {
 
     if (reply_box) {
         gtk_widget_set_halign(reply_login, GTK_ALIGN_START);
-        gtk_widget_set_halign(reply_content, GTK_ALIGN_START);
-        gtk_label_set_xalign(GTK_LABEL(reply_content), 0);
+        gtk_widget_set_halign(message->replied_message_content_label, GTK_ALIGN_START);
+        gtk_label_set_xalign(GTK_LABEL(message->replied_message_content_label), 0);
         apply_style_to_widget(reply_box, "reply_box");
         apply_style_to_widget(reply_login, "reply_login");
-        gtk_label_set_line_wrap(GTK_LABEL(reply_content), TRUE);
-        gtk_label_set_line_wrap_mode(GTK_LABEL(reply_content), PANGO_WRAP_WORD_CHAR);
+        gtk_label_set_line_wrap(GTK_LABEL(message->replied_message_content_label), TRUE);
+        gtk_label_set_line_wrap_mode(GTK_LABEL(message->replied_message_content_label), PANGO_WRAP_WORD_CHAR);
     }
 
     gtk_widget_set_margin_start(additional_info_box, 10);
@@ -167,6 +166,14 @@ void gui_update_messages_list(list_t *message_updates_list, char *sended_message
             set_label_text(client_message->content_label, client_message->data);
             set_label_text(client_message->is_edited_label, "edited");
             client_message->changes_count = message_update->changes_count;
+
+            for (list_node_t *i = LoadedMessagesList->head; i != NULL; i = i->next) {
+                t_message *msg = i->val;
+                if (msg->reply_message_id == client_message->message_id) {
+                    set_label_text(msg->replied_message_content_label, client_message->data);
+                }
+            }
+
             continue;
         }
 

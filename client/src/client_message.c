@@ -11,7 +11,8 @@ t_message create_message() {
         .reply_message_id = 0,
         .container_box = NULL,
         .content_label = NULL,
-        .is_edited_label = NULL
+        .is_edited_label = NULL,
+        .replied_message_content_label = NULL
     };
     return message;
 }
