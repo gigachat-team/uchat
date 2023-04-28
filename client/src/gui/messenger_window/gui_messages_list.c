@@ -154,6 +154,7 @@ void gui_update_messages_list(list_t *message_updates_list, char *sended_message
 }
 
 static void gui_send_message_and_update_messages_list(char *message) {
+    if (strcmp(message, "") == 0 || message == NULL) return;
     list_t *message_updates_list = rq_send_message_and_get_messages_updates(ServerAddress, ThisUser->id, SelectedChat->id, message, LoadedMessagesList);
     if (toggle_widget_visibility(!message_updates_list, Builder, CONNECTING_BOX_ID)) return;
     gui_update_messages_list(message_updates_list, message);
