@@ -11,6 +11,7 @@ typedef struct {
     char *data;
     time_t creation_date;
     uint8_t changes_count;
+    id_t reply_message_id;
     GtkWidget *container_box;
     GtkWidget *content_label;
     GtkWidget *is_edited_label;

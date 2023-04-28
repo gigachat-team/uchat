@@ -8,8 +8,10 @@ t_message create_message() {
         .data = NULL,
         .creation_date = 0,
         .changes_count = 0,
+        .reply_message_id = 0,
         .container_box = NULL,
-        .content_label = NULL
+        .content_label = NULL,
+        .is_edited_label = NULL
     };
     return message;
 }

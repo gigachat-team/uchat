@@ -11,6 +11,7 @@ void send_messages_list(int client_socket, list_t *messages_list) {
         pack_bytes(message->data, &package);
         pack_uint32(message->creation_date, &package);
         pack_byte(message->changes_count, &package);
+        pack_uint32(message->reply_message_id, &package);
     }
     send_and_free_package(client_socket, &package);
 }

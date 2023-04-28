@@ -7,7 +7,8 @@ t_message create_message() {
         .sender_login = NULL,
         .data = NULL,
         .creation_date = 0,
-        .changes_count = 0
+        .changes_count = 0,
+        .reply_message_id = 0
     };
     return message;
 }
