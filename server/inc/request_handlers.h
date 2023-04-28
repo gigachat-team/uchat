@@ -24,6 +24,7 @@ void handle_messages_in_chat_getting(int client_socket);
 void handle_message_sending_and_messages_updates_getting(int client_socket);
 void handle_message_deleting_and_messages_updates_getting(int client_socket);
 void handle_message_changing_and_message_updates_getting(int client_socket);
+void handle_message_replying_and_message_updates_getting(int client_socket);
 void handle_message_updates_getting(int client_socket);
 void handle_removing_user_from_chat(int client_socket);
 void handle_getting_chat_members(int client_socket);

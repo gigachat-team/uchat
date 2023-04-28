@@ -75,6 +75,24 @@ void handle_message_changing_and_message_updates_getting(int client_socket) {
     free_messages_list(message_updates_list);
 }
 
+void handle_message_replying_and_message_updates_getting(int client_socket) {
+    id_t replier_id = receive_uint32(client_socket);
+    id_t replying_message_id = receive_uint32(client_socket);
+    id_t chat_id = receive_uint32(client_socket);
+    char *reply_content = receive_bytes(client_socket);
+    t_id_and_changes_count_array client_messages = receive_id_and_changes_count_array(client_socket);
+
+    sqlite3 *db = db_open();
+    db_reply_to_message(db, chat_id, replier_id, replying_message_id, reply_content);
+    list_t *message_updates_list = db_select_message_updates(db, chat_id, &client_messages, true);
+    db_close(db);
+
+    send_messages_list(client_socket, message_updates_list);
+
+    free(reply_content);
+    free_messages_list(message_updates_list);
+}
+
 void handle_message_updates_getting(int client_socket) {
     id_t chat_id = receive_uint32(client_socket);
     t_id_and_changes_count_array client_messages = receive_id_and_changes_count_array(client_socket);
