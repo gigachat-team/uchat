@@ -98,9 +98,11 @@ static void create_and_show_message_widget(t_message *message) {
     gtk_widget_set_margin_start(message->content_label, 10);
     gtk_widget_set_margin_end(message->content_label, 10);
 
+    gtk_label_set_xalign(GTK_LABEL(name), 0);
     gtk_widget_set_halign(name, GTK_ALIGN_START);
     gtk_label_set_line_wrap(GTK_LABEL(message->content_label), TRUE);
     gtk_label_set_line_wrap_mode(GTK_LABEL(message->content_label), PANGO_WRAP_CHAR);
+    gtk_label_set_xalign(GTK_LABEL(message->content_label), 0);
     gtk_widget_set_halign(message->content_label, GTK_ALIGN_START);
     gtk_widget_set_valign(user_icon, GTK_ALIGN_END);
     gtk_widget_set_halign(additional_info_box, GTK_ALIGN_END);
