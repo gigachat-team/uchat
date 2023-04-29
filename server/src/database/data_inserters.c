@@ -102,3 +102,14 @@ void db_change_message(sqlite3 *db, id_t message_id, char *new_content) {
     db_execute_sql(db, sql);
     sqlite3_free(sql);
 }
+
+void db_reply_to_message(sqlite3 *db, id_t chat_id, id_t replier_id, id_t replying_message_id, char *reply_content) {
+    char *sql = sqlite3_mprintf(" \
+        INSERT INTO "MESSAGES_TABLE" \
+        ("MESSAGES_CHAT_ID", "MESSAGES_USER_ID", "MESSAGES_CONTENT", "MESSAGES_CREATION_DATE", "MESSAGES_REPLY_MESSAGE_ID") \
+        VALUES (%u, %u, %Q, strftime('%%s', 'now'), %u)",
+        chat_id, replier_id, reply_content, replying_message_id
+    );
+    db_execute_sql(db, sql);
+    sqlite3_free(sql);
+}

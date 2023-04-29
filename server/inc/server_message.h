@@ -10,6 +10,7 @@ typedef struct {
     char *data;
     uint32_t creation_date;
     uint8_t changes_count;
+    id_t reply_message_id;
 } t_message;
 
 t_message create_message();

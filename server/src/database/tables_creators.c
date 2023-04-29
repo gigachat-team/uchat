@@ -34,6 +34,7 @@ void db_create_messages_table(sqlite3 *db) {
         "MESSAGES_CONTENT"          BLOB NOT NULL, \
         "MESSAGES_CREATION_DATE"    INTEGER, \
         "MESSAGES_CHANGES_COUNT"    INTEGER DEFAULT 0, \
+        "MESSAGES_REPLY_MESSAGE_ID" INTEGER DEFAULT 0, \
         FOREIGN KEY ("MESSAGES_CHAT_ID")    REFERENCES "CHATS_TABLE" ("CHATS_ID") ON DELETE CASCADE \
         FOREIGN KEY ("MESSAGES_USER_ID")    REFERENCES "USERS_TABLE" ("USERS_ID"));";
     db_execute_sql(db, sql);

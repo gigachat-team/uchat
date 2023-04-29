@@ -60,7 +60,7 @@
 }
 
 .additional-message-info{
-    font-size: 13px;
+    font-size: 15px;
     font-family: system-ui;
     font-style: italic;
     color: #A0ACB6;
@@ -97,6 +97,17 @@
 .message-content-box {
     background-color: white;
     border-radius: 20px;
+}
+
+.reply_box {
+    background-color: #DEDFE0;
+    border-radius: 5;
+    padding: 10;
+    margin: 0 10 0 10;
+}
+
+.reply_login {
+    color: #3b4dea;
 }
 
 button {

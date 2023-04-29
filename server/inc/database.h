@@ -34,6 +34,7 @@
 #define MESSAGES_CONTENT "Content"
 #define MESSAGES_CREATION_DATE "CreationDate"
 #define MESSAGES_CHANGES_COUNT "ChangesCount"
+#define MESSAGES_REPLY_MESSAGE_ID "ReplyMessageId"
 
 #define MESSAGE_STATUSES_TABLE "MessageStatuses"
 #define MESSAGE_STATUSES_MESSAGE_ID "MessageId"
@@ -92,6 +93,7 @@ bool db_add_new_member_to_chat(sqlite3 *db, id_t user_id, id_t chat_id);
 */
 void db_add_text_message(sqlite3 *db, id_t chat_id, id_t user_id, char *text_message);
 void db_change_message(sqlite3 *db, id_t message_id, char *new_content);
+void db_reply_to_message(sqlite3 *db, id_t chat_id, id_t replier_id, id_t replying_message_id, char *reply_content);
 
 /**
  * @brief Searches for password by ID.

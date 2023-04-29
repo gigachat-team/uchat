@@ -11,6 +11,7 @@ list_t *receive_messages_list(int client_socket) {
         message->data = receive_bytes(client_socket);
         message->creation_date = receive_uint32(client_socket);
         message->changes_count = receive_byte(client_socket);
+        message->reply_message_id = receive_uint32(client_socket);
         list_rpush(messages_list, list_node_new(message));
     }
 

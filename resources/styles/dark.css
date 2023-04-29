@@ -62,7 +62,7 @@
 }
 
 .additional-message-info {
-    font-size: 14px;
+    font-size: 15px;
     font-family: system-ui;
     font-style: italic;
     color: #6D7F8F;
@@ -103,12 +103,23 @@
     border-radius: 20px;
 }
 
+.reply_box {
+    background-color: #0E1621;
+    border-radius: 5;
+    padding: 10;
+    margin: 0 10 0 10;
+}
+
+.reply_login {
+    color: #8b96ff;
+}
+
 button {
     background-image: url("../img/button_dark.png");
-    border: 2px solid;
-    border-radius: 5px;
+    border: 2 solid;
+    border-radius: 5;
     color: rgb(234, 230, 230);
-    margin: 5px;
+    margin: 5;
 }
 
 button:active {

@@ -11,15 +11,13 @@ typedef struct {
     char *data;
     time_t creation_date;
     uint8_t changes_count;
+    id_t reply_message_id;
     GtkWidget *container_box;
     GtkWidget *content_label;
     GtkWidget *is_edited_label;
+    GtkWidget *replied_message_content_label;
+    GtkWidget *replied_message_login_label;
 } t_message;
-
-typedef struct s_messages_array {
-    t_message *arr;
-    size_t size;
-} t_messages_array;
 
 t_message create_message();
 t_message *create_message_ptr();
