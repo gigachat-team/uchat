@@ -29,6 +29,8 @@ void on_change_message(GtkEntry *entry, gpointer user_data) {
 
     char *message_text = (char *)gtk_entry_get_text(entry);
 
+    if (!message_text || strcmp(message_text, "") == 0) return;
+
     list_t *message_updates_list = rq_change_message_and_get_message_updates(ServerAddress, message->message_id, message_text, SelectedChat->id, LoadedMessagesList);
     if (!message_updates_list) return;
 
@@ -68,6 +70,8 @@ gboolean on_close_message_settings(GtkWidget *widget, GdkEventFocus *event) {
 static void on_reply_to_message(GtkEntry *entry, gpointer user_data) {
     t_message *message = user_data;
     char *message_text = (char *)gtk_entry_get_text(entry);
+
+    if (!message_text || strcmp(message_text, "") == 0) return;
 
     list_t *message_updates_list = rq_reply_to_message_and_get_message_updates(ServerAddress, ThisUser->id, message->message_id, message_text, SelectedChat->id, LoadedMessagesList);
     if (toggle_widget_visibility(!message_updates_list, Builder, CONNECTING_BOX_ID)) return;
