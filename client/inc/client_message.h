@@ -16,6 +16,7 @@ typedef struct {
     GtkWidget *content_label;
     GtkWidget *is_edited_label;
     GtkWidget *replied_message_content_label;
+    GtkWidget *replied_message_login_label;
 } t_message;
 
 typedef struct s_messages_array {

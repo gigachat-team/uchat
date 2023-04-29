@@ -34,7 +34,6 @@ static void create_and_show_message_widget(t_message *message) {
     char *is_edited_str = message->changes_count ? "edited" : "";
 
     GtkWidget *reply_box = NULL;
-    GtkWidget *reply_login = NULL;
 
     message->container_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
     GtkWidget *user_icon = get_image_from_path("resources/img/message_icon.jpeg", 45, 45);
@@ -45,9 +44,16 @@ static void create_and_show_message_widget(t_message *message) {
         reply_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 1);
         LoadedMessagesList->match = compare_messages_IDs;
         t_message searching_reply_message_id = {.message_id = message->reply_message_id};
-        t_message *replied_message = list_find(LoadedMessagesList, &searching_reply_message_id)->val;
-        reply_login = gtk_label_new(replied_message->sender_login);
-        message->replied_message_content_label = gtk_label_new(replied_message->data);
+
+        list_node_t *replied_message_node = list_find(LoadedMessagesList, &searching_reply_message_id);
+        if (!replied_message_node) {
+            message->replied_message_content_label = gtk_label_new("Deleted Message");
+        } else {
+            t_message *replied_message = replied_message_node->val;
+            message->replied_message_login_label = gtk_label_new(replied_message->sender_login);
+            message->replied_message_content_label = gtk_label_new(replied_message->data);
+        }
+
     }
     message->content_label = gtk_label_new((gchar *)message->data);
     GtkWidget *additional_info_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 3);
@@ -70,7 +76,8 @@ static void create_and_show_message_widget(t_message *message) {
 
     // Reply box
     if (reply_box) {
-        gtk_container_add(GTK_CONTAINER(reply_box), reply_login);
+        if (message->replied_message_login_label)
+            gtk_container_add(GTK_CONTAINER(reply_box), message->replied_message_login_label);
         gtk_container_add(GTK_CONTAINER(reply_box), message->replied_message_content_label);
     }
 
@@ -79,11 +86,13 @@ static void create_and_show_message_widget(t_message *message) {
     gtk_container_add(GTK_CONTAINER(additional_info_box), creation_date_label);
 
     if (reply_box) {
-        gtk_widget_set_halign(reply_login, GTK_ALIGN_START);
+        if (message->replied_message_login_label)
+            gtk_widget_set_halign(message->replied_message_login_label, GTK_ALIGN_START);
         gtk_widget_set_halign(message->replied_message_content_label, GTK_ALIGN_START);
         gtk_label_set_xalign(GTK_LABEL(message->replied_message_content_label), 0);
         apply_style_to_widget(reply_box, "reply_box");
-        apply_style_to_widget(reply_login, "reply_login");
+        if (message->replied_message_login_label)
+            apply_style_to_widget(message->replied_message_login_label, "reply_login");
         gtk_label_set_line_wrap(GTK_LABEL(message->replied_message_content_label), TRUE);
         gtk_label_set_line_wrap_mode(GTK_LABEL(message->replied_message_content_label), PANGO_WRAP_WORD_CHAR);
     }
@@ -152,10 +161,19 @@ void gui_update_messages_list(list_t *message_updates_list, char *sended_message
         t_message *client_message = client_message_node ? client_message_node->val : NULL;
 
         if (!message_update->sender_id && !message_update->data) {
+            for (list_node_t *i = LoadedMessagesList->head; i != NULL; i = i->next) {
+                t_message *msg = i->val;
+                if (msg->reply_message_id == client_message->message_id) {
+                    set_label_text(msg->replied_message_content_label, "Deleted Message");
+                    gtk_widget_destroy(msg->replied_message_login_label);
+                }
+            }
+
             gtk_widget_hide(client_message->container_box);
             gtk_widget_destroy(client_message->container_box);
             free(client_message);
             list_remove(LoadedMessagesList, client_message_node);
+
             continue;
         }
 
