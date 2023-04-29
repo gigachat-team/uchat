@@ -19,11 +19,6 @@ typedef struct {
     GtkWidget *replied_message_login_label;
 } t_message;
 
-typedef struct s_messages_array {
-    t_message *arr;
-    size_t size;
-} t_messages_array;
-
 t_message create_message();
 t_message *create_message_ptr();
 void free_message(t_message *message);
