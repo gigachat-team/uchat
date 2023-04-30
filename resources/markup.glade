@@ -894,6 +894,7 @@
             </child>
             <child>
               <object class="GtkBox" id="connecting_box">
+                <property name="name">connecting_box</property>
                 <property name="can-focus">False</property>
                 <property name="orientation">vertical</property>
                 <child>

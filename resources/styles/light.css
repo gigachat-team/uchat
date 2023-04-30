@@ -19,7 +19,7 @@ entry {
     background-color: rgb(222, 223, 224);
 }
 
-.connection-box label {
+#connecting_box label {
     background-color: yellow;
     font-style: italic;
 }

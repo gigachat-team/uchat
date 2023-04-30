@@ -20,7 +20,6 @@
 #define CSS_CLASS_MESSAGE_FIELD "message-field"
 #define CSS_CLASS_ERROR_MESSAGE "error-message"
 #define CSS_CLASS_DEFAULT_WINDOW "default-window"
-#define CSS_CLASS_CONNECTION_BOX "connection-box"
 #define CSS_CLASS_NEW_CHAT_BUTTON "new-chat-button"
 #define CSS_CLASS_WINDOW_TOP_LABEL "window-top-label"
 #define CSS_CLASS_TIME_TEXT_SETTINGS "time-text"
