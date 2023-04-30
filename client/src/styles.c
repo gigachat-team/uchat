@@ -104,7 +104,6 @@ void apply_styles_for_messenger_window(GtkBuilder *gtk_builder) {
     get_widget_by_id_and_apply_style(gtk_builder, SEARCH_ENTRY_ID, CSS_CLASS_SEARCH_ENTRY);
 
     get_widget_by_id_and_apply_style(gtk_builder, NEW_MESSAGE_ENTRY_ID, CSS_CLASS_MESSAGE_FIELD);
-    get_widget_by_id_and_apply_style(gtk_builder, CREATE_ROOM_PARENT_ID, CSS_CLASS_CREATE_ROOM_PARENT);
     get_widget_by_id_and_apply_style(gtk_builder, UPPER_CANVAS_WINDOW_ID, CSS_CLASS_UPPER_CANVAS_WINDOW);
     get_widget_by_id_and_apply_style(gtk_builder, SEARCH_ENTRY_PARENT_ID, CSS_CLASS_SEARCH_ENTRY_PARENT);
     get_widget_by_id_and_apply_style(gtk_builder, NEW_MESSAGE_ENTRY_PARENT_ID, CSS_CLASS_NEW_MESSAGE_ENTRY_PARENT);

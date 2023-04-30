@@ -38,7 +38,6 @@
 //Windows
 #define SETTINGS_WINDOW_ID "settings_window"
 #define MESSENGER_WINDOW_ID "messenger_window"
-#define CREATE_ROOM_PARENT_ID "create_room_parent"
 #define CREATE_CHAT_WINDOW_ID "create_chat_window"
 #define UPPER_CANVAS_WINDOW_ID "upper_canvas_window"
 #define CHAT_SETTINGS_WINDOW_ID "chat_settings_window"

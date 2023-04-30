@@ -28,7 +28,6 @@
 #define CSS_CLASS_WINDOW_TOP_LABEL "window-top-label"
 #define CSS_CLASS_TIME_TEXT_SETTINGS "time-text"
 #define CSS_CLASS_TIME_NAME_SETTINGS "name-text"
-#define CSS_CLASS_CREATE_ROOM_PARENT "create-room-parent"
 #define CSS_CLASS_SEARCH_ENTRY_PARENT "search-entry-parent"
 #define CSS_CLASS_UPPER_CANVAS_WINDOW "upper-canvas-window"
 #define CSS_CLASS_NEW_MESSAGE_ENTRY_PARENT "new-message-entry-parent"

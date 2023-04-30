@@ -40,25 +40,17 @@ button:hover {
     animation: animate 1s linear infinite;
 }
 
-.connecting-box label {
-    background-color: @_connecting_box_background_color;
-    font-style: italic;
+.left-messenger-box {
+    background-color: @_left_messenger_box_background_color;
 }
 
 .chats-list-box {
     background-color: @_chats_list_box_background_color;
 }
 
-.create-room-parent {
-    background-color: @_create_room_parent_packgound_color;
-}
-
-.chat-name {
-    background-color: @_chat_name_background_color;
-}
-
-.canvas {
-    background-color: @_canvas_background_color;
+.connecting-box label {
+    background-color: @_connecting_box_background_color;
+    font-style: italic;
 }
 
 .create-chat-button {
@@ -68,6 +60,14 @@ button:hover {
     border: 2px solid;
     border-radius: 80px;
     border-color: @_create_chat_button_border_color;
+}
+
+.chat-name {
+    background-color: @_chat_name_background_color;
+}
+
+.canvas {
+    background-color: @_canvas_background_color;
 }
 
 .additional_message_info_label {
