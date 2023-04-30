@@ -10,7 +10,7 @@
 
 @define-color _chats_list_box_background_color rgb(196, 196, 196);
 
-@define-color _create_room_background_color rgb(221, 220, 220);
+@define-color _create_chat_button_background_color rgb(221, 220, 220);
 @define-color _create_room_parent_packgound_color rgb(196,196,196);
 
 @define-color _chat_name_background_color rgb(209, 209, 209);
@@ -19,7 +19,7 @@
 
 @define-color _new_chat_button_background_image_color rgba(0,0,0,.5);
 
-@define-color _new_chat_button_border_color rgb(151, 159, 185);
+@define-color _create_chat_button_border_color rgb(151, 159, 185);
 
 @define-color _additional_message_info_label_color #A0ACB6;
 

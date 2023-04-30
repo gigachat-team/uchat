@@ -13,7 +13,6 @@
 #define MIN_PASSWORD_LENGTH 5
 
 #define CANVAS_ID "canvas"
-#define CREATE_ROOM_ID "create_room"
 #define NEW_LOGIN_ENTRY_ID "new_login_entry"
 #define CHAT_NAME_LABEL_ID "chat_name"
 #define LOGIN_ENTRY_ID "login_entry"
@@ -37,7 +36,6 @@
 #define CHAT_SETTINGS_TOP_LABEL_ID "chat_settings_top_label"
 
 //Windows
-#define CHAT_CREATE_ROOM_ID "create_room"
 #define SETTINGS_WINDOW_ID "settings_window"
 #define MESSENGER_WINDOW_ID "messenger_window"
 #define CREATE_ROOM_PARENT_ID "create_room_parent"

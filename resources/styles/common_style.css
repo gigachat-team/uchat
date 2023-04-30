@@ -28,10 +28,6 @@ window, dialog {
     background-color: @_chats_list_box_background_color;
 }
 
-.create-room {
-    background-color: @_create_room_background_color;
-}
-
 .create-room-parent {
     background-color: @_create_room_parent_packgound_color;
 }
@@ -44,12 +40,13 @@ window, dialog {
     background-color: @_canvas_background_color;
 }
 
-.new-chat-button {
+.create-chat-button {
     background-repeat: no-repeat;
     background-position: center;
+    background-color: @_create_chat_button_background_color;
     border: 2px solid;
     border-radius: 80px;
-    border-color: @_new_chat_button_border_color;
+    border-color: @_create_chat_button_border_color;
 }
 
 .additional_message_info_label {
