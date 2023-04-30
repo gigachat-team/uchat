@@ -8,10 +8,6 @@ menu {
     background-color: white;
 }
 
-menu label {
-    color: black;
-}
-
 entry {
     border: 3 solid rgb(147, 144, 151);
     font-weight: unset;
