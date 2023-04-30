@@ -83,7 +83,7 @@ static void gui_leave_from_chat(id_t chat_id) {
         printf("The user removed from the chat.\n");
     }
 
-    write_label_text(Builder, CHAT_NAME_LABEL_ID, NULL);
+    write_label_text(Builder, SELECTED_CHAT_NAME_LABEL_ID, NULL);
     gui_render_chats_list();
     clear_container(Builder, CHAT_FIELD_CONTENER_ID);
 }

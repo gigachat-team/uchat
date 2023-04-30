@@ -62,7 +62,7 @@ button:hover {
     border-color: @_create_chat_button_border_color;
 }
 
-.chat-name {
+.selected-chat-name-label {
     background-color: @_chat_name_background_color;
 }
 

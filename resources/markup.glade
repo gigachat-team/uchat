@@ -984,10 +984,13 @@
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <child>
-                      <object class="GtkLabel" id="chat_name">
+                      <object class="GtkLabel" id="selected_chat_name_label">
                         <property name="height-request">34</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
+                        <style>
+                          <class name="selected-chat-name-label"/>
+                        </style>
                       </object>
                       <packing>
                         <property name="expand">True</property>

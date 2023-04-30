@@ -14,7 +14,7 @@
 
 #define CANVAS_ID "canvas"
 #define NEW_LOGIN_ENTRY_ID "new_login_entry"
-#define CHAT_NAME_LABEL_ID "chat_name"
+#define SELECTED_CHAT_NAME_LABEL_ID "selected_chat_name_label"
 #define LOGIN_ENTRY_ID "login_entry"
 #define PASSWORD_ENTRY_ID "password_entry"
 #define NEW_PASSWORD_ENTRY_ID "new_password_entry"

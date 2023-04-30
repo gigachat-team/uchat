@@ -240,7 +240,7 @@ static void gui_open_chat(t_chat *chat) {
     GtkWidget *chat_settings_window = get_widget(Builder, CHAT_SETTINGS_BUTTON_ID);
 
     clear_container(Builder, CHAT_FIELD_CONTENER_ID);
-    write_label_text(Builder, CHAT_NAME_LABEL_ID, chat->name);
+    write_label_text(Builder, SELECTED_CHAT_NAME_LABEL_ID, chat->name);
     load_messages(chat->id);
 
     g_signal_handlers_destroy(message_field);
