@@ -33,7 +33,6 @@
 #define CSS_CLASS_CREATE_ROOM_PARENT "create-room-parent"
 #define CSS_CLASS_SEARCH_ENTRY_PARENT "search-entry-parent"
 #define CSS_CLASS_UPPER_CANVAS_WINDOW "upper-canvas-window"
-#define CSS_CLASS_CHATS_LIST_CONTAINER "chats-list-containter"
 #define CSS_CLASS_NEW_MESSAGE_ENTRY_PARENT "new-message-entry-parent"
 
 typedef enum {

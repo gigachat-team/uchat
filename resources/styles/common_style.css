@@ -24,8 +24,8 @@ window, dialog {
     font-style: italic;
 }
 
-.chats-list-containter {
-    background-color: @_chats_list_container_background_color;
+.chats-list-box {
+    background-color: @_chats_list_box_background_color;
 }
 
 .create-room {

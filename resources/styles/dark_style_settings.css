@@ -8,7 +8,7 @@
 
 @define-color _connecting_box_background_color rgb(204, 204, 100);
 
-@define-color _chats_list_container_background_color #17212B;
+@define-color _chats_list_box_background_color #17212B;
 
 @define-color _create_room_background_color rgb(61, 68, 75);
 @define-color _create_room_parent_packgound_color rgb(79, 88, 97);

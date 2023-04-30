@@ -41,7 +41,6 @@
 #define SETTINGS_WINDOW_ID "settings_window"
 #define MESSENGER_WINDOW_ID "messenger_window"
 #define CREATE_ROOM_PARENT_ID "create_room_parent"
-#define CHAT_LISTS_WINDOW_ID "chats_list_container"
 #define CREATE_CHAT_WINDOW_ID "create_chat_window"
 #define UPPER_CANVAS_WINDOW_ID "upper_canvas_window"
 #define CHAT_SETTINGS_WINDOW_ID "chat_settings_window"
@@ -50,7 +49,7 @@
 
 //Conteners
 #define NEW_MESSAGE_ENTRY_ID "new_message_entry"
-#define CHATS_LIST_CONTAINER_ID "chats_list_container"
+#define CHATS_LIST_BOX_ID "chats_list_box"
 #define CHAT_FIELD_CONTENER_ID "chat_field"
 
 #define GROUP_SETTINGS_BOX "group_settings_box"
