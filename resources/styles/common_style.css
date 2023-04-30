@@ -19,6 +19,27 @@ window, dialog {
     background-color: @_window_and_dialog_background_color;
 }
 
+button {
+    background-image: none;
+    background-color: @_button_background_color;
+    border: 2 solid;
+    border-radius: 5;
+    color: @_button_color;
+    margin: 5;
+}
+
+button:active {
+    color: @_button_active_color;
+    border-radius: 50px;
+    box-shadow: 0 0 0 9px @_button_box_shadow_color;
+}
+
+button:hover {
+    box-shadow: 0 0 0 3px @_button_hover_box_shadow_color;
+    border-radius: 30px;
+    animation: animate 1s linear infinite;
+}
+
 .connecting-box label {
     background-color: @_connecting_box_background_color;
     font-style: italic;
@@ -104,27 +125,6 @@ window, dialog {
 
 .reply_login {
     color: @_reply_login_color;
-}
-
-button {
-    background-image: none;
-    background-color: @_button_background_color;
-    border: 2 solid;
-    border-radius: 5;
-    color: @_button_color;
-    margin: 5;
-}
-
-button:active {
-    color: @_button_active_color;
-    border-radius: 50px;
-    box-shadow: 0 0 0 9px @_button_box_shadow_color;
-}
-
-button:hover {
-    box-shadow: 0 0 0 3px @_button_hover_box_shadow_color;
-    border-radius: 30px;
-    animation: animate 1s linear infinite;
 }
 
 .error-message {
