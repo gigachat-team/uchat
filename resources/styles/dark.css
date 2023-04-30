@@ -4,6 +4,14 @@
     color: #F5F5F5;;
 }
 
+menu {
+    background-color: #0E1621;
+}
+
+menu label {
+    color: #F5F5F5;
+}
+
 .connection-box label {
     background-color: rgb(204, 204, 100);
     font-style: italic;

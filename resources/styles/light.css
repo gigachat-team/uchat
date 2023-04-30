@@ -4,6 +4,14 @@
     color: black;
 }
 
+menu {
+    background-color: white;
+}
+
+menu label {
+    color: black;
+}
+
 .connection-box label {
     background-color: yellow;
     font-style: italic;
