@@ -12,6 +12,13 @@ menu label {
     color: #F5F5F5;
 }
 
+entry {
+    border: 3px solid rgb(80, 85, 91);
+    font-weight: unset;
+    font-size: large;
+    background-color: rgb(110, 115, 122);
+}
+
 .connection-box label {
     background-color: rgb(204, 204, 100);
     font-style: italic;
@@ -35,15 +42,6 @@ menu label {
 
 .canvas {
     background-color: #0E1621;
-}
-
-.message-field {
-    color: #F5F5F5;
-    border: 3px solid;
-    border-color: rgb(80, 85, 91);
-    font-weight: unset;
-    font-size: large;
-    background-color: rgb(110, 115, 122);
 }
 
 .new-chat-button {
