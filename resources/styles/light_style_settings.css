@@ -19,7 +19,7 @@
 
 @define-color _new_chat_button_background_image_color rgba(0,0,0,.5);
 
-@define-color _new_chat_button_border_color rgb(255, 255, 255);
+@define-color _new_chat_button_border_color rgb(151, 159, 185);
 
 @define-color _additional_message_info_label_color #A0ACB6;
 
