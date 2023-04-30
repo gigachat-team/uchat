@@ -15,6 +15,10 @@ entry {
     background-color: rgb(110, 115, 122);
 }
 
+window, dialog {
+    background-color: rgb(51, 57, 62);
+}
+
 #connecting_box label {
     background-color: rgb(204, 204, 100);
     font-style: italic;
@@ -47,10 +51,6 @@ entry {
     border: 2px solid;
     border-radius: 80px;
     border-color: rgb(255, 255, 255);
-}
-
-.authentication-window {
-    background-color: rgb(51, 57, 62);
 }
 
 .additional_message_info_label {
@@ -171,8 +171,4 @@ button:hover {
 
 .main-area {
     background-color: rgb(58, 65, 72);
-}
-
-.default-window {
-    background-color: rgb(51, 57, 62);
 }

@@ -19,18 +19,14 @@
 #define CSS_CLASS_ENTRY_DEFAULT "entry-default"
 #define CSS_CLASS_MESSAGE_FIELD "message-field"
 #define CSS_CLASS_ERROR_MESSAGE "error-message"
-#define CSS_CLASS_DEFAULT_WINDOW "default-window"
 #define CSS_CLASS_NEW_CHAT_BUTTON "new-chat-button"
 #define CSS_CLASS_WINDOW_TOP_LABEL "window-top-label"
 #define CSS_CLASS_TIME_TEXT_SETTINGS "time-text"
 #define CSS_CLASS_TIME_NAME_SETTINGS "name-text"
-#define CSS_CLASS_CREATE_CHAT_WINDOW "create-chat-window"
 #define CSS_CLASS_CREATE_ROOM_PARENT "create-room-parent"
 #define CSS_CLASS_SEARCH_ENTRY_PARENT "search-entry-parent"
 #define CSS_CLASS_UPPER_CANVAS_WINDOW "upper-canvas-window"
-#define CSS_CLASS_CHAT_SETTINGS_WINDOW "chat-settings-window"
 #define CSS_CLASS_CHATS_LIST_CONTAINER "chats-list-containter"
-#define CSS_CLASS_AUTHENTICATION_WINDOW "authentication-window"
 #define CSS_CLASS_NEW_MESSAGE_ENTRY_PARENT "new-message-entry-parent"
 
 typedef enum {

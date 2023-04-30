@@ -110,7 +110,6 @@ void apply_styles_to_create_chat_window(GtkBuilder *gtk_builder) {
 
     GtkWidget *crate_chat_window = get_widget(gtk_builder, CREATE_CHAT_WINDOW_ID);
     set_cursor_image(crate_chat_window, DEFAULT_CURSOR_IMAGE_PATH);
-    apply_style_to_widget(crate_chat_window, CSS_CLASS_DEFAULT_WINDOW);
 
     get_widget_by_id_and_apply_style(gtk_builder, CREATE_CHAT_TOP_LABEL_ID, CSS_CLASS_WINDOW_TOP_LABEL);
     get_widget_by_id_and_apply_style(gtk_builder, NEW_CHAT_NAME_ENTRY_ID, CSS_CLASS_ENTRY);
@@ -121,7 +120,6 @@ void apply_styles_to_chat_settings_window(GtkBuilder *gtk_builder) {
 
     GtkWidget *chat_settings_window = GTK_WIDGET(gtk_builder_get_object(gtk_builder, CHAT_SETTINGS_WINDOW_ID));
     set_cursor_image(chat_settings_window, DEFAULT_CURSOR_IMAGE_PATH);
-    apply_style_to_widget(chat_settings_window, CSS_CLASS_DEFAULT_WINDOW);
 
     get_widget_by_id_and_apply_style(gtk_builder, CHAT_SETTINGS_TOP_LABEL_ID, CSS_CLASS_WINDOW_TOP_LABEL);
     get_widget_by_id_and_apply_style(gtk_builder, ENTRY_ADD_MEMBER_ID, CSS_CLASS_ENTRY);
@@ -134,8 +132,6 @@ void apply_styles_to_authentication_window(GtkBuilder *gtk_builder) {
     open_window(gtk_builder, AUTHENTICATION_WINDOW_ID);
     set_cursor_image(authentication_window, DEFAULT_CURSOR_IMAGE_PATH);
     get_widget_by_id_and_apply_style(gtk_builder, AUTHENTICATION_LABEL_ID, CSS_CLASS_WINDOW_TOP_LABEL);
-
-    apply_style_to_widget(authentication_window, CSS_CLASS_AUTHENTICATION_WINDOW);
 
     get_widget_by_id_and_apply_style(gtk_builder, LOGIN_ENTRY_ID,              CSS_CLASS_ENTRY);
     get_widget_by_id_and_apply_style(gtk_builder, PASSWORD_ENTRY_ID,           CSS_CLASS_ENTRY);
@@ -150,7 +146,6 @@ void apply_styles_to_settings_window(GtkBuilder *gtk_builder) {
     GtkWidget *settings_window = GTK_WIDGET(gtk_builder_get_object(gtk_builder, SETTINGS_WINDOW_ID));
     open_window(gtk_builder, SETTINGS_WINDOW_ID);
     set_cursor_image(settings_window, DEFAULT_CURSOR_IMAGE_PATH);
-    apply_style_to_widget(settings_window, CSS_CLASS_DEFAULT_WINDOW);
     get_widget_by_id_and_apply_style(gtk_builder, SETTINGS_LOGIN_ENTRY_ID, CSS_CLASS_ENTRY);
 }
 
