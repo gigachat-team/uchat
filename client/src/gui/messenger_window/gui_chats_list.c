@@ -4,14 +4,14 @@
 static void create_button_in_chat_list(t_chat *chat) {
     GtkWidget *new_button = gtk_button_new_with_label(chat->name);
     g_signal_connect(new_button, "clicked", G_CALLBACK(on_chat_clicked), chat);
-    add_to_box_start(Builder, new_button, CHATS_LIST_CONTAINER_ID, 0);
+    add_to_box_start(Builder, new_button, CHATS_LIST_BOX_ID, 0);
 }
 
 void gui_render_chats_list() {
     list_t *chats_list = rq_get_chats_i_am_in(ServerAddress, ThisUser->id);
     if (toggle_widget_visibility(!chats_list, Builder, CONNECTING_BOX_ID)) return;
 
-    clear_container(Builder, CHATS_LIST_CONTAINER_ID);
+    clear_container(Builder, CHATS_LIST_BOX_ID);
 
     bool selected_chat_exists = false;
     for (list_node_t *i = chats_list->head; i != NULL; i = i->next) {

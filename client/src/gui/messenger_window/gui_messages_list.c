@@ -2,7 +2,7 @@
 
 static gboolean scroll_to_bottom_message_list(gpointer user_data) {
     GtkBuilder *builder = user_data;
-    scroll_to_bottom(builder, "chat_scrolled_field");
+    scroll_to_bottom(builder, MESSAGES_LIST_SCROLLED_WINDOW_ID);
     return FALSE;
 }
 
@@ -119,16 +119,16 @@ static void create_and_show_message_widget(t_message *message) {
 
     add_to_box_start(Builder, message->container_box, CHAT_FIELD_CONTENER_ID, 10);
 
+    apply_style_to_widget(message->is_edited_label, ADDITIONAL_MESSAGE_INFO_LABEL_ID);
+    apply_style_to_widget(creation_date_label, ADDITIONAL_MESSAGE_INFO_LABEL_ID);
     if (message->sender_id == ThisUser->id) {
         apply_style_to_widget(content_box, "my-message-content-box");
         apply_style_to_widget(name, "my-name-text");
-        apply_style_to_widget(message->is_edited_label, "my-additional-message-info");
-        apply_style_to_widget(creation_date_label, "my-additional-message-info");
+        apply_style_to_widget(message->is_edited_label, MY_ADDITIONAL_MESSAGE_INFO_LABEL_ID);
+        apply_style_to_widget(creation_date_label, MY_ADDITIONAL_MESSAGE_INFO_LABEL_ID);
     } else {
         apply_style_to_widget(content_box, "message-content-box");
         apply_style_to_widget(name, CSS_CLASS_TIME_NAME_SETTINGS);
-        apply_style_to_widget(message->is_edited_label, "additional-message-info");
-        apply_style_to_widget(creation_date_label, "additional-message-info");
     }
 
     gtk_widget_show_all(message->container_box);
@@ -240,7 +240,7 @@ static void gui_open_chat(t_chat *chat) {
     GtkWidget *chat_settings_window = get_widget(Builder, CHAT_SETTINGS_BUTTON_ID);
 
     clear_container(Builder, CHAT_FIELD_CONTENER_ID);
-    write_label_text(Builder, CHAT_NAME_LABEL_ID, chat->name);
+    write_label_text(Builder, SELECTED_CHAT_NAME_LABEL_ID, chat->name);
     load_messages(chat->id);
 
     g_signal_handlers_destroy(message_field);

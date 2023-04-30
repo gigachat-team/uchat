@@ -1,0 +1,67 @@
+@define-color _text_color #000;
+@define-color _menu_background_color #fff;
+
+@define-color _entry_border_color rgb(147, 144, 151);
+@define-color _entry_background_color rgb(222, 223, 224);
+
+@define-color _window_and_dialog_background_color rgb(222, 222, 222);
+
+@define-color _connecting_box_background_color yellow;
+
+@define-color _chats_list_box_background_color rgb(196, 196, 196);
+
+@define-color _create_chat_button_background_color rgb(221, 220, 220);
+@define-color _left_messenger_box_background_color rgb(196,196,196);
+
+@define-color _chat_name_background_color rgb(209, 209, 209);
+
+@define-color _messages_list_canvas_background_color rgb(222, 223, 224);
+
+@define-color _new_chat_button_background_image_color rgba(0,0,0,.5);
+
+@define-color _create_chat_button_border_color rgb(151, 159, 185);
+
+@define-color _additional_message_info_label_color #A0ACB6;
+
+@define-color _my_additional_message_info_label_color #57B84C;
+
+@define-color _my_name_text_color #4FAD2D;
+
+@define-color _name_text_color #CD4073;
+
+@define-color _window_top_label_background_color rgb(161, 189, 210);
+
+@define-color _upper_canvas_window_background_color rgb(209,209,209);
+
+@define-color _new_message_entry_parent_background_color rgb(222,223,224);
+
+@define-color _my_message_content_box_color #000;
+@define-color _my_message_content_box_background_color #EFFDDE;
+
+@define-color _message_content_box_color  #000;
+@define-color _message_content_box_background_color #fff;
+
+@define-color _reply_box_background_color #DEDFE0;
+
+@define-color _reply_login_color #3b4dea;
+
+@define-color _button_background_color #EDEDED;
+@define-color _button_color rgb(151, 159, 185);
+@define-color _button_active_color rgb(29, 19, 19);
+@define-color _button_box_shadow_color rgb(0, 0, 0);
+@define-color _button_hover_box_shadow_color rgb(56, 77, 90);
+
+@define-color _error_message_background_color white;
+@define-color _error_message_border_color red;
+
+@define-color _animate_0_box_shadow_color rgb(112, 122, 155);
+@define-color _animate_50_box_shadow_color rgb(76, 131, 168);
+@define-color _animate_100_box_shadow_color rgb(112, 122, 155);
+
+@define-color _entry_background_color white;
+
+@define-color _search_entry_background_color white;
+
+@define-color _search_entry_parent_background_color rgb(196, 196, 196);
+
+@define-color _main_area_background_color rgb(222, 222, 222);

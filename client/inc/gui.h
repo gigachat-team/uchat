@@ -12,10 +12,10 @@
 #define MIN_LOGIN_LENGTH 4
 #define MIN_PASSWORD_LENGTH 5
 
-#define CANVAS_ID "canvas"
-#define CREATE_ROOM_ID "create_room"
+#define MESSAGES_LIST_SCROLLED_WINDOW_ID "messages_list_scrolled_window"
+
 #define NEW_LOGIN_ENTRY_ID "new_login_entry"
-#define CHAT_NAME_LABEL_ID "chat_name"
+#define SELECTED_CHAT_NAME_LABEL_ID "selected_chat_name_label"
 #define LOGIN_ENTRY_ID "login_entry"
 #define PASSWORD_ENTRY_ID "password_entry"
 #define NEW_PASSWORD_ENTRY_ID "new_password_entry"
@@ -29,20 +29,16 @@
 
 #define ERROR_MESSAGE_LOGIN_LABEL_ID "error_message_login_label"
 #define ERROR_MESSAGE_REGISTRATION_LABEL_ID "error_message_registration_label"
-#define CONNECTING_LABEL_ID "connecting_label"
 
 #define CHAT_SETTINGS_BUTTON_ID "open_chat_settings_window"
 
 #define AUTHENTICATION_LABEL_ID "authentication_label"
-#define CREATE_CHAT_TOP_LABEL_ID "create_chat_top_label" 
+#define CREATE_CHAT_TOP_LABEL_ID "create_chat_top_label"
 #define CHAT_SETTINGS_TOP_LABEL_ID "chat_settings_top_label"
 
 //Windows
-#define CHAT_CREATE_ROOM_ID "create_room"
 #define SETTINGS_WINDOW_ID "settings_window"
 #define MESSENGER_WINDOW_ID "messenger_window"
-#define CREATE_ROOM_PARENT_ID "create_room_parent"
-#define CHAT_LISTS_WINDOW_ID "chats_list_container"
 #define CREATE_CHAT_WINDOW_ID "create_chat_window"
 #define UPPER_CANVAS_WINDOW_ID "upper_canvas_window"
 #define CHAT_SETTINGS_WINDOW_ID "chat_settings_window"
@@ -51,11 +47,15 @@
 
 //Conteners
 #define NEW_MESSAGE_ENTRY_ID "new_message_entry"
-#define CHATS_LIST_CONTAINER_ID "chats_list_container"
+#define CHATS_LIST_BOX_ID "chats_list_box"
 #define CHAT_FIELD_CONTENER_ID "chat_field"
 
 #define GROUP_SETTINGS_BOX "group_settings_box"
 #define CONNECTING_BOX_ID "connecting_box"
+
+// Message
+#define ADDITIONAL_MESSAGE_INFO_LABEL_ID "additional_message_info_label"
+#define MY_ADDITIONAL_MESSAGE_INFO_LABEL_ID "my_additional_message_info_label"
 
 #define LAST_LOADING_MESSAGES_COUNT 30
 
