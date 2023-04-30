@@ -119,16 +119,16 @@ static void create_and_show_message_widget(t_message *message) {
 
     add_to_box_start(Builder, message->container_box, CHAT_FIELD_CONTENER_ID, 10);
 
+    apply_style_to_widget(message->is_edited_label, ADDITIONAL_MESSAGE_INFO_LABEL_ID);
+    apply_style_to_widget(creation_date_label, ADDITIONAL_MESSAGE_INFO_LABEL_ID);
     if (message->sender_id == ThisUser->id) {
         apply_style_to_widget(content_box, "my-message-content-box");
         apply_style_to_widget(name, "my-name-text");
-        apply_style_to_widget(message->is_edited_label, "my-additional-message-info");
-        apply_style_to_widget(creation_date_label, "my-additional-message-info");
+        apply_style_to_widget(message->is_edited_label, MY_ADDITIONAL_MESSAGE_INFO_LABEL_ID);
+        apply_style_to_widget(creation_date_label, MY_ADDITIONAL_MESSAGE_INFO_LABEL_ID);
     } else {
         apply_style_to_widget(content_box, "message-content-box");
         apply_style_to_widget(name, CSS_CLASS_TIME_NAME_SETTINGS);
-        apply_style_to_widget(message->is_edited_label, "additional-message-info");
-        apply_style_to_widget(creation_date_label, "additional-message-info");
     }
 
     gtk_widget_show_all(message->container_box);

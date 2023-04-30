@@ -57,6 +57,10 @@
 #define GROUP_SETTINGS_BOX "group_settings_box"
 #define CONNECTING_BOX_ID "connecting_box"
 
+// Message
+#define ADDITIONAL_MESSAGE_INFO_LABEL_ID "additional_message_info_label"
+#define MY_ADDITIONAL_MESSAGE_INFO_LABEL_ID "my_additional_message_info_label"
+
 #define LAST_LOADING_MESSAGES_COUNT 30
 
 extern GtkBuilder *Builder;

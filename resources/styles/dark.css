@@ -33,7 +33,7 @@
 }
 
 .message-field {
-    color:rgb(56, 62, 68);
+    color: #F5F5F5;
     border: 3px solid;
     border-color: rgb(80, 85, 91);
     font-weight: unset;
@@ -54,18 +54,15 @@
     background-color: rgb(51, 57, 62);
 }
 
-.my-additional-message-info {
-    font-size: 15px;
-    font-family: system-ui;
-    font-style: italic;
-    color: #7BA6D0;
-}
-
-.additional-message-info {
+.additional_message_info_label {
     font-size: 15px;
     font-family: system-ui;
     font-style: italic;
     color: #6D7F8F;
+}
+
+.my_additional_message_info_label {
+    color: #7BA6D0;
 }
 
 .my-name-text {

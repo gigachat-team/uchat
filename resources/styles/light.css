@@ -52,18 +52,15 @@
     background: url("../img/background_auth.png");
 }
 
-.my-additional-message-info {
-    font-size: 15px;
-    font-family: system-ui;
-    font-style: italic;
-    color: #57B84C;
-}
-
-.additional-message-info{
+.additional_message_info_label {
     font-size: 15px;
     font-family: system-ui;
     font-style: italic;
     color: #A0ACB6;
+}
+
+.my_additional_message_info_label {
+    color: #57B84C;
 }
 
 .my-name-text {
