@@ -38,11 +38,19 @@ void save_theme(t_style_type style_type) {
 }
 
 void load_light_theme() {
-    load_css(PATH_TO_LIGHT_STYLE);
+    GtkCssProvider *provider = gtk_css_provider_new();
+    gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(provider), GTK_STYLE_PROVIDER_PRIORITY_USER);
+    t_string css_str = read_three_files(PATH_TO_LIGHT_STYLE_SETTINGS, PATH_TO_COMMON_STYLE, PATH_TO_LIGHT_STYLE);
+    gtk_css_provider_load_from_data(provider, css_str.val, css_str.len, NULL);
+    string_destroy(&css_str);
 }
 
 void load_dark_theme() {
-    load_css(PATH_TO_DARK_STYLE);
+    GtkCssProvider *provider = gtk_css_provider_new();
+    gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(provider), GTK_STYLE_PROVIDER_PRIORITY_USER);
+    t_string css_str = read_three_files(PATH_TO_DARK_STYLE_SETTINGS, PATH_TO_COMMON_STYLE, PATH_TO_DARK_STYLE);
+    gtk_css_provider_load_from_data(provider, css_str.val, css_str.len, NULL);
+    string_destroy(&css_str);
 }
 
 void apply_style_to_widget(GtkWidget *widget, const char *class_name) {

@@ -1,0 +1,174 @@
+* {
+    border: 0;
+    font-size: large;
+    color: @_text_color;
+}
+
+menu {
+    background-color: @_menu_background_color;
+}
+
+entry {
+    border: 3px solid @_entry_border_color;
+    font-weight: unset;
+    font-size: large;
+    background-color: @_entry_background_color;
+}
+
+window, dialog {
+    background-color: @_window_and_dialog_background_color;
+}
+
+#connecting_box label {
+    background-color: @_connecting_box_background_color;
+    font-style: italic;
+}
+
+.chats-list-containter {
+    background-color: @_chats_list_container_background_color;
+}
+
+.create-room {
+    background-color: @_create_room_background_color;
+}
+
+.create-room-parent {
+    background-color: @_create_room_parent_packgound_color;
+}
+
+.chat-name {
+    background-color: @_chat_name_background_color;
+}
+
+.canvas {
+    background-color: @_canvas_background_color;
+}
+
+.new-chat-button {
+    background-repeat: no-repeat;
+    background-position: center;
+    border: 2px solid;
+    border-radius: 80px;
+    border-color: @_new_chat_button_border_color;
+}
+
+.additional_message_info_label {
+    font-size: 15px;
+    font-family: system-ui;
+    font-style: italic;
+    color: @_additional_message_info_label_color;
+}
+
+.my_additional_message_info_label {
+    color: @_my_additional_message_info_label_color;
+}
+
+.my-name-text {
+    font-family: unset;
+    color: @_my_name_text_color;
+}
+
+.name-text {
+    font-family: unset;
+    color: @_my_name_text_color;
+}
+
+.window-top-label {
+    background-color: @_window_top_label_background_color;
+}
+
+.upper-canvas-window {
+    background-color: @_upper_canvas_window_background_color;
+}
+
+.new-message-entry-parent {
+    border: 0px;
+    background-color: @_new_message_entry_parent_background_color;
+}
+
+.my-message-content-box {
+    color: @_my_message_content_box_color;
+    background-color: @_my_message_content_box_background_color;
+    border-radius: 20;
+}
+
+.message-content-box {
+    color: @_message_content_box_color;
+    background-color: @_message_content_box_background_color;
+    border-radius: 20px;
+}
+
+.reply_box {
+    background-color: @_reply_box_background_color;
+    border-radius: 5;
+    padding: 10;
+    margin: 0 10 0 10;
+}
+
+.reply_login {
+    color: @_reply_login_color;
+}
+
+button {
+    background-image: none;
+    background-color: @_button_background_color;
+    border: 2 solid;
+    border-radius: 5;
+    color: @_button_color;
+    margin: 5;
+}
+
+button:active {
+    color: @_button_active_color;
+    border-radius: 50px;
+    box-shadow: 0 0 0 9px @_button_box_shadow_color;
+}
+
+button:hover {
+    box-shadow: 0 0 0 3px @_button_hover_box_shadow_color;
+    border-radius: 30px;
+    animation: animate 1s linear infinite;
+}
+
+.error-message {
+    background-color: @_error_message_background_color;
+    border: 5px outset;
+    border-color: @_error_message_border_color;
+    font-family: Arial, sans-serif;
+    border-radius: 50px;
+    margin: 5px;
+}
+
+@keyframes animate {
+    0% {
+        box-shadow: 0 0 0 3px @_animate_0_box_shadow_color;
+        opacity: 1;
+    }
+    50% {
+        box-shadow: 0 0 0 5px @_animate_50_box_shadow_color;
+        opacity: 0.5;
+    }
+    100% {
+        box-shadow: 0 0 0 3px @_animate_100_box_shadow_color;
+        opacity: 1;
+    }
+}
+
+.entry {
+    background-color: @_entry_background_color;
+}
+
+.search-entry {
+    border: 0px;
+    border-radius: 0px;
+    background-color: @_search_entry_background_color;
+}
+
+.search-entry-parent {
+    border: 0px;
+    background-color: @_search_entry_parent_background_color;
+}
+
+.main-area {
+    background-color: @_main_area_background_color;
+}
