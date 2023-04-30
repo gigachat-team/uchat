@@ -4,11 +4,8 @@
     color: #F5F5F5;;
 }
 
-.connection-box {
+.connection-box label {
     background-color: rgb(204, 204, 100);
-}
-
-.connection-label {
     font-style: italic;
 }
 

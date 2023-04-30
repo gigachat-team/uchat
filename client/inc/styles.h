@@ -23,7 +23,6 @@
 #define CSS_CLASS_CONNECTION_BOX "connection-box"
 #define CSS_CLASS_NEW_CHAT_BUTTON "new-chat-button"
 #define CSS_CLASS_WINDOW_TOP_LABEL "window-top-label"
-#define CSS_CLASS_CONNECTION_LABEL "connection-label"
 #define CSS_CLASS_TIME_TEXT_SETTINGS "time-text"
 #define CSS_CLASS_TIME_NAME_SETTINGS "name-text"
 #define CSS_CLASS_CREATE_CHAT_WINDOW "create-chat-window"

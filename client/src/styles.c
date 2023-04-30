@@ -98,7 +98,6 @@ void apply_styles_for_messenger_window(GtkBuilder *gtk_builder) {
     get_widget_by_id_and_apply_style(gtk_builder, CREATE_ROOM_ID, CSS_CLASS_NEW_CHAT_BUTTON);
     get_widget_by_id_and_apply_style(gtk_builder, CONNECTING_BOX_ID, CSS_CLASS_CONNECTION_BOX);
     get_widget_by_id_and_apply_style(gtk_builder, NEW_MESSAGE_ENTRY_ID, CSS_CLASS_MESSAGE_FIELD);
-    get_widget_by_id_and_apply_style(gtk_builder, CONNECTING_LABEL_ID, CSS_CLASS_CONNECTION_LABEL);
     get_widget_by_id_and_apply_style(gtk_builder, CREATE_ROOM_PARENT_ID, CSS_CLASS_CREATE_ROOM_PARENT);
     get_widget_by_id_and_apply_style(gtk_builder, CHAT_LISTS_WINDOW_ID, CSS_CLASS_CHATS_LIST_CONTAINER);
     get_widget_by_id_and_apply_style(gtk_builder, UPPER_CANVAS_WINDOW_ID, CSS_CLASS_UPPER_CANVAS_WINDOW);

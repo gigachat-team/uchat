@@ -29,12 +29,11 @@
 
 #define ERROR_MESSAGE_LOGIN_LABEL_ID "error_message_login_label"
 #define ERROR_MESSAGE_REGISTRATION_LABEL_ID "error_message_registration_label"
-#define CONNECTING_LABEL_ID "connecting_label"
 
 #define CHAT_SETTINGS_BUTTON_ID "open_chat_settings_window"
 
 #define AUTHENTICATION_LABEL_ID "authentication_label"
-#define CREATE_CHAT_TOP_LABEL_ID "create_chat_top_label" 
+#define CREATE_CHAT_TOP_LABEL_ID "create_chat_top_label"
 #define CHAT_SETTINGS_TOP_LABEL_ID "chat_settings_top_label"
 
 //Windows
