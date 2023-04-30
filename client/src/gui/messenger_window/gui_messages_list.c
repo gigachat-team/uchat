@@ -2,7 +2,7 @@
 
 static gboolean scroll_to_bottom_message_list(gpointer user_data) {
     GtkBuilder *builder = user_data;
-    scroll_to_bottom(builder, "chat_scrolled_field");
+    scroll_to_bottom(builder, MESSAGES_LIST_SCROLLED_WINDOW_ID);
     return FALSE;
 }
 

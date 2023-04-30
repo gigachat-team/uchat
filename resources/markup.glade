@@ -1027,7 +1027,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkScrolledWindow" id="chat_scrolled_field">
+                  <object class="GtkScrolledWindow" id="messages_list_scrolled_window">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="hexpand">True</property>
