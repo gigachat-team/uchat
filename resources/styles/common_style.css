@@ -19,7 +19,7 @@ window, dialog {
     background-color: @_window_and_dialog_background_color;
 }
 
-#connecting_box label {
+.connecting-box label {
     background-color: @_connecting_box_background_color;
     font-style: italic;
 }
