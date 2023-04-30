@@ -22,10 +22,10 @@ window, dialog {
 button {
     background-image: none;
     background-color: @_button_background_color;
-    border: 2 solid;
-    border-radius: 5;
+    border: 2px solid;
+    border-radius: 5px;
     color: @_button_color;
-    margin: 5;
+    margin: 5px;
 }
 
 button:active {
@@ -100,14 +100,14 @@ button:hover {
 }
 
 .new-message-entry-parent {
-    border: 0px;
+    border: 0;
     background-color: @_new_message_entry_parent_background_color;
 }
 
 .my-message-content-box {
     color: @_my_message_content_box_color;
     background-color: @_my_message_content_box_background_color;
-    border-radius: 20;
+    border-radius: 20px;
 }
 
 .message-content-box {
@@ -118,9 +118,9 @@ button:hover {
 
 .reply_box {
     background-color: @_reply_box_background_color;
-    border-radius: 5;
-    padding: 10;
-    margin: 0 10 0 10;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 0 10px 0 10px;
 }
 
 .reply_login {
