@@ -14,7 +14,6 @@
 
 #define MESSAGES_LIST_SCROLLED_WINDOW_ID "messages_list_scrolled_window"
 
-#define CANVAS_ID "canvas"
 #define NEW_LOGIN_ENTRY_ID "new_login_entry"
 #define SELECTED_CHAT_NAME_LABEL_ID "selected_chat_name_label"
 #define LOGIN_ENTRY_ID "login_entry"

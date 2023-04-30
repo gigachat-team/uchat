@@ -18,7 +18,6 @@
 #define STYLE_TYPE_SETTING_PATH "resources/settings/style_type.txt"
 
 #define CSS_CLASS_ENTRY "entry"
-#define CSS_CLASS_CANVAS "canvas"
 #define CSS_CLASS_MAIN_AREA "main-area"
 #define CSS_CLASS_SEARCH_ENTRY "search-entry"
 #define CSS_CLASS_ENTRY_DEFAULT "entry-default"

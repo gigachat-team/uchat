@@ -1035,7 +1035,7 @@
                     <property name="hscrollbar-policy">never</property>
                     <property name="shadow-type">in</property>
                     <child>
-                      <object class="GtkViewport" id="canvas">
+                      <object class="GtkViewport">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <child>
@@ -1053,6 +1053,9 @@
                             </child>
                           </object>
                         </child>
+                        <style>
+                          <class name="messages-list-canvas"/>
+                        </style>
                       </object>
                     </child>
                   </object>

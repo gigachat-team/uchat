@@ -97,7 +97,6 @@ void apply_styles_for_messenger_window(GtkBuilder *gtk_builder) {
 
     set_cursor_image(messenger_window, DEFAULT_CURSOR_IMAGE_PATH);
 
-    get_widget_by_id_and_apply_style(gtk_builder, CANVAS_ID, CSS_CLASS_CANVAS);
     get_widget_by_id_and_apply_style(gtk_builder, MAIN_AREA_ID, CSS_CLASS_MAIN_AREA);
     get_widget_by_id_and_apply_style(gtk_builder, NEW_MESSAGE_ENTRY_ID, CSS_CLASS_ENTRY);
     get_widget_by_id_and_apply_style(gtk_builder, SEARCH_ENTRY_ID, CSS_CLASS_SEARCH_ENTRY);

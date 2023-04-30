@@ -66,8 +66,8 @@ button:hover {
     background-color: @_chat_name_background_color;
 }
 
-.canvas {
-    background-color: @_canvas_background_color;
+.messages-list-canvas {
+    background-color: @_messages_list_canvas_background_color;
 }
 
 .additional_message_info_label {

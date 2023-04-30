@@ -15,7 +15,7 @@
 
 @define-color _chat_name_background_color rgb(79, 88, 97);
 
-@define-color _canvas_background_color #0E1621;
+@define-color _messages_list_canvas_background_color #0E1621;
 
 @define-color _new_chat_button_background_image_color rgba(0,0,0,.0);
 
